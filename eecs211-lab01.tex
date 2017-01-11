@@ -346,9 +346,9 @@ command to turn this file into a directory called lab1:
 Now, once we have our new directory with its files, change your
 directory to \filename{lab1} using the \progname{cd} command.  Now list
 its contents using \progname{ls}, and notice that there is a
-\filename{CMakeLists.txt} file, and a \filename{main.cpp} file. The
+\filename{CMakeLists.txt} file, and a \filename{hello.cpp} file. The
 \filename{CMakeLists.txt} file is a CMake configuration file which you
-won't have to worry about too much, and the \filename{main.cpp} file is
+won't have to worry about too much, and the \filename{hello.cpp} file is
 a C++ file which we have provided you.
 
 When using CMake, you will want to create a subdirectory to do your
@@ -362,7 +362,7 @@ the lab1 directory.} to set up the build environment.  This should spit
 out some commands into the terminal, and if everything is successful,
 your CMake project is set up!
 
-Now, you can build your main program using the command \progname{make}.
+Now, you can build your program using the command \progname{make}.
 
 The basic purpose of Make is to build your project into an executable file.
 In your build directory, each time you update your code, you can run
@@ -372,13 +372,13 @@ In your build directory, each time you update your code, you can run
 \end{CmdLine}
 
 \noindent to create your executable called \metavar{target-name}.  In
-this case, run \cmdline{make main} to build a program called
-\filename{main}.  In your build directory, if you list its contents, you
+this case, run \cmdline{make hello} to build a program called
+\filename{hello}.  In your build directory, if you list its contents, you
 will see a few more CMake files, but you should also now see a file
-called \filename{main}, which is your executable you can now run:
+called \filename{hello}, which is your executable you can now run:
 
 \begin{CmdLine}
-  \prompt ./main
+  \prompt ./hello
 \end{CmdLine}
 
 \noindent
@@ -390,19 +390,19 @@ So, we gave you a basic function and you were able to run it, but how do
 you change the code?
 
 Navigate back up to your \filename{lab1} directory using cd (\cmdline{cd
-..}).  Now open up the \filename{main.cpp} file using Emacs, and edit it
+..}).  Now open up the \filename{hello.cpp} file using Emacs, and edit it
 so it now says ``Aloha 211 student!'' instead of ``Hello 211 student!.''
 Make sure to save and exit Emacs.\marginnote{Remember \keycombo{C-x C-s}
 to save and \keycombo{C-x C-c} to exit.}
 
-Go back to our build directory using cd.  Try running \cmdline{./main}
+Go back to our build directory using cd.  Try running \cmdline{./hello}
 again. Did anything change?
 
 The reason why you still see ``Hello 211 student!'' on your screen is
 because while you changed your C++ code, your computer doesn't
 understand the C++ code, but only the machine code you create by using
-\progname{make}.  So now, run \cmdline{make main} once again, and try
-\cmdline{./main}. Notice how you now have the correct output!  Each time
+\progname{make}.  So now, run \cmdline{make hello} once again, and try
+\cmdline{./hello}. Notice how you now have the correct output!  Each time
 we want to change our code, we are going to need to remember to rebuild
 our executable. Don't worry if you have error messages your first few
 times trying to write new code, this is completely normal.  Even the
