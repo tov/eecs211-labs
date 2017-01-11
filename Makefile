@@ -1,7 +1,6 @@
 TEXS = $(wildcard eecs211-lab*.tex)
 PDFS = $(TEXS:.tex=.pdf)
-
-all: $(PDFS)
+ZIPS = $(TEXS:.tex=.zip)
 
 Publish: $(PDFS) $(ZIPS)
 	ls $^ > $@
