@@ -14,10 +14,7 @@ Publish: $(PDFS) $(ZIPS)
 %.pdf: %.tex
 	pdflatex -interaction=nonstopmode $<
 
-latex-cleanup:
-	rm -f eecs211-lab*.log eecs211-lab*.aux eecs211-lab*.synctex.gz
-
 clean:
-	rm -f eecs211-lab*.zip eecs211-lab*.pdf
+	git clean -fX
 
-.PHONY: latex-cleanup clean
+.PHONY: clean
