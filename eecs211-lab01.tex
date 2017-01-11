@@ -384,4 +384,67 @@ called \filename{main}, which is your executable you can now run:
 \noindent
 This should spit out a nice greeting.
 
+\section{Updating our code}
+
+So, we gave you a basic function and you were able to run it, but how do
+you change the code?
+
+Navigate back up to your \filename{lab1} directory using cd (\cmdline{cd
+..}).  Now open up the \filename{main.cpp} file using Emacs, and edit it
+so it now says ``Aloha 211 student!'' instead of ``Hello 211 student!.''
+Make sure to save and exit Emacs.\marginnote{Remember \keycombo{C-x C-s}
+to save and \keycombo{C-x C-c} to exit.}
+
+Go back to our build directory using cd.  Try running \cmdline{./main}
+again. Did anything change?
+
+The reason why you still see ``Hello 211 student!'' on your screen is
+because while you changed your C++ code, your computer doesn't
+understand the C++ code, but only the machine code you create by using
+\progname{make}.  So now, run \cmdline{make main} once again, and try
+\cmdline{./main}. Notice how you now have the correct output!  Each time
+we want to change our code, we are going to need to remember to rebuild
+our executable. Don't worry if you have error messages your first few
+times trying to write new code, this is completely normal.  Even the
+best developers in the world usually need a few tries before they can
+properly build their files, so just take a deep breath, and try and
+figure out what went wrong.
+
+\section{Conclusion}
+
+Knowing how to use the shell is an extremely important tool in computer
+science. Don't worry if it is still hard for you to use, like much of
+life, it is one of those things you'll just need to practice with until
+it seems much more familiar!  On your own time, it would be a good idea
+to continue learning more about the shell and playing around with some
+more commands.\marginnote{A good resource for some basic commands is
+  here:
+\url{http://www.computerworld.com/article/2598082/linux/linux-linux-command-line-cheat-sheet.html}.}
+Of course, come to office hours or post on Piazza with any questions or
+if you want any more challenges!
+
+\section{Useful links}
+
+\begin{description}
+
+  \item[Lab 1 Project]
+\url{https://www.dropbox.com/s/jwqwq457ppslxh3/lab1.tar.gz}
+
+\item[EECS Lab names]
+\url{http://www.mccormick.northwestern.edu/eecs/documents/current-students/student-lab-hostnames.pdf}
+
+\item[Simple command line cheat sheet]
+\url{http://www.computerworld.com/article/2598082/linux/linux-linux-command-line-cheat-sheet.html}
+
+\item[PuTTY]
+\url{http://www.putty.org/}
+
+\item[Nice Emacs guide]
+\url{http://www.cs.cornell.edu/courses/cs312/2003sp/handouts/emacs.htm}
+
+\item[Nice Vim guide]
+\url{http://www.openvim.com/}
+
+\end{description}
+
 \end{document}
