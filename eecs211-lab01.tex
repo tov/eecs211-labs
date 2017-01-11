@@ -101,4 +101,47 @@ connecting.  Type ``yes'' as prompted and press Enter. Now type in your
 EECS account password (not necessarily your netID password), press
 Enter again, and you should be logged in remotely!
 
+\section{Basic shell navigation}
+
+There are a few basic commands we will be using frequently throughout
+this exercise in our shell: \progname{cd}, \progname{ls}, and
+\progname{pwd}, and \progname{man}.
+
+\progname{cd} stands for ``change directory,'' and is used to change the
+current directory we are looking at in our shell (our working
+directory). You can think of a directory as a folder from your regular
+interactions with your computer. For example the command \cmdline{cd
+Documents} \marginpar{As usual, don't type the \prompt.} will look for a
+directory inside our current directory called \filename{Documents}, and
+if it exists, our working directory will become that
+\filename{Documents} directory. If you ever want to go back to your home
+directory, the command \cmdline{cd} with no argument will switch your
+working directory back to your home directory. The command \cmdline{cd
+..} will switch your working directory up one level from where you
+currently are.
+
+\progname{pwd} stands for ``print working directory,'' and is used to
+print out the current working directory of your shell. For example, if
+you have been navigating around for a while and you are lost you can
+type in the command \cmdline{pwd} and you will see your directory
+printed out into the shell.
+
+\progname{ls} is short for the word ``list,'' and is used to list the contents
+and subdirectories within your current working directory. You can type
+the command \cmdline{ls} into your shell, and you will see all files and
+directories within your current working directory.
+
+Play around with these three commands for a few minutes in your shell,
+and see what directories and files already exist on your EECS box!
+
+\progname{man} is short for ``manual,'' and is used to access the system
+manuals. For example, you can read the manual pages for \progname{pwd}
+and \progname{ls} by running the commands \cmdline{man pwd} and
+\cmdline{man ls}. (Hit `q' to quit.) To learn about man, you can of
+course run \cmdline{man man}.
+
+Once you are done playing around, type \cmdline{cd} in to navigate back
+to your home directory. We will be making a new directory for this lab
+using the \progname{mkdir} command.
+
 \end{document}
