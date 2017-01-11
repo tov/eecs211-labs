@@ -282,4 +282,106 @@ exists, if it does you are all done! If you aren't make sure you did
 things correctly, and if you need help, raise your hand for a peer
 mentor!
 
+\section{Creating our build system}
+
+Back on our remote logins, please navigate to your home directories
+(using just the \cmdline{cd} command). Once your current working
+directory is your home directory, we are going to set up a configuration
+file so that you will be using the correct version of CMake, and that it
+will be correct each time you remotely login to your EECS account. Don't
+worry about understanding what is going on right here, it is something
+that just needs to be configured for this quarter. To do this we will be
+creating a file called \filename{.tcshrc} in your home directory (note
+the period, and ensure this name is spelled exactly
+correct).\marginnote{Remember to create this file and edit it using
+Emacs we will type in \cmdline{emacs .tcshrc}.} Once this is open, type
+the following line exactly into your file, save, and exit it:
+
+\begin{verbatim}
+  source /home/jesse/pub/etc/csh_profile
+\end{verbatim}
+
+Now, for this time only, type in \cmdline{exec tcsh} into the shell to
+reload.
+
+Each time you open up your remote connection (including right now) and
+plan on using CMake (probably every time for first few weeks of the
+class), type the \cmdline{dev} command into your shell.  This will
+ensure that everyone is on the same (and correct) developer toolset.
+
+\section{Using our build system}
+
+As briefly mentioned in class, \progname{CMake} is our build system we
+will be using for the first few weeks of the course at least.  We will
+usually be giving some sort of starting structure for the projects you
+will work on, and right now is no exception.  This structure is found in
+a \emph{tar} format (a compressed format) which will need to be
+downloaded onto your remote shells.  We have a command called wget which
+will help download things from the internet for us.
+
+\progname{wget} stands for ``web get,'' and downloads things from the web using the
+following command format:
+
+\begin{CmdLine}
+  \prompt wget \metavar{url}
+\end{CmdLine}
+
+For this example, we will be getting our file from this url:
+\url{https://www.dropbox.com/s/jwqwq457ppslxh3/lab1.tar.gz}
+So therefore, our command would be:
+
+\begin{CmdLine}
+  \prompt wget https://www.dropbox.com/s/jwqwq457ppslxh3/lab1.tar.gz
+\end{CmdLine}
+
+Once we have our tar file, we will need to turn it from a compressed
+file into a new directory, using the tar command.  Don't worry too much
+about what this is, just understand what it does.  Use the following
+command to turn this file into a directory called lab1:
+
+\begin{CmdLine}
+  \prompt tar -zxvf lab1.tar.gz
+\end{CmdLine}
+
+Now, once we have our new directory with its files, change your
+directory to \filename{lab1} using the \progname{cd} command.  Now list
+its contents using \progname{ls}, and notice that there is a
+\filename{CMakeLists.txt} file, and a \filename{main.cpp} file. The
+\filename{CMakeLists.txt} file is a CMake configuration file which you
+won't have to worry about too much, and the \filename{main.cpp} file is
+a C++ file which we have provided you.
+
+When using CMake, you will want to create a subdirectory to do your
+building and create your executable files the first time you set up each
+project.  To do this create a subdirectory called \filename{build} using
+\progname{mkdir}, and change that to be your current working directory.
+Then, the first time you set up each project, you will use the
+\progname{cmake} command like so: \cmdline{cmake ..}\marginnote{Note the
+  two periods, signifying the directory up one level, or in this case,
+the lab1 directory.} to set up the build environment.  This should spit
+out some commands into the terminal, and if everything is successful,
+your CMake project is set up!
+
+Now, you can build your main program using the command \progname{make}.
+
+The basic purpose of Make is to build your project into an executable file.
+In your build directory, each time you update your code, you can run
+
+\begin{CmdLine}
+  \prompt make \metavar{target-name}
+\end{CmdLine}
+
+\noindent to create your executable called \metavar{target-name}.  In
+this case, run \cmdline{make main} to build a program called
+\filename{main}.  In your build directory, if you list its contents, you
+will see a few more CMake files, but you should also now see a file
+called \filename{main}, which is your executable you can now run:
+
+\begin{CmdLine}
+  \prompt ./main
+\end{CmdLine}
+
+\noindent
+This should spit out a nice greeting.
+
 \end{document}
