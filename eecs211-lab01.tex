@@ -1,3 +1,4 @@
+\RequirePackage{fixltx2e}
 \documentclass{tufte-handout}
 
 \usepackage{eecs211-lab}
@@ -154,8 +155,8 @@ if we so desire. We can create hierarchies of directories to keep our
 files well organized.
 
 Create a new directory inside your home directory called
-\filename{eecs211-lab1}. Change your current working directory to
-\filename{eecs211-lab1}, and we will now practice editing and compiling
+\filename{lab1-dir}. Change your current working directory to
+\filename{lab1-dir}, and we will now practice editing and compiling
 some C++ files!
 
 The \cmdline{emacs} command in the shell will open up the Emacs text%
@@ -172,7 +173,7 @@ you can start editing that file! For example type \cmdline{emacs -nw
 my\_code.cpp} and you can start editing a file called
 \filename{my\_code.cpp} within your current working directory.
 
-Inside your \filename{eecs211-lab1} directory create and open a file
+Inside your \filename{lab1-dir} directory create and open a file
 using Emacs called \filename{animals.txt}. Note that the .cpp file
 extension is what we will be using to indicate C++ files. You will see a
 text editor pop up that does not look dissimilar to a
@@ -230,7 +231,7 @@ Navigate to a local directory where you want to keep your
 the file home!  This will look something like the following:
 
 \begin{CmdLine}
-  \prompt scp \metavar{eecs-id}@\metavar{eecs-host}:eecs211-lab1/animals.txt .
+  \prompt scp \metavar{eecs-id}@\metavar{eecs-host}:lab1-dir/animals.txt .
 \end{CmdLine}
 
 \noindent
@@ -241,7 +242,7 @@ directory on your local, home machine. For example, my \progname{scp} command
 looked something like this:
 
 \begin{CmdLine}
-  \prompt scp wsc147@batman.eecs.northwestern.edu:eecs211-lab1/animals.txt .
+  \prompt scp wsc147@batman.eecs.northwestern.edu:lab1-dir/animals.txt .
 \end{CmdLine}
 
 Look around on your local directory to make sure \filename{animals.txt}
@@ -263,7 +264,7 @@ command that came with our PuTTY install.  This command will look
 something like this:
 
 \begin{CmdLine}
-  \prompt pscp \metavar{eecs-id}@\metavar{eecs-host}:eecs211-lab1/animals.txt .
+  \prompt pscp \metavar{eecs-id}@\metavar{eecs-host}:lab1-dir/animals.txt .
 \end{CmdLine}
 
 \noindent
@@ -315,7 +316,7 @@ As briefly mentioned in class, \progname{CMake} is our build system we
 will be using for the first few weeks of the course at least.  We will
 usually be giving some sort of starting structure for the projects you
 will work on, and right now is no exception.  This structure is found in
-a \emph{tar} format (a compressed format) which will need to be
+a ZIP file which will need to be
 downloaded onto your remote shells.  We have a command called wget which
 will help download things from the internet for us.
 
@@ -326,25 +327,28 @@ following command format:
   \prompt wget \metavar{url}
 \end{CmdLine}
 
+\noindent
 For this example, we will be getting our file from this url:
-\url{https://www.dropbox.com/s/jwqwq457ppslxh3/lab1.tar.gz}
-So therefore, our command would be:
+\url{http://users.eecs.northwestern.edu/~jesse/course/eecs211/lab/eecs211-lab01.zip}.
+So therefore, our command will be:
 
 \begin{CmdLine}
-  \prompt wget https://www.dropbox.com/s/jwqwq457ppslxh3/lab1.tar.gz
+  \prompt wget http://users.eecs.northwestern.edu/~jesse/course/eecs211/lab/eecs211-lab01.zip
 \end{CmdLine}
 
-Once we have our tar file, we will need to turn it from a compressed
-file into a new directory, using the tar command.  Don't worry too much
+Once we have our ZIP file, we will need to turn it from a compressed
+file into a new directory, using the \progname{unzip} command.
+Don't worry too much
 about what this is, just understand what it does.  Use the following
-command to turn this file into a directory called lab1:
+command to turn this file into a directory called
+\filename{eecs211-lab01}:
 
 \begin{CmdLine}
-  \prompt tar -zxvf lab1.tar.gz
+  \prompt unzip eecs211-lab01.zip
 \end{CmdLine}
 
 Now, once we have our new directory with its files, change your
-directory to \filename{lab1} using the \progname{cd} command.  Now list
+directory to \filename{eecs211-lab01} using the \progname{cd} command.  Now list
 its contents using \progname{ls}, and notice that there is a
 \filename{CMakeLists.txt} file, and a \filename{hello.cpp} file. The
 \filename{CMakeLists.txt} file is a CMake configuration file which you
@@ -358,7 +362,7 @@ project.  To do this create a subdirectory called \filename{build} using
 Then, the first time you set up each project, you will use the
 \progname{cmake} command like so: \cmdline{cmake ..}\marginnote{Note the
   two periods, signifying the directory up one level, or in this case,
-the lab1 directory.} to set up the build environment.  This should spit
+the \filename{eecs211-lab01} directory.} to set up the build environment.  This should spit
 out some commands into the terminal, and if everything is successful,
 your CMake project is set up!
 
@@ -389,11 +393,12 @@ This should spit out a nice greeting.
 So, we gave you a basic function and you were able to run it, but how do
 you change the code?
 
-Navigate back up to your \filename{lab1} directory using cd (\cmdline{cd
-..}).  Now open up the \filename{hello.cpp} file using Emacs, and edit it
-so it now says ``Aloha 211 student!'' instead of ``Hello 211 student!.''
-Make sure to save and exit Emacs.\marginnote{Remember \keycombo{C-x C-s}
-to save and \keycombo{C-x C-c} to exit.}
+Navigate back up to your \filename{eecs211-lab01} directory using cd
+(\cmdline{cd ..}).  Now open up the \filename{hello.cpp} file using
+Emacs, and edit it so it now says ``Aloha 211 student!'' instead of
+``Hello 211 student!.'' Make sure to save and exit
+Emacs.\marginnote{Remember \keycombo{C-x C-s} to save and \keycombo{C-x
+C-c} to exit.}
 
 Go back to our build directory using cd.  Try running \cmdline{./hello}
 again. Did anything change?
@@ -428,7 +433,7 @@ if you want any more challenges!
 \begin{description}
 
   \item[Lab 1 Project]
-\url{https://www.dropbox.com/s/jwqwq457ppslxh3/lab1.tar.gz}
+\url{http://users.eecs.northwestern.edu/~jesse/course/eecs211/lab/eecs211-lab01.zip}
 
 \item[EECS Lab names]
 \url{http://www.mccormick.northwestern.edu/eecs/documents/current-students/student-lab-hostnames.pdf}

@@ -1,13 +1,14 @@
 \ProvidesPackage{eecs211-lab}[2017/1/11 EECS 211 lab handouts]
 
 \RequirePackage{fancyvrb}
-\RequirePackage{xcolor}
-\RequirePackage{hyperref}
 \RequirePackage{microtype}
+\RequirePackage{url}
+
+\urlstyle{sf}
 
 \newcommand\progname[1]{\emph{#1}}
-\newcommand\hostname[1]{\textit{#1}}
-\newcommand\filename[1]{\emph{#1}}
+\newcommand\hostname[1]{\emph{#1}}
+\newcommand\filename[1]{\textsf{#1}}
 \newcommand\prompt{{\normalfont\ttfamily\itshape\$}}
 \newcommand\metavar[1]{{\normalfont\itshape[#1]}}
 \newcommand\cmdline[1]{\prompt{\normalfont\ttfamily~#1}}
