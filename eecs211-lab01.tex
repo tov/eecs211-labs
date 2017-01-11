@@ -1,8 +1,6 @@
 \documentclass{tufte-handout}
 
-\usepackage{xcolor}
-\usepackage{hyperref}
-\usepackage{microtype}
+\usepackage{eecs211-lab}
 
 \title{EECS 211 Lab 1}
 \author{Navigating the Unix Shell}
@@ -15,8 +13,26 @@
 Today we are going over the basics of how to log into a remote computer,
 use shell commands to create and edit files, and compile and run C++
 code. The Northwestern EECS Machines run a Unix shell called
-\emph{tcsh}.\marginnote{Using \emph{tcsh} is very similar to using
-\emph{bash}, the default shell that Macs use for Terminal.app.}
+\progname{tcsh}.\marginnote{Using \progname{tcsh} is very similar to using
+\progname{bash}, the default shell that Macs use for Terminal.app.}
+
+The shell works as a textual conversation. It presents a prompt, like
+\verb![wsc147@batman eecs211]$!. (The default EECS prompt shows the
+username, the hostname, and the current working directory.) You type a
+command and press enter. The shell executes the command and then prints
+another prompt, waiting for further commands. For example, to list the
+files in the current directory, you will run the \progname{ls} command
+by typing it at the prompt:
+
+\begin{CmdLine}
+  \prompt ls
+\end{CmdLine}
+
+\marginnote[-\baselineskip]{Don't type the \prompt. That stands for your
+shell prompt.}
+
+\noindent
+Before you can do that, though, we have to get you logged in.
 
 \section{Logging in}
 
@@ -48,9 +64,9 @@ After you install PuTTY, open it up. You'll need to enter a hostname to
 login to. The link on the right will take you to a list of student lab
 hostnames\marginnote{\url{http://www.mccormick.northwestern.edu/eecs/documents/current-students/student-lab-hostnames.pdf}}
 (such as 
-\textit{tlab-03.eecs.northwestern.edu}
+\hostname{tlab-03.eecs.northwestern.edu}
 or
-\textit{batman.eecs.northwestern.edu}). Ensure SSH is selected, then
+\hostname{batman.eecs.northwestern.edu}). Ensure SSH is selected, then
 press Open. You should get some sort of message asking whether or not
 you trust the host. Press yes. From here, login as your EECS username
 (probably the same as NetID), and your EECS password (not necessarily
@@ -62,29 +78,27 @@ this every time.)
 
 \subsection{Mac/Linux}
 
-For those of you on Mac or Linux, please open up your terminal. (Search
-for ``terminal'' in Spotlight). At the prompt (which we'll show as
-\verb|$|), you will type a single command, of the form
+For those of you on Mac or Linux, everything you need is already
+installed. Open up your terminal\marginnote{Mac users: search
+for ``terminal'' in Spotlight} and at the prompt
+type a single command of the form
 
-\begin{verbatim}
-  $ ssh [eecs-id]@[eecs-host].eecs.northwestern.edu
-\end{verbatim}
-\marginnote[-\baselineskip]{Don't type the \$.}
+\begin{CmdLine}
+  \prompt ssh \metavar{eecs-id}@\metavar{eecs-host}.eecs.northwestern.edu
+\end{CmdLine}
+\marginnote[-\baselineskip]{Don't type the \prompt.}
 
-\noindent where [eecs-id] is your EECS username (probably your netID)
-and [eecs-host] is replaced by one of the EECS hostnames from the list
+\noindent where \metavar{eecs-id} is your EECS username (probably your NetID)
+and \metavar{eecs-host} is replaced by one of the EECS hostnames from the list
 of student lab hostnames%
 \marginnote{\url{http://www.mccormick.northwestern.edu/eecs/documents/current-students/student-lab-hostnames.pdf}}
-(such as \textit{tlab-03.eecs.northwestern.edu} or
-\textit{batman.eecs.northwestern.edu}).
-
-  % (For me the command was \verb!$ ssh wsc147@batman.eecs.northwestern.edu!.)
+(such as \hostname{tlab-03.eecs.northwestern.edu} or
+\hostname{batman.eecs.northwestern.edu}).
 
 You should get a message saying that the authenticity of the host
 can't be established, and you should be asked if you want to continue
 connecting.  Type ``yes'' as prompted and press Enter. Now type in your
 EECS account password (not necessarily your netID password), press
-Enter again, and you should be logged in remotely! (Note that you can
-configure SSH so that you don't have to do all of this every time.)
+Enter again, and you should be logged in remotely!
 
 \end{document}

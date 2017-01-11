@@ -11,7 +11,7 @@ Publish: $(PDFS) $(ZIPS)
 
 # The tufte-handout class we use works with pdflatex, but not
 # xelatex/lualatex.
-%.pdf: %.tex
+%.pdf: %.tex eecs211-lab.sty
 	pdflatex -interaction=nonstopmode $<
 
 clean:
