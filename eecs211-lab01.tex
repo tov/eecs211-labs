@@ -111,7 +111,7 @@ this exercise in our shell: \progname{cd}, \progname{ls}, and
 current directory we are looking at in our shell (our working
 directory). You can think of a directory as a folder from your regular
 interactions with your computer. For example the command \cmdline{cd
-Documents} \marginpar{As usual, don't type the \prompt.} will look for a
+Documents} \marginnote{As usual, don't type the \prompt.} will look for a
 directory inside our current directory called \filename{Documents}, and
 if it exists, our working directory will become that
 \filename{Documents} directory. If you ever want to go back to your home
@@ -137,11 +137,149 @@ and see what directories and files already exist on your EECS box!
 \progname{man} is short for ``manual,'' and is used to access the system
 manuals. For example, you can read the manual pages for \progname{pwd}
 and \progname{ls} by running the commands \cmdline{man pwd} and
-\cmdline{man ls}. (Hit `q' to quit.) To learn about man, you can of
-course run \cmdline{man man}.
+\cmdline{man ls}.\marginnote{Hit \keycombo{q} to quit.} To learn about
+man, you can of course run \cmdline{man man}.
 
 Once you are done playing around, type \cmdline{cd} in to navigate back
 to your home directory. We will be making a new directory for this lab
 using the \progname{mkdir} command.
+
+\section{Creating new content}
+
+\progname{mkdir} stands for make directory, and is used to create a new
+directory within our current working directory. For example,
+\cmdline{mkdir fun-project} will create a new directory inside our
+current one called \filename{fun-project} that we can \progname{cd} into
+if we so desire. We can create hierarchies of directories to keep our
+files well organized.
+
+Create a new directory inside your home directory called
+\filename{eecs211-lab1}. Change your current working directory to
+\filename{eecs211-lab1}, and we will now practice editing and compiling
+some C++ files!
+
+The \cmdline{emacs} command in the shell will open up the Emacs text%
+\marginnote{Text editor preferences can be a fairly contentious issue
+among software engineers, and if you already have experience with one
+of Vim or Emacs, feel free to use whichever you already have
+experience with instead of Emacs. However, for the purpose of this
+class, we will be teaching using Emacs. Emacs can also seem scary at
+first, but after you learn a few simple commands, it will quickly
+start making sense. } editor. (On Mac/Linux, you will probably want to
+use \cmdline{emacs -nw} to avoid starting the X Window System..) Pass in
+a file that you want to edit (even if it hasn't been created yet), and
+you can start editing that file! For example type \cmdline{emacs -nw
+my\_code.cpp} and you can start editing a file called
+\filename{my\_code.cpp} within your current working directory.
+
+Inside your \filename{eecs211-lab1} directory create and open a file
+using Emacs called \filename{animals.txt}. Note that the .cpp file
+extension is what we will be using to indicate C++ files. You will see a
+text editor pop up that does not look dissimilar to a
+\progname{Notepad.exe} or \progname{TextEdit.app} editor from your
+Windows or Mac. However, you will notice that clicking a location using
+your cursor will not move your cursor to where you click :(
+
+Inside this text editor, type in a list of your 3 favorite animals. Once
+you have typed in your list, you are going to want to save your file so
+you can use it later. On Emacs, saving is slightly different than other
+programs. Instead of using \keycombo{Command-} or \keycombo{Ctrl-s}, you
+are going to use \keycombo{Ctrl-x} followed by
+\keycombo{Ctrl-s}.\marginnote{If you are curious about more Emacs
+  commands, there is a nice basic list here:
+\url{http://www.cs.cornell.edu/courses/cs312/2003sp/handouts/emacs.htm}.
+You can also run an Emacs tutorial inside Emacs. Press \keycombo{C-h
+t} -- that is, \keycombo{Ctrl-h} followed by \keycombo{t} (no
+\keycombo{Ctrl}).}
+(In Emacs, this is spelled ``\keycombo{C-x C-s}.'') This will save your
+file to your current working directory. Now, we want to close our Emacs
+window and get back to our Unix shell. In order to close our Emacs
+window, we will type \keycombo{C-x C-c} (that is, \keycombo{Ctrl-x}
+followed by \keycombo{Ctrl-c}).
+
+We can ensure that our file was properly created by using the
+\progname{cat} command in the shell. \progname{cat} is short for
+``catenate,'' and prints out contents of a given file.  \cmdline{cat
+\metavar{filename}} will print the contents of the file to the shell. If
+you run \cmdline{cat animals.txt} you should see the file you just
+created on your shell.
+
+\section{Sending files back home (ET phone home)}
+
+Now, if everything worked, we are going to want to bring our list of our
+favorite animals back to our normal computers so we can access it
+easier, as it is something that is very essential in our lives.  We can
+do this using a program called \progname{scp}.
+
+\progname{scp} stands for secure copy protocol, and securely copies
+files to and from a remote box.  For example the command \cmdline{scp
+\metavar{filename} \metavar{remote-directory}} will securely copy
+\metavar{filename} to the remote directory. This also works in the
+reverse direction.  And since we are trying to get our list of our
+favorite animals back to our computer, we will be using that reverse
+direction (\cmdline{scp \metavar{remote-file} \metavar{local-directory}}).
+
+\subsection{Mac/Linux}
+
+On Mac, open up a second terminal window (This can be done easily by
+pressing \keycombo{Cmd-N} if you are currently on a terminal window).
+
+Navigate to a local directory where you want to keep your
+\filename{animals.txt} file using \progname{cd}, and/or create one using
+\progname{mkdir}.  Now, use the \progname{scp} command to bring
+the file home!  This will look something like the following:
+
+\begin{CmdLine}
+  \prompt scp \metavar{eecs-id}@\metavar{eecs-host}:eecs211-lab1/animals.txt .
+\end{CmdLine}
+
+\noindent
+Note the second argument is a single period, which signifies the current
+working directory to be the destination address, so \progname{scp} will copy the
+\filename{animals.txt} from the remote machine to the current working
+directory on your local, home machine. For example, my \progname{scp} command
+looked something like this:
+
+\begin{CmdLine}
+  \prompt scp wsc147@batman.eecs.northwestern.edu:eecs211-lab1/animals.txt .
+\end{CmdLine}
+
+Look around on your local directory to make sure \filename{animals.txt}
+exists; if it does you are all done!  If you aren't make sure you did
+things correctly, and if you need help, raise your hand for a peer
+mentor!
+
+\subsection{Windows}
+
+Using the search menu, search for the command prompt on your Windows
+machine.  Once you have this open, you can navigate to a directory you
+want to copy your \filename{animals.txt} to using the same \progname{cd}
+command as before, but instead of using \progname{ls}, on Windows you
+can use \progname{dir} instead. Once you have navigated to a directory
+you are comfortable with (such as the \filename{Desktop} or
+\filename{Documents} or what have you), we will be using the
+\progname{pscp}
+command that came with our PuTTY install.  This command will look
+something like this:
+
+\begin{CmdLine}
+  \prompt pscp \metavar{eecs-id}@\metavar{eecs-host}:eecs211-lab1/animals.txt .
+\end{CmdLine}
+
+\noindent
+Note the second argument is a single period, which signifies the current
+working directory to be the destination address, so \progname{scp} will copy the
+\filename{animals.txt} from the remote machine to the current working
+directory on your local, home machine. For example, my \progname{scp} command
+looked something like this:
+
+\begin{CmdLine}
+  \prompt pscp wsc147@batman.eecs.northwestern.edu:lab-dir/animals.txt .
+\end{CmdLine}
+
+Look around on your local directory to make sure \filename{animals.txt}
+exists, if it does you are all done! If you aren't make sure you did
+things correctly, and if you need help, raise your hand for a peer
+mentor!
 
 \end{document}
