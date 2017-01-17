@@ -124,7 +124,7 @@ Navigate back to your build directory, make and run lab2, and see if your new an
 \subsection{Creating your own function}
 So far, we've been filling in skeleton functions that were provided for you. Now it's time to write your own function from scratch.  Remember how annoying it was to type out the \functionname{cout} lines each time you wanted to print out your animal?  We're going to abstract that out and replace it with a simple call to a function! 
 
-Write a function called printAnimal that uses \functionname{cout} to print out your animal's three attributes.  Note that this should take in one argument(of the same type as your animal struct).  Think about type your function should be!  \marginnote{Note that the \varname{void} return type signifies that nothing is returned}
+Write a function called printAnimal that uses \functionname{cout} to print out your animal's three attributes.  Note that this should take in one argument(of the same type as your animal struct).  Think about what type your function should be!  \marginnote{Note that the \varname{void} return type signifies that nothing is returned}
 
 Once you wrote your function, go to your \functionname{main} function and replace your print statement with a call to \functionname{printAnimal()}.  \marginnote{remember to pass your animal instance to the function}
 
@@ -138,12 +138,12 @@ Now that we have gotten the hang of structs and functions, let's practice our co
         // run if <test-expression> evaluates to true
         }
     else{
-        // run if <test-expressino> evaluates to false
+        // run if <test-expression> evaluates to false
         // note that you don't necessarily need an else case
         }
 \end{verbatim}
 
-Using an if and else statement, check your animals age and add to your \functionname{printAnimal} function a line to print out "This animal is old!" if the animal is at least 10 and print out "This animal is not young" if the animal is younger than 10.   
+Using an if and else statement, check your animals age and add to your \functionname{printAnimal} function a line to print out "This animal is old!" if the animal is at least 10 and print out "This animal is not that old" if the animal is younger than 10.   
 
 Go back to the build directory, make and run lab2, and see if this feature is working!  
 
