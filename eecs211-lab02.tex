@@ -14,7 +14,7 @@
 Today we are going to practice navigating in the shell and writing basic C++ code. 
 
 \section{Getting Started}
-Let's get started by logging into a remote Northwestern server. We did this last week, but if you need help remembering the steps, they are included below. \marginnote{The list of remote Northwestern servers can be found here: \url{http://www.mccormick.northwestern.edu/eecs/documents/current-students/student-lab-hostnames.pdf}}
+Let's get started by logging into a remote Northwestern server. We did this last week, but if you need help remembering the steps, they are included below.\marginnote{The list of remote Northwestern servers can be found here: \url{http://www.mccormick.northwestern.edu/eecs/documents/current-students/student-lab-hostnames.pdf}}
 
 \subsection{Windows}
 Open PuTTY. You'll need to enter a hostname to login to. The link on the right will take you to a list of student lab hostnames (such as  \hostname{tlab-03.eecs.northwestern.edu} or \hostname{batman.eecs.northwestern.edu}).  Ensure SSH is selected, then press Open. When prompted, enter your EECS username and password (not necessarily the same as your NetID password) and you're good to go.
@@ -32,7 +32,7 @@ When prompted, type in your EECS username and password (not necessarily your Net
 Enter again, and you should be logged in remotely!
 
 \section{Getting the code}
-Recall our basic Unix commands: \progname{cd}, \progname{ls}, \progname{mkdir}, and \progname{pwd}. What do they stand for and what do they do? Ask your TA if you don't remember. \marginnote{Or ask Google.} 
+Recall our basic Unix commands: \progname{cd}, \progname{ls}, \progname{mkdir}, and \progname{pwd}. What do they stand for and what do they do? Ask your TA if you don't remember.\marginnote{Or ask Google.} 
 Use the following \progname{wget} command to download the code into your directory of choice. It's easiest to just use your home directory, which is where you start out when you first log in to the server.
 
 \begin{CmdLine}
@@ -48,7 +48,10 @@ Once we have our ZIP file, we will need to turn it in file directory using the \
 You should now have a directory called \filename{eecs211-lab02}.
 
 \subsection{Setting up the build system}
-Change your directory to \filename{eecs211-lab02}. Make a new subdirectory called \filename{build} and navigate into it. Then, the first time you set up the project, use the command \progname{cmake} in order to setup the CMake build system.
+Change your directory to \filename{eecs211-lab02}. Make a new
+subdirectory called \filename{build} and navigate into it. Then, the
+first time you set up the project, use the command \progname{cmake} in
+order to setup the CMake build system.%
 \marginnote{Note the two periods, which tell \progname{cmake} to run on the parent of the current working directory.}
 \begin{CmdLine}
   \prompt cmake ..
@@ -62,11 +65,11 @@ Navigate to your \filename{eecs211-lab02} directory, and open up \filename{lab2.
 Notice that there is already some skeletons of functions and some code in \functionname{main()} here.
 
 \subsection{Iteration}
-First, find the function called \functionname{sumNumbers}.  \marginnote{Notice that \functionname{sumNumbers} is going to return an int.}We are going to use this function to sum up all of the numbers from 1 to \varname{num}.  If you remember from class, we have a few ways of iterating through numbers, most notably \functionname{for} and \functionname{while}.  We will be using both, but first we will be using \functionname{while}.
+First, find the function called \functionname{sumNumbers}.\marginnote{Notice that \functionname{sumNumbers} is going to return an int.}We are going to use this function to sum up all of the numbers from 1 to \varname{num}.  If you remember from class, we have a few ways of iterating through numbers, most notably \functionname{for} and \functionname{while}.  We will be using both, but first we will be using \functionname{while}.
 
 \subsection{While loops}
-As we learned in class, a  \functionname{while} loop has the following syntax:
-\marginnote{Note that in while loops we usually will use a boolean expression for <expr> (an expression which returns True or False)}
+As we learned in class, a  \functionname{while} loop has the following
+syntax:\marginnote{Note that in while loops we usually will use a boolean expression for <expr> (an expression which returns True or False)}
 
 \begin{Code}
     while (<expr>) {
@@ -76,11 +79,10 @@ As we learned in class, a  \functionname{while} loop has the following syntax:
 \end{Code}
 
 
-Use a while loop inside our \functionname{sumNumbers} in order to add the numbers from 1 to \varname{num} together.  
-\marginnote{Remember that we have the \functionname{++} and \functionname{+=} functions to help us.}
+Use a while loop inside our \functionname{sumNumbers} in order to add the numbers from 1 to \varname{num} together.\marginnote{Remember that we have the \functionname{++} and \functionname{+=} functions to help us.}
 Make sure to use a \functionname{return} statement to return the sum that we aggregated!
 
-Once you think that your function works as intended, save and exit emacs \marginnote{\keycombo{C-x C-s} to save and \keycombo{C-x C-c} to exit}, then navigate to the build directory. If you remember from last week, we used the \functionname{make} command in order to turn our C++ file into machine code.  Making sure you are in the build directory, type in 
+Once you think that your function works as intended, save and exit emacs\marginnote{\keycombo{C-x C-s} to save and \keycombo{C-x C-c} to exit}, then navigate to the build directory. If you remember from last week, we used the \functionname{make} command in order to turn our C++ file into machine code.  Making sure you are in the build directory, type in 
 \begin{CmdLine}
   \prompt make lab2
 \end{CmdLine}
@@ -88,7 +90,7 @@ If everything works, if we list our files, we should now see a file called \file
 \begin{CmdLine}
   \prompt ./lab2
 \end{CmdLine}
-See if your value looks right!  If it doesn't, don't worry, Rome wasn't built in a day.  Go back to your lab2 directory and try and see what went wrong.  \marginnote{Error messages may look scary, but in reality, they're there to help you!  Not intimidate you!}  Play around with the value of \varname{numBound} and see how it affects the result.
+See if your value looks right!  If it doesn't, don't worry, Rome wasn't built in a day.  Go back to your lab2 directory and try and see what went wrong.\marginnote{Error messages may look scary, but in reality, they're there to help you!  Not intimidate you!}  Play around with the value of \varname{numBound} and see how it affects the result.
 
 \subsection{For loops}
 
@@ -111,10 +113,10 @@ Once you are done, again, navigate into your build directory, then make and run 
 \subsection{Structs}
 
 
-Structs are an important tool in C++ for grouping data together.  In your \filename{lab2.cpp} you will notice that we created an Apple structure for you.  \marginnote{How 'bout 'dem apples?}  This is so that we can organize attributes of Apples together in a convenient way.  If you look inside our Apple struct, we decided that we will want to know the weight, the variety, and the color of our apples.  In our \functionname{main()}, we created an example of a Red Delicious Apple.  Now, create your own type of apple (you'll need to define it as a type Apple), and give it those three attributes.  Add in a print statement (we gave you an example one) to print out your new Apple.  Navigate back to your build directory, and then make and run your lab2 file!  Hopefully everything works as expected!  If not, don't fret or get upset, go back and make changes!
+Structs are an important tool in C++ for grouping data together.  In your \filename{lab2.cpp} you will notice that we created an Apple structure for you.\marginnote{How 'bout 'dem apples?}  This is so that we can organize attributes of Apples together in a convenient way.  If you look inside our Apple struct, we decided that we will want to know the weight, the variety, and the color of our apples.  In our \functionname{main()}, we created an example of a Red Delicious Apple.  Now, create your own type of apple (you'll need to define it as a type Apple), and give it those three attributes.  Add in a print statement (we gave you an example one) to print out your new Apple.  Navigate back to your build directory, and then make and run your lab2 file!  Hopefully everything works as expected!  If not, don't fret or get upset, go back and make changes!
 
 
-Now that we know all about Apples, let's create our own structure.  Define a structure of your favorite animal, and give your animal three attributes, with one of them being age. Don't forget to give your attributes types. You can create a new struct that looks very similar to the Apple we created.  \marginnote{Don't forget the semi-colon after the closing brace.}
+Now that we know all about Apples, let's create our own structure.  Define a structure of your favorite animal, and give your animal three attributes, with one of them being age. Don't forget to give your attributes types. You can create a new struct that looks very similar to the Apple we created.\marginnote{Don't forget the semi-colon after the closing brace.}
 
 Once you have created your animal, go into \functionname{main()} and create an instance of your animal, assign it those three attributes, and then create a print statement to print out information about your animal.  These print statements are getting annoying; we'll tackle that soon.
 
@@ -125,9 +127,9 @@ Navigate back to your build directory, make and run lab2, and see if your new an
 \subsection{Creating your own function}
 So far, we've been filling in skeleton functions that were provided for you. Now it's time to write your own function from scratch.  Remember how annoying it was to type out the \functionname{cout} lines each time you wanted to print out your animal?  We're going to abstract that out and replace it with a simple call to a function! 
 
-Write a function called printAnimal that uses \functionname{cout} to print out your animal's three attributes.  Note that this should take in one argument(of the same type as your animal struct).  Think about what type your function should be!  \marginnote{Note that the \varname{void} return type signifies that nothing is returned}
+Write a function called printAnimal that uses \functionname{cout} to print out your animal's three attributes.  Note that this should take in one argument(of the same type as your animal struct).  Think about what type your function should be!\marginnote{Note that the \varname{void} return type signifies that nothing is returned}
 
-Once you wrote your function, go to your \functionname{main} function and replace your print statement with a call to \functionname{printAnimal()}.  \marginnote{remember to pass your animal instance to the function}
+Once you wrote your function, go to your \functionname{main} function and replace your print statement with a call to \functionname{printAnimal()}.\marginnote{remember to pass your animal instance to the function}
 
 Go back to your build directory, make and run lab2, and see if everything still works!  
 
