@@ -67,12 +67,13 @@ First, find the function called \functionname{sumNumbers}.  \marginnote{Notice t
 \subsection{While loops}
 As we learned in class, a  \functionname{while} loop has the following syntax:
 \marginnote{Note that in while loops we usually will use a boolean expression for <expr> (an expression which returns True or False)}
-\begin{verbatim}
-    while(<expr>){
+
+\begin{Code}
+    while (<expr>) {
         // Looping through code here
         // Until <expr> is false
-        }
-\end{verbatim}
+    }
+\end{Code}
 
 
 Use a while loop inside our \functionname{sumNumbers} in order to add the numbers from 1 to \varname{num} together.  
@@ -94,13 +95,13 @@ See if your value looks right!  If it doesn't, don't worry, Rome wasn't built in
 
 Once we have everything working with our \functionname{while} loop, let's work on using a \functionname{for} loop.  To help you remember the syntax, here is an example of a for loop to print out the values from 1 to 5
 
-\begin{verbatim}
-    for(int i = 1; i <= 5; ++i){
+\begin{Code}
+    for (int i = 1; i <= 5; ++i) {
         // Note that the code inside the curly braces is the code
         // That is ran each iteration of the for loop
-        cout<<i<<'\n';
+        cout << i << '\n';
     }
-\end{verbatim}
+\end{Code}
 
 Go back to our \functionname{sumNumbers} function, and try to replace your \functionname{while} loop expression with a \functionname{for} loop to accomplish the same task.
 
@@ -133,17 +134,19 @@ Go back to your build directory, make and run lab2, and see if everything still 
 \subsection{Control statements}
 
 Now that we have gotten the hang of structs and functions, let's practice our control statements.  Go back to our \functionname{printAnimal} function.  Remember from hw1 and class that if statements have the basic following syntax:
-\begin{verbatim}
-    if(<test-expression>){
+\begin{Code}
+    if (<test-expression>) {
         // run if <test-expression> evaluates to true
-        }
-    else{
+    } else {
         // run if <test-expression> evaluates to false
         // note that you don't necessarily need an else case
-        }
-\end{verbatim}
+    }
+\end{Code}
 
-Using an if and else statement, check your animals age and add to your \functionname{printAnimal} function a line to print out "This animal is old!" if the animal is at least 10 and print out "This animal is not that old" if the animal is younger than 10.   
+Using an if and else statement, check your animals age and add to your
+\functionname{printAnimal} function a line to print out ``This animal is
+old!'' if the animal is at least 10 and print out ``This animal is not
+that old'' if the animal is younger than 10.   
 
 Go back to the build directory, make and run lab2, and see if this feature is working!  
 
