@@ -1,0 +1,69 @@
+\RequirePackage{fixltx2e}
+\documentclass{tufte-handout}
+
+\usepackage{eecs211-lab}
+
+\title{EECS 211 Lab 3}
+\author{Using CLion, and more practice with Vectors and Loops}
+\date{Winter 2017}
+
+\begin{document}
+
+\maketitle
+
+Today we will be installing an IDE (Integrated Development Environment) called CLion to make development of our C++ programs a little bit easier.  In addition, we will be practicing our programming tools we've learned over the last few weeks!
+
+\section{Installing CLion}
+The first thing we will be doing today will be installing CLion in order to make writing C++ programs easier and more user friendly.  First, go to JetBrains's \marginnote{JetBrains is the developer of CLion and lots of other developer tools}website and apply for a student account: \newline
+
+www.jetbrains.com/shop/eform/students \newline
+
+Once you submit your information, you will be receiving a confirmation email.  Click confirm, then you will immediately receive a second email with a link to complete your JetBrains registration.
+
+Next either click on CLion from your dashboard, or go to this link: https://www.jetbrains.com/clion/ .  Press Download, then install CLion through their steps and login to your JetBrains account in order to activate your CLion editor. The default installation settings should work fine.  \marginnote{Don't worry about Plugins.} 
+
+
+
+\section{Using our first CLion Project}
+Once you have CLion installed, download the zip file from the course site:
+
+http://users.eecs.northwestern.edu/~jesse/course/eecs211/lab/eecs211-lab03.zip
+
+Once you have downloaded the zip file onto your laptop, extract the zip file into its own folder, keeping track of which folder it's in (by default the Downloads folder).  Next, open up CLion and Click on File --> Open Project, and click on the Lab 3 project that you just unzipped. 
+
+
+
+
+Once you open the project, test out the output from the program already loaded on your screen.  In order to do this, look into the top right corner of your CLion Window.  Press the button that has a down arrow with 1s and 0s.  This is the Build button.  This will essentially set up our CMake environment we previously would have to build on the command line.  \marginnote{One big draw of IDE's are their ability to abstract out the command line}   Then, press the arrow that looks like a play button just to the right of that, called the Run button.  The first time you press it, in the "Executable" line, click the dropdown menu down to "Lab3".  Next hit Apply, then you can hit Run.  Notice in the subwindow on the bottom of your CLion window how you now can see our nice message in the output!  
+
+
+This is similar to how in DrRacket you would have a top window for writing your code, and a bottom window for seeing the results of your code running.
+\section{Continuing with Vectors and structs}
+If you remember from class, a Vector is a way of storing a group of items together of the same type.  The basic syntax of a vector for a declaration is:
+\begin{Code}
+vector<type> varName;
+\end{Code}
+
+You can initialize the vector with a set of values using the following notation:
+\begin{Code}
+vector<type> varName = {var1, var2, varN};
+\end{Code}
+
+Notice in the lab that we created a struct called \varname{Dog} which has a few attributes.  In this lab, you will be the owner of a Dog Sanctuary, where you want to make sure that all the dogs are happy and getting along well together.  In your main function, we created a few instances of Dogs and gave them names, ages, and happiness ratings.  \marginnote{Note that the happiness rating is at the discretion of your assistant and may be wrong, but they're doing their best so cut them some slack!}  We also created a vector of the type Dog called \varname{dogs}, initialized to contain all of the Dogs that we created.  Feel free to add one or two of your own dogs!  Don't forget to add them to the vector!
+
+The first thing that you will be doing is trying to find the youngest dog at your sanctuary, so that you can warn guests to the sanctuary about them teething on the guests' fingers.  \marginnote{That could stop donations from coming in to help out all the dogs!}  Go to the function skeleton we gave you for \functionname{youngestDog}, and try and write a function that will return the Dog who is the youngest. Keep in mind that you can use a \functionname{foreach} loop \marginnote{Remember that you should be returning the youngest Dog, not the youngest Dog's age.}
+
+Call the function you just wrote in the main function, and print out the name of the youngest dog from your function's result using \functionname{cout}.  
+
+This time you just have to press the run button, and it will automatically build your program for you and run it!
+
+Now, once you have written \functionname{youngestDog}
+, write a similar function called \functionname{happiestDog} where you have to find the happiest Dog in the vector, and return that dog.
+
+Again, go back to the main function and call your new function on the \varname{dogs} vector, and print out the name of the happiest dog.  
+
+Once you have found your happiest and youngest dogs, let's create a function that can help you find 
+
+
+
+\end{document}
