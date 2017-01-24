@@ -26,7 +26,7 @@ of other developer tools} website and apply for a student account:
 \noindent
 Once you submit your information, you will be receiving a confirmation
 email.  Click confirm, then you will immediately receive a second email
-with a link to complete your JetBrains registration.
+with a link to complete your JetBrains registration. For the installation of CLion, we will have slightly different steps for Windows and Mac laptops:
 
 \subsection{Windows}
 
@@ -136,20 +136,28 @@ Once you have this, try it out by calling it in your main function to ensure tha
 
 \section{Dealing with Errors}
 
-Now, let's consider the case where the dog name inputted to the \functionname{findOwner} function is not in the \varname{dogs} vector.  In this case, let's try and print an error to the output, so we know that we have a weird solution.  We can use \functionname{cerr} to print out this to the output window for our special error output.  
+Now, let's consider the case where the dog name inputted to the \functionname{findOwner} function is not in the \varname{dogs} vector.%
+\marginnote{Hopefully the dog sanctuary can find the dog soon though!} In this case, let's try and print an error to the output, so we know that we have a weird solution.  We can use \functionname{cerr} to print out this to the output window for our special error output.  
 
 Call \functionname{findOwner} with arguments which should create this error to occur.  
 Notice the color of the text in your output window for the error!  
 
 Now, remember from class that while \functionname{cerr} will output an error in your output window, it will not cause the program to fail/exit.  
 Now, let's assume that if you can't find the dog name in the \varname{dogs} vector that you want to stop running the program.  
-We can \varname{throw} a \varname{runtime_error} using the following syntax: 
+We can \varname{throw} a \varname{runtime error} using the following syntax: 
 \begin{Code}
 throw runtime_error("Name of the error you want to produce");
 \end{Code}
 
 Now, notice when you run the program again, in the same call you made before to \functionname{findOwner}, when you hit the error, instead of silently outputting an error, your code will stop running entirely.  
 You can test this out by adding a \functionname{cout} line after your call to \functionname{findOwner}, and see that it never runs! 
+
+\section{Testing}
+
+
+For your homework, you will be writing your own tests to test the code.  We have provided you with tests already for this lab, but it is important that you understand how to run unit tests using CLion, so we will go over that now.
+
+
 Please feel free to post on Piazza with any questions, or ask your TA!  
 
 
