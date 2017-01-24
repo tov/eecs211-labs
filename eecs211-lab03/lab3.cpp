@@ -1,29 +1,9 @@
+#include "Dog.h"
+
 #include <iostream>
 #include <vector>
-#include <cstdlib>
-#include "lab3.h"
 
 using namespace std;
-
-
-
-Dog youngestDog(vector<Dog> dogs)
-{
-    // Write your code here
-    return dogs[0];
-}
-
-Dog happiestDog(vector<Dog> dogs)
-{
-    // Write your code here
-    return dogs[0];
-}
-
-string findOwner(vector<Dog> dogs, string name)
-{
-    // Write your code here
-    return dogs[0].owner;
-}
 
 int main()
 {
@@ -49,6 +29,4 @@ int main()
         }
      */
 }
-
-    
 

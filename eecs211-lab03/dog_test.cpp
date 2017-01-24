@@ -1,7 +1,7 @@
 #include <vector>
 #include <exception>
 #include <UnitTest++/UnitTest++.h>
-#include "lab3.h"
+#include "Dog.h"
 using namespace std;
 
 TEST(HAPPIESTDOG)
