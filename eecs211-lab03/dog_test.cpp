@@ -17,7 +17,7 @@ TEST(HAPPIESTDOG)
     // Vector creation:
     vector<Dog> dogs = {roger, angus, marie, samuel, pierre, rebecca, forrester};
 
-    CHECK_EQUAL(happiestDog(dogs).name, "Samuel");
+    CHECK_EQUAL("Samuel", happiestDog(dogs).name);
 }
 
 TEST(YOUNGESTDOG)
@@ -33,7 +33,7 @@ TEST(YOUNGESTDOG)
     // Vector creation:
     vector<Dog> dogs = {roger, angus, marie, samuel, pierre, rebecca, forrester};
 
-    CHECK_EQUAL(youngestDog(dogs).age, 0.5);
+    CHECK_EQUAL(0.5, youngestDog(dogs).age);
 }
 
 TEST(FINDOWNER)
@@ -48,7 +48,7 @@ TEST(FINDOWNER)
 
     // Vector creation:
     vector<Dog> dogs = {roger, angus, marie, samuel, pierre, rebecca, forrester};
-    CHECK_EQUAL(findOwner(dogs, "Marie"), "Brendan");
+    CHECK_EQUAL("Brendan", findOwner(dogs, "Marie"));
     CHECK_THROW(findOwner(dogs, "Jesse"), runtime_error);
 }
 
