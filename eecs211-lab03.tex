@@ -73,10 +73,18 @@ Once you have this, try it out by calling it in your main function to ensure tha
 
 Now, let's consider the case where the dog name inputted to the \functionname{findOwner} function is not in the \varname{dogs} vector.  In this case, let's try and print an error to the output, so we know that we have a weird solution.  We can use \functionname{cerr} to print out this to the output window for our special error output.  
 
-Call \functionname{findOwner} with arguments which should create this error to occur.  Notice the color of the text in your output window for the error!  
+Call \functionname{findOwner} with arguments which should create this error to occur.  
+Notice the color of the text in your output window for the error!  
 
-You can also use \functionname{throw} and \functionname{catch} to help with error handling, as we did in class, and if you are feeling ambitious try and adjust your function to use throw and catch instead of just printing to the output window!  
+Now, remember from class that while \functionname{cerr} will output an error in your output window, it will not cause the program to fail/exit.  
+Now, let's assume that if you can't find the dog name in the \varname{dogs} vector that you want to stop running the program.  
+We can \varname{throw} a \varname{runtime_error} using the following syntax: 
+\begin{Code}
+throw runtime_error("Name of the error you want to produce");
+\end{Code}
 
+Now, notice when you run the program again, in the same call you made before to \functionname{findOwner}, when you hit the error, instead of silently outputting an error, your code will stop running entirely.  
+You can test this out by adding a \functionname{cout} line after your call to \functionname{findOwner}, and see that it never runs! 
 Please feel free to post on Piazza with any questions, or ask your TA!  
 
 
