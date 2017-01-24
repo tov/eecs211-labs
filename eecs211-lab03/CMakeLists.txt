@@ -7,6 +7,5 @@ add_program(lab3
             )
 
 add_test_program(lab3test
-                 lab3.cpp
                  lab3_test.cpp
                  )
