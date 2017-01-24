@@ -6,6 +6,7 @@ Publish: $(PDFS) $(ZIPS)
 	ls $^ > $@
 
 %.zip: %
+	( cd $< && git clean -dfX )
 	zip -r $@ $<
 
 # The tufte-handout class we use works with pdflatex, but not
