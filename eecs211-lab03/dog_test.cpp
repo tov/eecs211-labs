@@ -4,7 +4,7 @@
 #include "Dog.h"
 using namespace std;
 
-TEST(HAPPIESTDOG)
+TEST(HappiestDog)
 {
     Dog roger{"Roger", 5.0, 3.0, "Brendan"};
     Dog angus{"Angus", 12.0, 2.4, "Brendan"};
@@ -20,7 +20,7 @@ TEST(HAPPIESTDOG)
     CHECK_EQUAL("Samuel", happiestDog(dogs).name);
 }
 
-TEST(YOUNGESTDOG)
+TEST(YoungestDog)
 {
     Dog roger{"Roger", 5.0, 3.0, "Brendan"};
     Dog angus{"Angus", 12.0, 2.4, "Brendan"};
@@ -36,7 +36,7 @@ TEST(YOUNGESTDOG)
     CHECK_EQUAL(0.5, youngestDog(dogs).age);
 }
 
-TEST(FINDOWNER)
+TEST(FindOwner)
 {
     Dog roger{"Roger", 5.0, 3.0, "Brendan"};
     Dog angus{"Angus", 12.0, 2.4, "Brendan"};
