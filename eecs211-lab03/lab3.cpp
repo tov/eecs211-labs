@@ -35,11 +35,11 @@ int main()
     Dog marie{"Marie", 0.5, 4.0, "Brendan"};
     Dog samuel{"Samuel", 7.5, 4.5, "Brendan"};
     Dog pierre{"Pierre", 8.5, 3.5, "Matt"};
-    Dog robert{"Robert", 15, 2.7, "Matt"};
+    Dog rebecca{"Rebecca", 15, 2.7, "Matt"};
     Dog forrester{"Forrester", 6.2, 1.5, "Matt"};
 
     // Vector creation:
-    vector<Dog> dogs = {roger, angus, marie, samuel, pierre, robert, forrester};
+    vector<Dog> dogs = {roger, angus, marie, samuel, pierre, rebecca, forrester};
 
     /*
       An example for-each loop that will print out the name of each Dog in dogs:

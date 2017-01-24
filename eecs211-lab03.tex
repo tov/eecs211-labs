@@ -109,7 +109,11 @@ You can initialize the vector with a set of values using the following notation:
 vector<type> varName = {var1, var2, varN};
 \end{Code}
 
-Notice in the lab that we created a struct called \varname{Dog} which has a few attributes.  In this lab, you will be the owner of a Dog Sanctuary, where you want to make sure that all the dogs are happy and getting along well together.  In your main function, we created a few instances of Dogs and gave them names, ages, and happiness ratings.\marginnote{Note that the happiness rating is at the discretion of your assistant and may be wrong, but they're doing their best so cut them some slack!}  We also created a vector of the type Dog called \varname{dogs}, initialized to contain all of the Dogs that we created.  Feel free to create one or two of your own dogs and add them to the vector!
+Notice in the lab that we created a struct called \varname{Dog} which is located in our \filename{lab3.h} which has a few attributes.
+In this lab, you will be the owner of a Dog Sanctuary, where you want to make sure that all the dogs are happy and getting along well together.
+Back in \filename{lab3.cpp}, in your main function, we created a few instances of Dogs and gave them names, ages, and happiness ratings.\marginnote{Note that the happiness rating is at the discretion of your assistant and may be wrong, but they're doing their best so cut them some slack!}
+We also created a vector of the type Dog called \varname{dogs}, initialized to contain all of the Dogs that we created.
+Feel free to create one or two of your own dogs and add them to the vector!
 
 
 The first thing that you will be doing is trying to find the youngest dog at your sanctuary, so that you can warn guests to the sanctuary about them teething on the guests' fingers.\marginnote{That could stop donations from coming in to help out all the dogs!}  Go to the function skeleton we gave you for \functionname{youngestDog}, and try and write a function that will return the Dog who is the youngest. Keep in mind that you can use a \functionname{foreach} loop, which has the form:
@@ -157,6 +161,16 @@ You can test this out by adding a \functionname{cout} line after your call to \f
 
 For your homework, you will be writing your own tests to test the code.  We have provided you with tests already for this lab, but it is important that you understand how to run unit tests using CLion, so we will go over that now.
 
+Click on the \filename{$lab3_test.cpp$} file that we have provided in the project.  
+Notice how we have already written your tests.  For your homework, you will have to write your own!
+Now let's run the tests to see if your code passes.
+In order to do so, go to the top right corner of your CLion window, and click on the dropdown menu in between the build and run buttons.
+You'll notice that your dropdown menu currently says "lab3".
+Now, go down to lab3test and select lab3test.
+Press run, and you will see the results of the tests running!
+
+
+If you want to go back and run your main code, you can easily go back to the dropdown menu and select lab3 instead of lab3test.  
 
 Please feel free to post on Piazza with any questions, or ask your TA!  
 
