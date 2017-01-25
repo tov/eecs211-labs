@@ -122,11 +122,13 @@ dog at your sanctuary, so that you can warn guests to the sanctuary
 about them teething on the guests' fingers.\marginnote{That could stop
 donations from coming in to help out all the dogs!}  Go to the function
 skeleton we gave you for \functionname{youngestDog} in
-\filename{Dog.cpp}, and try to write a function that will return the Dog who is the youngest. Keep in mind that you can use a \functionname{foreach} loop, which has the form:
+\filename{Dog.cpp}, and try to write a function that will return the Dog
+who is the youngest. You will probably want to use a \functionname{for}
+loop, which you may recall has the form:
 \begin{Code}
-    for (Type var : vectorName) {
-        // Do stuff here with var, for example:
-        cout << var.name << '\n';
+    for (size_t i = 0; i < vectorName.size(); ++i) {
+        // Do stuff here with i, for example:
+        cout << vectorName[i] << '\n';
     }
 \end{Code}
 
