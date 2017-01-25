@@ -1,7 +1,9 @@
-#include <vector>
-#include <exception>
-#include <UnitTest++/UnitTest++.h>
 #include "Dog.h"
+
+#include <UnitTest++/UnitTest++.h>
+#include <vector>
+#include <stdexcept>
+
 using namespace std;
 
 // Helper for creating a vector of dogs to test on.
