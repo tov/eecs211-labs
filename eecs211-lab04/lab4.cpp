@@ -38,9 +38,13 @@ int main()
     cout << "The name of crazyCircus is: " << crazyCircus.name << "\n";
     cout << "The owner if crazyCircus is: " << crazyCircus.owner << "\n";
 
-    passedByReference(*crazyPtr);
-    cout << "The name of crazyCircus is: " << crazyPtr->name << "\n";
-    cout << "The owner if crazyCircus is: " << crazyPtr->owner << "\n";
+    // Note here that if we pass *crazyPtr instead, we will have the same results,
+    // crazyPtr points to crazyCircus right now!
+    cout<< "Now after passedByReference: \n";
+
+    passedByReference(crazyCircus);
+    cout << "The name of crazyCircus is: " << crazyCircus.name << "\n";
+    cout << "The owner if crazyCircus is: " << crazyCircus.owner << "\n";
     // Notice that the name and owner of the circus do not change after passedByCopy() is called.
     // But after passedByReference() is called, the name and owner have changed!
 
@@ -48,15 +52,6 @@ int main()
 
 }
 
-void passedByCopy(Circus c) {
-    c.name = "Cirque du Soleil";
-    c.owner = "Guy Laliberté";
-}
-
-void passedByReference(Circus& c) {
-    c.name = "Cirque du Soleil";
-    c.owner = "Guy Laliberté";
-}
 
 
 

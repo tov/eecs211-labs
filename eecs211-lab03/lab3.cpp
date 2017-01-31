@@ -20,7 +20,7 @@ int main()
 
     // Vector creation:
     vector<Dog> dogs = {roger, angus, marie, samuel, pierre, rebecca, forrester};
-
+    cout<<youngestDog(dogs).age<<endl;
     /*
       An example for-each loop that will print out the name of each Dog in dogs:
 
