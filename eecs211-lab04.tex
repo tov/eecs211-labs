@@ -16,12 +16,15 @@ Today we will be getting comfortable with shared pointers and references. We'll 
 \section{Getting the code}
 Download the zip file from the course site: \medskip
 
-\url{http://users.eecs.northwestern.edu/~jesse/course/eecs211/lab/eecs211-lab04.zip} \medskip
+\url{http://users.eecs.northwestern.edu/~jesse/course/eecs211/lab/eecs211-lab04.zip}
 
-\noindent
-Once you have downloaded the zip file onto your laptop, extract the zip file into its own folder. Make sure you keep track of which folder it's in!  Next, open up CLion and Click on File --> Open Project, and click on the Lab 4 project that you just unzipped. 
+\medskip \noindent
+After you have downloaded the zip file onto your laptop, extract the zip file into its own folder. Make sure you keep track of which folder it's in!  Next, open up CLion and Click on File --> Open Project, and click on the Lab 4 project that you just unzipped. 
 
-Once you open the project, test out the output from the program already loaded on your screen.  In order to do this, look into the top right corner of your CLion Window.  Press the button that has a down arrow with 1s and 0s.  This is the Build button.  This will essentially set up our CMake environment we previously would have to build on the command line.\marginnote{One big advantage of IDEs are their ability to abstract out the command line.} Then, press the arrow that looks like a play button just to the right of that, called the Run button.  The first time you press it, in the ``Executable'' line, click the dropdown menu down to ``Lab3.''  Next hit Apply, then you can hit Run.  Notice in the subwindow on the bottom of your CLion window. You can now see our nice message in the output! This should remind you of DrRacket from EECS 111. You have a top window where you edit your code, and a bottom window which displays the output of your code when it runs.
+Once you open the project, try building the lab and then running the lab4 executable. 
+You should see a friendly message printed in your output subwindow.
+If you need a reminder on how to build and run code in CLion, consult lab 3 or ask your TA.
+Once this works, you're ready to start the lab!
 
 
 \section{Shared Pointers}
@@ -32,24 +35,36 @@ Instead, a pointer's data is actually just where it \textit{points} to in memory
 But, at the place where that pointer points in memory, there can be the typical data that we are used to seeing.  
 You need to tell C++ in advance what data type will be stored where the pointer points to, using the following syntax:
 
+\begin{Code}
+shared_ptr<DATA_TYPE> ptrName = make_shared<DATA_TYPE>();
+\end{Code}
 
-\begin{code}
-shared\_ptr<DATA\_TYPE> ptrName = make\_shared<DATA\_TYPE>();
-\end{code}
-
-
-
+\noindent
 If you can look in your \filename{lab4.cpp}, you can see we created a shared\_ptr  called \varname{crazyPtr} using the following syntax:
 
-\begin{code}
-shared\_ptr<Circus> crazyPtr = make\_shared<Circus>();
+\begin{Code}
+shared_ptr<Circus> crazyPtr = make_shared<Circus>();
 *crazyPtr = crazyCircus;
-\end{code}
+\end{Code}
 
-The first line of this code declares our shared\_ptr to point to a Circus in memory.  The next line defines that place in memory to hold a Circus that we previously defined called \varname{crazyCircus}
+\noindent
+The first line of this code declares our shared\_ptr to point to a Circus in memory.  
+The next line tells the place in memory that \varname{crazyPtr}  points to to hold a Circus that we previously defined called \varname{crazyCircus}.  
+This is done through \textit{dereferencing} \varname{crazyPtr}, a.k.a. putting an asterisk before the shared\_ptr.  
+This gives us the value at the place in memory our shared\_ptr points to.
+
+\subsection{Why Use Shared Pointers?}
+When you start a C++ program, you get allocated a certain amount of memory for your program to store local variables, where you are in your program, and your program itself in a place called the \textit{Stack}.
+\marginnote{The size of your stack varies depending on your operating system, your compiler version, and a few other factors, but generally nowadays it'll be around 1 MB}
+This stack is limited in memory, so when you start getting bigger data structures you want to define, you will realize quickly how easy it is to run out of space on your stack creating what is called a \textit{Stack Overflow}.
+Now, to avoid this, you can define a small pointer on your stack, which points to a place in memory in the free store, the big pool of memory on your computer that is not already allocated to a program.
+Defining a shared\_ptr itself on your stack does not take up much memory, but the object it points to may take up a lot of memory.  
+This is why it is important to have that object be in free store, and just access that data through our pointers.
+
+For example, in the \filename{lab4.cpp}, you can see that \varname{crazyPtr}, our pointer to the \varname{crazyCircus}, only took up 16 bytes of memory, but the \varname{crazyCircus} itself took up 128 bytes of memory.
+
 
 \section{References}
-
 If you remember from last week's lab and class, passing a variable by reference allows the variable that you pass into a function that accepts an argument by reference to be changed when that argument changes.
 This is denoted by an ampersand before the argument name in the function definitions and declarations.
 This is probably still a bit convoluted, so go to circus.cpp and check out the two functions \functionname{passedByCopy} and \functionname{passedByReference}.  
@@ -57,8 +72,10 @@ While these functions are identical on the outside, notice how they can affect t
 In \filename{lab4.cpp} we print out \varname{name} and \varname{owner} after each function call and notice how after the \functionname{passedByCopy} function call, \varname{name} and \varname{owner} are still the same as before the function call.
 Also notice how after the \functionname{passedByReference} function call, the variables values were changed by that function.
 
-
-
-
+\section{Practicing with Shared Pointers and References}
+Now that we've reviewed how and why to use shared pointers and references, let's get some practice. Open up \filename{circus.cpp} in CLion. 
+There's several function skeletons waiting to be implemented. 
+Give them a try and see if you can get them working - if things aren't making sense, don't hesitate to ask your TA!
+We've included a set of test cases in circus\_test.cpp, which you can run after you build your code. 
 
 \end{document}
