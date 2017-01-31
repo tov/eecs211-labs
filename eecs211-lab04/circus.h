@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <string>
+#include <memory>
 
 struct Circus
 {
@@ -9,9 +10,14 @@ struct Circus
     std::string owner;
     std::vector<std::string> animals;
     std::vector<std::string> performers;
-    int seatingCapacity;
-    std::vector<int> performanceTimes;
+    int seating_capacity;
+    std::vector<int> performance_times;
+    std::shared_ptr<Circus> sister_circus;
 };
 
-void passedByCopy(Circus c);
-void passedByReference(Circus& c);
+void passed_by_copy(Circus c);
+void passed_by_reference(Circus& c);
+
+void swap_sister_names(Circus& c);
+void remove_sister_circus(Circus& c);
+Circus& replace_sister_circus(Circus& c, std::string name);
