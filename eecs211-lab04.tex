@@ -39,14 +39,8 @@ You need to tell C++ in advance what data type will be stored where the pointer 
 shared_ptr<DATA_TYPE> ptrName = make_shared<DATA_TYPE>();
 \end{Code}
 
-<<<<<<< HEAD
 \noindent
 If you can look in your \filename{lab4.cpp}, you can see we created a shared\_ptr  called \varname{crazyPtr} using the following syntax:
-=======
-\begin{Code}
-shared_ptr<DATA_TYPE> ptrName = make_shared<DATA_TYPE>();
-\end{Code}
->>>>>>> 70ac80fc7c17f69a45d654b97148b3681ad706d0
 
 \begin{Code}
 shared_ptr<Circus> crazyPtr = make_shared<Circus>();
@@ -54,27 +48,25 @@ shared_ptr<Circus> crazyPtr = make_shared<Circus>();
 \end{Code}
 
 \noindent
-The first line of this code declares our shared\_ptr to point to a Circus in memory.  
+The first line of this code declares our shared\_ptr to point to a Circus in memory. 
 The next line tells the place in memory that \varname{crazyPtr}  points to to hold a Circus that we previously defined called \varname{crazyCircus}.  
 This is done through \textit{dereferencing} \varname{crazyPtr}, a.k.a. putting an asterisk before the shared\_ptr.  
 This gives us the value at the place in memory our shared\_ptr points to.
+
+\subsection{Null Pointers}
+
+If we are creating a \varname{shared\_ptr} by just declaring it without defining it with \varname{make\_shared}, we get what is called a null pointer, which is represented in C++ by \varname{nullptr}.
+When creating libraries and API's, it is very important to consider the case where your function gets a \varname{nullptr} inputted, as a \varname{nullptr} can't be de-referenced.
 
 \subsection{Why Use Shared Pointers?}
 When you start a C++ program, you get allocated a certain amount of memory for your program to store local variables, where you are in your program, and your program itself in a place called the \textit{Stack}.
 \marginnote{The size of your stack varies depending on your operating system, your compiler version, and a few other factors, but generally nowadays it'll be around 1 MB}
 This stack is limited in memory, so when you start getting bigger data structures you want to define, you will realize quickly how easy it is to run out of space on your stack creating what is called a \textit{Stack Overflow}.
-Now, to avoid this, you can define a small pointer on your stack, which points to a place in memory in the free store, the big pool of memory on your computer that is not already allocated to a program.
+Now, to avoid this, you can define a small pointer on your stack, which points to a place in memory in the free store, a big pool of memory on your computer that is not already allocated to your program.
 Defining a shared\_ptr itself on your stack does not take up much memory, but the object it points to may take up a lot of memory.  
 This is why it is important to have that object be in free store, and just access that data through our pointers.
 
-<<<<<<< HEAD
 For example, in the \filename{lab4.cpp}, you can see that \varname{crazyPtr}, our pointer to the \varname{crazyCircus}, only took up 16 bytes of memory, but the \varname{crazyCircus} itself took up 128 bytes of memory.
-=======
-\begin{Code}
-shared_ptr<Circus> crazyPtr = make_shared<Circus>();
-*crazyPtr = crazyCircus;
-\end{Code}
->>>>>>> 70ac80fc7c17f69a45d654b97148b3681ad706d0
 
 
 \section{References}
