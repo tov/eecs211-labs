@@ -32,7 +32,11 @@ int main()
     // Let's check and make sure that our crazyPtr is pointing to our same crazyCircus as before.
     cout << "crazyPtr points to a circus named: " << crazyPtr->name << "\n";
 
-
+    // Now, we'll show you how to check for a null pointer!
+    shared_ptr<Circus> exampleNullPtr;
+    if (exampleNullPtr == nullptr){
+        cout<<"Since we got here, exampleNullPtr is: "<<exampleNullPtr<<'\n';
+    }
 
     // Now let's experiment with some functions. Check the passedByCopy() and passedByReference() functions below.
     passedByCopy(crazyCircus);

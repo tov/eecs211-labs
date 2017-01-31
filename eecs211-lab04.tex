@@ -39,8 +39,14 @@ You need to tell C++ in advance what data type will be stored where the pointer 
 shared_ptr<DATA_TYPE> ptrName = make_shared<DATA_TYPE>();
 \end{Code}
 
+<<<<<<< HEAD
 \noindent
 If you can look in your \filename{lab4.cpp}, you can see we created a shared\_ptr  called \varname{crazyPtr} using the following syntax:
+=======
+\begin{Code}
+shared_ptr<DATA_TYPE> ptrName = make_shared<DATA_TYPE>();
+\end{Code}
+>>>>>>> 70ac80fc7c17f69a45d654b97148b3681ad706d0
 
 \begin{Code}
 shared_ptr<Circus> crazyPtr = make_shared<Circus>();
@@ -61,7 +67,14 @@ Now, to avoid this, you can define a small pointer on your stack, which points t
 Defining a shared\_ptr itself on your stack does not take up much memory, but the object it points to may take up a lot of memory.  
 This is why it is important to have that object be in free store, and just access that data through our pointers.
 
+<<<<<<< HEAD
 For example, in the \filename{lab4.cpp}, you can see that \varname{crazyPtr}, our pointer to the \varname{crazyCircus}, only took up 16 bytes of memory, but the \varname{crazyCircus} itself took up 128 bytes of memory.
+=======
+\begin{Code}
+shared_ptr<Circus> crazyPtr = make_shared<Circus>();
+*crazyPtr = crazyCircus;
+\end{Code}
+>>>>>>> 70ac80fc7c17f69a45d654b97148b3681ad706d0
 
 
 \section{References}
