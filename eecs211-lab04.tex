@@ -1,0 +1,64 @@
+\RequirePackage{fixltx2e}
+\documentclass{tufte-handout}
+
+\usepackage{eecs211-lab}
+
+\title{EECS 211 Lab 4}
+\author{Shared Pointers and References}
+\date{Winter 2017}
+
+\begin{document}
+
+\maketitle
+
+Today we will be getting comfortable with shared pointers and references. We'll review what they are, how to use them, and what they are useful for.  This can be a very tricky subject, so don't get discouraged if it is a bit difficult at first.
+
+\section{Getting the code}
+Download the zip file from the course site: \medskip
+
+\url{http://users.eecs.northwestern.edu/~jesse/course/eecs211/lab/eecs211-lab04.zip} \medskip
+
+\noindent
+Once you have downloaded the zip file onto your laptop, extract the zip file into its own folder. Make sure you keep track of which folder it's in!  Next, open up CLion and Click on File --> Open Project, and click on the Lab 4 project that you just unzipped. 
+
+Once you open the project, test out the output from the program already loaded on your screen.  In order to do this, look into the top right corner of your CLion Window.  Press the button that has a down arrow with 1s and 0s.  This is the Build button.  This will essentially set up our CMake environment we previously would have to build on the command line.\marginnote{One big advantage of IDEs are their ability to abstract out the command line.} Then, press the arrow that looks like a play button just to the right of that, called the Run button.  The first time you press it, in the ``Executable'' line, click the dropdown menu down to ``Lab3.''  Next hit Apply, then you can hit Run.  Notice in the subwindow on the bottom of your CLion window. You can now see our nice message in the output! This should remind you of DrRacket from EECS 111. You have a top window where you edit your code, and a bottom window which displays the output of your code when it runs.
+
+
+\section{Shared Pointers}
+A pointer is a variable. 
+It's similar to other variables that we've learned about so far, however, there's one big distinction. 
+A pointer itself doesn't actually contain the data that you tend to use in your functions.  
+Instead, a pointer's data is actually just where it \textit{points} to in memory.
+But, at the place where that pointer points in memory, there can be the typical data that we are used to seeing.  
+You need to tell C++ in advance what data type will be stored where the pointer points to, using the following syntax:
+
+
+\begin{code}
+shared\_ptr<DATA\_TYPE> ptrName = make\_shared<DATA\_TYPE>();
+\end{code}
+
+
+
+If you can look in your \filename{lab4.cpp}, you can see we created a shared\_ptr  called \varname{crazyPtr} using the following syntax:
+
+\begin{code}
+shared\_ptr<Circus> crazyPtr = make\_shared<Circus>();
+*crazyPtr = crazyCircus;
+\end{code}
+
+The first line of this code declares our shared\_ptr to point to a Circus in memory.  The next line defines that place in memory to hold a Circus that we previously defined called \varname{crazyCircus}
+
+\section{References}
+
+If you remember from last week's lab and class, passing a variable by reference allows the variable that you pass into a function that accepts an argument by reference to be changed when that argument changes.
+This is denoted by an ampersand before the argument name in the function definitions and declarations.
+This is probably still a bit convoluted, so go to circus.cpp and check out the two functions \functionname{passedByCopy} and \functionname{passedByReference}.  
+While these functions are identical on the outside, notice how they can affect the variables passed into the functions from \functionname{int main()}. 
+In \filename{lab4.cpp} we print out \varname{name} and \varname{owner} after each function call and notice how after the \functionname{passedByCopy} function call, \varname{name} and \varname{owner} are still the same as before the function call.
+Also notice how after the \functionname{passedByReference} function call, the variables values were changed by that function.
+
+
+
+
+
+\end{document}
