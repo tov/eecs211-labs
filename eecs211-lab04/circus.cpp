@@ -3,7 +3,8 @@
 #include <iostream>
 #include <vector>
 #include <cstdlib>
-
+#include <memory>
+#include <string>
 using namespace std;
 
 
@@ -36,6 +37,7 @@ void remove_sister_circus(Circus& c) {
 
 /// Create a new Circus with the specified name
 /// Reassign Circus c's sister_circus shared pointer to point to the new Circus
+/// You can add more fields to the circus besides a name --> be creative!
 void replace_sister_circus(Circus& c, string name) {
 
     // [YOUR CODE HERE]
