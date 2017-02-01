@@ -67,7 +67,9 @@ If we are creating a \varname{shared\_ptr} by just declaring it without defining
 When creating libraries and API's, it is very\marginnote{Really important.} important to consider the case where your function receives a \varname{nullptr} as input, as a \varname{nullptr} can't be de-referenced.
 
 \subsection{Why Use Shared Pointers?}
-When you start a C++ program, you get allocated a certain amount of memory for your program to store local variables, where you are in your program, and your program itself in a place called the \textit{Stack}.
+When you start a C++ program, you get allocated a certain amount of
+memory for your program to store local variables, where you are in your
+program, and your program itself in a place called the \textit{Stack}.%
 \marginnote{The size of your stack varies depending on your operating system, your compiler version, and a few other factors, but generally nowadays it'll be around 1 MB}
 This stack is limited in memory, so when you start getting bigger data structures you want to define, you will realize quickly how easy it is to run out of space on your stack creating what is called a \textit{Stack Overflow}.
 Now, to avoid this, you can define a small pointer on your stack, which points to a place in memory in the free store, a big pool of memory on your computer that is not already allocated to your program.
