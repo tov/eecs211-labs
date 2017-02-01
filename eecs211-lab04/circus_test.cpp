@@ -38,8 +38,7 @@ TEST(REMOVE_SISTER_CIRCUS)
 {
     Circus test_circus = create_test_circus();
     remove_sister_circus(test_circus);
-    //CHECK_EQUAL(nullptr, test_circus.sister_circus);
-    //TODO: Make this test work
+    CHECK(test_circus.sister_circus == nullptr);
 }
 
 TEST(REPLACE_SISTER_CIRCUS)
