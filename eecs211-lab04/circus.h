@@ -18,6 +18,6 @@ struct Circus
 void passed_by_copy(Circus c);
 void passed_by_reference(Circus& c);
 
-void swap_sister_names(Circus& c);
+void swap_names(Circus &c);
 void remove_sister_circus(Circus& c);
-Circus& replace_sister_circus(Circus& c, std::string name);
+void replace_sister_circus(Circus& c, std::string name);
