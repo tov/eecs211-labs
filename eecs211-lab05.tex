@@ -1,0 +1,62 @@
+\RequirePackage{fixltx2e}
+\documentclass{tufte-handout}
+
+\usepackage{eecs211-lab}
+
+\title{EECS 211 Lab 5}
+\author{Linked Lists + Review for the Midterm}
+\date{Winter 2017}
+
+\begin{document}
+
+\maketitle
+
+In this week's lab, we will be going over Linked Lists and some common uses for them.  Then, we will go over some review and practice questions for your exam!
+\section{Getting the code}
+Download the zip file from the course site: \medskip
+
+\url{http://users.eecs.northwestern.edu/~jesse/course/eecs211/lab/eecs211-lab05.zip}
+
+\medskip \noindent
+After you have downloaded the zip file onto your laptop, extract the zip file into its own folder. Make sure you keep track of which folder it's in!  Next, open up CLion and Click on File --> Open Project, and click on the Lab 4 project that you just unzipped. 
+
+Once you open the project, try building the lab and then running the lab5 executable. 
+You should see some output printed in your output subwindow.
+If you need a reminder on how to build and run code in CLion, consult lab 3/4 or ask your TA.
+Once this works, you're ready to start the lab!
+
+
+\section{Linked Lists}
+The general idea of a linked list is that there are nodes that have a data member to contain information about the node, as well as a pointer to the next node in the linked list.  
+As you know from the homework, a common linked list implementation would look something like this:
+
+\begin{Code}
+struct ListNode{
+    int data;
+    shared_ptr<ListNode> next;
+    };
+\end{Code}
+\marginnote{Note that in our implementation of linked lists, they have both an int for data and a Dog}
+
+Each node has pointer to the next node in the linked list, until one node's pointer is the null pointer, signifying the end of the linked list.
+When you write functions using linked lists, you generally are passed (by reference) in the node that is at the front of the linked list.
+From here, since the node is usually passed by reference, when you edit the front of the tree's pointers, the changes propagate back to the arguments to the original function call.
+Now, let's write another function for working on linked lists.
+
+Look at your \filename{Dog.h} and \filename{ListNode.h} files for struct definitions.
+
+Now, for the first practice problem, remember that you are in charge of a dog sanctuary still. 
+\marginnote{Hopefully you've been feeding them!}
+In ListNode.cpp, write a function \functionname{findDog} that takes in a pointer to a ListNode, and looks for the first ListNode that has the desired identification number.
+When you find the desired identification number, return the \varname{dog} from that ListNode!
+\marginnote{just like in the homework, we are abbreviating writing out a pointer to a ListNode as just a List}
+
+Next, also in ListNode.cpp, write a function that removes every other element from a Linked List.  
+For example, 1 -> 2 -> 3 -> 4 -> nullptr would become 1 -> 3 -> nullptr.  
+Remember to make sure the ListNode exists before accessing it's data types!
+\marginnote{This is important, as de-referencing a nullptr is going to break your program}
+
+
+
+
+\end{document}
