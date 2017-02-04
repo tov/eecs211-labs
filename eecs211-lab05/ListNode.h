@@ -10,5 +10,6 @@ struct ListNode{
     std::shared_ptr<ListNode> next;
 };
 using List = std::shared_ptr<ListNode>;
-Dog& traverse(List& front, int desiredID);
+Dog& findDog(List& front, int desiredID);
+void removeHalf(List&front);
 

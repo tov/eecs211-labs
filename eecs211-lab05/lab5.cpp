@@ -7,6 +7,10 @@
 
 using namespace std;
 
+
+
+
+
 int main()
 {
     List front;
