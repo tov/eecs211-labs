@@ -24,3 +24,31 @@ Dog& findDog(List& front, int desiredID){
 void removeHalf(List& front){
     /// Fill in this function
 }
+
+/// Write a function square idNumbers to go through a linked list,
+/// and square each identification number.
+
+void squareIDNumbers(List& front){
+    /// Fill in this function
+}
+
+/// Write a function that goes through a linked list, adds the dogs
+/// to a vector, and then returns that vector of Dogs.
+
+vector<Dog> toVector(List& front){
+
+}
+
+/// Write a function that takes in a linked list and two indices,
+/// and swaps the dogs located at the Nodes for those two indices.
+
+void swapDogs(List& front, int index1, int index2);
+
+/// Write a function to return a new list that is a reversed version
+/// of the first list.  For example:
+/// Input: 1 -> 2 -> 3 -> nullptr
+/// Output: 3 -> 2 -> 1 -> nullptr
+
+List reverseList(List front){
+
+}
