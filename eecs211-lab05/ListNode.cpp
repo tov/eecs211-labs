@@ -36,13 +36,15 @@ void squareIDNumbers(List& front){
 /// to a vector, and then returns that vector of Dogs.
 
 vector<Dog> toVector(List& front){
-
+    /// Fill in this function
 }
 
 /// Write a function that takes in a linked list and two indices,
 /// and swaps the dogs located at the Nodes for those two indices.
 
-void swapDogs(List& front, int index1, int index2);
+void swapDogs(List& front, int index1, int index2){
+    /// Fill in this function
+}
 
 /// Write a function to return a new list that is a reversed version
 /// of the first list.  For example:
@@ -50,5 +52,5 @@ void swapDogs(List& front, int index1, int index2);
 /// Output: 3 -> 2 -> 1 -> nullptr
 
 List reverseList(List front){
-
+    /// Fill in this function
 }
