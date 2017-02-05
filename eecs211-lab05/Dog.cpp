@@ -12,6 +12,6 @@ double meanAge(vector<Dog> dogs){
 
 /// Write a function to swap the favorite treats of two dogs passed by reference
 
-void swapTreats(Dog& dog1, Dog& dog2){
+void swapTreats(Dog &dog1, Dog &dog2){
     /// Fill in this function!
 }

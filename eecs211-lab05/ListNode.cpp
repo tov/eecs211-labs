@@ -11,7 +11,7 @@ using namespace std;
 /// whose linked list node's idNumber matches the desiredID
 /// If no idNumber matches, throw a runtime_error!
 
-Dog& findDog(List& front, int desiredID){
+Dog& findDog(List &front, int desiredID){
     /// Fill in this function
 }
 
@@ -21,28 +21,28 @@ Dog& findDog(List& front, int desiredID){
 /// Output:: 1 -> 3 -> nullptr
 /// Remember to check that a ListNode exists before accessing its data members
 
-void removeHalf(List& front){
+void removeHalf(List &front){
     /// Fill in this function
 }
 
 /// Write a function square idNumbers to go through a linked list,
 /// and square each identification number.
 
-void squareIDNumbers(List& front){
+void squareIDNumbers(List &front){
     /// Fill in this function
 }
 
 /// Write a function that goes through a linked list, adds the dogs
 /// to a vector, and then returns that vector of Dogs.
 
-vector<Dog> toVector(List& front){
+vector<Dog> toVector(List &front){
     /// Fill in this function
 }
 
 /// Write a function that takes in a linked list and two indices,
 /// and swaps the dogs located at the Nodes for those two indices.
 
-void swapDogs(List& front, int index1, int index2){
+void swapDogs(List &front, int index1, int index2){
     /// Fill in this function
 }
 
