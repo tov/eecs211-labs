@@ -16,6 +16,13 @@ vector<int> divisibleByAll(vector<int> nums, vector<int> divisors){
     /// Write code here
 }
 
+/// Write factorial to take the factorial of n and return it
+/// Remember that factorial(n) means (n) * (n-1) * (n-2) * ... * 1
+
+int factorial(int n){
+    /// Write code here
+}
+
 int main()
 {
     List front;
