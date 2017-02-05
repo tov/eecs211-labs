@@ -8,3 +8,5 @@ struct Dog{
     double age;
     std::string favoriteTreat;
 };
+
+double meanAge(std::vector<Dog> dogs);
