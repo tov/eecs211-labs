@@ -23,6 +23,24 @@ int factorial(int n){
     /// Write code here
 }
 
+/// Write vectorizeInt to turn an integer into a vector of digits.
+/// Examples:
+/// Input: 108
+/// Output: {1, 0, 8}
+/// Input: 55594
+/// Output: {5, 5, 5, 9, 4}
+/// Input: 3
+/// Output {3}
+/// One strategy may be to start by creating a vector that gets filled in in reverse order.
+/// There is a function in the standard library called reverse that would work like this for a vector:
+/// vector<int> v;
+/// reverse(v.begin(), v.end());
+
+
+vector<int> vectorizeInt(int num){
+    /// Write code here
+}
+
 int main()
 {
     List front;
