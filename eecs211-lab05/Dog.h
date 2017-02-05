@@ -10,3 +10,4 @@ struct Dog{
 };
 
 double meanAge(std::vector<Dog> dogs);
+void swapTreats(Dog& dog1, Dog& d2);
