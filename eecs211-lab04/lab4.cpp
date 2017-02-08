@@ -24,7 +24,7 @@ int main()
 
     // Uncomment each section below to review shared pointers and references.
 
-    /*
+
     cout << "Part 1: Shared Pointers\n";
     // The Circus struct seems pretty large right?
     // We can see how much memory it uses with this print statement.
@@ -33,6 +33,8 @@ int main()
 
     shared_ptr<Circus> crazy_ptr = make_shared<Circus>();
     *crazy_ptr = crazy_circus;
+
+    //ed_ptr<Circus> crazy_ptr = make_shared<Circus>(crazy_circus)
     // This sets the value in memory where crazy_ptr points to be the crazy_circus.
     cout << "The size of crazyPtr is: " << sizeof(crazy_ptr) << "\n";
     // That saves us a lot of memory on the stack.
@@ -46,9 +48,9 @@ int main()
     if (example_null_ptr == nullptr){
         cout<<"Since we got here, example_null_ptr is: "<< example_null_ptr << "\n\n";
     }
-     */
 
-    /*
+
+
     cout << "Part 2: References and functions\n";
     // Now let's experiment with some functions. 
     // Check out the passedByCopy() and passedByReference() functions in circus.cpp
@@ -66,7 +68,7 @@ int main()
     cout << "The owner if crazyCircus is: " << crazy_circus.owner << "\n";
     // Notice that the name and owner of the circus do not change after passed_by_copy() is called.
     // But after passed_by_reference() is called, the name and owner have changed!
-    */
+
 
 
 }

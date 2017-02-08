@@ -11,11 +11,12 @@
 
 \maketitle
 
-In this week's lab, we will be going over Linked Lists. Then, we will go over some review and practice questions for your exam!  
-We have given you more practice programs than you probably can get through in your section, so they could be good practice to study for the exam.
+In this week's lab, we will be going over linked lists. Then, we will review for the exam.
+You'll notice that we have given you more practice programs than you can probably complete through in your section. We recommend finishing them outside of discussion as they are good practice to study for the exam! 
+We've included a full set of test cases so to run - when a function is implemented correctly, it should pass all of the its tests.
 We organized the questions by general topic, so consider jumping around between the types of questions, or focusing on ones you feel weak at.
 
-Before you start doing the lab, your peer mentor is there to answer all of your questions that have been lingering!
+If you have any lingering questions during the lab, don't hesitate to ask your peer mentor!
 \section{Getting the code}
 Download the zip file from the course site: \medskip
 
@@ -28,7 +29,6 @@ Once you open the project, try building the lab and then running the lab5 execut
 You should see some output printed in your output subwindow.
 If you need a reminder on how to build and run code in CLion, consult lab 3/4 or ask your TA.
 Once this works, you're ready to start the lab!
-
 
 \section{Linked Lists}
 The general idea of a linked list is that there are nodes that have a data member to contain information about the node, as well as a pointer to the next node in the linked list.  
@@ -45,47 +45,92 @@ struct ListNode{
 Each node has pointer to the next node in the linked list, until one node's pointer is the null pointer, signifying the end of the linked list.
 When you write functions using linked lists, you generally are passed (by reference) in the node that is at the front of the linked list.
 From here, since the node is usually passed by reference, when you edit the front of the tree's pointers, the changes propagate back to the arguments to the original function call.
-\section{Practice Questions}
+
+\section{Exam Review}
 \subsection{Linked List Practice Questions}
 
-Now, let's write another function for working on linked lists.
+Now, let's write some functions for working on linked lists.
 Look at your \filename{Dog.h} and \filename{ListNode.h} files for struct definitions.
-Now, for the first practice problem, remember that you are in charge of a dog sanctuary still. 
+The following function skeletons have been provided for you. Each function is described below, give them a try!
+
+\medskip \noindent
+\textbf{\functionname{findDog}}
+\medskip
+
+\noindent For this function, you are still in charge of a dog sanctuary. 
 \marginnote{Hopefully you've been feeding them!}
-In ListNode.cpp, write a function \functionname{findDog} that takes in a pointer to a ListNode, and looks for the first ListNode that has the desired identification number.
-When you find the desired identification number, return the \varname{dog} from that ListNode!
-\marginnote{just like in the homework, we are abbreviating writing out a pointer to a ListNode as just a List}
+In \filename{ListNode.cpp}, write a function \functionname{findDog} that takes in a pointer to a ListNode, and looks for the first ListNode that has the desired identification number.
+When you find the desired identification number, return the \varname{dog} from that ListNode.
+\marginnote{Just like in the homework, we are abbreviating writing out a pointer to a ListNode as just a List}
 
-Next, also in ListNode.cpp, write a function called \functionname{} that removes every other element from a Linked List.  
+\medskip \noindent
+\textbf{\functionname{removeHalf}}
+\medskip
+
+\noindent In \filename{ListNode.cpp}, write a function called \functionname{removeHalf} that removes every other element from a linked list.  
 For example, 1 -> 2 -> 3 -> 4 -> nullptr would become 1 -> 3 -> nullptr.  
-Remember to make sure the ListNode exists before accessing it's data types!
-\marginnote{This is important, as de-referencing a nullptr is going to break your program}
+Remember to make sure the ListNode exists before accessing its data types!
+\marginnote{This is important, as de-referencing a nullptr is going to break your program.}
 
-Next, also in ListNode.cpp, write a function, \functionname{squareIDNumbers}, that squares the identification number of each node in the Linked list.
+\medskip \noindent
+\textbf{\functionname{squareIDNumbers}}
+\medskip
 
-Next, also in ListNode.cpp, write a function, \functionname{toVector}, that takes in a Linked List, and puts every element of the list into a vector.
+\noindent In \filename{ListNode.cpp}, write a function, \functionname{squareIDNumbers}, that squares the identification number of each node in the linked list.
 
-Next, also in ListNode.cpp, write a function, \functionname{swapDogs}, that takes in a Linked list, and two indices, and swaps the Dogs located at those indices.  
+\medskip \noindent
+\textbf{\functionname{toVector}}
+\medskip
 
-For a  challenge function, write a function, \functionname{reverseList} that takes in the front of a linked list (not by reference), and returns a new list, which is the original list in reversed order.  
+\noindent In \filename{ListNode.cpp}, write a function, \functionname{toVector}, that takes in a linked list, and puts every element of the list into a vector.
+
+\medskip \noindent
+\textbf{Challenge function: \functionname{swapDogs}}
+\medskip
+
+\noindent In \filename{ListNode.cpp}, write a function, \functionname{swapDogs}, that takes in a linked list, and two indices, and swaps the Dogs located at those indices. 
+
+\medskip \noindent
+\textbf{Challenge function: \functionname{reverseList}}
+\medskip
+
+\noindent If you're up for a challenge, write a function, \functionname{reverseList} that takes in the front of a linked list (not by reference), and returns a new list, which is the original list in reversed order.  
 \marginnote{One of the easier strategies could be modifying your \functionname{toVector} function first to be for ListNodes as opposed to Dogs, then using that vector to help you create a new list that is backwards.  However, there are many viable ways of creating this function!}
 
 \subsection{General Practice Questions}
 
-In \filename{Dog.cpp}, write the function called \functionname{meanAge} which goes through a vector of Dogs, and calculates the mean age of the dogs in your sanctuary.
+\medskip \noindent
+\textbf{\functionname{meanAge}}
+\medskip
 
-Next, also in \filename{Dog.cpp}, write the function \functionname{swapTreats}, which swaps the favorite treats of two dogs which are passed by reference into the function, after they probably had an altercation.
+\noindent In \filename{Dog.cpp}, write the function called \functionname{meanAge} which goes through a vector of Dogs, and calculates the mean age of the dogs in your sanctuary.
 
-Now, create a function in \filename{lab5.cpp} called \functionname{divisibleByAll} where you are passed two vectors, \varname{nums} and \varname{divisors}, where you have to return a new vector of only the ints in \varname{nums} that are divisible by all of the numbers in \varname{divisors}.
+\medskip \noindent
+\textbf{\functionname{swapTreats}}
+\medskip
 
-Now, in \filename{lab5.cpp}, write a function, \functionname{factorial} that takes an integer, and returns the factorial of that number using a loop.  
+\noindent In \filename{Dog.cpp}, write the function \functionname{swapTreats}, which swaps the favorite treats of two dogs which are passed by reference into the function, after they probably had an altercation.
+
+\medskip \noindent
+\textbf{\functionname{divisibleByAll}}
+\medskip
+
+\noindent Create a function in \filename{lab5.cpp} called \functionname{divisibleByAll} where you are passed two vectors, \varname{nums} and \varname{divisors}, where you have to return a new vector of only the ints in \varname{nums} that are divisible by all of the numbers in \varname{divisors}.
+
+\medskip \noindent
+\textbf{\functionname{factorial}}
+\medskip
+
+\noindent In \filename{lab5.cpp}, write a function, \functionname{factorial} that takes an integer, and returns the factorial of that number using a loop.  
 \marginnote{Remember that factorial(n) means n * (n-1) * (n-2) * ... * 1, and that the factorial of 0 is 1}
 
-Challenge function: 
+\medskip \noindent
+\textbf{Challenge function: \functionname{vectorizeInt}}
+\medskip
 
-Also in \filename{lab5.cpp}, write a function called \functionname{vectorizeInt}.
-This function should take a positive integer, and put it's digits into a vector, such that its most significant digits are in the least significant indicies of the vector.
-F.E. for the number 108\marginnote{coincidentally the number of years before the Cubs won the World Series again this year}, your vector you would return would have 1 in the 0th index, it would have 0 in the first index, and it would have 8 in the second index.
+\noindent In \filename{lab5.cpp}, write a function called \functionname{vectorizeInt}.
+This function should take a positive integer, and put it's digits into a vector, such that its most significant digits are in the least significant indicies of the vector. \newline
+For example: Given the number 108\marginnote{Coincidentally the number of years before the Cubs won the World Series again this year}, your vector you would return would have 1 in the 0th index, it would have 0 in the first index, and it would have 8 in the second index.
 Furthermore, this vector would be equivalent to the vector created from the following:
 \begin{Code}
 vector<int> v;
