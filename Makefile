@@ -3,16 +3,19 @@ PDFS = $(TEXS:.tex=.pdf)
 ZIPS = $(TEXS:.tex=.zip)
 
 Publish: $(PDFS) $(ZIPS)
+	echo index.html > $@
 	ls $^ > $@
 
 %.zip: %
-	( cd $< && git clean -dfX )
-	zip -r $@ $<
+	zip -r $@ $< -x '*/.idea/*' '*/cmake-debug-*'
 
 # The tufte-handout class we use works with pdflatex, but not
 # xelatex/lualatex.
 %.pdf: %.tex eecs211-lab.sty
-	pdflatex -interaction=nonstopmode $<
+	mkdir -p build
+	cp eecs211-lab.sty build
+	( cd build; pdflatex -interaction=nonstopmode ../$< )
+	cp build/$@ .
 
 clean:
 	git clean -fX
