@@ -11,7 +11,7 @@
 
 \maketitle
 
-In this week's lab, we will be going over classes, ecanspulation, and abstraction, and why both are important.
+In this week's lab, we will be going over classes, encapsulation, and abstraction, and why both are important.
 
 If you have any lingering questions during the lab, don't hesitate to ask your peer mentor!
 \section{Getting the code}
@@ -41,73 +41,107 @@ This is similar to a data member, as the functions would work on the instances o
 \subsection{Private vs Public}
 One key difference between structs and classes is that struct data members and functions are public by default, but in classes, they are private by default.
 But what does that mean?
-Basically, public vs private determines what an instance of a class can access.\marginnote{We usually refer to instances of classes as being called objects}
+Basically, public vs private determines what an instance of a class can access.\marginnote{We usually refer to instances of classes as \textit{objects}.}
 First, examine a class with a definition something like this:
 \begin{Code}
-class Dog{
-    private: 
-        int SSN;
-        double bank_balance;
-    public:
-        bool canIBuyThis(double itemCost);
-        bool hasValidSSN();
+class Person {
+private:
+    std::string name_;
+    int SSN_;
+    double bank_balance_;
+public:
+    Person(std::string n, int s);
+    Person(std::string n, int s, double b);
+    bool canIBuyThis(double itemCost);
+    bool canIBuyThis(int itemCost);
+    double withdrawFromBank(double amount);
+
+    std::string name();
+    int SSN();
+    double bank_balance();
 };
 \end{Code}
-Notice here, that our Dog class has both an SSN and a ban\_balance that are private. 
-This means that if in our \functionname{main} or any other function creates an instance of a Dog, it won't be able to access the Dog's SSN or bank\_balance.
-For example, this code wouldn't work, as you can't access the SSN or bank\_balance.
+Notice here, that our Person class has a name\_, SSN\_, and bank\_balance\_ that are private. 
+This means that if in our \functionname{main} or any other function creates an instance of a Person, it won't be able to access the Person's name\_, SSN\_ or bank\_balance.
+For example, this code wouldn't work, as you can't access the SSN\_ or bank\_balance\_.
 \begin{Code}
 int main(){
-    Dog doggy;
-    cout<<doggy.SSN<<'\n';
-    cout<<doggy.bank_balance<<'\n';
+    Person myPerson;
+    cout << myPerson.name_ << '\n';
+    cout << myPerson.SSN_ << '\n';
 }
 \end{Code}
 However, what you CAN do, is create public functions that use the private data members or private functions.
-Let's say a Dog is at a store, and is trying to buy a soda pop.
-While you don't want the register to be able to see how much money is on the doggy's bank account, you still want to be able to tell whether or not the doggy has enough money to purchase the soda pop.
+Let's say a Person is at a store, and is trying to buy a soda pop.
+While you don't want the register to be able to see how much money is on the Person's bank account, you still want to be able to tell whether or not the Person has enough money to purchase the soda pop.
 So, you're able to run code something like this:
 \begin{Code}
-void purchaseFunction(Dog& d, double sodaPrice){
-    if (d.canIBuyThis(sodaPrice)){
-        buySoda(d, sodaPrice);}
-    else{
-        // other stuff etc. }
+void buySoda(Person& p, double sodaPrice) {
+    if (p.canIBuyThis(sodaPrice)) {
+        p.withdrawFromBank(sodaPrice);
+    }
+    else {
+        cout << "You don't have enough money!\n";
+    }
 }
 \end{Code}
-Notice, that we are able to compare the Dog's bank\_balance and the sodaPrice, without being able to look at the dog's bank\_balance, through the use of our public \functionname{canIBuyThis} function.
-This allows us to abstract away the bank\_balance, while maintaining it's functionality!
-You can imagine doing something similar with the SSN and \functionname{hasValidSSN()}
-Cool, huh?
+Notice, that we are able to compare the Person's bank\_balance\_ and the sodaPrice, without being able to look at the Person's bank\_balance\_, through the use of our public \functionname{canIBuyThis} function.
+This allows us to abstract away the bank\_balance\_, while maintaining it's functionality!
 
 \subsection{Constructors}
-When you create an instance of a class, you use what's called a Constructor, which allows you to do something on the creation of an object.
-This "something" I just mentioned, is very typically used to set the fields of your class.
-For example, look at the following definition and constructor:
-
+When you create an instance of a class, you use what's called a Constructor, which allows you to do something upon the creation of an object.
+Typically, we'll use a constructor to set the private data members of your class.
+For example, let's look at the definition of the constructor for Person.
 \begin{Code}
-    class Rectangle{
-        private:
-            double myWidth, myLength;
-        public:
-            Rectangle(double width, double length){
-                myWidth = width;
-                myLength = length;
-            }
-};
+Person::Person(string n, int s, double b) 
+{
+    name_ = n;
+    SSN_ = s;
+    bank_balance_ = b;
+}
 \end{Code}
-Now, when you create a rectangle using the following syntax:
+Now, when you create a Person using the following syntax:
 \begin{Code}
-    Rectangle rect {5.2, 3.4};
+    Person myPerson {"Jesse", 1234567, 100.0};
 \end{Code}
-The rect's width and legnth are set to be 5.2 and 3.4
 
-As you noticed, this constructor allows for 2 parameters.
+myPersons's name\_, SSN\_, and bank\_balance\_ are assigned to be Jesse, 1234567, and 100.0, respectively. 
+Note that the following syntax would also be acceptable:
+\begin{Code}
+    Person myPerson = Person("Jesse", 1234567, 100.0);
+\end{Code}
+
+You probably noticed that this constructor allows for 3 parameters.
 You can actually create different constructors for different numbers of parameters as inputs, allowing you to set default values easier, or do different things when a class is instantiated with a different number of arguments.
+In \filename{Person.cpp}, we've defined another constructor for Person which only takes in 2 parameters:
+\begin{Code}
+Person::Person(string n, int s) 
+{
+    name_ = n;
+    SSN_ = s;
+    bank_balance_ = 0.0;
+}
+\end{Code}
+This constructor will automatically assign bank\_balance\_ to be 0.0.
+This is called \textit{\textbf{overloading}} a constructor.
+When you call these constructors, C++ will call the correct constructor by looking at the number and type of the arguments it's given.
+
+We can also overload functions! This works in the exact same way.
+In \filename{Person.cpp}, note that \functionname{canIBuyThis} has 2 definitions. 
+One of them takes in an int and the other takes in a double.
+Each of these definitions behaves in a slightly different way.
+Notice that both functions take in the same number of arguments but they are different types!
+C++ looks at the parameter supplied and decides which function to call based on the type of that parameter.
 
 \section{Practicing with classes}
 
-//Code stuff goes here.
-
+To get a little practice with classes, implement the function \functionname{printPerson}. In order to do that, you'll need to implement the get functions\marginnote{The get functions are public functions that return the values of their respective private data members.} for the Person class in \filename{Person.cpp}.\marginnote{Hint: All 3 get functions can (and should) be implemented in one line.} Once you've done that, use the get functions in the \functionname{printPerson} function in order to print a string with the following format: \newline
+\medskip
+\noindent "This Person is named (name\_), has Social Security Number (SSN\_), 
+and has (bank\_balance\_) dollars in their bank account." \newline
+\medskip
+\noindent For more practice, go \filename{Bank.cpp} and implement the function called \functionname{stealMoney()}. Note that a Bank is another class that we've created for you.
+A bank has a private vector of Person objects called accounts\_. It also has a public constructor and a get function for accounts\_ already implemented. 
+Your job is to write the \functionname{stealMoney()} function, which should iterate through each Person in accounts\_ and withdraw all of their money so that their bank\_balance\_ is 0. Add up all of the money you've stolen and return that value. The functions \functionname{bank\_balance} and \functionname{withdrawFromBank} in the Person class will be very helpful for this!
 
 \end{document}

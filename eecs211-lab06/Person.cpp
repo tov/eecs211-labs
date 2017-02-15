@@ -36,11 +36,14 @@ bool Person::canIBuyThis(double itemCost) {
 }
 
 double Person::withdrawFromBank(double amount){
+    if (amount > bank_balance_)
+        throw runtime_error("You don't have that much money!");
     bank_balance_ = bank_balance_ - amount;
     return bank_balance_;
 }
 
 // Implement these accessor functions!
+// You'll need change the return values.
 
 string Person::name() {
 
@@ -62,4 +65,6 @@ double Person::bank_balance() {
     return 0.0;
 
 }
+
+
 
