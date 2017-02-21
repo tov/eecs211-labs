@@ -25,4 +25,7 @@ const vector<Person>& Bank::accounts() const
 double Bank::stealMoney()
 {
     // [YOUR CODE HERE]
+    for( Person &p : accounts_){
+
+    }
 }

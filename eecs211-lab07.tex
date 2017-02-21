@@ -1,0 +1,70 @@
+\RequirePackage{fixltx2e}
+\documentclass{tufte-handout}
+
+\usepackage{eecs211-lab}
+
+\title{EECS 211 Lab 7}
+\author{Raw Pointers and Memory Management}
+\date{Winter 2017}
+
+\begin{document}
+
+\maketitle
+
+In this week's lab, we will be going over raw pointers and memory management.
+You already know pointers and the idea of memory management from shared pointers, but we will be taking a deeper dive into how pointers really work without the nice abstractions.
+
+If you have any lingering questions during the lab, don't hesitate to ask your peer mentor!
+\section{Getting the code}
+Download the zip file from the course site: \medskip
+
+\url{http://users.eecs.northwestern.edu/~jesse/course/eecs211/lab/eecs211-lab07.zip}
+
+\medskip \noindent
+After you have downloaded the zip file onto your laptop, extract the zip file into its own folder. Make sure you keep track of which folder it's in!  Next, open up CLion and Click on File --> Open Project, and click on the Lab 7 project that you just unzipped. 
+
+Once you open the project, try building the lab and then running the lab6 executable. 
+You should see some output printed in your output subwindow.
+If you need a reminder on how to build and run code in CLion, consult lab 3/4 or ask your TA.
+Once this works, you're ready to start the lab!
+
+WRITE FUNCTION THAT FINDS LENGTH OF ARRAY GIVING POINTER AND SIZE OF TYPE(?)
+\section{Memory Management}
+Raw pointers are no different than shared pointers in the sense that they store an address in memory.
+There are a few differences, however.
+One difference is the syntax.
+For shared pointers, as you remember, the syntax looks something like this:
+\begin{Code}
+    shared_ptr<TYPE> sharedPtr = make_shared<TYPE>();
+\end{Code}
+This allocates space on the heap for \varname{sharedPtr}, giving it the number of bytes that \varname{TYPE} takes up.
+Then sharedPtr is given the address for the beginning of that contiguous set of memory in the heap.
+
+
+For raw pointers, the syntax looks something like this:
+
+\begin{Code}
+    TYPE* rawPtr = new TYPE*();
+\end{Code}
+Just like with the \varname{sharedPtr}, \varname{rawPtr} has space on the heap allocated for it, giving \varname{rawPtr} the address of the start of a contiguous set of memory in the heap of the same size as \varname{TYPE}.
+
+
+However, unlike with shared pointers, raw pointers require a much larger sense of caution!
+When you are done using a shared pointer, under the hood, C++ gives that memory in the heap back to your operating system, so you are able to use that for other applications. 
+\marginnote{Think about the 200 chrome tabs you have open and all the memory they all eating}
+
+However, when you are done using a raw pointer, you have to manually tell your operating system that it can use the memory that your object took up on the heap.
+
+The syntax looks like this:
+
+\begin{Code}
+    delete rawPtr;
+\end{Code}
+
+
+While the syntax is simple, knowing when to de-allocate your memory can be tricky!
+
+\marginnote{If you don't de-allocate properly, you're going to end up with memory leaks, meaning you're going to lose all of your precious chrome tabs!!!}
+
+
+\end{document}
