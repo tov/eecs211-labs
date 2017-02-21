@@ -28,11 +28,80 @@ You should see some output printed in your output subwindow.
 If you need a reminder on how to build and run code in CLion, consult lab 3/4 or ask your TA.
 Once this works, you're ready to start the lab!
 
-WRITE FUNCTION THAT FINDS LENGTH OF ARRAY GIVING POINTER AND SIZE OF TYPE(?)
-\section{Memory Management}
+\section{Basic Raw Pointer Syntax}
+
+\subsection {De-referencing}
 Raw pointers are no different than shared pointers in the sense that they store an address in memory.
 There are a few differences, however.
 One difference is the syntax.
+
+When you create a shared pointer, you have to use the shared pointer notation to create one, like this:
+\begin{Code}
+    shared_ptr<TYPE> sharedPtr;
+\end{Code}
+This will initialize \varname{sharedPtr} to be \varname{nullptr}.
+
+To create a raw pointer type, you simply put an asterisk next to the type of the variable name, like this:
+\begin{Code}
+    Node* nodePtr;
+\end{Code}
+\marginnote{While this is a pointer to a Node, you can use the same notation as TYPE* rawPtr}
+
+Once you have both a nodePtr or a sharedPtr, you can de-reference them the exact same ways!
+Assuming pointers to Nodes, here is how you de-reference them!
+\begin{Code}
+    // Assuming rawPtr and sharedPtr are pointers to Nodes
+    // which are filled in without errors
+    
+    *rawPtr; //Gives you the Node stored at rawPtr's address
+    *sharedPtr; // Gives you the Node stored at sharedPtr's address.
+    
+    
+    // You can also use the -> operator for a class to de-reference 
+    // and access a member variable or function.
+    
+    rawPtr-> data ; 
+    // de-references rawPtr and then access it's data field
+    
+    sharedPtr ->findNextCommonDataField() 
+    // de-references sharedPtr then uses 
+    // its member function, findNextCommonDataField.
+     
+\end{Code}
+
+\subsection{Getting an address of a variable}
+One other cool thing you have the ability to do with raw pointers is set them equal to the address of stack variables.
+\marginnote{This is not something you want to do with shared pointers, as that can get ugly real quick}
+
+To do this, we use our ampersand that we have seen in the past used as a tool to pass variables by reference:
+\begin{Code}
+    double dub = 5.0; 
+    double* dubPtr = &dub; 
+    // This makes dubPtr equal to dub's address on the stack.
+    // if you check dub now equals the value at dubPtr,
+    // *dubPtr, which equals 5 
+    CHECK_EQUAL(dub, *dubPtr); // returns True.
+    
+    // If you change the value of dub, when
+    // you derefence dubPtr, the value will be consistent
+    // with the value of dub
+    dub = 7.5;
+    CHECK_EQUAL(dub, *dubPtr); // still return true
+    // *dubPtr = 7.5;
+    
+    // Likewise, if you change the value of 
+    // *dubPtr, the value of dub will change as well
+    
+    *dubPtr = 10.0;
+    CHECK_EQUAL(dub, *dubPtr); // true still
+    // dub now is equal to 10.0
+    
+    
+\end{Code}
+
+
+\section{Memory Management}
+When you are allocating space on the heap for your objects with raw pointers and shared pointers, the idea is identical, but the syntax is slightly different.
 For shared pointers, as you remember, the syntax looks something like this:
 \begin{Code}
     shared_ptr<TYPE> sharedPtr = make_shared<TYPE>();
@@ -65,6 +134,19 @@ The syntax looks like this:
 While the syntax is simple, knowing when to de-allocate your memory can be tricky!
 
 \marginnote{If you don't de-allocate properly, you're going to end up with memory leaks, meaning you're going to lose all of your precious chrome tabs!!!}
+
+Most of de-allocating memory is just remembering when you are done using the pointer, then using the simple delete syntax!
+
+
+\section{We talking about practice!}
+\marginnote{\url{https://www.youtube.com/watch?v=eGDBR2L5kzI}}
+
+
+In \filename{lab7.cpp}, fill in the function \functionname{getLength}, in order to return the length of an array passed in (remember from above that an array is just stored as pointer).
+This will return the number of elements in the array, not the number of contiguous bytes in memory the array takes up.
+
+Also in \filename{lab7.cpp}, fill in the function \functionname{swapValues}, which takes in two raw pointers and swaps the values stored at those addresses in memory.
+
 
 
 \end{document}
