@@ -7,12 +7,14 @@
 
 using namespace std;
 
-int getlength(int* arr, size_t sizeOf){
+int getLength(const int* arr, size_t sizeOf){
     // note that sizeOf will give you the size of the elements in the array
+    // but you don't actually need this, if you think about how de-referencing arrays works
+    // Also note that the last element of the array is guaranteed to be 0, and no other element will be.
+    // Make sure to include this element in your count.
     /// Write code to traverse the array keeping track of how many elements there are.
     /// And return the number of elements
     /// FILL IN YOUR CODE HERE
-
 }
 
 void swapValues(int* ptr1, int* ptr2){
@@ -23,6 +25,8 @@ void swapValues(int* ptr1, int* ptr2){
 int main()
 {
 
+    int arr[]  = {5, 10, 15, 20, 25, 0};
+    cout<<getLength(arr, sizeof(int))<<endl;
 
 
 }
