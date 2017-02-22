@@ -21,6 +21,18 @@ TreeNode::TreeNode(TreeNode left, TreeNode right, int data){
     data_ = data;
 }
 
+TreeNode* TreeNode::left() const{
+    return left_;
+}
+
+TreeNode* TreeNode::right() const{
+    return right_;
+}
+
+int TreeNode::data() const{
+    return data_;
+}
+
 TreeNode* TreeNode::findLargest(){
     /// FILL ME IN
 }
