@@ -21,11 +21,31 @@ TreeNode::TreeNode(TreeNode left, TreeNode right, int data){
     data_ = data;
 }
 
-TreeNode::findLargest(){
+TreeNode* TreeNode::findLargest(){
     /// FILL ME IN
 }
 
-TreeNode::largestLessThan(int bound){
+TreeNode* TreeNode::largestLessThan(int bound){
     /// FILL ME IN
     /// if there is no TreeNode less than bound, throw an error
 }
+
+TreeNode* TreeNode::largestBetween(int lowerBound, int upperBound){
+    /// FILL ME IN
+    /// if there is no treeNode between the bounds, throw an erorr
+}
+
+void TreeNode::insertNode(int data){
+    /// FILL ME IN
+}
+
+TreeNode::~TreeNode(){
+    /// Make this destructor
+}
+
+void TreeNode::removeNode(TreeNode *removeMe) {
+    /// FILL ME IN
+    /// Make sure to de-allocate removeMe's memory.
+    /// this is  a challenge function
+}
+
