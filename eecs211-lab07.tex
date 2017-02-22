@@ -130,6 +130,12 @@ The syntax looks like this:
     delete rawPtr;
 \end{Code}
 
+One to thing to consider additionally, is that if you are done using an array, you have to de-reference the array using the special array notation:
+
+\begin{Code}
+    delete[] arrayPtr;
+\end{Code}
+
 
 While the syntax is simple, knowing when to de-allocate your memory can be tricky!
 
