@@ -10,7 +10,7 @@ private:
     int data_;
 
 public:
-    TreeNode(TreeNode left, TreeNode right, int data);
+    TreeNode(TreeNode* left, TreeNode* right, int data);
     TreeNode(int data);
     TreeNode();
     TreeNode* left() const;
@@ -21,6 +21,6 @@ public:
     TreeNode* largestBetween(int lowerBound, int upperBound);
     void insertNode(int data);
     ~TreeNode();
-    void removeNode(TreeNode* removeMe);
+    void removeNode(int data);
 };
 

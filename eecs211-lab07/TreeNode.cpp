@@ -15,9 +15,9 @@ TreeNode::TreeNode(int data){
     data_ = data;
 }
 
-TreeNode::TreeNode(TreeNode left, TreeNode right, int data){
-    left_ = new TreeNode(left);
-    right_ = new TreeNode(right);
+TreeNode::TreeNode(TreeNode* left, TreeNode* right, int data){
+    left_ = left;
+    right_ = right;
     data_ = data;
 }
 
@@ -29,7 +29,7 @@ TreeNode* TreeNode::right() const{
     return right_;
 }
 
-int TreeNode::data() const{
+int TreeNode::data() const {
     return data_;
 }
 
@@ -55,9 +55,9 @@ TreeNode::~TreeNode(){
     /// Make this destructor
 }
 
-void TreeNode::removeNode(TreeNode *removeMe) {
+void TreeNode::removeNode(int data) {
     /// FILL ME IN
-    /// Make sure to de-allocate removeMe's memory.
-    /// this is  a challenge function
+    /// Make sure to de-allocate the removed node's memory.
+    /// this is a challenge function
 }
 
