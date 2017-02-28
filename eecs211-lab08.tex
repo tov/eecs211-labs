@@ -30,7 +30,7 @@ Once this works, you're ready to start the lab!
 
 \section{Inheritance}
 
-\subsection {General Idea}
+\section {General Idea}
 Inheritance is an incredibly important idea, central to object oriented design.
 The main concept to understand for inheritance is the parent-child relationship.
 This is represented in C++ with a \textit{base} class which contains the general information that a set of child classes, called \textit{derived} classes, inherit from.
@@ -42,7 +42,7 @@ We could create a shape base class that has circles, rectangles, and triangles a
 As you can imagine, some common fields we may want would be things like the size of the perimeter of the shape.
 However, for the circles we may also want to add a radius field, and for the rectangles and triangles we may want to add length and width fields.
 
-\subsection{The Protected Access Modifier}
+\section{The Protected Access Modifier}
 So far you had only seen public and private access modifiers.
 With public data members and functions, both you and any other class can access those fields.
 With private data members and functions, only other member functions of your class can access those private data members and functions.
@@ -116,6 +116,34 @@ class Circle: public Shape {
 \end{Code}
 Notice how for the area function of the Circle derived class, we are able to access the \varname{perimeter\_} data member from the parent shape.
 If the \varname{perimeter\_} data member of Shape had a private access modifier as opposed to a protected access modifier, we wouldn't be able to access it.
+
+\section{Virtual Functions}
+
+\subsection{Pure Virtual Functions}
+
+\section{Abstract Base Classes}
+
+
+\section{Practice Problems}
+For this section, we will be working with a vehicle abstract base class, and be creating functions for our derived classes.
+
+For our \varname{Vehicle} class, its \functionname{Drive} function is a pure virtual function, making it an abstract base class.
+However, we do need to define \functionname{Drive} for our 3 inherited classes, our \varname{Boat}, our \varname{Car}, and our \varname{Plane}.
+
+A function to calculate distance looks something like distance = velocity * time.
+
+In \filename{Vehicle.h} we defined a DELTA\_TIME variable to signify the time that is supposed to pass in between each movement call.
+
+
+For our \varname{Car} class, make your car move forward proportional to it's movement speed data member.
+This should be multiplied with DELTA\_TIME then added to its position data member inherited from the \varname{Vehicle} class.
+
+For the \varname{Plane} class, assume that each engine gives you an additional 100 mph of speed.
+Use this to calculate the plane's velocity, then from there you can find the distance moved, and add that to its inherited position data member.
+
+For the \varname{Boat} class, assume the boat's velocity to be 20 mph if it's a sailboat, or 50 mph if it's a motor boat, as determined by its \varname{movementType\_} data member.
+Use this to determine a velocity, and again move the boat's inherited position.
+
 
 
 
