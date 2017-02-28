@@ -117,11 +117,42 @@ class Circle: public Shape {
 Notice how for the area function of the Circle derived class, we are able to access the \varname{perimeter\_} data member from the parent shape.
 If the \varname{perimeter\_} data member of Shape had a private access modifier as opposed to a protected access modifier, we wouldn't be able to access it.
 
+
 \section{Virtual Functions}
 
-\subsection{Pure Virtual Functions}
+Virtual functions are functions defined in a base class that will give the derived class's function with the same name, return types, and arguments precedent over the virtual function.
+Let's say that you have a \functionname{print} function for a base class.
+Normally, if that function were not void, and you were to write the following code (assuming we have the shapes from above, where both the \varname{Shape} and each of the derived classes have a \functionname{print} function defined):
+\begin{Code}
+    Circle* circ;
+    Shape* shp = circ;
+    shp->print();
+    // --> Outputs something like:
+    // "I am a Shape"
+    
+\end{Code}
 
+Since \varname{shp} is using its \functionname{print} function, which is nota virtual function, even though \varname{shp} points to a \varname{Circle}, we are still using the base, \varname{Shape} class's \functionname{print} function
+
+Now, if our \varname{Shape} had its \functionname{print} function as a virtual function, we would instead be using the derived, \varname{Circle} print function.
+This is somewhat illustrated below:
+
+\begin{Code}
+    Circle* circ;
+    Shape* shp = circ;
+    shp->print();
+    // Outputs something like:
+    // "I am a Circle"
+\end{Code}
+Notice how with the exact same code besides changing the print function to virtual, we are now able to have our derived class's function take priority!
+As you get more practice with inheritance, this will become increasingly useful!
+
+
+\subsection{Pure Virtual Functions}
+A pure virtual function is a virtual function set = 0.
 \section{Abstract Base Classes}
+
+\section{Polymorphism Practice}
 
 
 \section{Practice Problems}
