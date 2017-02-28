@@ -4,14 +4,14 @@
 \usepackage{eecs211-lab}
 
 \title{EECS 211 Lab 8}
-\author{The STL; inheritance}
+\author{Inheritance}
 \date{Winter 2017}
 
 \begin{document}
 
 \maketitle
 
-In this week's lab, we will be going over some cool STL tricks such as iterators, and going over inheritance.
+In this week's lab, we will be going over inheritance, and doing some more practice with classes.
 
 
 If you have any lingering questions during the lab, don't hesitate to ask your peer mentor!
@@ -28,11 +28,94 @@ You should see some output printed in your output subwindow.
 If you need a reminder on how to build and run code in CLion, consult lab 3/4 or ask your TA.
 Once this works, you're ready to start the lab!
 
-\section{The STL}
+\section{Inheritance}
 
-\subsection {Iterators}
-Iterators are a tool, like many of the things we've learned, that help you abstract away problems to make the solutions easier to adapt to other methods.
+\subsection {General Idea}
+Inheritance is an incredibly important idea, central to object oriented design.
+The main concept to understand for inheritance is the parent-child relationship.
+This is represented in C++ with a \textit{base} class which contains the general information that a set of child classes, called \textit{derived} classes, inherit from.
+In situations where you have different variants of something which share several common required functions and data members, inheriting from one base class can not only help you abstract your code, but also help you have better code organization.
 
+\subsection{An Example}
+Let's say we are creating a geometry program which has a bunch of different shapes we want to use.
+We could create a shape base class that has circles, rectangles, and triangles all inheriting from our shape parent, or \textit{base} class.
+As you can imagine, some common fields we may want would be things like the size of the perimeter of the shape.
+However, for the circles we may also want to add a radius field, and for the rectangles and triangles we may want to add length and width fields.
+
+\subsection{The Protected Access Modifier}
+So far you had only seen public and private access modifiers.
+With public data members and functions, both you and any other class can access those fields.
+With private data members and functions, only other member functions of your class can access those private data members and functions.
+However, there is a third access modifier called \textif{protected}.
+With protected access modifiers, like private you and your member functions are able to access the data member or function.
+However, your derived classes now also are able to access that same field!
+This basically becomes a way to make things private to only you and your derived classes, and is extremely common and important to object oriented design.
+
+\subsection{Representing This All in C++}
+In order to represent this in C++, we would first need to make the \varname{Shape} base class, then create the derived classes from the \varname{Shape} base.
+
+This looks something like this:
+
+\begin{Code}
+class Shape{
+    protected:
+        double perimeter_;
+    public:
+        void setPerimeter(double perimeter){
+            perimeter_ = perimeter;
+        }
+};
+
+class Rectangle: public Shape {
+    private:
+        double length_;
+        double width_;
+    public:
+        // Basic setters and getters:
+        void setLength(double length){
+            length_ = length;
+        }
+        void setWidth(double width){
+            width_ = width;
+        }
+        double length(){
+            return length_;
+        }
+        double width(){
+            return width_;
+        }
+        
+        // Area function:
+        double area(){
+            return width_ * length_;
+        }
+        
+};
+
+class Circle: public Shape {
+    private:
+        double radius_;
+    public:
+        void setRadius(double radius){
+            radius_ = radius;
+        }
+        double getRadius(){
+            return radius_;
+        }
+        // Area function:
+        // Notice how we are able
+        // to access the perimeter data member
+        
+        double area(){
+            // area for circle = 
+            // .5 * perimeter * radius
+            return .5 * perimeter * radius_;
+        }
+};
+            
+\end{Code}
+Notice how for the area function of the Circle derived class, we are able to access the \varname{perimeter\_} data member from the parent shape.
+If the \varname{perimeter\_} data member of Shape had a private access modifier as opposed to a protected access modifier, we wouldn't be able to access it.
 
 
 
