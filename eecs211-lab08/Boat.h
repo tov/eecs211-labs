@@ -2,7 +2,7 @@
 #include "Vehicle.h"
 #include <iostream>
 
-class Boat:Vehicle{
+class Boat: public Vehicle{
 private:
     std::string movementType_; // "Sail Boat" or "Motor Boat"
 public:

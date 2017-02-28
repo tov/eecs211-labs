@@ -2,7 +2,7 @@
 #include "Vehicle.h"
 #include <iostream>
 
-class Car:Vehicle{
+class Car: public Vehicle{
 private:
     std::string build_;
     double movementSpeed_;
