@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 
-#define DELTA_TIME .05
+#define DELTA_TIME 0.5 // (hours)
 
 class Vehicle {
 
@@ -11,6 +11,9 @@ protected:
     std:: string fuelType_;
     double position_;
 public:
+    Vehicle() : position_(0) {}
+    virtual ~Vehicle(){}
+
     void setBrand(std::string brand){
         brand_ = brand;
     }
@@ -32,6 +35,10 @@ public:
     std::string fuelType(){
         return fuelType_;
     }
+    double position() {
+        return position_;
+    }
     virtual void Drive() = 0; // Our pure virtual function
+    virtual std::string vehicleType() = 0; // Another pure virtual function
 
 };

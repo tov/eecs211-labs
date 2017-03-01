@@ -4,10 +4,13 @@
 
 class Car: public Vehicle{
 private:
-    std::string build_;
-    double movementSpeed_;
+    double speed_;
 public:
+    Car() : Vehicle(), speed_(60) {}
+    Car(double s) : Vehicle(), speed_(s) {}
+    ~Car() {}
     void Drive();
+    std::string vehicleType();
 };
 
 
