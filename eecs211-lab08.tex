@@ -46,7 +46,7 @@ However, for the circles we may also want to add a radius field, and for the rec
 So far you had only seen public and private access modifiers.
 With public data members and functions, both you and any other class can access those fields.
 With private data members and functions, only other member functions of your class can access those private data members and functions.
-However, there is a third access modifier called \textif{protected}.
+However, there is a third access modifier called \textit{protected}.
 With protected access modifiers, like private you and your member functions are able to access the data member or function.
 However, your derived classes now also are able to access that same field!
 This basically becomes a way to make things private to only you and your derived classes, and is extremely common and important to object oriented design.
@@ -172,10 +172,10 @@ class Shape{
 \section{Abstract Base Classes}
 You want abstract base classes in situations where the parent is a class that you can't create without getting more specific.
 For example, you can't just have a generic vehicle.
-Instead, you would need to have a specific type of a vehicle, like a car or a boat!
+Instead, you would need to have a specific type of a vehicle, like a car or a boat.
 In C++, abstract base classes are defined simply as classes which have pure virtual functions.
+In the example above, Shape is an abstract base class because it has a pure virtual function.
 Abstract base classes, along with virtual functions, as you'd suspect, allow you to easily abstract concepts out into more generic ideas!
-
 
 \section{Practice Problems}
 For this section, we will be working with an abstract base class called \varname{Vehicle} and creating functions for its derived classes.
