@@ -2,9 +2,16 @@
 
 using namespace std;
 
+/// Update the position_ data member inherited from Vehicle
+/// Give the plane 100mph of speed for each engine it has
+/// Recall that distance = speed * time
 void Plane::Drive() {
-    /// FILL ME IN
 
+    // [YOUR CODE HERE]
 
+}
+
+string Plane::vehicleType() {
+    return "Plane";
 }
 
