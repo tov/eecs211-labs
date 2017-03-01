@@ -64,6 +64,10 @@ class Shape{
         void setPerimeter(double perimeter){
             perimeter_ = perimeter;
         }
+        // Virtual function:
+        virtual void print(){
+            cout<<"I am a Shape! \n";
+        }
 };
 
 class Rectangle: public Shape {
@@ -89,6 +93,9 @@ class Rectangle: public Shape {
         double area(){
             return width_ * length_;
         }
+        void print(){
+            cout<<"I am a Rectangle! \n";
+        }
         
 };
 
@@ -111,6 +118,9 @@ class Circle: public Shape {
             // .5 * perimeter * radius
             return .5 * perimeter * radius_;
         }
+        void print(){
+            cout<<"I am a Circle! \n";
+        }
 };
             
 \end{Code}
@@ -121,67 +131,81 @@ If the \varname{perimeter\_} data member of Shape had a private access modifier 
 \section{Virtual Functions}
 
 Virtual functions are functions defined in a base class that will give the derived class's function with the same name, return types, and arguments precedent over the virtual function.
-Let's say that you have a \functionname{print} function for a base class.
-Normally, if that function were not void, and you were to write the following code (assuming we have the shapes from above, where both the \varname{Shape} and each of the derived classes have a \functionname{print} function defined):
+Let's say we have our \functionname{print} function for our Shape base class as defined above, with one difference - let's suppose that the \functionname{print} isn't virtual.
+If that function was not virtual, and you were to write the following code (assuming we have the shapes from above, where both the \varname{Shape} and each of the derived classes have a \functionname{print} function defined):
 \begin{Code}
     Circle* circ;
     Shape* shp = circ;
     shp->print();
-    // --> Outputs something like:
-    // "I am a Shape"
+    // --> Outputs:
+    // "I am a Shape!"
     
 \end{Code}
 
-Since \varname{shp} is using its \functionname{print} function, which is nota virtual function, even though \varname{shp} points to a \varname{Circle}, we are still using the base, \varname{Shape} class's \functionname{print} function
+Since \varname{shp} is using its \functionname{print} function, \textit{\textbf{which is not a virtual function}}, even though \varname{shp} points to a \varname{Circle}, we are still using the base, \varname{Shape} class's \functionname{print} function.
 
-Now, if our \varname{Shape} had its \functionname{print} function as a virtual function, we would instead be using the derived, \varname{Circle} print function.
-This is somewhat illustrated below:
+Now, if our \varname{Shape} defined its \functionname{print} function as a virtual function as we do actually have above, we would instead be using the derived, \varname{Circle} print function.
+This is illustrated below:
 
 \begin{Code}
     Circle* circ;
     Shape* shp = circ;
     shp->print();
-    // Outputs something like:
-    // "I am a Circle"
+    // Outputs:
+    // "I am a Circle!"
 \end{Code}
 Notice how with the exact same code besides changing the print function to virtual, we are now able to have our derived class's function take priority!
 As you get more practice with inheritance, this will become increasingly useful!
 
-
 \subsection{Pure Virtual Functions}
-A pure virtual function is a virtual function set = 0.
-\section{Abstract Base Classes}
+A pure virtual function is very similar to a virtual function.
+A pure virtual function is a virtual function that is required to implemented by a derived class that is not abstract.
+This means that a derived class which is not abstract\marginnote{A non-abstract class doesn't have any pure virtual methods, like Circle in our example above.} \textbf{\textit{must}} implement the pure virtual function. We denote a pure virtual function by placing "= 0" in its declaration. For example, in the Shape class we used above, we could make \functionname{print} a pure virtual function as follows:
+\begin{Code}
+class Shape{
+    public:
+        // Pure virtual function:
+        virtual void print() = 0;
+};
+\end{Code}
 
-\section{Polymorphism Practice}
+\section{Abstract Base Classes}
+You want abstract base classes in situations where the parent is a class that you can't create without getting more specific.
+For example, you can't just have a generic vehicle.
+Instead, you would need to have a specific type of a vehicle, like a car or a boat!
+In C++, abstract base classes are defined simply as classes which have pure virtual functions.
+Abstract base classes, along with virtual functions, as you'd suspect, allow you to easily abstract concepts out into more generic ideas!
 
 
 \section{Practice Problems}
-For this section, we will be working with a vehicle abstract base class, and be creating functions for our derived classes.
+For this section, we will be working with an abstract base class called \varname{Vehicle} and creating functions for its derived classes.
 
 For our \varname{Vehicle} class, its \functionname{Drive} function is a pure virtual function, making it an abstract base class.
 However, we do need to define \functionname{Drive} for our 3 inherited classes, our \varname{Boat}, our \varname{Car}, and our \varname{Plane}.
 
-A function to calculate distance looks something like distance = velocity * time.
+A function to calculate distance looks something like distance = velocity * time. In \filename{Vehicle.h} we defined a \varname{DELTA\_TIME} variable to signify the time that is supposed to pass in between each movement call.
 
-In \filename{Vehicle.h} we defined a DELTA\_TIME variable to signify the time that is supposed to pass in between each movement call.
-
-
+\subsection{Implement the Drive Function}
 For our \varname{Car} class, make your car move forward proportional to it's movement speed data member.
-This should be multiplied with DELTA\_TIME then added to its position data member inherited from the \varname{Vehicle} class.
+This should be multiplied with \varname{DELTA\_TIME} then added to its position data member inherited from the \varname{Vehicle} class. \newline \medskip
 
 For the \varname{Plane} class, assume that each engine gives you an additional 100 mph of speed.
-Use this to calculate the plane's velocity, then from there you can find the distance moved, and add that to its inherited position data member.
+Use this to calculate the plane's speed, then from there you can find the distance moved, and add that to its inherited position data member. \newline \medskip
 
-For the \varname{Boat} class, assume the boat's velocity to be 20 mph if it's a sailboat, or 50 mph if it's a motor boat, as determined by its \varname{movementType\_} data member.
-Use this to determine a velocity, and again move the boat's inherited position.
+For the \varname{Boat} class, assume the boat's speed to be 20 mph if it's a sailboat, or 50 mph if it's a motor boat, as determined by its \varname{movementType\_} data member.
+Use this to determine a speed, and again move the boat's inherited position.
 
-
+\subsection{Implement moveForDistance and moveForTime}
 Now, once you define these functions, go to your \filename{lab8.cpp} File, and fill in two functions:
-\functionname{moveThisFar} and \functionname{moveThisLong}.
+\functionname{moveForDistance} and \functionname{moveForTime}. \newline \medskip
 
-For \functionname{moveThisFar}, move the \varname{Vehicle} passed in using its \functionname{Drive} function until the position has changed by the specified \varname{distance}.
+For \functionname{moveForDistance}, move the \varname{Vehicle} passed in using its \functionname{Drive} function until the position has changed by the specified \varname{distance}. \newline \medskip
 
-For \functionname{moveThisLong}, move the \varname{Vehicle} passed in using its \functionname{Drive} function until it has moved the desired amount of time.
+For \functionname{moveForTime}, move the \varname{Vehicle} passed in using its \functionname{Drive} function until the desired amount of time has passed.
+
+\subsection{Race Time!}
+Implement the function \functionname{race}, which takes in a vector of shared pointers to Vehicles and a distance.
+the function should move each Vehicle over the specified distance and return the shared pointer to the Vehicle that moved over the distance in the least amount of time.
 
 
 
