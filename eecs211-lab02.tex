@@ -5,7 +5,7 @@
 
 \title{EECS 211 Lab 2}
 \author{Control Statements, Functions and Structures}
-\date{Winter 2017}
+\date{Winter 2018}
 
 \begin{document}
 
@@ -48,7 +48,7 @@ Once we have our ZIP file, we will need to turn it in file directory using the \
 You should now have a directory called \filename{eecs211-lab02}.
 
 \subsection{Setting up the build system}
-Change your directory to \filename{eecs211-lab02}. Make a new
+Type the \cmdline{dev} command into the shell to ensure that you are using the correct developer toolset. You must do this every time you open a remote connection and plan on using CMake. Next, change your directory to \filename{eecs211-lab02}. Make a new
 subdirectory called \filename{build} and navigate into it. Then, the
 first time you set up the project, use the command \progname{cmake} in
 order to setup the CMake build system.%
@@ -86,6 +86,7 @@ Once you think that your function works as intended, save and exit emacs\marginn
 \begin{CmdLine}
   \prompt make lab2
 \end{CmdLine}
+\marginnote{Remember, make works as follows: \cmdline{make [target]}. Target is the name of the executable file that will be built by the make command.}
 If everything works, if we list our files, we should now see a file called \filename{lab2}.  Enter the command
 \begin{CmdLine}
   \prompt ./lab2
