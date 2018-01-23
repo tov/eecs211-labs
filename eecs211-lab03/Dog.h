@@ -11,8 +11,8 @@ struct Dog
     std::string owner;
 };
 
-Dog& youngestDog(std::vector<Dog>&);
+Dog youngestDog(std::vector<Dog>);
 
-Dog& happiestDog(std::vector<Dog>&);
+Dog happiestDog(std::vector<Dog>);
 
-std::string findOwner(const std::vector<Dog>&, const std::string&);
+std::string findOwner(const std::vector<Dog>, const std::string);
