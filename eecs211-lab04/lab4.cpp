@@ -34,7 +34,7 @@ int main()
     shared_ptr<Circus> crazy_ptr = make_shared<Circus>();
     *crazy_ptr = crazy_circus;
 
-    //ed_ptr<Circus> crazy_ptr = make_shared<Circus>(crazy_circus)
+    // shared_ptr<Circus> crazy_ptr = make_shared<Circus>(crazy_circus);
     // This sets the value in memory where crazy_ptr points to be the crazy_circus.
     cout << "The size of crazyPtr is: " << sizeof(crazy_ptr) << "\n";
     // That saves us a lot of memory on the stack.

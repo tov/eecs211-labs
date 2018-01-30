@@ -79,8 +79,12 @@ This is why it is important to have that object be in free store, and just acces
 For example, in the \filename{lab4.cpp}, you can see that \varname{crazy\_ptr}, our pointer to the \varname{crazy\_circus}, only took up 16 bytes of memory, but the \varname{crazy\_circus} itself took up 160 bytes of memory. 
 
 \section{References}
-If you remember from last week's lab and class, passing a variable by reference allows the variable that you pass into a function that accepts an argument by reference to be changed when that argument changes.
+\marginnote{The caller is the function that calls another function (the callee), while the callee is the function that is called by the caller}
+If you remember from class, passing a variable by \textbf{reference} allows the callee to \textit{borrow} a reference to the variable passed by the caller. Thus means that the caller and callee are operating on the \textbf{same} variable. So, if the callee modifies the variable, the result is visible to the caller. 
 This is denoted by an ampersand before the argument name in the function definitions and declarations.
+
+When a variable is passed by \textbf{copy}, the caller passes a copy of the variable to the callee. This means that the caller and callee have two \textbf{different} variables with the same value. So, if the callee modifies the parameter, the result is not visible to the caller.
+
 This is probably still a bit confusing, so go to circus.cpp and check out the two functions \functionname{passed\_by\_copy} and \functionname{passed\_by\_reference}.  
 While these functions are identical on the outside, notice how they can affect the variables passed into the functions from \functionname{int main()}. 
 In \filename{lab4.cpp} we print out \varname{name} and \varname{owner} after each function call and notice how after the \functionname{passed\_by\_copy} function call, \varname{name} and \varname{owner} are still the same as before the function call.
