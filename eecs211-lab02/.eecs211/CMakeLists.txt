@@ -1,6 +1,9 @@
 # Turn on CTest
 enable_testing()
 
+# Catch
+include_directories(.eecs211/lib/catch)
+
 # UnitTest++
 set(UNITTESTCPP_ROOT .eecs211/lib/unittest-cpp)
 add_subdirectory(${UNITTESTCPP_ROOT})
@@ -25,6 +28,14 @@ macro (add_test_program name)
     target_link_libraries(${name} UnitTest++)
     add_test(Test_${name} ${name})
 endmacro (add_test_program)
+
+# Adds a Catch-based test program with the given name and source files
+macro (add_catch_program name)
+    add_program(${name} .eecs211/lib/catch-main.cpp ${ARGN})
+    add_test(Test_${name} ${name})
+endmacro (add_catch_program)
+
+
 
 ###
 ### Setting some flags, portably
