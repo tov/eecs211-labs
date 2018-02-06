@@ -50,7 +50,7 @@ vector<Dog> toVector(List &front){
 /// and swaps the dogs located at the Nodes for those two indices.
 /// Assume that index1 < index2. If index1 >= index2, throw a runtime error.
 /// If the list is empty, throw a runtime error.
-/// If either of the indeces weren't found, throw a runtime error.
+/// If either of the indices weren't found, throw a runtime error.
 void swapDogs(List &front, int index1, int index2){
 
     // [YOUR CODE HERE]
