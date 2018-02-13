@@ -93,8 +93,8 @@ TEST(SWAP_DOGS) {
 TEST(REVERSE_LIST) {
     List front = test_list();
     List reverse = reverseList(front);
-    CHECK_EQUAL(1, reverse->idNumber);
-    CHECK_EQUAL(2, reverse->next->idNumber);
+    CHECK_EQUAL(2, reverse->idNumber);
+    CHECK_EQUAL(1, reverse->next->idNumber);
     CHECK(reverse->next->next == nullptr);
 
     List empty;
