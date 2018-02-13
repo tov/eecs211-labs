@@ -11,7 +11,7 @@
 
 \maketitle
 
-In this week's lab, we will be going over classes, encapsulation, and abstraction, and why both are important.
+In this week's lab, we will be introducing classes, and reviewing encapsulation and abstraction.
 
 If you have any lingering questions during the lab, don't hesitate to ask your peer mentor!
 \section{Getting the code}
@@ -28,15 +28,15 @@ If you need a reminder on how to build and run code in CLion, consult lab 3/4 or
 Once this works, you're ready to start the lab!
 
 \section{Encapsulation and Abstraction}
+Encapsulation is the process of binding associated data, and abstraction is the process of hiding details.
 You already have seen the idea of encapsulation and abstraction throughout the quarter.
-One place that you see it is through structs.
-When you create a struct, you are creating a type that encapsulates data members.
-Another place you've created abstraction is through creating libraries, like linked\_lib or circle\_lib, which allow a consumer to use certain functions about circles or linked lists, and not have to see every little inner working under the hood.
+One place that you seen encapsulation is through structs.
+When you create a struct, you are creating a type that encapsulates data members. For example, the circle struct had x,y coordinates as well as a radius. One place that you've seen abstraction is through creating libraries, like linked\_lib or circle\_lib, which allow a consumer to use certain functions about circles or linked lists, without having to understand every little inner working under the hood.
 
 \section{Classes}
 So that brings us to classes.  
 Classes allow you to create your own types, just like structs.
-Additionally, with classes, we can create member functions, which allow you to do things that you may have already noticed from other classes, such as call myObject.area(); for instance.
+Additionally, with classes, we usually create member functions, which allow you to do things that you may have already noticed from other classes, such as call myObject.area(); for instance.
 This is similar to a data member, as the functions would work on the instances of the classes themselves.  
 \subsection{Private vs. Public}
 One key difference between structs and classes is that struct data members and functions are public by default, but in classes, they are private by default.
@@ -93,6 +93,7 @@ Notice, that we are able to compare the Person's bank\_balance\_ and the sodaPri
 This allows us to abstract away the bank\_balance\_, while maintaining its functionality!
 
 \subsection{Constructors}
+\marginnote{The constructor function for a given class does not have a return type and must have the same name as the class.}
 When you create an instance of a class, you use what's called a Constructor, which allows you to do something upon the creation of an object.
 Typically, we'll use a constructor to set the private data members of your class.
 For example, let's look at the definition of the constructor for Person.
