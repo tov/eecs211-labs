@@ -45,9 +45,9 @@ To create a raw pointer type, you simply put an asterisk next to the type of the
 \begin{Code}
     Node* nodePtr;
 \end{Code}
-\marginnote{While this is a pointer to a Node, you can use the same notation as TYPE* rawPtr}
+\marginnote{This creates a raw pointer to a Node, but the generic notation is TYPE* rawPtr}
 
-Once you have both a nodePtr or a sharedPtr, you can de-reference them the exact same ways!
+Once you have both a nodePtr or a sharedPtr, you can de-reference them the exact same way!
 Assuming pointers to Nodes, here is how you de-reference them!
 \begin{Code}
     // Assuming rawPtr and sharedPtr are pointers to Nodes
@@ -70,21 +70,21 @@ Assuming pointers to Nodes, here is how you de-reference them!
 \end{Code}
 
 \subsection{Getting an address of a variable}
-One other cool thing you have the ability to do with raw pointers is set them equal to the address of stack variables.
+One other cool thing you have the ability to do with raw pointers is to set them equal to the address of stack variables.
 \marginnote{This is not something you want to do with shared pointers, as that can get ugly real quick}
 
-To do this, we use our ampersand that we have seen in the past used as a tool to pass variables by reference:
+To do this, we employ the ampersand which is used to pass variables by reference:
 \begin{Code}
     double dub = 5.0; 
     double* dubPtr = &dub; 
     // This makes dubPtr equal to dub's address on the stack.
-    // if you check dub now equals the value at dubPtr,
+    // if you check, dub now equals the value at dubPtr,
     // *dubPtr, which equals 5 
     CHECK_EQUAL(dub, *dubPtr); // returns True.
     
     // If you change the value of dub, when
     // you derefence dubPtr, the value will be consistent
-    // with the value of dub
+    // with the new value of dub
     dub = 7.5;
     CHECK_EQUAL(dub, *dubPtr); // still return true
     // *dubPtr = 7.5;
@@ -113,14 +113,14 @@ Then sharedPtr is given the address for the beginning of that contiguous set of 
 For raw pointers, the syntax looks something like this:
 
 \begin{Code}
-    TYPE* rawPtr = new TYPE*();
+    TYPE* rawPtr = new TYPE();
 \end{Code}
 Just like with the \varname{sharedPtr}, \varname{rawPtr} has space on the heap allocated for it, giving \varname{rawPtr} the address of the start of a contiguous set of memory in the heap of the same size as \varname{TYPE}.
 
 
 However, unlike with shared pointers, raw pointers require a much larger sense of caution!
 When you are done using a shared pointer, under the hood, C++ gives that memory in the heap back to your operating system, so you are able to use that for other applications. 
-\marginnote{Think about the 200 chrome tabs you have open and all the memory they all eating}
+\marginnote{Think about the 200 chrome tabs you have open and all the memory they are eating}
 
 However, when you are done using a raw pointer, you have to manually tell your operating system that it can use the memory that your object took up on the heap.
 
@@ -130,7 +130,7 @@ The syntax looks like this:
     delete rawPtr;
 \end{Code}
 
-One to thing to consider additionally, is that if you are done using an array, you have to de-reference the array using the special array notation:
+One thing to consider additionally, is that if you are done using an array, you have to de-reference the array using the special array notation:
 
 \begin{Code}
     delete[] arrayPtr;
@@ -148,10 +148,10 @@ Most of de-allocating memory is just remembering when you are done using the poi
 \marginnote{\url{https://www.youtube.com/watch?v=eGDBR2L5kzI}}
 
 
-In \filename{lab7.cpp}, fill in the function \functionname{getLength}, in order to return the length of an array passed in (remember from above that an array is just stored as pointer).
+In \filename{lab7.cpp}, fill in the function \functionname{getLength} in order to return the length of an array passed in (remember from above that an array is just stored as pointer).
 This will return the number of elements in the array, not the number of contiguous bytes in memory the array takes up.
 To make this easier, we will guarantee that the last element of the array is 0, and no other element will be equal to 0.
-We pass in the sizeof each element, which you can choose to use, but it is definitely not necessary.
+We pass in the sizeof of each element, which you can choose to use, but it is definitely not necessary.
 
 Also in \filename{lab7.cpp}, fill in the function \functionname{swapValues}, which takes in two raw pointers and swaps the values stored at those addresses in memory.
 
