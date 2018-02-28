@@ -5,3 +5,4 @@ Publish
 *.aux
 *.log
 *.out
+*.synctex.gz
