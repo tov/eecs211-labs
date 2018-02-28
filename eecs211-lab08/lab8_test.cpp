@@ -45,33 +45,33 @@ TEST(B_MOVEFORDISTANCE){
 
 TEST(C_MOVEFORDISTANCE){
     shared_ptr<Vehicle> c = make_shared<Car>();
-    CHECK_EQUAL(move_for_distance(c, 60), 2);
-    CHECK_EQUAL(move_for_distance(c, 80), 3);
-    CHECK_EQUAL(move_for_distance(c, 40), 2);
+    CHECK_EQUAL(2, move_for_distance(c, 60));
+    CHECK_EQUAL(3, move_for_distance(c, 80));
+    CHECK_EQUAL(2, move_for_distance(c, 40));
 }
 
 TEST(P_MOVEFORDISTANCE){
     shared_ptr<Vehicle> p = make_shared<Plane>();
-    CHECK_EQUAL(move_for_distance(p, 200), 2);
-    CHECK_EQUAL(move_for_distance(p, 150), 2);
-    CHECK_EQUAL(move_for_distance(p, 300), 3);
+    CHECK_EQUAL(2, move_for_distance(p, 200));
+    CHECK_EQUAL(2, move_for_distance(p, 150));
+    CHECK_EQUAL(3, move_for_distance(p, 300));
 }
 
 TEST(B_MOVEFORTIME){
     shared_ptr<Vehicle> m = make_shared<Boat>("Motor Boat");
     shared_ptr<Vehicle> s = make_shared<Boat>("Sail Boat");
-    CHECK_EQUAL(move_for_time(s, 1), 20);
-    CHECK_EQUAL(move_for_time(m, 1), 50);
+    CHECK_EQUAL(20, move_for_time(s, 1));
+    CHECK_EQUAL(50, move_for_time(m, 1));
 }
 
 TEST(C_MOVEFORTIME){
     shared_ptr<Vehicle> c = make_shared<Car>();
-    CHECK_EQUAL(move_for_time(c, 1), 60);
+    CHECK_EQUAL(60, move_for_time(c, 1));
 }
 
 TEST(P_MOVEFORTIME){
     shared_ptr<Vehicle> p = make_shared<Plane>();
-    CHECK_EQUAL(move_for_time(p, 1), 200);
+    CHECK_EQUAL(200, move_for_time(p, 1));
 }
 
 TEST(RACE){
@@ -80,6 +80,6 @@ TEST(RACE){
     shared_ptr<Vehicle> p = make_shared<Plane>();
     vector<shared_ptr<Vehicle>> vehicles = {b, p, c};
     shared_ptr<Vehicle> winner = race(vehicles, 100);
-    CHECK_EQUAL(winner, p);
+    CHECK_EQUAL(p, winner);
 }
 
