@@ -14,6 +14,6 @@ add_library(graphics
         color.cpp
         color.h
         sample.h
-        )
+        ../../../lab8_main.cpp ../../../lab8_functions.h ../../../lab8_test.cpp)
 set_property(TARGET graphics PROPERTY CXX_STANDARD 14)
 set_property(TARGET graphics PROPERTY CXX_STANDARD_REQUIRED On)

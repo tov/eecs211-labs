@@ -6,30 +6,7 @@
 #include "Car.h"
 #include "Plane.h"
 #include "Boat.h"
-
-using namespace std;
-
-/// Move the vehicle until its position has changed by the specified distance (miles)
-void moveForDistance(Vehicle* v, double distance){
-
-    // [YOUR CODE HERE]
-}
-
-/// Move the vehicle until the specified amount of time has passed (hours)
-void moveForTime(Vehicle* v, double time){
-
-    // [YOUR CODE HERE]
-}
-
-/// Race a set of vehicles over a set distance. The function takes in a vector of Vehicle shared_ptrs
-/// Returns the shared_ptr to the Vehicle which wins the race,
-/// i.e. the vehicle that moves the distance in the least amount of time
-shared_ptr<Vehicle> race(vector<shared_ptr<Vehicle>> vehicles, double distance) {
-
-    // [YOUR CODE HERE]
-    return nullptr;
-
-}
+#include "lab8_functions.h"
 
 int main()
 {
@@ -57,8 +34,4 @@ int main()
     if (winner != nullptr)
         cout << "The winner of the race over 100 miles is the: " << winner->vehicleType() << "!\n";
 
-
 }
-
-
-

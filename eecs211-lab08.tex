@@ -5,7 +5,7 @@
 
 \title{EECS 211 Lab 8}
 \author{Inheritance}
-\date{Winter 2017}
+\date{Winter 2018}
 
 \begin{document}
 
@@ -23,7 +23,7 @@ Download the zip file from the course site: \medskip
 \medskip \noindent
 After you have downloaded the zip file onto your laptop, extract the zip file into its own folder. Make sure you keep track of which folder it's in!  Next, open up CLion and Click on File --> Open Project, and click on the Lab 8 project that you just unzipped. 
 
-Once you open the project, try building the lab and then running the lab6 executable. 
+Once you open the project, try building the lab and then running the lab8 executable. 
 You should see some output printed in your output subwindow.
 If you need a reminder on how to build and run code in CLion, consult lab 3/4 or ask your TA.
 Once this works, you're ready to start the lab!
@@ -116,7 +116,7 @@ class Circle: public Shape {
         double area(){
             // area for circle = 
             // .5 * perimeter * radius
-            return .5 * perimeter * radius_;
+            return .5 * perimeter_ * radius_;
         }
         void print(){
             cout<<"I am a Circle! \n";
@@ -134,8 +134,8 @@ Virtual functions are functions defined in a base class that will give the deriv
 Let's say we have our \functionname{print} function for our Shape base class as defined above, with one difference - let's suppose that the \functionname{print} isn't virtual.
 If that function was not virtual, and you were to write the following code (assuming we have the shapes from above, where both the \varname{Shape} and each of the derived classes have a \functionname{print} function defined):
 \begin{Code}
-    Circle* circ;
-    Shape* shp = circ;
+    Circle circ;
+    Shape* shp = &circ;
     shp->print();
     // --> Outputs:
     // "I am a Shape!"
@@ -148,8 +148,8 @@ Now, if our \varname{Shape} defined its \functionname{print} function as a virtu
 This is illustrated below:
 
 \begin{Code}
-    Circle* circ;
-    Shape* shp = circ;
+    Circle circ;
+    Shape* shp = &circ;
     shp->print();
     // Outputs:
     // "I am a Circle!"
@@ -159,7 +159,7 @@ As you get more practice with inheritance, this will become increasingly useful!
 
 \subsection{Pure Virtual Functions}
 A pure virtual function is very similar to a virtual function.
-A pure virtual function is a virtual function that is required to implemented by a derived class that is not abstract.
+A pure virtual function is a virtual function that is required to be implemented by a derived class that is not abstract.
 This means that a derived class which is not abstract\marginnote{A non-abstract class doesn't have any pure virtual methods, like Circle in our example above.} \textbf{\textit{must}} implement the pure virtual function. We denote a pure virtual function by placing "= 0" in its declaration. For example, in the Shape class we used above, we could make \functionname{print} a pure virtual function as follows:
 \begin{Code}
 class Shape{
@@ -196,7 +196,7 @@ For the \varname{Boat} class, assume the boat's speed to be 20 mph if it's a sai
 Use this to determine a speed, and again move the boat's inherited position.
 
 \subsection{Implement moveForDistance and moveForTime}
-Now, once you define these functions, go to your \filename{lab8.cpp} File, and fill in two functions:
+Now, once you define these functions, go to your \filename{lab8Functions.cpp} File, and fill in two functions:
 \functionname{moveForDistance} and \functionname{moveForTime}. \newline \medskip
 
 For \functionname{moveForDistance}, move the \varname{Vehicle} passed in using its \functionname{Drive} function until the position has changed by the specified \varname{distance}. \newline \medskip
