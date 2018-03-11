@@ -11,7 +11,7 @@ private:
 
 public:
     Bank();
-
+    double convertToFaraneheit(double);
     const std::vector<Person>& accounts() const;
     double stealMoney();
 };

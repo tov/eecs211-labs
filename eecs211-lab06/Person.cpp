@@ -10,6 +10,7 @@ using namespace std;
 // Note that bank_balance defaults to 0.0
 Person::Person(const string& n, int s)
         : Person(n, s, 0.0)
+
 { }
 
 // This is also a Person constructor... but it takes in different arguments
@@ -48,16 +49,16 @@ double Person::withdrawFromBank(double amount)
 
 const string& Person::name() const
 {
-    // [YOUR CODE HERE]
+    return name_;
 }
 
 int Person::ssn() const
 {
-    // [YOUR CODE HERE]
+    return ssn_;
 }
 
 double Person::bank_balance() const
 {
-    // [YOUR CODE HERE]
+    return bank_balance_;
 }
 

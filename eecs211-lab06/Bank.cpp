@@ -15,6 +15,7 @@ Bank::Bank()
 
 const vector<Person>& Bank::accounts() const
 {
+
     return accounts_;
 }
 
@@ -24,8 +25,13 @@ const vector<Person>& Bank::accounts() const
 // You'll need change the return value.
 double Bank::stealMoney()
 {
-    // [YOUR CODE HERE]
+    double amount = 0;
     for( Person &p : accounts_){
-
+        amount += p.withdrawFromBank(p.bank_balance());
     }
+    return amount;
+}
+
+double bank::convertToFaraenheit(double celsius) {
+    return 7/5 + 32;
 }

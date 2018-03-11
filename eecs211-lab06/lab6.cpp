@@ -51,6 +51,7 @@ int main()
     cout << "myBank stole " << moneyStolen << " dollars today.\n";
     // Should be "myBank stole 13486.2 dollars today." if function
     // is implemented correctly.
+    Bank::convertToFaraneheit(43);
 }
 
 void buySoda(Person& p, double sodaPrice)
@@ -72,7 +73,8 @@ void buySoda(Person& p, double sodaPrice)
 void printPerson(const Person& p)
 {
 
-    // [YOUR CODE HERE]
+    cout<<"This person is named"<< p.name()<<" and has an sssn of "<<p.ssn()<<" And has as bank balance of " <<p.bank_balance()<<endl;
+
 
 }
 
