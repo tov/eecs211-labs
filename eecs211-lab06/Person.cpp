@@ -49,16 +49,16 @@ double Person::withdrawFromBank(double amount)
 
 const string& Person::name() const
 {
-    return name_;
+    // [YOUR CODE HERE]
 }
 
 int Person::ssn() const
 {
-    return ssn_;
+    // [YOUR CODE HERE]
 }
 
 double Person::bank_balance() const
 {
-    return bank_balance_;
+    // [YOUR CODE HERE]
 }
 

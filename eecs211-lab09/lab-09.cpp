@@ -11,23 +11,21 @@ T square(T num) {
 }
 
 // struct template
-
 template <typename T>
 struct ListNode {
     T value;
     ListNode<T>* next;
 };
 
+//Iterator Example
 template <typename Fwd_iter>
 void print_container(Fwd_iter start, Fwd_iter limit) {
     for(Fwd_iter i = start; i != limit; i++) {
         cout << *i <<"\n";
-}
+    }
 }
 
 // Review Practice
-
-
 void rawPtrCode() {
     int* rawPtr = new int();
     *rawPtr = 211;
