@@ -1,7 +1,5 @@
-cmake_minimum_required(VERSION 3.6)
-project(eecs211_lab09)
+cmake_minimum_required(VERSION 3.3)
+project(lab9 CXX)
+include(.eecs211/CMakeLists.txt)
 
-set(CMAKE_CXX_STANDARD 14)
-
-set(SOURCE_FILES lab-09.cpp)
-add_executable(eecs211_lab09 ${SOURCE_FILES})
+add_program(lab9 lab-09.cpp review_classes.cpp)

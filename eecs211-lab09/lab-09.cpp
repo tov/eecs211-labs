@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <list>
+#include "review_classes.cpp"
 
 using namespace std;
 
@@ -43,12 +44,24 @@ void ptrMath() {
     for(testPtr = dubArr; *testPtr != 7.0; testPtr++) {
         cout<<*testPtr<<"\n";
     }
+}
 
+Animal* get_oldest_animal(vector<Animal*> const &animals)
+{
+    Animal* oldest_animal = animals[0];
+    for(int i=1; i<animals.size(); i++)
+    {
+        if (animals[i]->age() > oldest_animal->age())
+        {
+            oldest_animal = animals[i];
+        }
+    }
+    return oldest_animal;
 }
 
 template <typename T, typename Fwd_iter>
 T add(Fwd_iter beg, Fwd_iter end) {
-    // Sum up all of the elements within the iterator range
+    // INSERT CODE HERE
 };
 
 int main() {
