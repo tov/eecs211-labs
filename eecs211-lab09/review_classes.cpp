@@ -36,4 +36,10 @@ public:
     {
         //insert code here
     }
+    double real(){
+        return real_;
+    }
+    double imaginary(){
+        return imaginary_;
+    }
 };
