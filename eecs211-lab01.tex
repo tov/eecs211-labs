@@ -8,14 +8,14 @@
 
 \title{EECS 211 Lab 1}
 \author{Navigating the Unix Shell}
-\date{Winter 2017}
+\date{Winter 2019}
 
 \begin{document}
 
 \maketitle
 
 Today we are going over the basics of how to log into a remote computer,
-use shell commands to create and edit files, and compile and run C++
+use shell commands to create and edit files, and compile and run C
 code. The Northwestern EECS servers run a Unix shell called
 \progname{tcsh}.\marginnote{Using \progname{tcsh} is very similar to using
 \progname{bash}, the default shell that Macs use for Terminal.app.}
@@ -162,7 +162,7 @@ files well organized.
 Create a new directory inside your home directory called
 \filename{lab1-dir}. Change your current working directory to
 \filename{lab1-dir}, and we will now practice editing and compiling
-some C++ files!
+some C source files!
 
 The \cmdline{emacs} command in the shell will open up the Emacs text%
 \marginnote{Text editor preferences can be a fairly contentious issue
@@ -179,8 +179,8 @@ my\_code.cpp} and you can start editing a file called
 \filename{my\_code.cpp} within your current working directory.
 
 Inside your \filename{lab1-dir} directory create and open a file
-using Emacs called \filename{animals.txt}. Note that the .cpp file
-extension is what we will be using to indicate C++ files. You will see a
+using Emacs called \filename{animals.txt}. Note that the .c file
+extension is what we will be using to indicate C files. You will see a
 text editor pop up that does not look dissimilar to a
 \progname{Notepad.exe} or \progname{TextEdit.app} editor from your
 Windows or Mac. However, you will notice that clicking a location using
@@ -210,95 +210,17 @@ We can ensure that our file was properly created by using the
 you run \cmdline{cat animals.txt} you should see the file you just
 created on your shell.
 
-\section{Sending files back home (ET phone home)}
-
-Now, if everything worked, we are going to want to bring our list of our
-favorite animals back to our normal computers so we can access it
-easier, as it is something that is very essential in our lives.  We can
-do this using a program called \progname{scp}.
-
-\progname{scp} stands for secure copy protocol, and securely copies
-files to and from a remote box.  For example the command \cmdline{scp
-\metavar{filename} \metavar{remote-directory}} will securely copy
-\metavar{filename} to the remote directory. This also works in the
-reverse direction.  And since we are trying to get our list of our
-favorite animals back to our computer, we will be using that reverse
-direction (\cmdline{scp \metavar{remote-file} \metavar{local-directory}}).
-
-\subsection{Mac/Linux}
-
-On Mac, open up a second terminal window (This can be done easily by
-pressing \keycombo{Cmd-N} if you are currently on a terminal window).
-
-Navigate to a local directory where you want to keep your
-\filename{animals.txt} file using \progname{cd}, and/or create one using
-\progname{mkdir}.  Now, use the \progname{scp} command to bring
-the file home!  This will look something like the following:
-
-\begin{CmdLine}
-  \prompt scp \metavar{eecs-id}@\metavar{eecs-host}:lab1-dir/animals.txt .
-\end{CmdLine}
-
-\noindent
-Note the second argument is a single period, which signifies the current
-working directory to be the destination address, so \progname{scp} will copy the
-\filename{animals.txt} from the remote machine to the current working
-directory on your local, home machine. For example, my \progname{scp} command
-looked something like this:
-
-\begin{CmdLine}
-  \prompt scp wsc147@batman.eecs.northwestern.edu:lab1-dir/animals.txt .
-\end{CmdLine}
-
-Look around on your local directory to make sure \filename{animals.txt}
-exists; if it does you are all done!  If you aren't make sure you did
-things correctly, and if you need help, raise your hand for a peer
-mentor!
-
-\subsection{Windows}
-
-Using the search menu, search for the command prompt on your Windows
-machine.  Once you have this open, you can navigate to a directory you
-want to copy your \filename{animals.txt} to using the same \progname{cd}
-command as before, but instead of using \progname{ls}, on Windows you
-can use \progname{dir} instead. Once you have navigated to a directory
-you are comfortable with (such as the \filename{Desktop} or
-\filename{Documents} or what have you), we will be using the
-\progname{pscp}
-command that came with our PuTTY install.  This command will look
-something like this:
-
-\begin{CmdLine}
-  \prompt pscp \metavar{eecs-id}@\metavar{eecs-host}:lab1-dir/animals.txt .
-\end{CmdLine}
-
-\noindent
-Note the second argument is a single period, which signifies the current
-working directory to be the destination address, so \progname{scp} will copy the
-\filename{animals.txt} from the remote machine to the current working
-directory on your local, home machine. For example, my \progname{scp} command
-looked something like this:
-
-\begin{CmdLine}
-  \prompt pscp wsc147@batman.eecs.northwestern.edu:lab-dir/animals.txt .
-\end{CmdLine}
-
-Look around on your local directory to make sure \filename{animals.txt}
-exists, if it does you are all done! If you aren't make sure you did
-things correctly, and if you need help, raise your hand for a peer
-mentor!
-
 \section{Creating our build system}
 
-Back on our remote logins, please navigate to your home directories
-(using just the \cmdline{cd} command). Once your current working
-directory is your home directory, we are going to set up a configuration
-file so that you will be using the correct version of CMake, and that it
-will be correct each time you remotely login to your EECS account. Don't
-worry about understanding what is going on right here, it is something
-that just needs to be configured for this quarter. To do this we will be
-creating a file called \filename{.tcshrc} in your home directory (note
-the period, and ensure this name is spelled exactly
+Please navigate back to your home directory (using just the \cmdline{cd}
+command). Once your current working directory is your home directory, we
+are going to set up a configuration file so that you will be using the
+correct version of the toolchain (the C compiler and associated tools),
+and that it will be correct each time you remotely login to your EECS
+account. Don't worry about understanding what is going on right here, it
+is something that just needs to be configured for this quarter. To do
+this we will be creating a file called \filename{.tcshrc} in your home
+directory (note the period, and ensure this name is spelled exactly
 correct).\marginnote{Remember to create this file and edit it using
 Emacs we will type in \cmdline{emacs .tcshrc}.} Once this is open, type
 the following line exactly into your file, save, and exit it:
@@ -311,19 +233,19 @@ Now, for this time only, type in \cmdline{exec tcsh} into the shell to
 reload.
 
 Each time you open up your remote connection (including right now) and
-plan on using CMake (probably every time for first few weeks of the
+plan on compiling code (probably every time for first few weeks of the
 class), type the \cmdline{dev} command into your shell.  This will
 ensure that everyone is on the same (and correct) developer toolset.
 
 \section{Using our build system}
 
-As briefly mentioned in class, \progname{CMake} is our build system we
+As briefly mentioned in class, \progname{make} is our build system we
 will be using for the first few weeks of the course at least.  We will
 usually be giving some sort of starting structure for the projects you
 will work on, and right now is no exception.  This structure is found in
-a ZIP file which will need to be
-downloaded onto your remote shells.  We have a command called wget which
-will help download things from the internet for us.
+a ZIP file which will need to be downloaded onto your remote shells.
+Linux provides a command called \progname{wget} which will help download
+things from the internet for us.
 
 \progname{wget} stands for ``web get,'' and downloads things from the web using the
 following command format:
@@ -353,41 +275,32 @@ command to turn this file into a directory called
 \end{CmdLine}
 
 Now, once we have our new directory with its files, change your
-directory to \filename{eecs211-lab01} using the \progname{cd} command.  Now list
-its contents using \progname{ls}, and notice that there is a
-\filename{CMakeLists.txt} file, and a \filename{hello.cpp} file. The
-\filename{CMakeLists.txt} file is a CMake configuration file which you
-won't have to worry about too much, and the \filename{hello.cpp} file is
-a C++ file which we have provided you.
+directory to \filename{eecs211-lab01} using the \progname{cd} command.
+Now list its contents using \progname{ls}, and notice that there is a
+\filename{Makefile} file, and a \filename{src/} directory. The
+\filename{Makefile} file is a \progname{make} configuration file which
+you won't have to worry about too much right now; the \filename{src/}
+directory contains the file \progname{hello.c}, which we have provided
+you.
 
-When using CMake, you will want to create a subdirectory to do your
-building and create your executable files the first time you set up each
-project.  To do this create a subdirectory called \filename{build} using
-\progname{mkdir}, and change that to be your current working directory.
-Then, the first time you set up each project, you will use the
-\progname{cmake} command like so: \cmdline{cmake ..}\marginnote{Note the
-  two periods, signifying the directory up one level, or in this case,
-the \filename{eecs211-lab01} directory.} to set up the build environment.  This should spit
-out some commands into the terminal, and if everything is successful,
-your CMake project is set up!
+You can build your program using the command \progname{make}.
 
-Now, you can build your program using the command \progname{make}.
-
-The basic purpose of Make is to build your project into an executable file.
-In your build directory, each time you update your code, you can run
+The basic purpose of \progname{make} is to build your project into an
+executable file. In your build directory, each time you update your
+code, you can run
 
 \begin{CmdLine}
   \prompt make \metavar{target-name}
 \end{CmdLine}
 
 \noindent to create your executable called \metavar{target-name}.  In
-this case, run \cmdline{make hello} to build a program called
-\filename{hello}.  In your build directory, if you list its contents, you
-will see a few more CMake files, but you should also now see a file
-called \filename{hello}, which is your executable you can now run:
+this case, run \cmdline{make build/hello} to build a program called
+\filename{hello}, which will be put in a directory called
+\filename{build/} (which \progname{make} will create for you as
+necessary). You can run the executable as follows:
 
 \begin{CmdLine}
-  \prompt ./hello
+  \prompt build/hello
 \end{CmdLine}
 
 \noindent
@@ -398,27 +311,24 @@ This should spit out a nice greeting.
 So, we gave you a basic function and you were able to run it, but how do
 you change the code?
 
-Navigate back up to your \filename{eecs211-lab01} directory using cd
-(\cmdline{cd ..}).  Now open up the \filename{hello.cpp} file using
-Emacs, and edit it so it now says ``Aloha 211 student!'' instead of
-``Hello 211 student!.'' Make sure to save and exit
-Emacs.\marginnote{Remember \keycombo{C-x C-s} to save and \keycombo{C-x
-C-c} to exit.}
+Open up the \filename{src/hello.c} file using Emacs, and edit it so it
+now says ``Aloha 211 student!'' instead of ``Hello 211 student!.'' Make
+sure to save and exit Emacs.\marginnote{Remember \keycombo{C-x C-s} to
+save and \keycombo{C-x C-c} to exit.}
 
-Go back to our build directory using cd.  Try running \cmdline{./hello}
-again. Did anything change?
+Then try running \cmdline{build/hello} again. Did anything change?
 
 The reason why you still see ``Hello 211 student!'' on your screen is
 because while you changed your C++ code, your computer doesn't
 understand the C++ code, but only the machine code you create by using
-\progname{make}.  So now, run \cmdline{make hello} once again, and try
-\cmdline{./hello}. Notice how you now have the correct output!  Each time
-we want to change our code, we are going to need to remember to rebuild
-our executable. Don't worry if you have error messages your first few
-times trying to write new code, this is completely normal.  Even the
-best developers in the world usually need a few tries before they can
-properly build their files, so just take a deep breath, and try and
-figure out what went wrong.
+\progname{make}.  So now, run \cmdline{make build/hello} once again, and
+try \cmdline{build/hello}. Notice how you now have the correct output!
+Each time we want to change our code, we are going to need to remember
+to rebuild our executable. Don't worry if you have error messages your
+first few times trying to write new code, this is completely normal.
+Even the best developers in the world usually need a few tries before
+they can properly build their files, so just take a deep breath, and try
+and figure out what went wrong.
 
 \section{Conclusion}
 
@@ -440,7 +350,7 @@ if you want any more challenges!
   \item[Lab 1 Project]
 \url{http://users.eecs.northwestern.edu/~jesse/course/eecs211/lab/eecs211-lab01.zip}
 
-\item[EECS Lab names]
+\item[EECS login server hostnames]
 \url{http://www.mccormick.northwestern.edu/eecs/documents/current-students/student-lab-hostnames.pdf}
 
 \item[Simple command line cheat sheet]
