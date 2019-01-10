@@ -7,7 +7,7 @@ Publish: $(PDFS) $(ZIPS)
 	ls $^ > $@
 
 %.zip: %
-	zip -r $@ $< -x '*/.idea/*' '*/cmake-debug-*'
+	zip -r $@ $< -x '*/.idea/*' '*/build/*' '*/cmake-debug-*'
 
 # The tufte-handout class we use works with pdflatex, but not
 # xelatex/lualatex.
