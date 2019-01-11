@@ -3,6 +3,8 @@
 
 % Be sure to check and update this:
 \def\PuTTYurl{https://the.earth.li/~sgtatham/putty/0.70/w32/putty-0.70-installer.msi}
+\def\ThisLabBase{eecs211-lab01}
+\def\ThisLabUrl{\LabBaseUrl/\ThisLabBase.tgz}
 
 \usepackage{eecs211-lab}
 
@@ -68,7 +70,7 @@ The link on the right will take you
 directly to the Windows installer.
 After you install PuTTY, open it up. You'll need to enter a hostname to
 login to. The link on the right will take you to a list of student lab
-hostnames\marginnote{\url{http://www.mccormick.northwestern.edu/eecs/documents/current-students/student-lab-hostnames.pdf}}
+hostnames\marginnote{\url{\LabHostnamesUrl}}
 (such as 
 \hostname{tlab-03.eecs.northwestern.edu}
 or
@@ -97,7 +99,7 @@ type a single command of the form
 \noindent where \metavar{eecs-id} is your EECS username (probably your NetID)
 and \metavar{eecs-host} is replaced by one of the EECS hostnames from the list
 of student lab hostnames%
-\marginnote{\url{http://www.mccormick.northwestern.edu/eecs/documents/current-students/student-lab-hostnames.pdf}}
+\marginnote{\url{\LabHostnamesUrl}}
 (such as \hostname{tlab-03.eecs.northwestern.edu} or
 \hostname{batman.eecs.northwestern.edu}).
 
@@ -243,7 +245,12 @@ As briefly mentioned in class, \progname{make} is our build system we
 will be using for the first few weeks of the course at least.  We will
 usually be giving some sort of starting structure for the projects you
 will work on, and right now is no exception.  This structure is found in
-a ZIP file which will need to be downloaded onto your remote shells.
+a .tgz
+\marginpar{
+  The .tgz file extension is used for “gzipped tarballs”, which are like
+  the Linux equivalent of .ZIP files.
+}
+file that you need to downloaded onto your remote shell.
 Linux provides a command called \progname{wget} which will help download
 things from the internet for us.
 
@@ -256,26 +263,27 @@ following command format:
 
 \noindent
 For this example, we will be getting our file from this url:
-\url{http://users.eecs.northwestern.edu/~jesse/course/eecs211/lab/eecs211-lab01.zip}.
-So therefore, our command will be:
+\url{\ThisLabUrl}. However, the shell setup we did earlier defined
+an \emph{environment variable} to contain the URL of the EECS 211
+website. Thus, our command will be:
 
 \begin{CmdLine}
-  \prompt wget http://users.eecs.northwestern.edu/~jesse/course/eecs211/lab/eecs211-lab01.zip
+  \prompt wget \$URL211/\ThisLabBase.tgz
 \end{CmdLine}
 
 Once we have our ZIP file, we will need to turn it from a compressed
-file into a new directory, using the \progname{unzip} command.
+file into a new directory, using the \progname{tar} command.
 Don't worry too much
 about what this is, just understand what it does.  Use the following
 command to turn this file into a directory called
-\filename{eecs211-lab01}:
+\filename{\ThisLabBase}:
 
 \begin{CmdLine}
-  \prompt unzip eecs211-lab01.zip
+  \prompt tar xf \ThisLabBase.tgz
 \end{CmdLine}
 
 Now, once we have our new directory with its files, change your
-directory to \filename{eecs211-lab01} using the \progname{cd} command.
+directory to \filename{\ThisLabBase} using the \progname{cd} command.
 Now list its contents using \progname{ls}, and notice that there is a
 \filename{Makefile} file, and a \filename{src/} directory. The
 \filename{Makefile} file is a \progname{make} configuration file which
@@ -348,10 +356,10 @@ if you want any more challenges!
 \begin{description}
 
   \item[Lab 1 Project]
-\url{http://users.eecs.northwestern.edu/~jesse/course/eecs211/lab/eecs211-lab01.zip}
+\url{\ThisLabUrl}
 
 \item[EECS login server hostnames]
-\url{http://www.mccormick.northwestern.edu/eecs/documents/current-students/student-lab-hostnames.pdf}
+\url{\LabHostnamesUrl}
 
 \item[Simple command line cheat sheet]
 \url{http://www.computerworld.com/article/2598082/linux/linux-linux-command-line-cheat-sheet.html}
