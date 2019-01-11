@@ -247,8 +247,10 @@ usually be giving some sort of starting structure for the projects you
 will work on, and right now is no exception.  This structure is found in
 a .tgz
 \marginpar{
-  The .tgz file extension is used for “gzipped tarballs”, which are like
-  the Linux equivalent of .ZIP files.
+  The .tgz file extension is used for
+  “\href{https://en.wikipedia.org/wiki/Gzip}{gzipped}
+  \href{https://en.wikipedia.org/wiki/Tar_(computing)}{tarball},” which
+  is like the Linux equivalent of a .ZIP file.
 }
 file that you need to downloaded onto your remote shell.
 Linux provides a command called \progname{wget} which will help download
@@ -271,11 +273,9 @@ website. Thus, our command will be:
   \prompt wget \$URL211/\ThisLabBase.tgz
 \end{CmdLine}
 
-Once we have our ZIP file, we will need to turn it from a compressed
-file into a new directory, using the \progname{tar} command.
-Don't worry too much
-about what this is, just understand what it does.  Use the following
-command to turn this file into a directory called
+Once we have our .tgz file, we will need to turn it from a compressed
+file into a new directory, using the \progname{tar} command. Use the
+following command to extract archive file into a directory called
 \filename{\ThisLabBase}:
 
 \begin{CmdLine}
