@@ -1,14 +1,11 @@
 TEXS = $(wildcard eecs211-lab*.tex)
 PDFS = $(TEXS:.tex=.pdf)
 ZIPS = $(TEXS:.tex=.zip)
+TGZS = $(TEXS:.tex=.tgz)
 
-Publish: $(PDFS) $(ZIPS)
+Publish: $(PDFS) $(ZIPS) $(TGZS)
 	echo index.html > $@
 	ls $^ > $@
-
-%.zip: %
-	zip -r $@ $< \
-	  -x '*/.idea/*' '*/build/*' '*/cmake-build-*/*' '*/.*.swp'
 
 # The tufte-handout class we use works with pdflatex, but not
 # xelatex/lualatex.
@@ -16,13 +13,4 @@ Publish: $(PDFS) $(ZIPS)
 	( cd build; pdflatex -interaction=nonstopmode ../$< )
 	cp build/$@ .
 
-build/%: % | build/
-	cp $< $@
-
-build/:
-	mkdir -p $@
-
-clean:
-	git clean -xfd
-
-.PHONY: clean
+include ../../lib/Makefile
