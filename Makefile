@@ -23,6 +23,6 @@ build/:
 	mkdir -p $@
 
 clean:
-	git clean -xf
+	git clean -xfd
 
 .PHONY: clean
