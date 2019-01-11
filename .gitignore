@@ -1,5 +1,6 @@
 build/
 Publish
+*.tgz
 *.zip
 *.pdf
 *.aux
