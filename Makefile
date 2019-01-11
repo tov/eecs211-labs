@@ -7,17 +7,22 @@ Publish: $(PDFS) $(ZIPS)
 	ls $^ > $@
 
 %.zip: %
-	zip -r $@ $< -x '*/.idea/*' '*/build/*' '*/cmake-debug-*'
+	zip -r $@ $< \
+	  -x '*/.idea/*' '*/build/*' '*/cmake-build-*/*' '*/.*.swp'
 
 # The tufte-handout class we use works with pdflatex, but not
 # xelatex/lualatex.
-%.pdf: %.tex eecs211-lab.sty
-	mkdir -p build
-	cp eecs211-lab.sty build
+%.pdf: %.tex build/eecs211-lab.sty | build/
 	( cd build; pdflatex -interaction=nonstopmode ../$< )
 	cp build/$@ .
 
+build/%: % | build/
+	cp $< $@
+
+build/:
+	mkdir -p $@
+
 clean:
-	git clean -fX
+	git clean -xf
 
 .PHONY: clean
