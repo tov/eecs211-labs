@@ -2,6 +2,7 @@
 
 CFLAGS     = -std=c11 -pedantic -Wall
 # CFLAGS    += -fsanitize=address -fsanitize=undefined
+LDFLAGS    =
 
 all: test build/lab2
 
@@ -9,10 +10,10 @@ test: build/lab2_test
 	build/lab2_test
 
 build/lab2: build/lab2.o
-	cc -o $@ $^ $(CFLAGS)
+	cc -o $@ $^ $(CFLAGS) $(LDFLAGS)
 
 build/lab2_test: build/lab2_test.o
-	cc -o $@ $^ $(CFLAGS)
+	cc -o $@ $^ $(CFLAGS) $(LDFLAGS)
 
 build/%.o: src/%.c | build/
 	cc -o $@ -c $< $(CFLAGS)
