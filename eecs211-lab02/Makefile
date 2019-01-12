@@ -8,7 +8,7 @@ all: test build/lab2
 test: build/lab2_test
 	build/lab2_test
 
-build/lab2: build/lab2.o build/lib211.o
+build/lab2: build/lab2.o
 	cc -o $@ $^ $(CFLAGS)
 
 build/lab2_test: build/lab2_test.o
@@ -28,7 +28,3 @@ clean:
 
 # Targets that are not actually files we can build:
 .PHONY: all test clean
-
-# Dependencies:
-build/lab2.o: src/lib211.h
-build/lib211.o: src/lib211.h
