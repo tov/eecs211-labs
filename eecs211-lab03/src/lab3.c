@@ -1,5 +1,6 @@
 #include <stdbool.h>
 #include<stdio.h>
+#include<ctype.h> //to get tolower and toupper 
 #define NORMAL 0
 #define UPPERCASE  1
 #define LOWERCASE  2
@@ -31,20 +32,6 @@ const char *str_str(const char *haystack, const char *needle)
         haystack++;
     }
     return NULL;
-}
-
-char to_upper(char s)
-{
-    if (s >= 'a' && s <= 'z')
-        return 'A'+(s-'a');
-    return s;
-}
-
-char to_lower(char s)
-{
-    if (s >= 'A' && s <= 'Z')
-        return 'a'+(s-'A');
-    return s;
 }
 
 char* interpolate(const char* format, const char* args[], char * buffer)
@@ -88,12 +75,12 @@ char* interpolate(const char* format, const char* args[], char * buffer)
                     }
                     case UPPERCASE:
                     {
-                        *buffer = to_upper(*args[argc]);
+                        *buffer = toupper(*args[argc]);
                         break;
                     }
                     case LOWERCASE:
                     {
-                        *buffer = to_lower(*args[argc]);
+                        *buffer = tolower(*args[argc]);
                     }
                 }
                 args[argc]++;
