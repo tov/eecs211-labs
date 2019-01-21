@@ -2,6 +2,8 @@
 // #include "../lab3.h"
 
 #include <assert.h>
+// for NULL:
+#include <stddef.h>
 
 char *str_chr(const char *s, char c);
 

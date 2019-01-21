@@ -81,7 +81,7 @@ char* interpolate(const char* format, const char* args[], char * buffer)
 			{
 				switch (modifier)
 				{
-					case NORMAL
+					case NORMAL:
 					{
 						*buffer=*args[argc];
 					}
@@ -89,7 +89,7 @@ char* interpolate(const char* format, const char* args[], char * buffer)
 					{
 						*buffer=to_upper(*args[argc]);
 					}
-					case LOWECASE:
+					case LOWERCASE:
 					{
 						*buffer = to_lower(*args[argc]);
 					}

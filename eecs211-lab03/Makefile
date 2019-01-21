@@ -9,8 +9,8 @@ all: build/lab3 build/lab3_test
 test: build/lab3_test
 	build/lab3_test
 
-CC.c    = cc -o $@ $^ $(CFLAGS) $(LDFLAGS)
-LINK.c  = cc -o $@ -c $< $(CFLAGS)
+LINK.c  = cc -o $@ $^ $(CFLAGS) $(LDFLAGS)
+CC.c    = cc -o $@ -c $< $(CFLAGS)
 
 build/lab3: build/lab3.o
 	$(LINK.c)
