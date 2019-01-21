@@ -12,19 +12,13 @@ test: build/lab3_test
 LINK.c  = cc -o $@ $^ $(CFLAGS) $(LDFLAGS)
 CC.c    = cc -o $@ -c $< $(CFLAGS)
 
-build/lab3: build/lab3.o
+build/lab3: src/lab3.c
+	@mkdir -p build
 	$(LINK.c)
 
-build/lab3_test: build/lab3_test.o build/lab3.o
-	$(LINK.c)
-
-build/%.o: src/%.c
+build/lab3_test: src/lab3.c test/lab3_test.c
 	@mkdir -p build
-	$(CC.c)
-
-build/%.o: test/%.c
-	@mkdir -p build
-	$(CC.c)
+	$(LINK.c) -DUSE_TEST_MAIN
 
 clean:
 	rm -Rf build

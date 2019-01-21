@@ -114,6 +114,8 @@ char* interpolate(const char* format, const char* args[], char * buffer)
 
 // Your new function goes here
 
+#ifndef USE_TEST_MAIN
+
 int main(){
     const char *args[3]={"211","IS","great"};
     printf(str_chr("hello NU\n",' '));
@@ -123,3 +125,5 @@ int main(){
     printf(interpolate("Doing labs for {} {v} {^}",args,buffer));
     return 0;
 }
+
+#endif

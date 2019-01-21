@@ -19,4 +19,5 @@ void test_str_chr()
 
 int main()
 {
+    test_str_chr();
 }
