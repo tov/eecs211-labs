@@ -1,9 +1,6 @@
 #include <stdbool.h>
 #include<stdio.h>
 #include<ctype.h> //to get tolower and toupper 
-#define NORMAL 0
-#define UPPERCASE  1
-#define LOWERCASE  2
 
 const char *str_chr(const char *s, char c)
 {
@@ -36,13 +33,14 @@ const char *str_str(const char *haystack, const char *needle)
 
 char* interpolate(const char* format, const char* args[], char * buffer)
 {
-    int modifier = NORMAL;
+    enum Modifier {normal,uppercase, lowercase} modifier = normal;
     int argc = 0;
     char *start = buffer;
     while (*format)
     {
         if (*format == '{')
         {
+			modifier = normal;
             format++;
             while (*format != '}')
             {
@@ -50,12 +48,12 @@ char* interpolate(const char* format, const char* args[], char * buffer)
                 {
                     case '^':
                     {
-                        modifier = UPPERCASE;
+                        modifier = uppercase;
                         break;
                     }
                     case 'v':
                     {
-                        modifier = LOWERCASE;
+                        modifier = lowercase;
                         break;
                     }
                     default:
@@ -68,17 +66,17 @@ char* interpolate(const char* format, const char* args[], char * buffer)
             {
                 switch (modifier)
                 {
-                    case NORMAL:
+                    case normal:
                     {
                         *buffer = *args[argc];
                         break;
                     }
-                    case UPPERCASE:
+                    case uppercase:
                     {
                         *buffer = toupper(*args[argc]);
                         break;
                     }
-                    case LOWERCASE:
+                    case lowercase:
                     {
                         *buffer = tolower(*args[argc]);
                     }
