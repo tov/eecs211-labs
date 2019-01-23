@@ -33,18 +33,17 @@ of student lab hostnames (such as \hostname{tlab-03.eecs.northwestern.edu} or
 When prompted, type in your EECS username and password (not necessarily your NetID password), press
 Enter again, and you should be logged in remotely!
 
-\section{Getting the code}
-Recall our basic Unix commands: \progname{cd}, \progname{ls}, \progname{mkdir}, and \progname{pwd}. What do they stand for and what do they do? Ask your TA if you don't remember.\marginnote{Or ask Google.} Use the following \progname{wget} command to download the code into your directory of choice. We suggest that you keep your EECS 211 files in an \filename{eecs211/} subdirectory of your home directory, but it's up to you.
+\section{Getting the code} Recall our basic Unix commands:
+\progname{cd}, \progname{ls}, \progname{mkdir}, and \progname{pwd}. What
+do they stand for and what do they do? Ask your TA if you don't
+remember.\marginnote{Or ask Google.} Use the following
+\progname{curl}-and-\progname{tar} pipeline to download and extract the
+code into your directory of choice. We suggest that you keep your EECS
+211 files in an \filename{eecs211/} subdirectory of your home directory,
+but it's up to you.
 
 \begin{CmdLine}
-  \prompt wget \$URL211/\ThisLabBase.tgz
-\end{CmdLine}
-
-Once we have our .tgz file, we will need to turn it from a compressed
-file into a new directory, using the \progname{tar} command:
-
-\begin{CmdLine}
-  \prompt tar xvf \ThisLabBase.tgz
+  \prompt curl \$URL211/lab/\ThisLabBase.tgz | tar zxv
 \end{CmdLine}
 
 You should now have a directory called \filename{\ThisLabBase}.
