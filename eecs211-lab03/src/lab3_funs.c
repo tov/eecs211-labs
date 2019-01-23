@@ -9,7 +9,7 @@ const char *str_chr(const char *s, char c)
     return s;
 }
 
-bool is_prefix_of(const char* haystack, const char* needle)
+bool is_prefix_of(const char *haystack, const char *needle)
 {
     while(*needle && *needle == *haystack) 
     {
@@ -31,7 +31,7 @@ const char *str_str(const char *haystack, const char *needle)
     return NULL;
 }
 
-void interpolate(const char* format, const char* args[], char * buffer)
+void interpolate(const char *format, const char *args[], char *buffer)
 {
     enum Modifier {normal,uppercase, lowercase} modifier = normal;
     int argc = 0;
