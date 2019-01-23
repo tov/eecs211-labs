@@ -1,11 +1,7 @@
-// need to make this work:
-// #include "../lab3.h"
+#include "../src/lab3_funs.h"
 
 #include <assert.h>
-// for NULL:
-#include <stddef.h>
-
-char *str_chr(const char *s, char c);
+#include <stddef.h>             // for NULL
 
 void test_str_chr()
 {
