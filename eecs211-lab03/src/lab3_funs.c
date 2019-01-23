@@ -31,11 +31,10 @@ const char *str_str(const char *haystack, const char *needle)
     return NULL;
 }
 
-char* interpolate(const char* format, const char* args[], char * buffer)
+void interpolate(const char* format, const char* args[], char * buffer)
 {
     enum Modifier {normal,uppercase, lowercase} modifier = normal;
     int argc = 0;
-    char *start = buffer;
     while (*format)
     {
         if (*format == '{')
@@ -58,7 +57,7 @@ char* interpolate(const char* format, const char* args[], char * buffer)
                     }
                 default:
                     {
-                        return NULL;
+                        // ignore
                     }
                 }
             }
@@ -94,6 +93,5 @@ char* interpolate(const char* format, const char* args[], char * buffer)
         format++;
     }
     *buffer = *format;
-    return start;
 }
 

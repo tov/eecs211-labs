@@ -13,10 +13,8 @@ int main(int argc, const char *argsv[] )
                     "---------\n";
 
     if (argc == 4) {
-        printf("interpolation result:%s\n",
-                interpolate("Doing labs for {} {v} {^}",
-                ++argsv,
-                buffer));
+        interpolate("Doing labs for {} {v} {^}", ++argsv, buffer);
+        printf("interpolation result:%s\n", buffer);
     } else {
         fprintf(stderr, "unexpected number of arguments\n");
     }
