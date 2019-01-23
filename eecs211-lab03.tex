@@ -144,7 +144,7 @@ that you will fill in text any time you see \texttt{\{\}}. So, a string that
 looks like \texttt{"Hello \{\}!"} with and argument of \texttt{"Jason"} would return
 \texttt{"Hello Jason"}. As well, we want to allow our format strings to have
 modifiers. If you just see \texttt{\{\}}, then return exactly what you got as
-input but if you see \texttt{\{\^\}} then make the input uppercase and if you see
+input but if you see \verb!{^}! then make the input uppercase and if you see
 \texttt{\{v\}} then make the input lowercase. This is a complex problem so it might be useful to break it down into the component parts: identifying format string and modifiers, filling the string in (modified).
 
 Once you have this done, make and run lab3, and see if this feature is working!
