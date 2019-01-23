@@ -1,185 +1,111 @@
 \RequirePackage{fixltx2e}
 \documentclass{tufte-handout}
 
+\def\ThisLabBase{eecs211-lab03}
+\def\ThisLabUrl{\LabBaseUrl/\ThisLabBase.tgz}
+
 \usepackage{eecs211-lab}
 \title{EECS 211 Lab 3}
-\author{Using CLion, and more practice with Vectors and Loops}
+\author{Strings}
 \date{Winter 2018}
 
 \begin{document}
 
 \maketitle
 
-Today we will be installing an IDE (Integrated Development Environment) called CLion to make development of our C++ programs a little bit easier.  In addition, we will be practicing the programming tools we've learned over the last few weeks!
+Today we are going to practice manipulating "strings".
 
-\section{Installing CLion}
-
-The first thing we will be doing today will be installing CLion in order
-to make writing C++ programs easier and more user friendly.  First, go
-to JetBrains's\marginnote{JetBrains is the developer of CLion and lots
-of other developer tools} website and apply for a student account:
-\medskip
-
-\url{www.jetbrains.com/shop/eform/students} \medskip
-
-\noindent
-Once you submit your information, you will be receiving a confirmation
-email.  Click confirm, then you will immediately receive a second email
-with a link to complete your JetBrains registration. For the installation of CLion, we will have slightly different steps for Windows and Mac laptops:
+\section{Getting Started}
+Let's get started by logging into a remote Northwestern server. We did this last week, but if you need help remembering the steps, they are included below.\marginnote{The list of remote Northwestern servers can be found here: \url{http://www.mccormick.northwestern.edu/eecs/documents/current-students/student-lab-hostnames.pdf}}
 
 \subsection{Windows}
+Open PuTTY. You'll need to enter a hostname to login to. The link on the right will take you to a list of student lab hostnames (such as  \hostname{tlab-03.eecs.northwestern.edu} or \hostname{batman.eecs.northwestern.edu}).  Ensure SSH is selected, then press Open. When prompted, enter your EECS username and password (not necessarily the same as your NetID password) and you're good to go.
 
-Before installing CLion on Windows, you need to install a C++
-toolchain.\marginnote{A toolchain consists of a compiler and other
-programming tools.} Download MinGW from here:
+\subsection{Mac/Linux}
+Open up your terminal. At the prompt, use the ssh command of the form
+\begin{CmdLine}
+  \prompt ssh \metavar{eecs-id}@\metavar{eecs-host}.eecs.northwestern.edu
+\end{CmdLine}
+\noindent where \metavar{eecs-id} is your EECS username (probably your NetID)
+and \metavar{eecs-host} is replaced by one of the EECS hostnames from the list
+of student lab hostnames (such as \hostname{tlab-03.eecs.northwestern.edu} or
+\hostname{batman.eecs.northwestern.edu}).
+When prompted, type in your EECS username and password (not necessarily your NetID password), press
+Enter again, and you should be logged in remotely!
 
-\medskip
-\url{http://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win32/Personal%20Builds/mingw-builds/installer/mingw-w64-install.exe/download}
-
-\medskip\noindent
-Follow the prompts to install MinGW---make sure to select the x86-64 architecture. Take note of where you install it, as you will have to
-configure CLion to find it.
-
-Then go to this link to get CLion:
-
-\medskip
-\url{https://www.jetbrains.com/clion/}
-
-\medskip\noindent
-Press Download, then install CLion through their steps
-and login to your JetBrains account in order to activate your CLion
-editor. When prompted for the toolchain location, provide the path where
-you installed MinGW; this should be a directory that contains
-subdirectories with names like \filename{bin} and \filename{lib}. Check
-all of the ``Create associations'' boxes when they appear. Besides that,
-the default installation settings should work fine.\marginnote{Don't
-worry about Plugins.}
-
-
-\subsection{Mac}
-
-OS X automatically installs its toolchain\marginnote{A toolchain
-consists of a compiler and other programming tools.} when you
-attempt to use it from the command line for the first time. Thus, to
-install developer tools, run the \progname{Terminal.app} program (from
-\filename{/Applications/Utilities}) to get a command prompt. At the prompt, type
+\section{Getting the code}
+Recall our basic Unix commands: \progname{cd}, \progname{ls}, \progname{mkdir}, and \progname{pwd}. What do they stand for and what do they do? Ask your TA if you don't remember.\marginnote{Or ask Google.} Use the following \progname{wget} command to download the code into your directory of choice. We suggest that you keep your EECS 211 files in an \filename{eecs211/} subdirectory of your home directory, but it's up to you.
 
 \begin{CmdLine}
-  \prompt clang
+  \prompt wget \$URL211/\ThisLabBase.tgz
 \end{CmdLine}
 
-\noindent
-and press return. If it prints ``\texttt{clang: error: no input files}''
-then you have it installed already. Otherwise, a dialog box will pop up
-and offer to install the command-line developer tools for you. Say yes.
+Once we have our .tgz file, we will need to turn it from a compressed
+file into a new directory, using the \progname{tar} command:
 
-Then go to this link to get CLion:
+\begin{CmdLine}
+  \prompt tar xvf \ThisLabBase.tgz
+\end{CmdLine}
 
-\medskip
-\url{https://www.jetbrains.com/clion/}
+You should now have a directory called \filename{\ThisLabBase}.
 
-\medskip\noindent
-Press Download, then install CLion through their steps and login to your
-JetBrains account in order to activate your CLion editor. The default
-installation settings should work fine.\marginnote{Don't worry about
-Plugins.}
+\subsection{Setting up the build system}
+Type the \cmdline{dev} command into the shell to ensure that you are
+using the correct developer toolset. You must do this every time you
+open a remote connection and plan on compiling C code.
 
-\section{Using our first CLion Project}
+\section{Writing the code}
+Navigate to your \filename{\LabBaseUrl} directory, and open up
+\filename{src/lab2.c} in Emacs using
+\begin{CmdLine}
+  \prompt emacs -nw src/lab3.c
+\end{CmdLine}
+Notice that there is already some skeletons of functions and some code in \functionname{main()} here.
 
-Once you have CLion installed, download the zip file from the course
-site: \medskip
+\subsection{str_chr}
+First, find the function called \functionname{str_chr}.\marginnote{Notice that \functionname{str_chr} is going to return an char *.}We are going to use this function to determine if the character \varname{c} exists in the string \varname{s}. If you remember from class, we have a few ways of iterating, most notably \functionname{while} which is what you will use for this function.
 
-\url{http://users.eecs.northwestern.edu/~jesse/course/eecs211/lab/eecs211-lab03.zip} \medskip
+\subsection{While loops}
+As we learned in class, a \functionname{while} loop has the following
+syntax:\marginnote{Note that in while loops we usually will use a boolean expression for <expr> (an expression which returns True or False)}
 
-\noindent
-Once you have downloaded the zip file onto your laptop, extract the zip file into its own folder. Make sure you keep track of which folder it's in!  Next, open up CLion and Click on File --> Open Project, and click on the Lab 3 project that you just unzipped. 
-
-Once you open the project, test out the output from the program already loaded on your screen.  In order to do this, look into the top right corner of your CLion Window.  Press the button that has a down arrow with 1s and 0s.  This is the Build button.  This will essentially set up our CMake environment we previously would have to build on the command line.\marginnote{One big advantage of IDEs are their ability to abstract out the command line.} Then, press the arrow that looks like a play button just to the right of that, called the Run button.  The first time you press it, in the ``Executable'' line, click the dropdown menu down to ``lab3.''  Next hit Apply, then you can hit Run.  Notice in the subwindow on the bottom of your CLion window. You can now see our nice message in the output! This should remind you of DrRacket from EECS 111. You have a top window where you edit your code, and a bottom window which displays the output of your code when it runs.
-
-\section{Continuing with Vectors and structs}
-If you remember from class, a Vector is a way of storing a group of items together of the same type.  The basic syntax of a vector for a declaration is:
 \begin{Code}
-vector<type> varName;
-\end{Code}
-
-You can initialize the vector with a set of values using the following notation:
-\begin{Code}
-vector<type> varName = {var1, var2, varN};
-\end{Code}
-
-Notice in the lab that we created a struct called \varname{Dog} which is
-located in our \filename{Dog.h} which has a few member variables.
-In this lab, you will be the owner of a dog sanctuary, where you want to make sure that all the dogs are happy and getting along well together.
-Back in \filename{lab3.cpp}, in your main function, we created a few instances of Dogs and gave them names, ages, and happiness ratings.\marginnote{Note that the happiness rating is at the discretion of your assistant and may be wrong, but they're doing their best so cut them some slack!}
-We also created a vector of the type Dog called \varname{dogs}, initialized to contain all of the Dogs that we created.
-Feel free to create one or two of your own dogs and add them to the vector!
-
-
-The first thing that you will be doing is trying to find the youngest
-dog at your sanctuary, so that you can warn guests to the sanctuary
-about them teething on the guests' fingers.\marginnote{That could stop
-donations from coming in to help out all the dogs!}  Go to the function
-skeleton we gave you for \functionname{youngestDog} in
-\filename{Dog.cpp}, and try to write a function that will return the Dog
-who is the youngest. You will probably want to use a \functionname{for}
-loop, which you may recall has the form:
-\begin{Code}
-    for (size_t i = 0; i < vectorName.size(); ++i) {
-        // Do stuff here with i, for example:
-        cout << vectorName[i] << '\n';
+    while (<expr>) {
+        // Looping through code here
+        // Until <expr> is false
     }
 \end{Code}
 
-We put an example \functionname{foreach} loop in the main function to help you out.\marginnote{Remember that you should be returning the youngest Dog, not the youngest Dog's age.}
+Use a while loop inside our \functionname{str_chr} in order to see if \varname{c} is every equal to any one of the charcters in \varname{s}.\marginnote{Remember that we have the \functionname{++} function to help us.}
+Make sure to use a \functionname{return} statement to return the char * that is left from our search (or a NULL if nothing is found)!
 
-Call the function you just wrote in the main function, and print out the name of the youngest dog from your function's result using \functionname{cout}.  
+Once you think that your function works as intended, save and exit emacs\marginnote{\keycombo{C-x C-s} to save and \keycombo{C-x C-c} to exit}. If you remember from last week, we used the \functionname{make} command in order to turn our C++ file into machine code. Run:
+\begin{CmdLine}
+  \prompt make build/lab3
+\end{CmdLine}
+\marginnote{Remember, make works as follows: \cmdline{make [target]}. Target is the name of the executable file that will be built by the make command.}
+If everything works, if we list our files, we should now see a file called \filename{lab3}.  Enter the command
+\begin{CmdLine}
+  \prompt build/lab3
+\end{CmdLine}
+See if your value looks right!  If it doesn't, don't worry, Rome wasn't built in a day. Try and see what went wrong.\marginnote{Error messages may look scary, but in reality, they're there to help you!  Not intimidate you!}  Play around with the value of \varname{s} and \varname{c} to see how it affects the result.
 
-This time you just have to press the run button, and it will automatically build your program for you and run it!
+\subsection{is_prefix_of}
 
-Now, once you have written \functionname{youngestDog}, write a similar function called \functionname{happiestDog} where you have to find the happiest Dog in the vector, and return that dog.
+Once we have everything working with our \functionname{str_chr}, let's move on to a similar function called \functionname{is_prefix_of}\marginnote{Notice that \functionname{is_prefix_of} is going to return an bool.}. This function is similar to \functionname{str_chr} in that it loops through a string to find something, but the difference here is that we are looking for a substring - not just a character. Since both of the inputs are "strings" (char *), you will need to check that not only one character matches in the substring (\varname{needle}), but that every character matches. Return true if the \varname{needle} is fully contained by the \varname{haystack}.
 
-Again, go back to the main function and call your new function on the \varname{dogs} vector, and print out the name of the happiest dog.
+Once you are done, make and run your file. See if your function properly identifies prefixes. If not, no worries, go back and try again!
 
-Once you have found your happiest and youngest dogs, let's create a function that can help you find a dog's owner given only the dog's name.  Fill in the function \functionname{findOwner} which takes in both a \varname{vector<Dog>} and a \varname{string}, where you have to return the name of the Dog's owner which you found from the vector.
+\subsection{str_str}
 
-Once you have this, try it out by calling it in your main function to ensure that you are able to find the name of a Dog's owner, and test out a few examples, printing out the names of the dog owners.
+Once the function \functionname{is_prefix_of} is working, write a new function \functionname{str_str} that uses \functionname{is_prefix_of} to determine if a word exists anywhere in another word. To check if the search word (\varname{needle}) is in the \varname{haystack}, first check to see if it is a prefix of \varname{haystack}. If \varname{needle} is not the prefix to \varname{haystack}, try to see if \varname{needle} is the prefix of everything but the first letter of \varname{haystack}. This loop will effectively check for the subword \varname{needle} in every possible position inside \varname{haystack}. Make sure to return \varname{haystack} if you find the subword and NULL if you don't.
 
-\section{Dealing with Errors}
+Make and run lab3, and see if \functionname{str_str} works the way that you intended.  Hopefully everything works!  If not, as usual, go back and try and find what went wrong and update your code.
 
-Now, let's consider the case where the dog name inputted to the \functionname{findOwner} function is not in the \varname{dogs} vector.%
-\marginnote{Hopefully the dog sanctuary can find the dog soon though!} In this case, let's try and print an error to the output, so we know that we have a weird solution.  We can use \functionname{cerr} to print out this to the output window for our special error output.  
+\subsection{interpolate}
 
-Call \functionname{findOwner} with arguments which should create this error to occur.  
-Notice the color of the text in your output window for the error!  
+Now using what we have learned about how to manipulate strings we are going to write our own version of \functionname{printf} called \functionname{interpolate}. Interpolate will return a char *, and takes as input a const char *, a const char * array, and a final char *. The first input (const char *) \varname{format} will contain our format string. This string is what our program will work through to try and come up with an output string. The second input is \varname{args} and this holds the elements that we will be placing into the new string. The final input is simply our \varname{buffer}, where we will build everything to return. The rules for our format string are going to be that you will fill in text any time you see {}. So, a string that looks like "Hello {}!" with and argument of "Jason" would return "Hello Jason". As well, we want to allow our format strings to have modifiers. If you just see {}, then return exactly what you got as input but if you see {^} then make the input uppercase and if you see {v} then make the input lowercase. This is a complex problem so it might be useful to break it down into the component parts: identifying format string and modifiers, filling the string in (modified).
 
-Now, remember from class that while \functionname{cerr} will output an error in your output window, it will not cause the program to fail/exit.  
-Now, let's assume that if you can't find the dog name in the \varname{dogs} vector that you want to stop running the program.  
-We can \varname{throw} a \varname{runtime error} using the following syntax: 
-\begin{Code}
-throw runtime_error("Message for the error");
-\end{Code}
-
-Now, notice when you run the program again, in the same call you made before to \functionname{findOwner}, when you hit the error, instead of silently outputting an error, your code will stop running entirely.  
-You can test this out by adding a \functionname{cout} line after your call to \functionname{findOwner}, and see that it never runs! 
-
-\section{Testing}
-
-
-For your homework, you will be writing your own tests to test the code.  We have provided you with tests already for this lab, but it is important that you understand how to run unit tests using CLion, so we will go over that now.
-
-Click on the \filename{dog\_test.cpp} file that we have provided in the project.  
-Notice how we have already written your tests.  For your homework, you will have to write your own!
-Now let's run the tests to see if your code passes.
-In order to do so, go to the top right corner of your CLion window, and click on the dropdown menu in between the build and run buttons.
-You'll notice that your dropdown menu currently says "lab3".
-Now, go down to ``dog\_test'' and select that.
-Press run, and you will see the results of the tests running!
-
-
-If you want to go back and run your main code, you can easily go back to
-the dropdown menu and select ``lab3'' instead of ``dog\_test.''
-
-Please feel free to post on Piazza with any questions, or ask your TA!  
-
+Once you have this done, make and run lab3, and see if this feature is working!
 
 \end{document}
