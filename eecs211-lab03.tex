@@ -54,20 +54,27 @@ using the correct developer toolset. You must do this every time you
 open a remote connection and plan on compiling C code.
 
 \section{Writing the code}
-Navigate to your \filename{\LabBaseUrl} directory, and open up
+Navigate to your \filename{\ThisLabBase} directory, and open up
 \filename{src/lab2.c} in Emacs using
 \begin{CmdLine}
   \prompt emacs -nw src/lab3.c
 \end{CmdLine}
 Notice that there is already some skeletons of functions and some code in \functionname{main()} here.
 
-\subsection{str\_chr}
+\subsection{{const char *str\_chr(const char *s, char c)}}
 First, find the function called
-\functionname{str\_chr}.\marginnote{Notice that \functionname{str\_chr} is going to return an char *.}We are going to use this function to determine if the character \varname{c} exists in the string \varname{s}. If you remember from class, we have a few ways of iterating, most notably \functionname{while} which is what you will use for this function.
+\functionname{str\_chr}.\marginnote{Notice that \functionname{str\_chr}
+is going to return a \texttt{const char *}.}
+We are going to use this function to determine if the character
+\varname{c} exists in the string \varname{s}, and if so, where. If you
+remember from class, we have a few ways of iterating, most notably
+\texttt{while} which is what you will use for this function.
 
 \subsection{While loops}
-As we learned in class, a \functionname{while} loop has the following
-syntax:\marginnote{Note that in while loops we usually will use a boolean expression for <expr> (an expression which returns True or False)}
+As we learned in class, a \texttt{while} loop has the following
+syntax:\marginnote{Note that in while loops we usually will use a
+boolean expression for <expr> (an expression which returns \texttt{true} or
+\texttt{false}.)}
 
 \begin{Code}
     while (<expr>) {
@@ -76,55 +83,69 @@ syntax:\marginnote{Note that in while loops we usually will use a boolean expres
     }
 \end{Code}
 
-Use a while loop inside our \functionname{str\_chr} in order to see if \varname{c} is every equal to any one of the charcters in \varname{s}.\marginnote{Remember that we have the \functionname{++} function to help us.}
-Make sure to use a \functionname{return} statement to return the char * that is left from our search (or a NULL if nothing is found)!
+Use a while loop inside our \functionname{str\_chr} in order to see if
+\varname{c} is every equal to any one of the charcters in
+\varname{s}.\marginnote{Remember that we have the \texttt{++} operator to help us.}
+Make sure to use a \texttt{return} statement to return the
+\texttt{char *} if we find it (or a \texttt{NULL} if nothing is found).
 
-Once you think that your function works as intended, save and exit emacs\marginnote{\keycombo{C-x C-s} to save and \keycombo{C-x C-c} to exit}. If you remember from last week, we used the \functionname{make} command in order to turn our C++ file into machine code. Run:
+Once you think that your function works as intended, save and and try
+compiling and running it.\marginnote{\keycombo{C-x C-s} to save} If you
+remember from last week, we used the \functionname{make} command in
+order to turn our C file into machine code. Run:
 \begin{CmdLine}
   \prompt make build/lab3
 \end{CmdLine}
-\marginnote{Remember, make works as follows: \cmdline{make [target]}. Target is the name of the executable file that will be built by the make command.}
-If everything works, if we list our files, we should now see a file called \filename{lab3}.  Enter the command
+\marginnote{Remember, make works as follows: \cmdline{make [target]}.
+Target is usually the name of the executable file that will be built by the make command.}
+If everything works, if we list the files in \texttt{build}, we should now see a file called \filename{lab3}.  Enter the command
 \begin{CmdLine}
   \prompt build/lab3
 \end{CmdLine}
 See if your value looks right!  If it doesn't, don't worry, Rome wasn't built in a day. Try and see what went wrong.\marginnote{Error messages may look scary, but in reality, they're there to help you!  Not intimidate you!}  Play around with the value of \varname{s} and \varname{c} to see how it affects the result.
 
-\subsection{is\_prefix\_of}
+\subsection{{bool is\_prefix\_of(const char *haystack,
+      const char *needle)}}
 
 Once we have everything working with our \functionname{str\_chr}, let's
 move on to a similar function called
 \functionname{is\_prefix\_of}\marginnote{Notice that
-\functionname{is\_prefix\_of} is going to return an bool.}. This
-function is similar to \functionname{str\_chr} in that it loops through a string to find something, but the difference here is that we are looking for a substring - not just a character. Since both of the inputs are "strings" (char *), you will need to check that not only one character matches in the substring (\varname{needle}), but that every character matches. Return true if the \varname{needle} is fully contained by the \varname{haystack}.
+\functionname{is\_prefix\_of} is going to return a \texttt{bool}.}. This
+function is similar to \functionname{str\_chr} in that it loops through
+a string to find something, but the difference here is that we are
+looking for a substring - not just a character. Since both of the inputs
+are ``strings'' (\texttt{char *}), you will need to check that not only one character matches in the substring (\varname{needle}), but that every character matches. Return true if the \varname{needle} is fully contained by the \varname{haystack}.
 
 Once you are done, make and run your file. See if your function properly identifies prefixes. If not, no worries, go back and try again!
 
-\subsection{str\_str}
+\subsection{{const char *str\_str(const char* haystack, const
+char *needle)}}
 
 Once the function \functionname{is\_prefix\_of} is working, write a new
 function \functionname{str\_str} that uses \functionname{is\_prefix\_of} to determine if a word exists anywhere in another word. To check if the search word (\varname{needle}) is in the \varname{haystack}, first check to see if it is a prefix of \varname{haystack}. If \varname{needle} is not the prefix to \varname{haystack}, try to see if \varname{needle} is the prefix of everything but the first letter of \varname{haystack}. This loop will effectively check for the subword \varname{needle} in every possible position inside \varname{haystack}. Make sure to return \varname{haystack} if you find the subword and NULL if you don't.
 
 Make and run lab3, and see if \functionname{str\_str} works the way that you intended.  Hopefully everything works!  If not, as usual, go back and try and find what went wrong and update your code.
 
-\subsection{interpolate}
+\subsection{{char* interpolate(const char *format, const char *args[], char *buffer)}}
 
 Now using what we have learned about how to manipulate strings we are
-going to write our own version of \functionname{printf} called
-\functionname{interpolate}. Interpolate will return a char *, and takes
-as input a const char *, a const char * array, and a final char *. The
-first input (const char *) \varname{format} will contain our format
+going to write our own version of \functionname{sprintf}(3) (a relative
+of \functionname{printf}(3)) called
+\functionname{interpolate}. Interpolate will return a \texttt{char *}, and takes
+as input a \texttt{const char *}, an array of \texttt{const char *}, and
+a final \texttt{char *}. The
+first input (\texttt{const char *}) \varname{format} will contain our format
 string. This string is what our program will work through to try and
 come up with an output string. The second input is \varname{args} and
 this holds the elements that we will be placing into the new string. The
 final input is simply our \varname{buffer}, where we will build
 everything to return. The rules for our format string are going to be
-that you will fill in text any time you see \{\}. So, a string that
-looks like "Hello \{\}!" with and argument of "Jason" would return
-"Hello Jason". As well, we want to allow our format strings to have
-modifiers. If you just see \{\}, then return exactly what you got as
-input but if you see \{\^\} then make the input uppercase and if you see
-\{v\} then make the input lowercase. This is a complex problem so it might be useful to break it down into the component parts: identifying format string and modifiers, filling the string in (modified).
+that you will fill in text any time you see \texttt{\{\}}. So, a string that
+looks like \texttt{"Hello \{\}!"} with and argument of \texttt{"Jason"} would return
+\texttt{"Hello Jason"}. As well, we want to allow our format strings to have
+modifiers. If you just see \texttt{\{\}}, then return exactly what you got as
+input but if you see \texttt{\{\^\}} then make the input uppercase and if you see
+\texttt{\{v\}} then make the input lowercase. This is a complex problem so it might be useful to break it down into the component parts: identifying format string and modifiers, filling the string in (modified).
 
 Once you have this done, make and run lab3, and see if this feature is working!
 
