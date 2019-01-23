@@ -1,6 +1,6 @@
 #include <stdbool.h>
-#include<stdio.h>
-#include<ctype.h> //to get tolower and toupper 
+#include <stdio.h>
+#include <ctype.h> // to get tolower and toupper 
 
 const char *str_chr(const char *s, char c)
 {
