@@ -94,8 +94,8 @@ int sum_list(list_t lst)
 void append(list_t lst, int new_car)
 {
     list_t to_append = cons(new_car, empty);
-    while (is_cons(lst)) lst = rest(lst);
-    (*lst).cdr = to_append; // == lst->cdr
+    while ((*lst).cdr != empty) lst = rest(lst);
+    (*lst).cdr = &(*to_append);
 }
 
 
