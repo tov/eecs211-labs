@@ -91,8 +91,8 @@ bool is_even(int z) { return (z & 1) == 0; }
 int main()
 {
     list_t my_list = cons(2, cons(3, cons(4, cons(5, empty))));
-    list_t append_list = copy(my_list);
-    append(append_list, 6);
+    //list_t append_list = copy(my_list);
+    //append(append_list, 6);
     list_t copied = copy(my_list);
     list_t doubled = map(dbl, my_list);
     list_t evens_only = filter(is_even, my_list);
@@ -101,7 +101,7 @@ int main()
     print_list(my_list);
     printf("Sum of list: %d\n", sum_list(my_list));
     print_list(rest(my_list));
-    print_list(append_list);
+    //print_list(append_list);
     print_list(doubled);
     print_list(evens_only);
 
