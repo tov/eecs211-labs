@@ -99,7 +99,7 @@ int main()
 
     print_list(empty);
     print_list(my_list);
-    printf("Sum of list: %d", sum_list(my_list));
+    printf("Sum of list: %d\n", sum_list(my_list));
     print_list(rest(my_list));
     print_list(append_list);
     print_list(doubled);

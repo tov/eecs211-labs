@@ -17,7 +17,7 @@ test: build/test_cons
 	    $$prog; \
 	done
 
-build/test_cons: build/cons.o build/lib211.o build/test_cons.o
+build/test_cons: build/cons.o build/test_cons.o build/lib211.o
 	$(LINK.c) $^
 
 build/%.o: src/%.c
@@ -36,5 +36,5 @@ clean:
 
 # Dependencies:
 build/cons.o: src/cons.h
-build/lib211.o: src/lib211.h
 build/test_cons.o: src/cons.h src/lib211.h
+build/lib211.o: src/lib211.h

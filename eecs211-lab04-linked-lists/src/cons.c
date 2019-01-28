@@ -120,7 +120,7 @@ list_t map(int (*f)(int), list_t lst)
     list_t result = empty;
     list_t* temp = &result;
 
-    while (lst) {
+    while (is_cons(lst)) {
         *temp = cons(f(first(lst)), empty);
         temp = &(**temp).cdr;
         lst = rest(lst);
@@ -134,8 +134,8 @@ list_t filter(bool (*keep)(int), list_t lst)
     list_t result = empty;
     list_t* temp = &result;
 
-    while (lst) {
-        if (keep(lst->car)) {
+    while (is_cons(lst)) {
+        if (keep(first(lst))) {
             *temp = cons(first(lst), empty);
             temp = &(**temp).cdr;
         }
