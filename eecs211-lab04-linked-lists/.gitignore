@@ -1,0 +1,11 @@
+build/
+dist/
+Publish
+*.tgz
+*.zip
+*.pdf
+*.aux
+*.log
+*.out
+*.synctex.gz
+.DS_Store
