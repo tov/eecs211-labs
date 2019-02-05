@@ -1,7 +1,10 @@
 cmake_minimum_required(VERSION 3.3)
-project(lab5 CXX)
-include(.eecs211/CMakeLists.txt)
+project(project-base CXX)
+include(.eecs211/cmake/CMakeLists.txt)
 
-add_program(lab5 lab5.cpp)
+# Builds program client from the two listed source files:
+add_program(client src/client.cpp src/shared.cpp)
 
-add_test_program(lab5_test lab5_test.cpp Practice.cpp ListNode.cpp Dog.cpp)
+# Builds test program shared_test from the two listed source files:
+add_test_program(shared_test test/shared_test.cpp src/shared.cpp)
+
