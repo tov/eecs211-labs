@@ -15,14 +15,13 @@ build/lab2: build/lab2.o
 build/lab2_test: build/lab2_test.o
 	cc -o $@ $^ $(CFLAGS) $(LDFLAGS)
 
-build/%.o: src/%.c | build/
+build/%.o: src/%.c
+	@mkdir -p build
 	cc -o $@ -c $< $(CFLAGS)
 
-build/%.o: test/%.c | build/
+build/%.o: test/%.c
+	@mkdir -p build
 	cc -o $@ -c $< $(CFLAGS)
-
-build/:
-	mkdir -p $@
 
 clean:
 	rm -Rf build
