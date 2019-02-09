@@ -47,7 +47,7 @@ void Game::draw(ge211::Sprite_set& sprites)
 {    
     sprites.add_sprite(square_sprite, model.square_position);
 
-    switch (model.state) {
+    switch (model.get_state()) {
         case Collision_state::touching:
             sprites.add_sprite(circle_red, model.circle_position);
             break;

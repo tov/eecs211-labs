@@ -21,9 +21,10 @@ struct Model
     void move_circle_left();
     void move_circle_right();
 
+    Collision_state get_state() const;
+
     // Member variables
 
-    Collision_state state = Collision_state::touching;
     ge211::Position circle_position{scene_dimensions.width / 2,
                                     scene_dimensions.height / 2};
     ge211::Position square_position{scene_dimensions.width / 2,

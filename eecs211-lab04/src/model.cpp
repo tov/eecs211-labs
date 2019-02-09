@@ -22,10 +22,13 @@ static double distance(ge211::Position pos1, ge211::Position pos2)
 void Model::move_square_to(ge211::Position goal)
 {
     square_position = goal;
+}
 
+Collision_state Model::get_state() const
+{
     if (distance(square_position, circle_position) <= circle_radius)
-        state = Collision_state::touching;
+        return Collision_state::touching;
     else
-        state = Collision_state::not_touching;
+        return Collision_state::not_touching;
 }
 
