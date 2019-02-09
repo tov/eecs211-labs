@@ -20,20 +20,29 @@ Dimensions const square_dimension{15,15};
 
 struct Game : Abstract_game
 {
-    //View
-    Circle_sprite circle_red{circle_radius, color_red};
-    Circle_sprite circle_green{circle_radius, color_green};
-    
-    Rectangle_sprite square_sprite{square_dimension, color_green};
-    Model model;
+    ///
+    /// Member functions
+    ///
 
-    //Controller
+    // Controller
     void on_key(Key key) override;
     void on_mouse_move(Position mouse) override;
 
-    Dimensions initial_window_dimensions() const override;
+    // View
     void draw(Sprite_set& sprites) override;
+    Dimensions initial_window_dimensions() const override;
 
+    ///
+    /// Member variables
+    ///
+
+    // Model
+    Model model;
+
+    // View
+    Circle_sprite circle_red{circle_radius, color_red};
+    Circle_sprite circle_green{circle_radius, color_green};
+    Rectangle_sprite square_sprite{square_dimension, color_green};
 };
 
 int main()
