@@ -2,12 +2,12 @@
 
 void Model::move_circle_left()
 {
-    circle_position.x+=10;
+    circle_position.x += 10;
 }
 
 void Model::move_circle_right()
 {
-    circle_position.x-=10;
+    circle_position.x -= 10;
 }
 
 static double distance(ge211::Position pos1, ge211::Position pos2)

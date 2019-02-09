@@ -11,8 +11,8 @@
 using namespace ge211;
 using namespace std;
 
-Color const color_green{127, 255, 127, 255};
-Color const color_red{255, 127, 127, 255};
+Color const color_green = Color::medium_green();
+Color const color_red   = Color::medium_red();
 
 // UI Object
 
