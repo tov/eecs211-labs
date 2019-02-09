@@ -8,10 +8,7 @@ using namespace std;
 Color const color_green = Color::medium_green();
 Color const color_red   = Color::medium_red();
 
-// UI Object
-
-Dimensions const square_dimension{15,15};
-
+// UI object
 struct Game : Abstract_game
 {
     ///

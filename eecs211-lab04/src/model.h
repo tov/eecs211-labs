@@ -3,7 +3,9 @@
 #include <ge211.h>
 
 ge211::Dimensions const scene_dimensions{1024, 768};
+
 int const circle_radius = 30;
+ge211::Dimensions const square_dimension{15, 15};
 
 enum class Collision_state
 {
