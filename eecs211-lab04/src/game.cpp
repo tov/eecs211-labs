@@ -46,11 +46,12 @@ ge211::Dimensions Game::initial_window_dimensions() const
 void Game::draw(ge211::Sprite_set& sprites)
 {    
     sprites.add_sprite(square_sprite, model.square_position);
-    switch (model.state)
-    {
+
+    switch (model.state) {
         case Collision_state::touching:
             sprites.add_sprite(circle_red, model.circle_position);
             break;
+
         case Collision_state::not_touching:
             sprites.add_sprite(circle_green, model.circle_position);
             break;
@@ -59,9 +60,9 @@ void Game::draw(ge211::Sprite_set& sprites)
 
 void Game::on_key(ge211::Key key)
 {
-    if (key==ge211::Key::left()) {
+    if (key == ge211::Key::left()) {
         model.move_circle_left();
-    } else if (key==ge211::Key::right()) {
+    } else if (key == ge211::Key::right()) {
         model.move_circle_right();
     }
 }
