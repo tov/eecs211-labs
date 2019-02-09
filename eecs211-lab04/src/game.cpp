@@ -70,11 +70,10 @@ void Game::draw(Sprite_set& sprites)
 }
 
 void Game::on_key(Key key)
-{   if (key==Key::left())
-    {
+{
+    if (key==Key::left()) {
         model.move_circle_left();
-    } else if (key==Key::right())
-    {
+    } else if (key==Key::right()) {
         model.move_circle_right();
     }
 }
