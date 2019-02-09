@@ -52,10 +52,10 @@ void Game::draw(Sprite_set& sprites)
     sprites.add_sprite(square_sprite, model.square_position);
     switch (model.state)
     {
-        case Model::Collision_state::touching:
+        case Collision_state::touching:
             sprites.add_sprite(circle_red, model.circle_position);
             break;
-        case Model::Collision_state::not_touching:
+        case Collision_state::not_touching:
             sprites.add_sprite(circle_green, model.circle_position);
             break;
     }
@@ -79,4 +79,3 @@ void Game::on_mouse_move(Position mouse)
 void Game::on_frame(double dt)
 {
     model.update(dt);
-}
