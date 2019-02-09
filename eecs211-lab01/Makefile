@@ -9,7 +9,8 @@ all: build/hello
 build/hello: build/hello.o
 	cc -o $@ $^ $(CFLAGS) $(LDFLAGS)
 
-build/%.o: src/%.c | build/
+build/%.o: src/%.c
+	@mkdir -p build
 	cc -o $@ -c $< $(CFLAGS)
 
 build/:

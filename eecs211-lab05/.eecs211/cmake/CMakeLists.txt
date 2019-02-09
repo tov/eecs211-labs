@@ -1,6 +1,8 @@
 # Turn on CTest
 enable_testing()
 
+include_directories(src)
+
 add_subdirectory(.eecs211/lib/catch EXCLUDE_FROM_ALL)
 add_subdirectory(.eecs211/lib/ge211 EXCLUDE_FROM_ALL)
 

@@ -9,7 +9,8 @@ Publish: $(PDFS) $(ZIPS) $(TGZS)
 
 # The tufte-handout class we use works with pdflatex, but not
 # xelatex/lualatex.
-%.pdf: %.tex build/eecs211-lab.sty | build/
+%.pdf: %.tex build/eecs211-lab.sty
+	@mkdir -p build
 	( cd build; pdflatex -interaction=nonstopmode ../$< )
 	cp build/$@ .
 
