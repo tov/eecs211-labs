@@ -49,14 +49,14 @@ Dimensions Game::initial_window_dimensions() const
 
 void Game::draw(Sprite_set& sprites)
 {    
-    sprites.add_sprite(square_sprite, model.square_position.into<int>());
+    sprites.add_sprite(square_sprite, model.square_position);
     switch (model.state)
     {
         case Model::Collision_state::touching:
-            sprites.add_sprite(circle_red, model.circle_position.into<int>());
+            sprites.add_sprite(circle_red, model.circle_position);
             break;
         case Model::Collision_state::not_touching:
-            sprites.add_sprite(circle_green, model.circle_position.into<int>());
+            sprites.add_sprite(circle_green, model.circle_position);
             break;
     }
 }

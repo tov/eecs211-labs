@@ -10,9 +10,11 @@ void Model::move_right()
     circle_position.x-=10;
 }
 
-float distance ( ge211::Position pos1,  ge211::Position pos2)
+double distance(ge211::Position pos1, ge211::Position pos2)
 {
-    return sqrt(pow(pos1.x - pos2.x,2)+pow(pos1.y - pos2.y,2));
+    int dx = pos1.x - pos2.x;
+    int dy = pos1.y - pos2.y;
+    return sqrt(dx * dx + dy * dy);
 }
 
 void Model::update(double const dt)
