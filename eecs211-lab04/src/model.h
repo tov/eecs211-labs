@@ -15,9 +15,9 @@ struct Model
 {
     // Member functions
 
-    void update_mouse(ge211::Position);
-    void move_left();
-    void move_right();
+    void move_square_to(ge211::Position);
+    void move_circle_left();
+    void move_circle_right();
 
     // Member variables
 

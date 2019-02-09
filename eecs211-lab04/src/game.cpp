@@ -63,16 +63,16 @@ void Game::draw(Sprite_set& sprites)
 void Game::on_key(Key key)
 {   if (key==Key::left())
     {
-        model.move_left();
+        model.move_circle_left();
     } else if (key==Key::right())
     {
-        model.move_right();
+        model.move_circle_right();
     }
 }
 
 void Game::on_mouse_move(Position mouse)
 {
-    model.update_mouse(mouse);
+    model.move_square_to(mouse);
 }
 
 

@@ -1,11 +1,11 @@
 #include "model.h"
 
-void Model::move_left()
+void Model::move_circle_left()
 {
     circle_position.x+=10;
 }
 
-void Model::move_right()
+void Model::move_circle_right()
 {
     circle_position.x-=10;
 }
@@ -17,9 +17,9 @@ static double distance(ge211::Position pos1, ge211::Position pos2)
     return sqrt(dx * dx + dy * dy);
 }
 
-void Model::update_mouse(ge211::Position mouse_position)
+void Model::move_square_to(ge211::Position goal)
 {
-    square_position = mouse_position;
+    square_position = goal;
 
     if (distance(square_position, circle_position) <= circle_radius)
         state = Collision_state::touching;
