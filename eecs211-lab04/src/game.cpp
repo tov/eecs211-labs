@@ -1,4 +1,7 @@
+#include "model.h"
+
 #include <ge211.h>
+
 #include <iostream>
 #include <string>
 #include <algorithm>
@@ -8,26 +11,12 @@
 using namespace ge211;
 using namespace std;
 
-Dimensions const scene_dimensions{1024, 768};
-Dimensions const square_dimension{15,15};
-
-int const circle_radius = 30;
-
 Color const color_green{127, 255, 127, 255};
 Color const color_red{255, 127, 127, 255};
 
-// MODEL DATA DEFINITIONS
-struct Model
-{
-    Position circle_position{scene_dimensions.width/2, scene_dimensions.height/2};
-    Position square_position{scene_dimensions.width/2, scene_dimensions.height/2};
-    enum State{red,green} circle_state = red;
-    void update(double const dt);
-    void move_left ();
-    void move_right ();
-};
-
 // UI Object
+
+Dimensions const square_dimension{15,15};
 
 struct Game : Abstract_game
 {
@@ -51,28 +40,6 @@ struct Game : Abstract_game
 int main()
 {
     Game{}.run();
-}
-
-void Model::move_left()
-{
-    circle_position.x+=10;
-}
-void Model::move_right()
-{
-    circle_position.x-=10;
-}
-
-float distance ( Position pos1,  Position pos2)
-{
-    return sqrt(pow(pos1.x - pos2.x,2)+pow(pos1.y - pos2.y,2));
-}
-
-void Model::update(double const dt)
-{
-    if ( distance(square_position,circle_position) <= circle_radius)
-        circle_state=red;
-    else
-        circle_state=green;
 }
 
 Dimensions Game::initial_window_dimensions() const
