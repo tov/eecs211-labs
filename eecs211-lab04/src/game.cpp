@@ -50,12 +50,12 @@ Dimensions Game::initial_window_dimensions() const
 void Game::draw(Sprite_set& sprites)
 {    
     sprites.add_sprite(square_sprite, model.square_position.into<int>());
-    switch (model.circle_state)
+    switch (model.state)
     {
-        case Model::red:
+        case Model::Collision_state::touching:
             sprites.add_sprite(circle_red, model.circle_position.into<int>());
             break;
-        case Model::green:
+        case Model::Collision_state::not_touching:
             sprites.add_sprite(circle_green, model.circle_position.into<int>());
             break;
     }

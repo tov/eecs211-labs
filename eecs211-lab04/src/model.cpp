@@ -17,9 +17,9 @@ float distance ( ge211::Position pos1,  ge211::Position pos2)
 
 void Model::update(double const dt)
 {
-    if ( distance(square_position,circle_position) <= circle_radius)
-        circle_state=red;
+    if (distance(square_position,circle_position) <= circle_radius)
+        state = Collision_state::touching;
     else
-        circle_state=green;
+        state = Collision_state::not_touching;
 }
 
