@@ -2,12 +2,6 @@
 
 #include <ge211.h>
 
-#include <iostream>
-#include <string>
-#include <algorithm>
-#include <cmath>
-#include <iomanip>
-
 using namespace ge211;
 using namespace std;
 

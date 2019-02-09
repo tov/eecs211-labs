@@ -1,5 +1,7 @@
 #include "model.h"
 
+#include <cmath>
+
 void Model::move_circle_left()
 {
     circle_position.x += 10;
