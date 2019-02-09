@@ -15,7 +15,7 @@ struct Model
 {
     // Member functions
 
-    void update(double dt);
+    void update_mouse(ge211::Position);
     void move_left();
     void move_right();
 

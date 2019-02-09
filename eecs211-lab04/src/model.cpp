@@ -17,9 +17,11 @@ static double distance(ge211::Position pos1, ge211::Position pos2)
     return sqrt(dx * dx + dy * dy);
 }
 
-void Model::update(double const dt)
+void Model::update_mouse(ge211::Position mouse_position)
 {
-    if (distance(square_position,circle_position) <= circle_radius)
+    square_position = mouse_position;
+
+    if (distance(square_position, circle_position) <= circle_radius)
         state = Collision_state::touching;
     else
         state = Collision_state::not_touching;

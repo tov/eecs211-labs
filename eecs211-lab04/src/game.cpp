@@ -30,7 +30,6 @@ struct Game : Abstract_game
     //Controller
     void on_key(Key key) override;
     void on_mouse_move(Position mouse) override;
-    void on_frame(double dt) override;
 
     Dimensions initial_window_dimensions() const override;
     void draw(Sprite_set& sprites) override;
@@ -73,9 +72,7 @@ void Game::on_key(Key key)
 
 void Game::on_mouse_move(Position mouse)
 {
-    model.square_position=mouse;
+    model.update_mouse(mouse);
 }
 
-void Game::on_frame(double dt)
-{
-    model.update(dt);
+
