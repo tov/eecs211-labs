@@ -32,8 +32,8 @@ private:
     explicit Exception_base(const std::string& message);
 
     /// Derived classes
-    friend class Client_logic_error;
-    friend class Environment_error;
+    friend Client_logic_error;
+    friend Environment_error;
 
     std::shared_ptr<const std::string> message_;
 };
@@ -60,11 +60,11 @@ class Environment_error : public Exception_base
     explicit Environment_error(const std::string& message);
 
     /// Throwers
-    friend class ge211::Window;
+    friend Window;
 
     /// Derived classes
-    friend class Ge211_logic_error;
-    friend class Host_error;
+    friend Ge211_logic_error;
+    friend Host_error;
 };
 
 /// Indicates a condition unexpected by %ge211, that appears
@@ -75,8 +75,9 @@ class Ge211_logic_error : public Environment_error
     explicit Ge211_logic_error(const std::string& message);
 
     /// Throwers
-    friend class detail::Render_sprite;
-    friend class sprites::Text_sprite;
+    friend detail::Render_sprite;
+    friend Mixer;
+    friend Text_sprite;
 };
 
 /// Indicates an exception from the host environment being
@@ -88,16 +89,17 @@ class Host_error : public Environment_error
     explicit Host_error(const std::string& extra_message = "");
 
     /// Derived classes
-    friend class File_error;
-    friend class Font_error;
-    friend class Image_error;
+    friend File_error;
+    friend Font_error;
+    friend Image_error;
+    friend Mixer_error;
 
     /// Throwers
-    friend class ge211::Window;
-    friend class detail::Renderer;
-    friend class detail::Render_sprite;
-    friend class ge211::Text_sprite;
-    friend class detail::Texture;
+    friend Text_sprite;
+    friend Window;
+    friend detail::Renderer;
+    friend detail::Render_sprite;
+    friend detail::Texture;
 };
 
 /// Indicates an error opening a file.
@@ -107,7 +109,7 @@ class File_error final : public Host_error
     static File_error could_not_open(const std::string& filename);
 
     /// Thrower
-    friend class detail::File_resource;
+    friend detail::File_resource;
 };
 
 /// Indicates an error loading a font front an already-open file.
@@ -117,7 +119,7 @@ class Font_error final : public Host_error
     static Font_error could_not_load(const std::string& filename);
 
     /// Thrower
-    friend class ge211::Font;
+    friend Font;
 };
 
 /// Indicates an error loading an image from an already-open file.
@@ -127,7 +129,21 @@ class Image_error final : public Host_error
     static Image_error could_not_load(const std::string& filename);
 
     /// Thrower
-    friend class sprites::Image_sprite;
+    friend Image_sprite;
+};
+
+/// Indicates an error in the mixer, which could include the inability to
+/// understand an audio file format.
+class Mixer_error : public Host_error
+{
+    Mixer_error(const std::string& message);
+    static Mixer_error could_not_load(const std::string& filename);
+    static Mixer_error out_of_channels();
+
+    /// Thrower
+    friend Mixer;
+    friend Music_track;
+    friend Sound_effect;
 };
 
 } // end namespace exception

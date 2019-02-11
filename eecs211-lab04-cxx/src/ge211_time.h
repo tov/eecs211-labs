@@ -46,6 +46,15 @@ public:
         return seconds.count();
     }
 
+    /// Gets this duration, approximately, in milliseconds.
+    long milliseconds() const
+    {
+        auto millis =
+                std::chrono::duration_cast<std::chrono::duration<long, std::milli>>(
+                        duration_);
+        return millis.count();
+    }
+
     /// \name Comparisons
     ///@{
 
@@ -127,9 +136,8 @@ public:
     ///@}
 
 private:
-    friend class Time_point;
-
-    friend class detail::Engine;
+    friend Time_point;
+    friend detail::Engine;
 
     Duration(std::chrono::duration<double> duration)
             : Duration{std::chrono::duration_cast<detail::Clock::duration>
@@ -328,7 +336,7 @@ public:
     }
 
     /// Unpauses the timer. If the timer is already running, has no effect.
-    void unpause()
+    void resume()
     {
         if (is_paused_) {
             fake_start_time_ = now_() - elapsed_time_;

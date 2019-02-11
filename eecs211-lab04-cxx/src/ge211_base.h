@@ -1,14 +1,17 @@
 #pragma once
 
+#include "ge211_audio.h"
 #include "ge211_color.h"
 #include "ge211_error.h"
 #include "ge211_event.h"
 #include "ge211_forward.h"
 #include "ge211_geometry.h"
 #include "ge211_random.h"
+#include "ge211_resource.h"
 #include "ge211_session.h"
 #include "ge211_time.h"
 
+#include <memory>
 #include <string>
 
 namespace ge211 {
@@ -100,16 +103,16 @@ public:
     /// derived class. To change the background color, assign the protected
     /// member variable Abstract_game::background_color from the
     /// draw(Sprite_set&) or on_start() functions.
-    static constexpr Color default_background_color = Color::black();
+    static const Color default_background_color;
 
     /// The default initial window title. You can change this in a derived class
     /// by overriding the initial_window_title() const member function.
-    static constexpr const char* const default_window_title = "ge211 window";
+    static const char* const default_window_title;
 
     /// The default window dimensions, in pixels. You can change this in a
     /// derived class by overriding the initial_window_dimensions() const member
     /// function.
-    static constexpr Dimensions default_window_dimensions{800, 600};
+    static const Dimensions default_window_dimensions;
 
 protected:
     /// \name Functions to be overridden by clients
@@ -214,6 +217,12 @@ protected:
     /// produce random numbers.
     Random& get_random() const noexcept;
 
+    /// Gets the audio mixer, which can be used to play music. If the
+    /// Mixer could not be initialized, this function returns `nullptr`.
+    /// Do not delete the result of this function, as it is borrowed from
+    /// a private Mixer object stored by this class.
+    Mixer* get_mixer() const noexcept;
+
     /// Gets the time point at which the current frame started. This can be
     /// used to measure intervals between events, though it might be better
     /// to use a time::Timer or time::Pausable_timer.
@@ -250,12 +259,13 @@ protected:
     Color background_color = default_background_color;
 
 private:
-    friend class detail::Engine;
+    friend detail::Engine;
 
     void mark_frame_() noexcept;
 
     mutable Random rng_;
     detail::Session session_;
+    std::unique_ptr<audio::Mixer> mixer_ = audio::Mixer::open_mixer();
     detail::Engine* engine_ = nullptr;
 
     bool quit_ = false;
