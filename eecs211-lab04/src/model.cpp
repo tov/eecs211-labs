@@ -1,5 +1,4 @@
 #include "model.h"
-
 #include <cmath>
 
 void Model::move_circle_left()
@@ -19,14 +18,20 @@ static double distance(ge211::Position pos1, ge211::Position pos2)
     return sqrt(dx * dx + dy * dy);
 }
 
-void Model::move_square_to(ge211::Position goal)
+void Model::move_cursor_to(ge211::Position goal)
 {
-    square_position = goal;
+    cursor_position = goal;
 }
 
 Collision_state Model::get_state() const
 {
-    if (distance(square_position, circle_position) <= circle_radius)
+	ge211::Position cursor_center = cursor_position;
+	cursor_center.x += cursor_radius;
+	cursor_center.y += cursor_radius;
+	ge211::Position circle_center = circle_position;
+	circle_center.x += circle_radius;
+	circle_center.y += circle_radius;
+    if (distance(cursor_center, circle_center) <= circle_radius+cursor_radius)
         return Collision_state::touching;
     else
         return Collision_state::not_touching;

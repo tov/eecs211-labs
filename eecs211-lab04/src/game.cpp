@@ -2,6 +2,7 @@
 
 #include <ge211.h>
 
+ge211::Color const color_yellow = ge211::Color::medium_yellow();
 ge211::Color const color_green = ge211::Color::medium_green();
 ge211::Color const color_red   = ge211::Color::medium_red();
 
@@ -30,7 +31,7 @@ struct Game : ge211::Abstract_game
     // View
     ge211::Circle_sprite circle_red{circle_radius, color_red};
     ge211::Circle_sprite circle_green{circle_radius, color_green};
-    ge211::Rectangle_sprite square_sprite{square_dimension, color_green};
+    ge211::Circle_sprite cursor{cursor_radius, color_yellow};
 };
 
 int main()
@@ -45,7 +46,7 @@ ge211::Dimensions Game::initial_window_dimensions() const
 
 void Game::draw(ge211::Sprite_set& sprites)
 {    
-    sprites.add_sprite(square_sprite, model.square_position);
+    sprites.add_sprite(cursor, model.cursor_position);
 
     switch (model.get_state()) {
         case Collision_state::touching:
@@ -69,7 +70,5 @@ void Game::on_key(ge211::Key key)
 
 void Game::on_mouse_move(ge211::Position mouse)
 {
-    model.move_square_to(mouse);
+    model.move_cursor_to(mouse);
 }
-
-

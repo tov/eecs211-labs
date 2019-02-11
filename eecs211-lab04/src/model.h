@@ -5,7 +5,7 @@
 ge211::Dimensions const scene_dimensions{1024, 768};
 
 int const circle_radius = 30;
-ge211::Dimensions const square_dimension{15, 15};
+int const cursor_radius = 10;
 
 enum class Collision_state
 {
@@ -17,7 +17,7 @@ struct Model
 {
     // Member functions
 
-    void move_square_to(ge211::Position);
+    void move_cursor_to(ge211::Position);
     void move_circle_left();
     void move_circle_right();
 
@@ -27,7 +27,7 @@ struct Model
 
     ge211::Position circle_position{scene_dimensions.width / 2,
                                     scene_dimensions.height / 2};
-    ge211::Position square_position{scene_dimensions.width / 2,
+    ge211::Position cursor_position{scene_dimensions.width / 2,
                                     scene_dimensions.height / 2};
 };
 
