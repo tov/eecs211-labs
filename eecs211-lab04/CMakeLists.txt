@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.3)
-project(project-base CXX)
+project(lab04 CXX)
 include(.eecs211/cmake/CMakeLists.txt)
 
 # Builds program client from the two listed source files:
