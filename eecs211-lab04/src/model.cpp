@@ -3,17 +3,17 @@
 
 void Model::move_large_circle_left()
 {
-    large_position.x += 10;
+    large_center_.x += 10;
 }
 
 void Model::move_large_circle_right()
 {
-    large_position.x -= 10;
+    large_center_.x -= 10;
 }
 
 void Model::move_small_circle_to(ge211::Position pos)
 {
-    small_position = pos;
+    small_center_ = pos;
 }
 
 static double distance(ge211::Position pos1, ge211::Position pos2)
@@ -28,12 +28,20 @@ static ge211::Dimensions const large_dims{2 * large_radius, 2 * large_radius};
 
 Collision_state Model::get_state() const
 {
-    ge211::Position small_center = small_position + 0.5 * small_dims;
-    ge211::Position large_center = large_position + 0.5 * large_dims;
-
-    if (distance(small_center, large_center) <= large_radius + small_radius)
+    if (distance(small_center_, large_center_) <= large_radius + small_radius)
         return Collision_state::touching;
     else
         return Collision_state::not_touching;
+}
+
+ge211::Position Model::large_upper_left() const
+{
+    return {large_center_.x - large_radius, large_center_.y - large_radius};
+
+}
+
+ge211::Position Model::small_upper_left() const
+{
+    return {small_center_.x - small_radius, small_center_.y - small_radius};
 }
 

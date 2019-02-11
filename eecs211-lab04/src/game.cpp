@@ -14,11 +14,11 @@ struct Game : ge211::Abstract_game
     ///
 
     // Controller
-    void on_key(ge211::Key key) override;
-    void on_mouse_move(ge211::Position mouse) override;
+    void on_key(ge211::Key) override;
+    void on_mouse_move(ge211::Position) override;
 
     // View
-    void draw(ge211::Sprite_set& sprites) override;
+    void draw(ge211::Sprite_set&) override;
     ge211::Dimensions initial_window_dimensions() const override;
 
     ///
@@ -26,7 +26,7 @@ struct Game : ge211::Abstract_game
     ///
 
     // Model
-    Model model;
+    Model model_;
 
     // View
     ge211::Circle_sprite large_sprite_collide_{large_radius, large_collide_color};
@@ -45,16 +45,18 @@ ge211::Dimensions Game::initial_window_dimensions() const
 }
 
 void Game::draw(ge211::Sprite_set& sprites)
-{    
-    sprites.add_sprite(small_sprite_, model.small_position);
+{
+    sprites.add_sprite(small_sprite_, model_.small_upper_left());
 
-    switch (model.get_state()) {
+    switch (model_.get_state()) {
         case Collision_state::touching:
-            sprites.add_sprite(large_sprite_collide_, model.large_position);
+            sprites.add_sprite(large_sprite_collide_,
+                               model_.large_upper_left());
             break;
 
         case Collision_state::not_touching:
-            sprites.add_sprite(large_sprite_normal_, model.large_position);
+            sprites.add_sprite(large_sprite_normal_,
+                               model_.large_upper_left());
             break;
     }
 }
@@ -62,9 +64,9 @@ void Game::draw(ge211::Sprite_set& sprites)
 void Game::on_key(ge211::Key key)
 {
     if (key == ge211::Key::left()) {
-        model.move_large_circle_left();
+        model_.move_large_circle_left();
     } else if (key == ge211::Key::right()) {
-        model.move_large_circle_right();
+        model_.move_large_circle_right();
     } else if (key == ge211::Key::code('q')) {
         quit();
     }
@@ -72,5 +74,5 @@ void Game::on_key(ge211::Key key)
 
 void Game::on_mouse_move(ge211::Position mouse)
 {
-    model.move_small_circle_to(mouse);
+    model_.move_small_circle_to(mouse);
 }

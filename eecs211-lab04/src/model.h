@@ -23,11 +23,14 @@ struct Model
 
     Collision_state get_state() const;
 
+    ge211::Position large_upper_left() const;
+    ge211::Position small_upper_left() const;
+
     // Member variables
 
-    ge211::Position large_position{scene_dimensions.width / 2,
-                                   scene_dimensions.height / 2};
-    ge211::Position small_position{scene_dimensions.width / 2,
-                                   scene_dimensions.height / 2};
+    ge211::Position large_center_{scene_dimensions.width / 2,
+                                  scene_dimensions.height / 2};
+    ge211::Position small_center_{scene_dimensions.width / 2,
+                                  scene_dimensions.height / 2};
 };
 
