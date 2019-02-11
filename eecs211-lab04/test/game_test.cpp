@@ -1,7 +1,7 @@
 #include "../src/model.h"
 #include <catch.h>
 
-TEST_CASE("move_circle_left")
+TEST_CASE("move large circle left")
 {
     Model model;
     int x = model.large_position.x;
@@ -9,7 +9,7 @@ TEST_CASE("move_circle_left")
     CHECK( model.large_position.x == x - 10 );
 }
 
-TEST_CASE("move_circle_right")
+TEST_CASE("move large circle right")
 {
     Model model;
     int x = model.large_position.x;
@@ -17,7 +17,7 @@ TEST_CASE("move_circle_right")
     CHECK( model.large_position.x == x + 10 );
 }
 
-TEST_CASE("move_cursor_to")
+TEST_CASE("move small circle to")
 {
     Model model;
     ge211::Position pos{120, 150};
@@ -25,7 +25,7 @@ TEST_CASE("move_cursor_to")
     CHECK( model.small_position == pos );
 }
 
-TEST_CASE("move_get_state")
+TEST_CASE("get collision state")
 {
     Model model;
     ge211::Position pos = model.large_position;
