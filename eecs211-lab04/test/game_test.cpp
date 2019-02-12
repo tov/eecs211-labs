@@ -17,6 +17,20 @@ TEST_CASE("move_circle_right")
     CHECK( model.circle_position.x == x + 10 );
 }
 
+TEST_CASE("move_circle_up")
+{
+    Model model;
+    // YOUR TEST CODE HERE
+    // YOUR CHECK( ... ); HERE
+}
+
+TEST_CASE("move_circle_down")
+{
+    Model model;
+    // YOUR TEST CODE HERE
+    // YOUR CHECK( ... ); HERE
+}
+
 TEST_CASE("move_cursor_to")
 {
     Model model;
@@ -35,3 +49,10 @@ TEST_CASE("move_get_state")
     CHECK( model.get_state() == Collision_state::touching );
 }
 
+TEST_CASE("move_get_not_state")
+{
+    Model model;
+    ge211::Position pos = model.circle_position;
+    // YOUR TEST CODE HERE
+    CHECK( model.get_state() == Collision_state::not_touching );
+}

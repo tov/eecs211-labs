@@ -20,6 +20,8 @@ struct Model
     void move_cursor_to(ge211::Position);
     void move_circle_left();
     void move_circle_right();
+    void move_circle_up();
+    void move_circle_down();
 
     Collision_state get_state() const;
 
