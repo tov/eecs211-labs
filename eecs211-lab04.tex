@@ -7,52 +7,83 @@
 \def\MinGWSDLurl{https://users.eecs.northwestern.edu/~jesse/course/eecs211/files/MinGW-SDL2.exe}
 \def\appleclangurl{https://developer.apple.com/downloads/}
 \def\jetbrainsAccounturl{https://www.jetbrains.com/shop/eform/students}
+
 \def\ThisLabBase{eecs211-lab04}
 \def\ThisLabUrl{\LabBaseUrl/\ThisLabBase.zip}
 
 \usepackage{eecs211-lab}
 \title{EECS 211 Lab 4}
-\author{Game Development}
+\author{C++ Toolchain Setup}
 \date{Winter 2019}
 
 \begin{document}
 
 \maketitle
 
-Today we will be looking at a C++ program using the eecs211 game engine in a
-simple example game. Provided are the model file which defines the game state
-and interactions, and a game file which uses the model to create our game and
-draw the necessary shapes in the correct screen locations. The game is simple,
-you control two circles on the screen---one with your mouse and one with your
-keyboard---when the two circles overlap, they change color. Before we can get
-started we need to install our development environment. You\textquotesingle ll
-need a C++ compiler, the CLion IDE, and the SDL2 graphics libraries.
+Today we begin programming in C++ and the GE211 game engine in a minimal
+example game. The game is quite simple: You control two circles on the
+screen---one with the mouse and one with the keyboard---and when the two
+circles overlap, one changes color. As you will see, however, it comes
+with a bug.
 
-\section{Downloads}
+Before we can get started we need to install our C++ and GE211
+development environment. You'll need a C++ compiler, the CLion IDE, and
+the SDL2 graphics libraries. Read on\ldots
 
-For all platforms, you will need the \hyperlink{\cLionurl}{CLion installer}%
-\marginnote{\url{\cLionurl}}.
+\section{Software registration \& downloads}
 
-Additional installation varies by platform.
+First, register\marginnote{\url{\jetbrainsAccounturl}} for a student
+JetBrains account on \href{\jetbrainsAccounturl}{their website}.
+You will receive an email that you need later in this process.
 
-\subsection{Mac}
+For all platforms, you will need to download the
+\href{\cLionurl}{CLion installer}\marginnote{\url{\cLionurl}}.
+Additional downloads vary by platform:
 
-You will need to download our custom \hyperlink{\macSDLurl}{SDL2 disk image}%
-\marginnote{\url{\macSDLurl}}.
+\begin{description}
+  \item[Windows]
+    You will need to\marginnote{\url{\MinGWSDLurl}}
+    download our \href{\MinGWSDLurl}{custom installer} for
+    \progname{MinGW-w64} with SDL2.
+    This comes with C and C++ compilers as well as the SDL2 graphics
+    library.
+  \item[Mac]
+    You will need to\marginnote{\url{\macSDLurl}}
+    download our custom \href{\macSDLurl}{disk image}
+    containing the SDL2 graphics library.
+  \item[Linux]
+    Make sure you have a working C++14 toolchain installed. You should
+    also install the development packages for \filename{SDL2},
+    \filename{SDL2\_image}, \filename{SDL2\_ttf}, and
+    \filename{SDL2\_mixer}.
+\end{description}
+
+\section{Toolchain setup}
 
 \subsection{Windows}
 
-You will need to download our custom installer for
-\hyperlink{\MinGWSDLurl}{MinGW-w64 with SDL2}%
-\marginnote{\url{\MinGWSDLurl}}.
+On Windows, you need to install \progname{MinGW-w64} (the C++ compiler):
 
-\subsection{Linux}
+\begin{enumerate}
 
-Make sure you have a working C++14 toolchain installed. You should
-also install the development packages for SDL2, SDL2\_image, SDL2\_ttf,
-and SDL2\_mixer.
+  \item Run the \filename{MinGW-SDL2.exe} installer and follow the
+    prompts to install \progname{MinGW-w64}. You should usually install it to
+    \filename{C:\textbackslash MinGW}, but wherever you install it, take
+    note, as you will have to configure CLion to find it later.
 
-\section{Setup}
+  \item Follow the instructions in your JetBrains registration email to
+    activate your account.
+
+\item Run the CLion installer. Most defaults should be fine, but you
+  should check all of the ``Create associations'' boxes when they
+    appear.
+
+   Set the toolchain in CLion to the location where you installed
+    \progname{MinGW}. The folder you select should contain subfolders
+    with names like \filename{bin} and \filename{lib}. Ignore any
+    warnings about version numbers.
+
+\end{enumerate}
 
 \subsection{Mac}
 
@@ -60,97 +91,86 @@ Mac OS automatically installs its toolchain when you attempt to use it
 from the command line for the first time; you will still have to
 install the SDL2 libraries yourself.
 
-1. Thus, to install developer tools, run the Terminal program (from
-Applications/Utilities) to get a command prompt. At the prompt, type
-\begin{verbatim}
-  clang
-\end{verbatim}
-and press return. If it prints \cmdline{clang: error: no input files}
+\begin{enumerate}
+
+  \item Thus, to install developer tools, run the \textsf{Terminal.app}
+    program (from \textsf{/Applications/Utilities}) to get a command
+    prompt. At the prompt, type
+\begin{CmdLine}
+\prompt clang
+\end{CmdLine}
+and press return. If it prints \texttt{clang:~error:~no input files}
 then you have it installed already. Otherwise, a dialog box will pop
 up and offer to install the command-line developer tools for you. Say yes.
 
 (Alternatively, you can install the latest version of Command Line Tools
-for OS X manually from \hyperlink{\appleclangurl}{Apple}%
+for OS X manually from \href{\appleclangurl}{Apple}%
 \marginnote{\url{\appleclangurl}}, or install XCode from the App Store.)
 
-2. Once you have the developer tools installed, you need to install
-the SDL2 libraries. Open the SDL2-all.dmg disk image and drag the
-four frameworks into the linked /Library/Frameworks directory. You may
-have to authenticate as an administrator.
+  \item Once you have the developer tools installed, you need to install
+    the SDL2 libraries. Open the \textsf{SDL2-all.dmg} disk image and
+    drag the four frameworks into the linked
+    \textsf{/Library/Frameworks} directory. You may have to authenticate
+    as an administrator.
 
-\subsection{Windows}
+  \item Follow the instructions in your JetBrains registration email to
+    activate your account.
 
-On Windows, you need to install MinGW-w64 (the C++ compiler):
+  \item Run the CLion installer---defaults should be fine.
 
-1. Run the MinGW-SDL2.exe installer and follow the prompts to install
-MinGW-w64. You should usually install it to C:\textbackslash MinGW, but
-wherever you install it, take note, as you will have to configure CLion
-to find it later.
+\end{enumerate}
 
-\subsection{All}
+\section{The game}
 
-On all platforms you will need to follow these steps to set up the CLion IDE:
+\subsection{Getting the starter code}
 
-1. Register for a student JetBrains account on
-\hyperlink{\jetbrainsAccounturl}{their website}%
-\marginnote{\url{\jetbrainsAccounturl}}.
+For this lab, the starter code is provided as a ZIP file here:
+\url{\ThisLabUrl}. Extract the archive file into a directory in the
+location of your choosing. Once you have your new directory containing
+the starter files, you can open it in CLion.
 
-2. Follow the instructions in your email to activate your account.
+Be careful, as CLion will only work correctly if you open the \emph{main
+project directory} with the \filename{CMakeLists.txt} in it. If you open
+any other directory, CLion may create a \filename{CMakeLists.txt} for
+you, but it won't work properly.
 
-3. Run the CLion installer-defaults should be fine. (Windows: Check all
-of the ''Create associations'' boxes when they appear.)
+\subsection{Inverted control}
 
-Windows only: Set the toolchain in CLion to the location where you
-installed MinGW. The folder you select should contain subfolders with
-names like bin and lib. Ignore any warnings about version numbers.
+Currently, there is an bug in this code. Run the program and try to
+control the circle with your left and right arrow keys, and you will
+move in the opposite direction of what you intend. Locate the code for
+this---hint: it's in the model---and fix it.
 
-\section{Game Code}
-
-\subsection{Downloading}
-
-For this lab we will be getting our project files from this url:
-\url{\ThisLabUrl}. Extract this file into \filename{\ThisLabBase}.
-Now, once we have our new directory \filename{\ThisLabBase} with its
-files, we can open it up in CLion. Be careful though as CLion will
-only work correctly if you open the main project directory with the
-CMakeLists.txt in it. Any other directory and CLion may create a
-CMakeLists.txt in it but this will not be properly configured.
-
-\subsection{Inverted Arrows}
-
-Currently, there is an error with this code - if you run the program
-and try to control the circle with your arrow keys you will move in the
-opposite direction of what you intended. Locate the bug for this and fix
-it. There are test cases for checking the movement directions so when you
-are done try running your code against the test classes.
+There are test cases for checking the model's movement, so when you are
+done try running your code against the tests.
 
 \subsection{Up and down}
 
-As you have seen, the circle that is controlled by the keyboard only has
-left and right movement setup. Add two functions to model.cpp,
-\functionname{move\_large\_circle\_up} and
-\functionname{move\_large\_circle\_down} that add vertical movement to
-the keyboard controlled circle.
+As you have seen, the circle that is controlled by the keyboard only
+moves horizontally right now.
+Add two member functions to the \verb!Model! struct,
+\verb!Model::move_large_circle_up()! and
+\verb!Model::move_large_circle_down()!, and connect them to the keyboard
+by modifying the \verb!Game::on_key(Key)! member function in
+\filename{game.cpp}.
 
-\subsection{Click not Hover}
+\subsection{Click, not hover}
 
-Currently, the position of the mouse is always updating the position of its
-corresponding circle and the color of these circles then changes based on
-the current position of the mouse. However, we want the game to only update
-the position of mouse circle when we click. You have seen an example of
-detecting mouse click events in the previous class materials so consult those
-for format and functions to use for detecting a click and update the logic for
-when your program decides to change the color of the circles.
+Currently, the position of the smaller circle tracks the position of the
+mouse. However, what if we want the game to only update the position of
+smaller circle when we click? To detect mouse clicks, you will have to
+override the \verb!Abstract_game::on_mouse_down(Mouse_button, Position)!
+function in the \verb!Game! struct. See the documentation
+\href{https://tov.github.io/ge211/classge211_1_1_abstract__game.html\#a6d88b5777c0a08fe261bc39c0694dd4f}{here}.
 
 \subsection{Testing}
 
-The current test file has a few example test functions that should run for
-your code. Go ahead and add two test functions modeled after
-\functionname{move large circle left} and \functionname{move large circle right}
-to verify that the up and down movement code you added works. The test
-\functionname{get collision state touching} checks that the state will sometimes
-be touching, fill in the alternative test for state
-\functionname{get collision state not touching} to check that the state will
-sometimes be not\_touching.
+The current tests include a few examples that should pass
+for your code. Add two new test cases for the new functions you added to
+the model, and verify that they do what you expect.
+
+There is a test case that checks that the state will sometimes be
+\verb!Collision_state::touching!. Fill in the final test for checking
+when the circles aren't touching.
 
 \end{document}
