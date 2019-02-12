@@ -8,7 +8,7 @@
 \def\appleclangurl{https://developer.apple.com/downloads/}
 \def\jetbrainsAccounturl{https://www.jetbrains.com/shop/eform/students}
 \def\ThisLabBase{eecs211-lab04}
-\def\ThisLabUrl{\LabBaseUrl/\ThisLabBase.tgz}
+\def\ThisLabUrl{\LabBaseUrl/\ThisLabBase.zip}
 
 \usepackage{eecs211-lab}
 \title{EECS 211 Lab 4}
@@ -23,8 +23,8 @@ Today we will be looking at a C++ program using the eecs211 game engine in a
 simple example game. Provided are the model file which defines the game state
 and interactions, and a game file which uses the model to create our game and
 draw the necessary shapes in the correct screen locations. The game is simple,
-you control two circles on the screen - one with your mouse and one with your
-keyboard - when the two circles overlap, they change color. Before we can get
+you control two circles on the screen---one with your mouse and one with your
+keyboard---when the two circles overlap, they change color. Before we can get
 started we need to install our development environment. You\textquotesingle ll
 need a C++ compiler, the CLion IDE, and the SDL2 graphics libraries.
 
@@ -83,9 +83,9 @@ have to authenticate as an administrator.
 On Windows, you need to install MinGW-w64 (the C++ compiler):
 
 1. Run the MinGW-SDL2.exe installer and follow the prompts to install
-MinGW-w64. You should usually install it to C:\textbackslash MinGW, but wherever
-you install it, take note, as you will have to configure CLion to find
-it later.
+MinGW-w64. You should usually install it to C:\textbackslash MinGW, but
+wherever you install it, take note, as you will have to configure CLion
+to find it later.
 
 \subsection{All}
 
@@ -109,34 +109,28 @@ names like bin and lib. Ignore any warnings about version numbers.
 \subsection{Downloading}
 
 For this lab we will be getting our project files from this url:
-\url{\ThisLabUrl}. You can use the wget and tar commands (below) to extract this
-folder or you can download and open the zip manually.
-
-\begin{CmdLine}
-  \prompt wget \$URL211/\ThisLabBase.tgz
-  \prompt tar xvf \ThisLabBase.tgz
-\end{CmdLine}
-
-Now, once we have our new directory \filename{\ThisLabBase} with its files,
-we can open it up in CLion. Be careful though as CLion will only work correctly
-if you open the main project directory with the CMakeLists.txt in it. Any other
-directory and CLion may create a CMakeLists.txt in it but this will not be
-properly configured.
+\url{\ThisLabUrl}. Extract this file into \filename{\ThisLabBase}.
+Now, once we have our new directory \filename{\ThisLabBase} with its
+files, we can open it up in CLion. Be careful though as CLion will
+only work correctly if you open the main project directory with the
+CMakeLists.txt in it. Any other directory and CLion may create a
+CMakeLists.txt in it but this will not be properly configured.
 
 \subsection{Inverted Arrows}
 
-Currently, there is an error with this code - if you run the program and try
-to control the circle with your arrow keys you will move in the opposite
-direction of what you intended. Locate the bug for this and fix it. There
-are test cases for checking the movement directions so when you are done try
-running your code against the test classes.
+Currently, there is an error with this code - if you run the program
+and try to control the circle with your arrow keys you will move in the
+opposite direction of what you intended. Locate the bug for this and fix
+it. There are test cases for checking the movement directions so when you
+are done try running your code against the test classes.
 
 \subsection{Up and down}
 
 As you have seen, the circle that is controlled by the keyboard only has
 left and right movement setup. Add two functions to model.cpp,
-\functionname{move\_circle\_up} and \functionname{move\_circle\_down} that
-add vertical movement to the keyboard controlled circle.
+\functionname{move\_large\_circle\_up} and
+\functionname{move\_large\_circle\_down} that add vertical movement to
+the keyboard controlled circle.
 
 \subsection{Click not Hover}
 
@@ -152,11 +146,11 @@ when your program decides to change the color of the circles.
 
 The current test file has a few example test functions that should run for
 your code. Go ahead and add two test functions modeled after
-\functionname{move\_circle\_left} and \functionname{move\_circle\_right} to
-verify that the up and down movement code you added works. The test
-\functionname{move\_get\_state} checks that the state will sometimes be
-touching, fill in the alternative test for state
-\functionname{move\_get\_not\_state} to check that the state will sometimes be
-not\_touching.
+\functionname{move large circle left} and \functionname{move large circle right}
+to verify that the up and down movement code you added works. The test
+\functionname{get collision state touching} checks that the state will sometimes
+be touching, fill in the alternative test for state
+\functionname{get collision state not touching} to check that the state will
+sometimes be not\_touching.
 
 \end{document}

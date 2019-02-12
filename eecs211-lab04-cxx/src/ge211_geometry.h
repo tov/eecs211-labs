@@ -7,14 +7,8 @@
 
 namespace ge211 {
 
-/// \defgroup Geometry Geometric objects and operations
-/// @{
-
 /// Geometric objects and their operations.
 namespace geometry {
-
-/// \defgroup Dimensions Dimensions and their operations
-/// @{
 
 /// Represents the dimensions of an object, or more generally,
 /// the displacement between two Basic_position%s. Note that
@@ -132,7 +126,8 @@ Basic_dimensions<T> operator*(double s1, Basic_dimensions<T> d2)
 /// division. If the result components would be fractional, they are
 /// truncated.
 ///
-/// **Precondition**: `z` cannot be `0` if `T` is an integral type.
+/// \preconditions
+///  - `z` cannot be `0` if `T` is an integral type.
 template <class T>
 Basic_dimensions<T> operator/(Basic_dimensions<T> d1, T s2)
     noexcept(has_nothrow_division<double, T>())
@@ -190,7 +185,8 @@ Basic_dimensions<T>& operator*=(Basic_dimensions<T>& d1, double s2)
 
 /// Succinct Basic_dimensions-scalar division.
 ///
-/// **Precondition**: `s2 != 0`
+/// \preconditions
+///  - `s2 != 0`
 template <class T>
 Basic_dimensions<T>& operator/=(Basic_dimensions<T>& d1, T s2)
     noexcept(has_nothrow_division<T>)
@@ -205,11 +201,6 @@ Basic_dimensions<T>& operator/=(Basic_dimensions<T>& d1, double s2)
 {
     return d1 = d1 / s2;
 }
-
-/// @}
-
-/// \defgroup Positions Positions and their operations
-/// @{
 
 /// A position in the T-valued Cartesian plane. In graphics,
 /// the origin is traditionally in the upper left, so the *x* coordinate
@@ -401,11 +392,6 @@ Basic_position<T>& operator-=(Basic_position<T>& p1, Basic_dimensions<T> d2)
     return p1 = p1 - d2;
 }
 
-/// @}
-
-/// \defgroup Rectangles Rectangles and their operations
-/// @{
-
 /// Represents a positioned rectangle.
 template <class T>
 struct Basic_rectangle
@@ -518,9 +504,9 @@ struct Basic_rectangle
     }
 
 private:
-    friend class sprites::Circle_sprite;
-    friend class detail::Render_sprite;
-    friend class detail::Renderer;
+    friend Circle_sprite;
+    friend detail::Render_sprite;
+    friend detail::Renderer;
 
     /// Converts this rectangle to an internal SDL rectangle.
     operator SDL_Rect() const
@@ -560,11 +546,6 @@ bool operator!=(const Basic_rectangle<T> &r1,
 {
     return !(r1 == r2);
 }
-
-/// @}
-
-/// \defgroup Transforms Transforms and their operations
-/// @{
 
 /// A rendering transform, which can scale, flip, and rotate. A Transform
 /// can be given to
@@ -695,10 +676,6 @@ private:
 bool operator==(const Transform&, const Transform&) noexcept;
 /// Disequality for transforms.
 bool operator!=(const Transform&, const Transform&) noexcept;
-
-/// @}
-
-/// @}
 
 } // end namespace geometry.
 

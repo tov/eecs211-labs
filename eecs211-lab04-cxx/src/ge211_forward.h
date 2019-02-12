@@ -8,6 +8,9 @@ struct SDL_RWops;
 struct SDL_Surface;
 struct SDL_Texture;
 struct SDL_Window;
+struct Mix_Chunk;
+struct _Mix_Music;
+typedef struct _Mix_Music Mix_Music;
 struct _TTF_Font;
 typedef struct _TTF_Font TTF_Font;
 
@@ -34,6 +37,16 @@ class Texture_sprite;
 
 } // end namespace detail
 
+namespace audio {
+
+enum class Channel_state;
+class Mixer;
+class Music_track;
+class Sound_effect;
+class Sound_effect_handle;
+
+} // end namespace audio
+
 namespace events {
 
 class Key;
@@ -51,6 +64,7 @@ class Host_error;
 class File_error;
 class Font_error;
 class Image_error;
+class Mixer_error;
 
 } // end namespace exception
 
@@ -91,6 +105,7 @@ class Pausable_timer;
 
 // Bring everything but detail into the ge211 namespace.
 
+using namespace audio;
 using namespace events;
 using namespace exceptions;
 using namespace geometry;

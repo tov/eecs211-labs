@@ -1,8 +1,10 @@
 #include "ge211_session.h"
 #include "ge211_error.h"
+#include "ge211_util.h"
 
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_mixer.h>
 #include <SDL_ttf.h>
 
 #include <clocale>
@@ -14,6 +16,11 @@ namespace detail {
 Session::Session()
 {
     setlocale(LC_ALL, "en_US.utf8");
+
+    int mix_flags = MIX_INIT_OGG | MIX_INIT_MP3;
+    if ((Mix_Init(mix_flags) & mix_flags) != mix_flags) {
+        info_sdl() << "Could not pre-initialize audio mixer";
+    }
 
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         fatal_sdl() << "Could not initialize graphics";
@@ -41,6 +48,7 @@ Session::~Session()
     TTF_Quit();
     IMG_Quit();
     SDL_Quit();
+    Mix_Quit();
 }
 
 } // end namespace detail

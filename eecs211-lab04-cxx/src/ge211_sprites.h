@@ -45,10 +45,9 @@ public:
     virtual ~Sprite() {}
 
 private:
-    friend class detail::Engine;
-
-    friend struct detail::Placed_sprite;
-    friend class sprites::Multiplexed_sprite;
+    friend detail::Engine;
+    friend detail::Placed_sprite;
+    friend Multiplexed_sprite;
 
     virtual void render(detail::Renderer&,
                         Position,
@@ -92,7 +91,8 @@ private:
 class Render_sprite : public Texture_sprite
 {
 protected:
-    /// **Precondition:** Both dimensions must be positive.
+    /// \preconditions
+    ///  - Both dimensions must be positive.
     explicit Render_sprite(Dimensions);
 
     /// Fills the whole surface with the given color.
@@ -129,7 +129,8 @@ public:
     /// Constructs a rectangle sprite from required Dimensions
     /// and an optional Color, which defaults to white.
     ///
-    /// **Precondition**: both dimensions must be positive
+    /// \preconditions
+    ///  - both dimensions must be positive
     explicit Rectangle_sprite(Dimensions, Color = Color::white());
 
     /// Changes the color of this rectangle sprite.
@@ -145,7 +146,8 @@ public:
     /// the reference point is the upper-left corner of the bounding
     /// box of the sprite, not the center of the circle.
     ///
-    /// **Precondition**: radius must be positive
+    /// \preconditions
+    ///  - radius must be positive
     explicit Circle_sprite(int radius, Color = Color::white());
 
     /// Changes the color of this circle sprite.
@@ -161,7 +163,7 @@ class Image_sprite : public detail::Texture_sprite
 public:
     /// Constructs an image sprite, given the filename of the
     /// image to display. The image must be saved in the project's
-    /// `resources/` directory. Many image formats are supported,
+    /// `Resources/` directory. Many image formats are supported,
     /// including JPEG, PNG, GIF, BMP, etc.
     explicit Image_sprite(std::string const& filename);
 
@@ -195,6 +197,9 @@ public:
     /// Is this Text_sprite empty? (If so, you shouldn't try to use
     /// it.)
     bool empty() const;
+
+    /// Is this Text_sprite non-empty (and thus renderable)?
+    operator bool() const;
 
     // Defined below.
     class Builder;
@@ -232,7 +237,7 @@ class Text_sprite::Builder
 public:
     /// \name Constructor and builder
     /// @{
-    
+
     /// Constructs a new Text_sprite::Builder with the given Font.
     explicit Builder(Font const&);
 
@@ -390,7 +395,7 @@ public:
     Sprite_set& add_sprite(Sprite const&, Position, int z, Transform const&);
 
 private:
-    friend class detail::Engine;
+    friend detail::Engine;
 
     Sprite_set();
     std::vector<detail::Placed_sprite> sprites_;

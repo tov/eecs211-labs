@@ -2,22 +2,28 @@
 
 #include "ge211_forward.h"
 #include "ge211_util.h"
+#include "ge211_error.h"
+
 #include <string>
+#include <vector>
 
 namespace ge211 {
 
 namespace detail {
+
+std::vector<const char*> get_search_prefixes();
 
 class File_resource
 {
 public:
     explicit File_resource(const std::string&);
 
-    SDL_RWops* get_raw_() const noexcept { return ptr_.get(); }
-
-    static delete_ptr<SDL_RWops> open_rwops_(const std::string&);
+    SDL_RWops* get_raw() const noexcept { return ptr_.get(); }
+    SDL_RWops* release() && { return ptr_.release(); }
 
 private:
+    static delete_ptr<SDL_RWops> open_rwops_(const std::string&);
+
     delete_ptr<SDL_RWops> ptr_;
 };
 
@@ -25,7 +31,7 @@ private:
 
 /// Represents a font that can be used to render a sprites::Text_sprite.
 /// To create a font, you must specify the TrueType font file (`.ttf`) to
-/// load, and that file must be in the `resources/` directory of your
+/// load, and that file must be in the `Resources/` directory of your
 /// project. You can create multiple Font instances for the same font
 /// file at different sizes.
 ///
@@ -47,16 +53,15 @@ public:
     Font(const std::string& filename, int size);
 
 private:
-    friend class sprites::Text_sprite;
+    friend Text_sprite;
 
     TTF_Font* get_raw_() const noexcept { return ptr_.get(); }
 
     static detail::delete_ptr<TTF_Font>
     load_(const std::string& filename,
-          detail::File_resource& ttf_file,
+          detail::File_resource&& ttf_file,
           int size);
 
-    detail::File_resource file_;
     detail::delete_ptr<TTF_Font> ptr_;
 };
 

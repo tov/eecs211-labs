@@ -1,14 +1,19 @@
 #include "model.h"
 #include <cmath>
 
-void Model::move_circle_left()
+void Model::move_large_circle_left()
 {
-    circle_position.x += 10;
+    large_center_.x += 10;
 }
 
-void Model::move_circle_right()
+void Model::move_large_circle_right()
 {
-    circle_position.x -= 10;
+    large_center_.x -= 10;
+}
+
+void Model::move_small_circle_to(ge211::Position pos)
+{
+    small_center_ = pos;
 }
 
 static double distance(ge211::Position pos1, ge211::Position pos2)
@@ -18,22 +23,25 @@ static double distance(ge211::Position pos1, ge211::Position pos2)
     return sqrt(dx * dx + dy * dy);
 }
 
-void Model::move_cursor_to(ge211::Position goal)
-{
-    cursor_position = goal;
-}
+static ge211::Dimensions const small_dims{2 * small_radius, 2 * small_radius};
+static ge211::Dimensions const large_dims{2 * large_radius, 2 * large_radius};
 
 Collision_state Model::get_state() const
 {
-	ge211::Position cursor_center = cursor_position;
-	cursor_center.x += cursor_radius;
-	cursor_center.y += cursor_radius;
-	ge211::Position circle_center = circle_position;
-	circle_center.x += circle_radius;
-	circle_center.y += circle_radius;
-    if (distance(cursor_center, circle_center) <= circle_radius+cursor_radius)
+    if (distance(small_center_, large_center_) <= large_radius + small_radius)
         return Collision_state::touching;
     else
         return Collision_state::not_touching;
+}
+
+ge211::Position Model::large_upper_left() const
+{
+    return {large_center_.x - large_radius, large_center_.y - large_radius};
+
+}
+
+ge211::Position Model::small_upper_left() const
+{
+    return {small_center_.x - small_radius, small_center_.y - small_radius};
 }
 
