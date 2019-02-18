@@ -13,11 +13,9 @@ Model::Model(std::initializer_list<std::string> words)
     load_next_word_();
 }
 
-void Model::update(double dt)
+void Model::update()
 {
-    last_update_ += dt;
-
-    if (last_update_ >= letter_delay)
+    if (last_update_.elapsed_time() > letter_delay)
         record_progress_(false);
 }
 
@@ -41,7 +39,7 @@ void Model::record_progress_(bool success)
     if (word_is_finished_())
         load_next_word_();
 
-    last_update_ = 0;
+    last_update_.reset();
 }
 
 void Model::load_next_word_()

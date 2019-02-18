@@ -28,11 +28,11 @@ public:
     // Controller
     void on_start() override;
 
-    void on_frame(double dt) override;
+    void on_frame(double) override;
 
-    void on_key(ge211::Key key) override;
+    void on_key(ge211::Key) override;
 
-    void draw(ge211::Sprite_set& sprites) override;
+    void draw(ge211::Sprite_set&) override;
 
 private:
 

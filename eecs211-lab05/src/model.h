@@ -3,7 +3,7 @@
 #include <ge211.h>
 #include <initializer_list>
 
-int const letter_delay = 2;
+static ge211::Duration const letter_delay(2);
 
 class Model
 {
@@ -29,7 +29,7 @@ public:
 
     void hit_key(char letter);
 
-    void update(double dt);
+    void update();
 
 private:
 
@@ -47,7 +47,7 @@ private:
     /// Private member variables
     ///
 
-    double last_update_ = 0;
+    ge211::Timer last_update_;
 
     std::string current_word_;
     std::vector<bool> typing_progress_;

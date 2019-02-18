@@ -46,9 +46,9 @@ void Controller::on_key(ge211::Key key)
         load_word_();
 }
 
-void Controller::on_frame(double dt)
+void Controller::on_frame(double)
 {
-    model_.update(dt);
+    model_.update();
 }
 
 void Controller::draw(ge211::Sprite_set& sprites)
