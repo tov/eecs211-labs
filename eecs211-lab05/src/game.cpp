@@ -26,7 +26,6 @@ struct Game : ge211::Abstract_game
     ///
     /// Constructors
     ///
-    Game();
 
     explicit Game(const std::vector<std::string>& words);
 
@@ -74,26 +73,27 @@ int main()
     Game{"Resources/dictionary.dat"}.run();
 }
 
-Game::Game()
+Game::Game(std::vector<std::string> const& words)
+        : model(words)
 {
     init_letter_sprites();
-    model = Model();
 }
 
-Game::Game(std::vector<std::string> const& words)
+static std::vector<std::string> words_in_file(std::string const& filename)
 {
-    init_letter_sprites();
-    model = Model(words);
+    std::vector<std::string> result;
+    std::ifstream dictionary(filename);
+    std::string buffer;
+
+    while (std::getline(dictionary, buffer))
+        result.push_back(buffer);
+
+    return result;
 }
 
 Game::Game(std::string const& filename)
-{
-    init_letter_sprites();
-    std::vector<std::string> words;
-    std::ifstream dictionary(filename);
-    copy(std::istream_iterator<std::string>(dictionary), std::istream_iterator<std::string>(), back_inserter(words));
-    model = Model(words);
-}
+        : Game(words_in_file(filename))
+{ }
 
 ge211::Position Bubble::letter_position()
 {

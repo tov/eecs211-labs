@@ -1,14 +1,9 @@
 #include "model.h"
 #include <cmath>
 
-Model::Model()
-{
-}
-
 Model::Model(const std::vector<std::string>& words)
-{
-    words_ = words;
-}
+        : words_(words)
+{ }
 
 Model::Model(std::initializer_list<std::string> words)
         : words_(words)

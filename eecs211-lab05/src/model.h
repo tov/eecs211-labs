@@ -19,11 +19,9 @@ public:
     /// Constructors
     ///
 
-    Model();
+    explicit Model(const std::vector<std::string>& words);
 
-    explicit Model(const std::vector<std::string>&);
-
-    Model(std::initializer_list<std::string>);
+    Model(std::initializer_list<std::string> words);
 
     ///
     /// Public member functions
