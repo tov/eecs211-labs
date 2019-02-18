@@ -161,17 +161,20 @@ void Game::draw(ge211::Sprite_set& sprites)
 void Game::new_word()
 {
     std::string word = model.next_word();
+
     if (word.empty())
-        exit(0);
+        word = "game over";
+
     int word_width = word.length() * (bubble_radius * 2 + bubble_separation);
+
     int x = get_random().between(0, scene_dimensions.width - word_width);
     int y = get_random().between(0, scene_dimensions.height - bubble_radius * 2);
-    ge211::Position starting_position = {x, y};
+    ge211::Position position{x, y};
+
     bubbles.clear();
     for (size_t i = 0; i < word.length(); i++) {
         char letter = word.at(i);
-        ge211::Position position = starting_position;
-        position.x += bubble_separation * i;
+        position.x += bubble_separation;
         Bubble bubble{letter_sprites[letter - 'a'], position};
         bubbles.push_back(bubble);
     }
