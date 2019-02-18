@@ -4,8 +4,9 @@
 #include <cstdlib>
 #include <fstream>
 
-int const bubble_radius = 30;
+int const bubble_radius     = 30;
 int const bubble_separation = 70;
+int const espinosas_number  = 7;
 
 struct Bubble
 {
@@ -109,7 +110,7 @@ Game::Game(std::string const& filename)
 ge211::Position Bubble::letter_position()
 {
     ge211::Position pos = position;
-    pos.x += bubble_radius - 7;
+    pos.x += bubble_radius - espinosas_number;
     return pos;
 }
 
