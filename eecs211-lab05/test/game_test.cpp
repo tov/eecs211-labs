@@ -1,12 +1,9 @@
 #include "../src/model.h"
 #include <catch.h>
 
-TEST_CASE("add_word next_word")
+TEST_CASE("next_word")
 {
-    std::vector<std::string> words;
-    words.push_back("word1");
-    words.push_back("word2");
-    Model model(words);
+    Model model{"word1", "word2"};
     CHECK( model.next_word() == "word1");
     CHECK( model.next_word() == "word2");
     CHECK( model.next_word().empty());
