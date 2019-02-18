@@ -73,7 +73,7 @@ private:
 
 int main()
 {
-    Game{"Resources/dictionary.dat"}.run();
+    Game{"../Resources/dictionary.dat"}.run();
 }
 
 Game::Game(std::vector<std::string> const& words)
