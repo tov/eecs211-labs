@@ -26,8 +26,8 @@ struct Game : ge211::Abstract_game
     /// Constructors
     ///
     Game();
-    Game(std::vector<std::string> words);
-    Game(std::string const& filename);
+    explicit Game(const std::vector<std::string>& words);
+    explicit Game(std::string const& filename);
 
     ///
     /// Member functions
@@ -72,7 +72,7 @@ Game::Game()
     model=Model();
 }
 
-Game::Game(std::vector<std::string> words)
+Game::Game(std::vector<std::string> const& words)
 {
     init_letter_sprites();
     model=Model(words);
