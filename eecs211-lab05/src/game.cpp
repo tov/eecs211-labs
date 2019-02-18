@@ -1,30 +1,17 @@
 #include "model.h"
 #include <ge211.h>
-#include <cstdio>
+#include <cctype>
 #include <cstdlib>
 #include <fstream>
 
 int const bubble_radius     = 30;
-int const bubble_separation = 70;
+int const bubble_offset     = 70;
 int const espinosas_number  = 7;
 
-struct Bubble
-{
-    ///
-    /// Member variables
-    ///
-    ge211::Text_sprite& letter_sprite;
-    ge211::Position position;
-
-    ///
-    /// Member functions
-    ///
-    ge211::Position letter_position();
-};
-
 // UI object
-struct Game : ge211::Abstract_game
+class Game : public ge211::Abstract_game
 {
+public:
     ///
     /// Constructors
     ///
@@ -38,19 +25,17 @@ struct Game : ge211::Abstract_game
     ///
 
     // Controller
-    void on_key(ge211::Key key) override;
-
     void on_start() override;
 
     void on_frame(double dt) override;
 
+    void on_key(ge211::Key key) override;
 
     // View
     void draw(ge211::Sprite_set& sprites) override;
 
-    ge211::Dimensions initial_window_dimensions() const override;
-
-    void new_word();
+private:
+    void new_word_();
 
     void init_letter_sprites();
 
@@ -59,15 +44,31 @@ struct Game : ge211::Abstract_game
     ///
 
     // Model
-    Model model;
+    Model model_;
 
     // View
-    std::vector<Bubble> bubbles;
-    ge211::Font sans{"sans.ttf", 30};
-    std::vector<ge211::Text_sprite> letter_sprites;
-    ge211::Circle_sprite yellow_bubble{bubble_radius, ge211::Color::medium_yellow()};
-    ge211::Circle_sprite green_bubble{bubble_radius, ge211::Color::medium_green()};
-    ge211::Circle_sprite red_bubble{bubble_radius, ge211::Color::medium_red()};
+    struct Bubble_
+    {
+        // Constructor
+        Bubble_(ge211::Text_sprite&, ge211::Position);
+
+        /// Member functions
+        ge211::Position bubble_position() const;
+        ge211::Position letter_position() const;
+
+        /// Member variables
+        ge211::Text_sprite& letter_sprite;
+        ge211::Position     center;
+    };
+
+    std::vector<Bubble_> bubbles_;
+
+    ge211::Font sans_{"sans.ttf", 30};
+    std::vector<ge211::Text_sprite> letter_sprites_;
+
+    ge211::Circle_sprite yellow_bubble_{bubble_radius, ge211::Color::medium_yellow()};
+    ge211::Circle_sprite green_bubble_{bubble_radius, ge211::Color::medium_green()};
+    ge211::Circle_sprite red_bubble_{bubble_radius, ge211::Color::medium_red()};
 };
 
 int main()
@@ -76,7 +77,7 @@ int main()
 }
 
 Game::Game(std::vector<std::string> const& words)
-        : model(words)
+        : model_(words)
 {
     init_letter_sprites();
 }
@@ -107,81 +108,84 @@ Game::Game(std::string const& filename)
         : Game(words_in_file(filename))
 { }
 
-ge211::Position Bubble::letter_position()
+Game::Bubble_::Bubble_(ge211::Text_sprite& sprite, ge211::Position position)
+        : letter_sprite(sprite)
+        , center(position)
+{ }
+
+ge211::Position Game::Bubble_::bubble_position() const
 {
-    ge211::Position pos = position;
-    pos.x += bubble_radius - espinosas_number;
-    return pos;
+    return center.up_by(bubble_radius).left_by(bubble_radius);
 }
 
-ge211::Dimensions Game::initial_window_dimensions() const
+ge211::Position Game::Bubble_::letter_position() const
 {
-    return scene_dimensions;
-}
-
-void Game::on_frame(double dt)
-{
-    if (model.is_finished()) new_word();
-    model.update(dt);
+    return center.right_by(bubble_radius - espinosas_number);
 }
 
 void Game::init_letter_sprites()
 {
-    for (char letter = 'a'; letter <= 'z'; ++letter) {
-        letter_sprites.push_back(ge211::Text_sprite(std::string(&letter, 1), sans));
+    for (char letter = 'a'; letter <= 'z'; ++letter)
+        letter_sprites_.emplace_back(std::string(1, letter), sans_);
+}
+
+void Game::draw(ge211::Sprite_set& sprites)
+{
+    std::vector<bool> const& progress = model_.typing_progress();
+
+    for (int i = 0; i < bubbles_.size(); ++i) {
+        Bubble_ const& bubble = bubbles_[i];
+        sprites.add_sprite(bubble.letter_sprite,
+                           bubble.letter_position(),
+                           1);
+        sprites.add_sprite(i < progress.size()
+                           ? progress[i]
+                             ? green_bubble_
+                             : red_bubble_
+                           : yellow_bubble_,
+                           bubble.center, 0);
+    }
+}
+
+void Game::new_word_()
+{
+    std::string const& word = model_.current_word();
+
+    int word_width = static_cast<int>(word.length()) * bubble_offset;
+
+    ge211::Dimensions window_dims = get_window().get_dimensions();
+
+    int x = get_random().between(0, window_dims.width - word_width);
+    int y = get_random().between(0, window_dims.height - bubble_radius * 2);
+    ge211::Position position{x, y};
+
+    bubbles_.clear();
+
+    for (char c : word) {
+        position.x += bubble_offset;
+        size_t i    = static_cast<size_t>(std::tolower(c) - 'a');
+        bubbles_.emplace_back(letter_sprites_.at(i), position);
     }
 }
 
 void Game::on_start()
 {
-    new_word();
-}
-
-void Game::draw(ge211::Sprite_set& sprites)
-{
-    std::vector<State> states = model.get_word_state();
-    for (size_t i = 0; i < states.size(); i++) {
-        Bubble bubble = bubbles[i];
-        switch (states[i]) {
-            case State::pending:
-                sprites.add_sprite(yellow_bubble, bubble.position, i * 2);
-                break;
-            case State::missed:
-                sprites.add_sprite(red_bubble, bubble.position);
-                break;
-            case State::done:
-                sprites.add_sprite(green_bubble, bubble.position);
-                break;
-        }
-        ge211::Position pos = bubble.letter_position();
-        sprites.add_sprite(bubble.letter_sprite, pos, i * 2 + 1);
-    }
-}
-
-void Game::new_word()
-{
-    std::string word = model.next_word();
-
-    if (word.empty())
-        word = "game over";
-
-    int word_width = word.length() * (bubble_radius * 2 + bubble_separation);
-
-    int x = get_random().between(0, scene_dimensions.width - word_width);
-    int y = get_random().between(0, scene_dimensions.height - bubble_radius * 2);
-    ge211::Position position{x, y};
-
-    bubbles.clear();
-    for (size_t i = 0; i < word.length(); i++) {
-        char letter = word.at(i);
-        position.x += bubble_separation;
-        Bubble bubble{letter_sprites[letter - 'a'], position};
-        bubbles.push_back(bubble);
-    }
-    model.load_word(word);
+    new_word_();
 }
 
 void Game::on_key(ge211::Key key)
 {
-    model.hit_key(key.code());
+    model_.hit_key(char(key.code()));
+
+    if (model_.game_is_finished())
+        model_ = Model{"gameover"};
+
+    if (model_.typing_progress().empty())
+        new_word_();
 }
+
+void Game::on_frame(double dt)
+{
+    model_.update(dt);
+}
+

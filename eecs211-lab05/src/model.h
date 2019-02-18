@@ -4,12 +4,6 @@
 #include <initializer_list>
 
 int const letter_delay = 2;
-ge211::Dimensions const scene_dimensions{1024, 768};
-
-enum class State
-{
-    pending, missed, done
-};
 
 class Model
 {
@@ -27,35 +21,38 @@ public:
     /// Public member functions
     ///
 
-    void update(double dt);
+    std::string const& current_word() const;
 
-    std::string next_word();
+    std::vector<bool> const& typing_progress() const;
 
-    void load_word(std::string const& word);
-
-    std::string& get_word();
+    bool game_is_finished() const;
 
     void hit_key(char letter);
 
-    bool is_finished();
-
-    std::vector<State> const& get_word_state() const;
+    void update(double dt);
 
 private:
 
     ///
-    /// Private member functions
+    /// Private helper functions
     ///
 
-    size_t first_pending_(std::vector<State> const& bubbles);
+    void record_progress_(bool success);
+
+    void load_next_word_();
+
+    bool word_is_finished_() const;
 
     ///
     /// Private member variables
     ///
 
-    std::string current_word_;
-    std::vector<State> word_state_;
-    std::vector<std::string> words_;
     double last_update_ = 0;
-    size_t word_count_ = 0;
+
+    std::string current_word_;
+    std::vector<bool> typing_progress_;
+
+    std::vector<std::string> words_;
+    size_t next_word_index_ = 0;
 };
+

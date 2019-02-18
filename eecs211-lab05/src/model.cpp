@@ -1,70 +1,73 @@
 #include "model.h"
-#include <cmath>
+#include <algorithm>
 
 Model::Model(const std::vector<std::string>& words)
         : words_(words)
-{ }
+{
+    load_next_word_();
+}
 
 Model::Model(std::initializer_list<std::string> words)
         : words_(words)
-{ }
+{
+    load_next_word_();
+}
 
 void Model::update(double dt)
 {
     last_update_ += dt;
-    if (last_update_ >= letter_delay) {
-        if (!is_finished()) word_state_[first_pending_(word_state_)] = State::missed;
-        last_update_ = 0;
-    }
+
+    if (last_update_ >= letter_delay)
+        record_progress_(false);
 }
 
-std::vector<State> const& Model::get_word_state() const
+std::vector<bool> const& Model::typing_progress() const
 {
-    return word_state_;
+    return typing_progress_;
 }
 
-std::string& Model::get_word()
+std::string const& Model::current_word() const
 {
     return current_word_;
 }
 
-void Model::load_word(std::string const& new_word)
+void Model::record_progress_(bool success)
 {
-    word_state_.clear();
-    for (size_t i = 0; i < new_word.length(); i++)
-        word_state_.push_back(State::pending);
-    current_word_ = new_word;
+    size_t i = typing_progress_.size();
+
+    if (!word_is_finished_())
+        typing_progress_.push_back(success);
+
+    if (word_is_finished_())
+        load_next_word_();
+
+    last_update_ = 0;
 }
 
-size_t Model::first_pending_(const std::vector<State>& bubbles)
+void Model::load_next_word_()
 {
-    size_t i = 0;
-    while (i < bubbles.size() && bubbles[i] != State::pending) i++;
-    return i;
-}
+    typing_progress_.clear();
 
-std::string Model::next_word()
-{
-    if (word_count_ == words_.size())
-        return std::string();
+    if (next_word_index_ < words_.size())
+        current_word_ = words_[next_word_index_++];
     else
-        return words_[word_count_++];
+        current_word_ = "";
 }
 
-bool Model::is_finished()
+bool Model::word_is_finished_() const
 {
-    return first_pending_(word_state_) == word_state_.size();
+    return typing_progress_.size() == current_word_.size();
+}
+
+bool Model::game_is_finished() const
+{
+    return current_word_.empty();
 }
 
 void Model::hit_key(char letter)
 {
-    size_t i = first_pending_(word_state_);
-    if (i < word_state_.size()) {
-        if (current_word_.at(i) == letter)
-            word_state_[i] = State::done;
-        else
-            word_state_[i] = State::missed;
-    }
-    last_update_ = 0;
-}
+    size_t i = typing_progress_.size();
 
+    if (i < current_word_.size())
+        record_progress_(current_word_[i] == letter);
+}
