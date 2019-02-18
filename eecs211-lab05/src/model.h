@@ -13,7 +13,7 @@ struct Model
 	/// Constructors
 	///
 	Model();
-	Model(std::vector<std::string> words);
+	explicit Model(std::vector<std::string> words);
 
     private:
 		///
