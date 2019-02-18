@@ -1,6 +1,7 @@
 #pragma once
 
 #include <ge211.h>
+#include <initializer_list>
 
 int const letter_delay = 2;
 ge211::Dimensions const scene_dimensions{1024, 768};
@@ -21,6 +22,8 @@ public:
     Model();
 
     explicit Model(const std::vector<std::string>&);
+
+    Model(std::initializer_list<std::string>);
 
     ///
     /// Public member functions

@@ -10,6 +10,10 @@ Model::Model(const std::vector<std::string>& words)
     words_ = words;
 }
 
+Model::Model(std::initializer_list<std::string> words)
+        : words_(words)
+{ }
+
 void Model::update(double dt)
 {
     last_update_ += dt;
@@ -68,3 +72,4 @@ void Model::hit_key(char letter)
     }
     last_update_ = 0;
 }
+
