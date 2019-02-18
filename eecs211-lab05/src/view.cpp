@@ -3,7 +3,8 @@
 View::View(Model const& model)
         : model_(model)
 {
-    init_letter_sprites_();
+    for (char letter = 'a'; letter <= 'z'; ++letter)
+        letter_sprites_.emplace_back(std::string(1, letter), sans_);
 }
 
 View::Bubble_::Bubble_(ge211::Text_sprite& sprite, ge211::Position position)
@@ -19,12 +20,6 @@ ge211::Position View::Bubble_::bubble_position() const
 ge211::Position View::Bubble_::letter_position() const
 {
     return center.right_by(bubble_radius - espinosas_number);
-}
-
-void View::init_letter_sprites_()
-{
-    for (char letter = 'a'; letter <= 'z'; ++letter)
-        letter_sprites_.emplace_back(std::string(1, letter), sans_);
 }
 
 void View::draw(ge211::Sprite_set& sprites) const

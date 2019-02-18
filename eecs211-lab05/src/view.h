@@ -19,7 +19,6 @@ public:
                    ge211::Random& rng);
 
 private:
-    void init_letter_sprites_();
 
     // The view can look at the model but doesn't change it.
     Model const& model_;
