@@ -1,8 +1,11 @@
 #include "model.h"
+
 #include <ge211.h>
+
 #include <cctype>
-#include <cstdlib>
 #include <fstream>
+#include <iostream>
+#include <stdexcept>
 
 int const bubble_radius     = 30;
 int const bubble_offset     = 70;
@@ -73,7 +76,12 @@ private:
 
 int main()
 {
-    Game{"../Resources/dictionary.dat"}.run();
+    try {
+        Game("../Resources/dictionary.dat").run();
+    } catch (std::runtime_error const& e) {
+        std::cerr << e.what() << "\n";
+        return 1;
+    }
 }
 
 Game::Game(std::vector<std::string> const& words)
@@ -82,30 +90,26 @@ Game::Game(std::vector<std::string> const& words)
     init_letter_sprites();
 }
 
-static std::vector<std::string> words_in_file(std::string const& filename)
+static std::vector<std::string> load_dictionary(std::string const& filename)
 {
     std::vector<std::string> result;
     std::ifstream dictionary(filename);
     std::string buffer;
 
-    if (!dictionary.is_open()) {
-        std::perror(("could not open dictionary: " + filename).c_str());
-        std::exit(1);
-    }
+    if (!dictionary.is_open())
+        throw std::runtime_error("could not open dictionary: " + filename);
 
     while (std::getline(dictionary, buffer))
         result.push_back(buffer);
 
-    if (dictionary.bad()) {
-        std::perror(("could not read dictionary: " + filename).c_str());
-        std::exit(2);
-    }
+    if (dictionary.bad())
+        throw std::runtime_error("could not read dictionary: " + filename);
 
     return result;
 }
 
 Game::Game(std::string const& filename)
-        : Game(words_in_file(filename))
+        : Game(load_dictionary(filename))
 { }
 
 Game::Bubble_::Bubble_(ge211::Text_sprite& sprite, ge211::Position position)
