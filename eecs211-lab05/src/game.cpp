@@ -1,7 +1,7 @@
 #include "model.h"
 #include <ge211.h>
 #include <fstream>
-#include <iterator>
+#include <iostream>
 
 int const bubble_radius = 30;
 int const bubble_separation = 70;
@@ -84,6 +84,11 @@ static std::vector<std::string> words_in_file(std::string const& filename)
     std::vector<std::string> result;
     std::ifstream dictionary(filename);
     std::string buffer;
+
+    if (!dictionary.is_open()) {
+        std::cerr << "Could not open dictionary: " << filename << "\n";
+        std::exit(1);
+    }
 
     while (std::getline(dictionary, buffer))
         result.push_back(buffer);
