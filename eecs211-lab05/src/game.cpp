@@ -25,9 +25,9 @@ struct Game : ge211::Abstract_game
     ///
     /// Constructors
     ///
-	Game();
-	Game(std::vector<std::string> words);
-	Game(std::string const& filename); 
+    Game();
+    Game(std::vector<std::string> words);
+    Game(std::string const& filename);
 
     ///
     /// Member functions
@@ -43,7 +43,7 @@ struct Game : ge211::Abstract_game
     void draw(ge211::Sprite_set& sprites) override;
     ge211::Dimensions initial_window_dimensions() const override;
     void new_word();
-	void init_letter_sprites();
+    void init_letter_sprites();
 
     ///
     /// Member variables
@@ -80,10 +80,10 @@ Game::Game(std::vector<std::string> words)
 
 Game::Game(std::string const& filename)
 {
-	init_letter_sprites();
-	std::vector<std::string> words;
-	std::ifstream dictionary(filename); 
-	copy(std::istream_iterator<std::string>(dictionary), std::istream_iterator<std::string>(), back_inserter(words));
+    init_letter_sprites();
+    std::vector<std::string> words;
+    std::ifstream dictionary(filename);
+    copy(std::istream_iterator<std::string>(dictionary), std::istream_iterator<std::string>(), back_inserter(words));
     model=Model(words);
 }
 
@@ -110,7 +110,7 @@ void Game::init_letter_sprites()
     for (char letter = 'a' ; letter <= 'z' ; letter++)
     {
         letter_sprites.push_back(ge211::Text_sprite(std::string(&letter, 1), sans));
-    }	
+    }
 }
 
 void Game::on_start()
@@ -119,9 +119,9 @@ void Game::on_start()
 }
 
 void Game::draw(ge211::Sprite_set& sprites)
-{   
+{
     std::vector<State> states = model.get_word_state();
-	for (size_t i = 0;i < states.size(); i++)
+    for (size_t i = 0;i < states.size(); i++)
     {
         Bubble bubble = bubbles[i];
         switch (states[i])
@@ -146,11 +146,11 @@ void Game::new_word ()
     std::string word = model.next_word();
     if (word.empty())
         exit(0);
-   int word_width = word.length() * (bubble_radius * 2 + bubble_separation);
+    int word_width = word.length() * (bubble_radius * 2 + bubble_separation);
     int x = get_random().between(0,scene_dimensions.width - word_width) ;
     int y = get_random().between(0,scene_dimensions.height - bubble_radius * 2) ;
     ge211::Position starting_position={ x , y };
-	bubbles.clear();
+    bubbles.clear();
     for (size_t i = 0 ; i < word.length() ; i++)
     {
         char letter = word.at(i);
