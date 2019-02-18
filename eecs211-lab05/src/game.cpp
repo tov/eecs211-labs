@@ -1,7 +1,7 @@
 #include "model.h"
 #include <ge211.h>
+#include <cstdio>
 #include <fstream>
-#include <iostream>
 
 int const bubble_radius = 30;
 int const bubble_separation = 70;
