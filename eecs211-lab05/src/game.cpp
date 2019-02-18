@@ -115,7 +115,7 @@ void Game::on_frame(double dt)
 
 void Game::init_letter_sprites()
 {
-    for (char letter = 'a'; letter <= 'z'; letter++) {
+    for (char letter = 'a'; letter <= 'z'; ++letter) {
         letter_sprites.push_back(ge211::Text_sprite(std::string(&letter, 1), sans));
     }
 }

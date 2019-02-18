@@ -10,34 +10,22 @@ enum class State
     pending, missed, done
 };
 
-struct Model
+class Model
 {
+public:
+
     ///
     /// Constructors
     ///
+
     Model();
 
     explicit Model(const std::vector<std::string>&);
 
-private:
-    ///
-    /// Private member variables
-    ///
-    std::string current_word;
-    std::vector<State> word_state;
-    std::vector<std::string> words_;
-    double last_update = 0;
-    size_t word_count = 0;
-
-    ///
-    /// Private member functions
-    ///
-    size_t first_pending(std::vector<State> const& bubbles);
-
-public:
     ///
     /// Public member functions
     ///
+
     void update(double dt);
 
     std::string next_word();
@@ -51,4 +39,22 @@ public:
     bool is_finished();
 
     std::vector<State>& get_word_state();
+
+private:
+
+    ///
+    /// Private member functions
+    ///
+
+    size_t first_pending_(std::vector<State> const& bubbles);
+
+    ///
+    /// Private member variables
+    ///
+
+    std::string current_word_;
+    std::vector<State> word_state_;
+    std::vector<std::string> words_;
+    double last_update_ = 0;
+    size_t word_count_ = 0;
 };
