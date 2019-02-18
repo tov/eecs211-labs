@@ -41,7 +41,7 @@ public:
 
     bool is_finished();
 
-    std::vector<State>& get_word_state();
+    std::vector<State> const& get_word_state() const;
 
 private:
 

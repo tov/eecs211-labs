@@ -23,7 +23,7 @@ void Model::update(double dt)
     }
 }
 
-std::vector<State>& Model::get_word_state()
+std::vector<State> const& Model::get_word_state() const
 {
     return word_state_;
 }
