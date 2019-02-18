@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.3)
-project(lab04 CXX)
+project(lab05 CXX)
 include(.eecs211/cmake/CMakeLists.txt)
 
 # Builds program from the two listed source files:
