@@ -11,8 +11,9 @@ struct Bubble
     ///
     /// Member variables
     ///
-    ge211::Text_sprite &letter_sprite;
+    ge211::Text_sprite& letter_sprite;
     ge211::Position position;
+
     ///
     /// Member functions
     ///
@@ -26,7 +27,9 @@ struct Game : ge211::Abstract_game
     /// Constructors
     ///
     Game();
+
     explicit Game(const std::vector<std::string>& words);
+
     explicit Game(std::string const& filename);
 
     ///
@@ -35,14 +38,19 @@ struct Game : ge211::Abstract_game
 
     // Controller
     void on_key(ge211::Key key) override;
+
     void on_start() override;
+
     void on_frame(double dt) override;
 
 
     // View
     void draw(ge211::Sprite_set& sprites) override;
+
     ge211::Dimensions initial_window_dimensions() const override;
+
     void new_word();
+
     void init_letter_sprites();
 
     ///
@@ -69,13 +77,13 @@ int main()
 Game::Game()
 {
     init_letter_sprites();
-    model=Model();
+    model = Model();
 }
 
 Game::Game(std::vector<std::string> const& words)
 {
     init_letter_sprites();
-    model=Model(words);
+    model = Model(words);
 }
 
 Game::Game(std::string const& filename)
@@ -84,7 +92,7 @@ Game::Game(std::string const& filename)
     std::vector<std::string> words;
     std::ifstream dictionary(filename);
     copy(std::istream_iterator<std::string>(dictionary), std::istream_iterator<std::string>(), back_inserter(words));
-    model=Model(words);
+    model = Model(words);
 }
 
 ge211::Position Bubble::letter_position()
@@ -107,8 +115,7 @@ void Game::on_frame(double dt)
 
 void Game::init_letter_sprites()
 {
-    for (char letter = 'a' ; letter <= 'z' ; letter++)
-    {
+    for (char letter = 'a'; letter <= 'z'; letter++) {
         letter_sprites.push_back(ge211::Text_sprite(std::string(&letter, 1), sans));
     }
 }
@@ -121,11 +128,9 @@ void Game::on_start()
 void Game::draw(ge211::Sprite_set& sprites)
 {
     std::vector<State> states = model.get_word_state();
-    for (size_t i = 0;i < states.size(); i++)
-    {
+    for (size_t i = 0; i < states.size(); i++) {
         Bubble bubble = bubbles[i];
-        switch (states[i])
-        {
+        switch (states[i]) {
             case State::pending:
                 sprites.add_sprite(yellow_bubble, bubble.position, i * 2);
                 break;
@@ -141,22 +146,21 @@ void Game::draw(ge211::Sprite_set& sprites)
     }
 }
 
-void Game::new_word ()
+void Game::new_word()
 {
     std::string word = model.next_word();
     if (word.empty())
         exit(0);
     int word_width = word.length() * (bubble_radius * 2 + bubble_separation);
-    int x = get_random().between(0,scene_dimensions.width - word_width) ;
-    int y = get_random().between(0,scene_dimensions.height - bubble_radius * 2) ;
-    ge211::Position starting_position={ x , y };
+    int x = get_random().between(0, scene_dimensions.width - word_width);
+    int y = get_random().between(0, scene_dimensions.height - bubble_radius * 2);
+    ge211::Position starting_position = {x, y};
     bubbles.clear();
-    for (size_t i = 0 ; i < word.length() ; i++)
-    {
+    for (size_t i = 0; i < word.length(); i++) {
         char letter = word.at(i);
         ge211::Position position = starting_position;
         position.x += bubble_separation * i;
-        Bubble bubble{ letter_sprites[letter - 'a'] , position };
+        Bubble bubble{letter_sprites[letter - 'a'], position};
         bubbles.push_back(bubble);
     }
     model.load_word(word);
