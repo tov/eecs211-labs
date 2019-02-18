@@ -1,6 +1,7 @@
 #include "model.h"
 #include <ge211.h>
 #include <cstdio>
+#include <cstdlib>
 #include <fstream>
 
 int const bubble_radius = 30;
@@ -86,7 +87,7 @@ static std::vector<std::string> words_in_file(std::string const& filename)
     std::string buffer;
 
     if (!dictionary.is_open()) {
-        perror(("could not open dictionary: " + filename).c_str());
+        std::perror(("could not open dictionary: " + filename).c_str());
         std::exit(1);
     }
 
@@ -94,7 +95,7 @@ static std::vector<std::string> words_in_file(std::string const& filename)
         result.push_back(buffer);
 
     if (dictionary.bad()) {
-        perror(("could not read dictionary: " + filename).c_str());
+        std::perror(("could not read dictionary: " + filename).c_str());
         std::exit(2);
     }
 
