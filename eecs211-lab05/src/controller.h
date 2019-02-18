@@ -8,7 +8,8 @@
 #include <string>
 #include <vector>
 
-// UI object
+// Controls how the user interacts with the game and coordinates
+// among the other objects.
 class Controller : public ge211::Abstract_game
 {
 public:
