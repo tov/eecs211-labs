@@ -1,0 +1,3 @@
+[submodule "dot-eecs211/lib/ge211"]
+	path = dot-eecs211/lib/ge211
+	url = https://github.com/tov/ge211.git
