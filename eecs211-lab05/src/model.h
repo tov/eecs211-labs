@@ -13,7 +13,7 @@ struct Model
 	/// Constructors
 	///
 	Model();
-	explicit Model(std::vector<std::string> words);
+	explicit Model(const std::vector<std::string>& words);
 
     private:
 		///
@@ -33,9 +33,9 @@ struct Model
 		///
 		/// Public member functions
 		///
-        void update(double const dt);
+        void update(double dt);
         std::string next_word();
-        void load_word(std::string const word);
+        void load_word(std::string const& word);
 		std::string &get_word();
         void hit_key(char letter);
         bool is_finished();

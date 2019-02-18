@@ -5,12 +5,12 @@ Model::Model()
 {
 }
 
-Model::Model(std::vector<std::string> dictionary)
+Model::Model(const std::vector<std::string>& words)
 {
-	words=dictionary;
+	words=words;
 }
 
-void Model::update(double const dt)
+void Model::update(double dt)
 {
     last_update += dt;
     if (last_update >= letter_delay)
@@ -30,7 +30,7 @@ std::string &Model::get_word()
 	return current_word;
 }
 
-void Model::load_word(std::string const new_word)
+void Model::load_word(std::string const& new_word)
 {
 	word_state.clear();
     for (size_t i = 0 ; i < new_word.length() ; i++)
