@@ -6,7 +6,7 @@
 int main()
 {
     try {
-        Controller("./Resources/dictionary.dat").run();
+        Controller("../Resources/dictionary.dat").run();
     } catch (std::runtime_error const& e) {
         std::cerr << e.what() << "\n";
         return 1;
