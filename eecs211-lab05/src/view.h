@@ -2,19 +2,28 @@
 
 #include "model.h"
 
-static int const font_size         = 30;
-static int const bubble_radius     = 30;
-static int const bubble_offset     = 70;
-static int const espinosas_number  = 7;
+static int const font_size = 30;
+static int const bubble_radius = 30;
+static int const bubble_offset = 70;
 
 // Controls how the game is shown to the user:
 class View
 {
 public:
+/// Constructor
+
+    // Construct View given a reference to a Model that is 
+    // stored in a the private member model_ 
+    // At this times the view create sprites for all letters in the alphabet
     explicit View(Model const&);
 
-    void draw(ge211::Sprite_set&) const;
+/// Member functions
 
+    // Renders the bubbles with the letters of the current word 
+    // on the screen
+    void draw(ge211::Sprite_set&) const;
+    
+    // Creates the bubble objects for the current word
     void load_word(ge211::Dimensions window_dims,
                    ge211::Random& rng);
 
@@ -25,12 +34,16 @@ private:
 
     struct Bubble_
     {
-        // Constructor
+        /// Constructor
         Bubble_(ge211::Text_sprite&, ge211::Position);
 
         /// Member functions
+
+        // Returns the position of the center of the bubble 
         ge211::Position bubble_position() const;
-        ge211::Position letter_position() const;
+        
+        // Returns the position of the bubble letter
+       ge211::Position letter_position() const;
 
         /// Member variables
         ge211::Text_sprite& letter_sprite;
