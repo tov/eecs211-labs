@@ -9,7 +9,7 @@ View::View(Model const& model)
 
 View::Bubble_::Bubble_(ge211::Text_sprite& sprite, ge211::Position position)
         : letter_sprite(sprite)
-          , center(position)
+        , center(position)
 { }
 
 ge211::Position View::Bubble_::bubble_position() const

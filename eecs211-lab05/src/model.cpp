@@ -13,10 +13,12 @@ Model::Model(std::initializer_list<std::string> words)
     load_next_word_();
 }
 
-void Model::update()
+bool Model::update()
 {
     if (last_update_.elapsed_time() > letter_delay)
-        record_progress_(false);
+        return record_progress_(false);
+    else
+        return false;
 }
 
 std::vector<bool> const& Model::typing_progress() const
@@ -29,17 +31,17 @@ std::string const& Model::current_word() const
     return current_word_;
 }
 
-void Model::record_progress_(bool success)
+bool Model::record_progress_(bool success)
 {
-    size_t i = typing_progress_.size();
-
-    if (!word_is_finished_())
-        typing_progress_.push_back(success);
-
-    if (word_is_finished_())
-        load_next_word_();
-
     last_update_.reset();
+
+    typing_progress_.push_back(success);
+
+    if (word_is_finished_()) {
+        load_next_word_();
+        return true;
+    } else
+        return false;
 }
 
 void Model::load_next_word_()
@@ -62,10 +64,10 @@ bool Model::game_is_finished() const
     return current_word_.empty();
 }
 
-void Model::hit_key(char letter)
+bool Model::hit_key(char letter)
 {
     size_t i = typing_progress_.size();
 
-    if (i < current_word_.size())
-        record_progress_(current_word_[i] == letter);
+    return i < current_word_.size() &&
+            record_progress_(current_word_[i] == letter);
 }

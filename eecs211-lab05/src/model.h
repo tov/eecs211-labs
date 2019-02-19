@@ -3,7 +3,7 @@
 #include <ge211.h>
 #include <initializer_list>
 
-static ge211::Duration const letter_delay(2);
+static ge211::Duration const letter_delay(.3);
 
 class Model
 {
@@ -27,9 +27,9 @@ public:
 
     bool game_is_finished() const;
 
-    void hit_key(char letter);
+    bool hit_key(char letter);
 
-    void update();
+    bool update();
 
 private:
 
@@ -37,7 +37,7 @@ private:
     /// Private helper functions
     ///
 
-    void record_progress_(bool success);
+    bool record_progress_(bool success);
 
     void load_next_word_();
 
