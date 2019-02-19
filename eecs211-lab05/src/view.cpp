@@ -54,21 +54,13 @@ void View::load_word(ge211::Dimensions window_dims,
 }
 
 ///
-/// Private class Bubble_  
-///
-
-///
-/// Constructor
+/// Private helper class Bubble_
 ///
 
 View::Bubble_::Bubble_(ge211::Text_sprite& sprite, ge211::Position position)
         : letter_sprite(sprite)
-          , center(position)
+        , center(position)
 { }
-
-///
-/// Member functions
-///
 
 ge211::Position View::Bubble_::bubble_position() const
 {
