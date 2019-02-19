@@ -3,7 +3,13 @@
 #include <ge211.h>
 #include <initializer_list>
 
-static ge211::Duration const letter_delay(.3);
+static ge211::Duration const letter_delay(2);
+
+// Encapsulates the internal state of the game:
+//
+//  - the current word,
+//  - the progress in the current word, and
+//  - the words to do next.
 
 class Model
 {
@@ -13,45 +19,31 @@ public:
     /// Constructors
     ///
     
-    // Construct Model given a vector of strings that is 
-    // used to create the words vector, then the first word is loaded 
+    // Uses the given vector of words as the source of words.
     explicit Model(const std::vector<std::string>& words);
 
-    // Construct Model given a initializer_list of strings that is 
-    // used to create the words vector, then the first word is loaded 
+    // Uses the given literal word list as the source of words.
     Model(std::initializer_list<std::string> words);
 
     ///
     /// Public member functions
     ///
 
-    // Returns a reference to a string containing 
-    // the current word being process by the model
+    // The current word being process by the model.
     std::string const& current_word() const;
 
-    // Returns a vector of booleans representing 
-    // the state of all letters already processed 
-    // where true means hit and false means miss
+    // Returns the state of all letters already processed in order,
+    // where true means hit and false means miss.
     std::vector<bool> const& typing_progress() const;
 
-    // Returns a boolean representing the 
-    // state of the game where true means 
-    // finished ( no more words to play ) and
-    // false means in progress
+    // Returns whether the game is over.
     bool game_is_finished() const;
 
-    // Process a new key pressed and
-    // after determine if it is the right one
-    // it records the typing progress
-   void hit_key(char letter);
+    // Processes a user key press, updating the word progress.
+    void hit_key(char letter);
 
-	// Determines if the time lapsed since 
-    // the last letter was active is bigger than 
-    // the wait time and if so mark progress 
-    // as a miss
-	// Returns a boolean representing the state of the 
-	// current word where true means finished and 
-	// false means in progress. 
+    // Updates the model for the passage of time and returns whether
+    // the current word changed.
     bool update();
 
 private:
@@ -60,33 +52,33 @@ private:
     /// Private helper functions
     ///
 
-    // Records the typing progress of the current word
-	// Receives a boolean parameter to determine 
-    // if it was a hit(true) or a miss(false).
-	// Returns a boolean representing the state of the 
-	// current word where true means finished and 
-	// false means in progress. 	
+    // Records the effect of the most recent keystroke, where true
+    // means it was correct and means incorrect or out of time.
     bool record_progress_(bool success);
 
-    // Set the current_word to the next one in the 
-    // words vector
+    // Set the current_word to the next one in the words vector.
     void load_next_word_();
 
-    // Returns a boolean representing the 
-    // state of the current word where true means
-    // the word is finished and false the word is 
-    // still in progress
+    // Returns whether the current word is finished.
     bool word_is_finished_() const;
 
     ///
     /// Private member variables
     ///
 
+    // Keeps track of time since the last letter was typed or timed out.
     ge211::Timer last_update_;
 
+    // The current word we're trying to type.
     std::string current_word_;
+
+    // The typing progress: true for correct keystrokes, false for incorrect,
+    // grows as we type or time passes.
     std::vector<bool> typing_progress_;
 
+    // The source of words.
     std::vector<std::string> words_;
+
+    // The index of the next work for after the current word finishes.
     size_t next_word_index_ = 0;
 };
