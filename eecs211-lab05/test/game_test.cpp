@@ -1,84 +1,52 @@
 #include "../src/model.h"
 #include <catch.h>
 
-TEST_CASE("next_word")
+TEST_CASE("current_word")
 {
     Model model{"word1", "word2"};
-    CHECK( model.next_word() == "word1");
-    CHECK( model.next_word() == "word2");
-    CHECK( model.next_word().empty());
+    CHECK( model.current_word() == "word1");
 }
 
-//TEST_CASE("create_bubbles get_bubbles")
-//{
-//    Model model;
-//    model.create_bubbles("hi",{100,100},5);
-//	std::vector<Bubble> bubbles=model.get_bubbles();
-//	CHECK( bubbles.size() == 2);
-//	CHECK( bubbles[0].letter == 'h');
-//	CHECK( bubbles[0].position.x == 100);
-//	CHECK( bubbles[0].position.y == 100);
-//	CHECK( bubbles[0].state == Bubble::State::pending);
-//	CHECK( bubbles[1].letter == 'i');
-//	CHECK( bubbles[1].position.x == 105);
-//	CHECK( bubbles[1].position.y == 100);
-//	CHECK( bubbles[1].state == Bubble::State::pending);
-//}
-//
-//TEST_CASE("hit_key-hit")
-//{
-//    Model model;
-//    model.create_bubbles("hi",{100,100},5);
-//	std::vector<Bubble> bubbles=model.get_bubbles();
-//	CHECK( bubbles[0].state == Bubble::State::pending);
-//	CHECK( bubbles[1].state == Bubble::State::pending);
-//	model.hit_key('h');
-//	bubbles=model.get_bubbles();
-//	CHECK( bubbles[0].state == Bubble::State::done);
-//	CHECK( bubbles[1].state == Bubble::State::pending);
-//	model.hit_key('i');
-//	bubbles=model.get_bubbles();
-//	CHECK( bubbles[0].state == Bubble::State::done);
-//	CHECK( bubbles[1].state == Bubble::State::done);
-//}
-//
-//TEST_CASE("hit_key-miss")
-//{
-//    Model model;
-//    model.create_bubbles("hi",{100,100},5);
-//	std::vector<Bubble> bubbles=model.get_bubbles();
-//	CHECK( bubbles[0].state == Bubble::State::pending);
-//	CHECK( bubbles[1].state == Bubble::State::pending);
-//	model.hit_key('n');
-//	bubbles=model.get_bubbles();
-//	CHECK( bubbles[0].state == Bubble::State::missed);
-//	CHECK( bubbles[1].state == Bubble::State::pending);
-//	model.hit_key('o');
-//	bubbles=model.get_bubbles();
-//	CHECK( bubbles[0].state == Bubble::State::missed);
-//	CHECK( bubbles[1].state == Bubble::State::missed);
-//}
-//
-//TEST_CASE("first_pending")
-//{
-//    Model model;
-//    model.create_bubbles("hi",{100,100},5);
-//	std::vector<Bubble> bubbles=model.get_bubbles();
-//	CHECK(model.first_pending_(bubbles)==0);
-//	model.hit_key('n');
-//	bubbles=model.get_bubbles();
-//	CHECK(model.first_pending_(bubbles)==1);
-//	model.hit_key('o');
-//	bubbles=model.get_bubbles();
-//	CHECK(model.first_pending_(bubbles)==2);
-//}
-//
-//TEST_CASE("is_finished")
-//{
-//    Model model;
-//    model.create_bubbles("hi",{100,100},5);
-//	model.hit_key('h');
-//	model.hit_key('i');
-//	CHECK(model.is_finished());
-//}
+TEST_CASE("hit_key")
+{
+    Model model{"hi", "no"};
+    CHECK( model.current_word() == "hi");
+	model.hit_key('h');
+	model.hit_key('i');
+    CHECK( model.current_word() == "no");
+}
 
+TEST_CASE("game_is_finished")
+{
+    Model model{"hi", "no"};
+	model.hit_key('h');
+	model.hit_key('i');
+	model.hit_key('n');
+	model.hit_key('o');
+    CHECK( model.game_is_finished());
+}
+
+TEST_CASE("typing_progress")
+{
+    Model model{"hello", "bye"};
+	model.hit_key('h');
+	std::vector<bool>  progress = model.typing_progress();
+	CHECK( progress.size() == 1 );
+	CHECK( progress[0] );
+	model.hit_key('p');
+	progress = model.typing_progress();
+	CHECK( progress.size() == 2 );
+	CHECK( progress[0] );
+	CHECK( !progress[1] );
+	model.hit_key('l');
+	model.hit_key('l');
+	progress = model.typing_progress();
+	CHECK( progress.size() == 4 );
+	CHECK( progress[0] );
+	CHECK( !progress[1] );
+	CHECK( progress[2] );
+	CHECK( progress[2] );
+	model.hit_key('o');
+	progress = model.typing_progress();
+	CHECK( progress.size() == 0 );    
+}
