@@ -8,7 +8,8 @@
 #include <string>
 #include <vector>
 
-// UI object
+// Code for handling user input and managing the overall flow
+// of the game. Owns the model and view.
 class Controller : public ge211::Abstract_game
 {
 public:
@@ -17,39 +18,32 @@ public:
     /// Constructors
     ///
 
-    // Construct Controller given a reference to a vector of words that is 
-    // used to create an instance of the model 
+    // Uses the given vector as the source of words for the model.
     explicit Controller(std::vector<std::string> const& words);
 
-    // Construct Controller given a reference to a string with the
-    // path to a file containing the words to be added to the game
-    // The file is loaded into a vector of string and then the Controller  
-    // constructor that can receive it as a parameter is called 
+    // Opens the given file and reads one word per line, as the source of
+    // words for the model.
     explicit Controller(std::string const& filename);
 
     ///
     /// Member functions
     ///
 
-    // Controller
+    // Called by ge211 when it needs to redraw the screen. Delegates to
+    // the view.
+    void draw(ge211::Sprite_set& sprites) override;
 
-    // Called when the game engine is ready 
-    // to start the game. It loads the first word    
+    // Called by ge211 once right before the game starts. We use this to
+    // tell the view to load the bubbles for the first word.
     void on_start() override;
 
-    // Called when the game engine is ready 
-    // to process another frame. It runs the model update
+    // Called by ge211 when the game engine is ready. We use this to tell
+    // the model to react to time passing.
     void on_frame(double dt) override;
 
-    // Called when the user press a key
-    // forwards the key to the model using 
-    // the model.hit_key function 
+    // Called by ge211 when the user press a key. We forward the keypress
+    // to the model.
     void on_key(ge211::Key key) override;
-
-    // Executes the view draw member to render the 
-    // bubbles with the letters of the current word 
-    // on the screen
-    void draw(ge211::Sprite_set& sprites) override;
 
 private:
 
@@ -57,9 +51,7 @@ private:
     /// Private member functions (helpers)
     ///
 
-    // Loads the current word to the view. It passes the 
-    // screen dimensions and a reference to a ge211::Random object
-    // to locate the bubbles on the screen.
+    // Loads the current word into to the view.
     void load_word_();
 
     ///

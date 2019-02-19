@@ -8,6 +8,8 @@
 /// Helper functions
 ///
 
+// Reads a vector of strings from a file, one string per line. Throws
+// std::runtime_error if there's a problem.
 static std::vector<std::string> load_dictionary(std::string const& filename)
 {
     std::vector<std::string> result;
@@ -25,7 +27,6 @@ static std::vector<std::string> load_dictionary(std::string const& filename)
 
     return result;
 }
-
 
 
 ///
