@@ -49,4 +49,4 @@ TEST_CASE("typing_progress")
     model.hit_key('o');
     progress = model.typing_progress();
     CHECK( progress.size() == 0 );    
-}
+} 
