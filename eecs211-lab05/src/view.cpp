@@ -1,5 +1,9 @@
 #include "view.h"
 
+///
+/// Constructor
+///
+
 View::View(Model const& model)
         : model_(model)
 {
@@ -7,20 +11,9 @@ View::View(Model const& model)
         letter_sprites_.emplace_back(std::string(1, letter), sans_);
 }
 
-View::Bubble_::Bubble_(ge211::Text_sprite& sprite, ge211::Position position)
-        : letter_sprite(sprite)
-          , center(position)
-{ }
-
-ge211::Position View::Bubble_::bubble_position() const
-{
-    return center.up_by(bubble_radius).left_by(bubble_radius);
-}
-
-ge211::Position View::Bubble_::letter_position() const
-{
-    return center.right_by(bubble_radius - espinosas_number);
-}
+///
+/// Member functions
+///
 
 void View::draw(ge211::Sprite_set& sprites) const
 {
@@ -60,3 +53,21 @@ void View::load_word(ge211::Dimensions window_dims,
     }
 }
 
+///
+/// Private helper class Bubble_
+///
+
+View::Bubble_::Bubble_(ge211::Text_sprite& sprite, ge211::Position position)
+        : letter_sprite(sprite)
+        , center(position)
+{ }
+
+ge211::Position View::Bubble_::bubble_position() const
+{
+    return center.up_by(bubble_radius).left_by(bubble_radius);
+}
+
+ge211::Position View::Bubble_::letter_position() const
+{
+    return center.right_by(bubble_radius - letter_sprite.dimensions().width / 2);
+}
