@@ -41,38 +41,42 @@ you, but it won't work properly.
 
 You have been given a fully functioning type racer that loads a dictionary file
 (this file can be found at \filename{Resources/dictionary.dat}), then displays
-each word from the dictionary---in order---as letters inside yellow circles, and
-can then take keyboard input to udpate the players progress through the word. You
-progress through the word by either typing a correct letter (circle color changes
-to green) or an incorrect letter (color changes to red). Additionally, if you do
-not type the word in time you will finish---fail---that word. Upon finishing a
-word the game loads the next until all words in the dictionary have been exhausted.
-Try to identify these components and their interactions in the code provided before
-continuing!
+each word from the dictionary---in order---as letters inside yellow circles,
+and can then take keyboard input to udpate the players progress through the
+word. You progress through the word by either typing a correct letter (circle
+color changes to green) or an incorrect letter (color changes to red).
+Additionally, if you do not type the word in time you will finish---fail---that
+word. Upon finishing a word the game loads the next until all words in the
+dictionary have been exhausted. Try to identify these components and their
+interactions in the code provided before continuing!
 
 \subsection{Randomize dictionary}
 
-In the controller file there is a function for loading in the dictionary file which
-uses a std::vector to keep track of the dictionary. Your job is to implement the
-Fisher–Yates shuffle algorithm on this vector before returning it so that each game
-is not the same set of words in the exact same order. The algorithm involves looping
-over the entire structure, choosing a random integer between 0 and the current index,
-and swapping the element at that random index with the current index in your loop.
-Upon finishing the loop, your data will be perfectly random.
+In \filename{controller.cpp} there is a helper function for loading in the
+dictionary file called \verb!load_dictionary()! which uses a \verb!std::vector!
+to keep track of the dictionary. Your job is to implement the Fisher–Yates
+shuffle algorithm and apply it to this vector before returning it so that each
+game is not the same set of words in the exact same order. The algorithm
+involves looping over the entire structure, choosing a random integer between 0
+and the current index, and swapping the element at that random index with the
+current index in your loop. Upon finishing the loop, your data will be
+perfectly random.
 
 \subsection{Score keeping}
 
-One thing that might be nice for this game is score keeping. Implement score keeping
-in this game by adding the ability to track a score in the model code. As well, you
-will want to see the score you have while playing so make sure to add some score text
-to the view that you can update as the player progresses. The score keeping method you
-should use is 5 points for every correct letter, -10 for every incorrect letter, and
--30 for every word missed due to time.
+One thing that might be nice for this game is score keeping. Implement score
+keeping in this game by adding the ability to track a score in
+\filename{model.cpp}. As well, you will want to see the score you have while
+playing so make sure to add some score text to \filename{view.cpp} that you
+can update as the player progresses.The score keeping method you should use is
+5 points for every correct letter, -10 for every incorrect letter, and -30 for
+every word missed due to time.
 
 \subsection{Testing}
 
-Unfortunately there is no reasonable way to test randomness but we can write some
-tests to verify that score keepig works. Make sure to set up the game so that it will
-give you the scoring condition you want, and then verify the score changed as you expected.
+Unfortunately there is no reasonable way to test randomness but we can write
+some tests to verify that score keeping works. Make sure to set up the game so
+that it will give you the scoring condition you want, and then verify the score
+changed as you expected. Add this code to \filename{game_test.cpp}.
 
 \end{document}
