@@ -6,13 +6,13 @@
 ///
 
 Model::Model(const std::vector<std::string>& words)
-        : words_(words)
+        : dictionary_(words)
 {
     load_next_word_();
 }
 
 Model::Model(std::initializer_list<std::string> words)
-        : words_(words)
+        : dictionary_(words)
 {
     load_next_word_();
 }
@@ -52,6 +52,11 @@ bool Model::update()
         return false;
 }
 
+std::vector<std::string> const& Model::dictionary() const
+{
+    return dictionary_;
+}
+
 ///
 /// Private member functions
 ///
@@ -72,11 +77,10 @@ bool Model::record_progress_(bool success)
 void Model::load_next_word_()
 {
     typing_progress_.clear();
+    current_word_.clear();
 
-    if (next_word_index_ < words_.size())
-        current_word_ = words_[next_word_index_++];
-    else
-        current_word_ = "";
+    while (next_word_index_ < dictionary_.size() && current_word_.empty())
+        current_word_ = dictionary_[next_word_index_++];
 }
 
 bool Model::word_is_finished_() const

@@ -13,70 +13,197 @@
 
 \maketitle
 
-Today we will be looking at another a C++ program using the GE211 game engine
-in a slightly more advanced example game. This game uses the Model, View,
-Controller architecture described in class that allows you to define the look,
-interactions, and coordinating logic between these components. Provided are
-the model file which defines the game state, the view file for drawing elements
-on the screen, and a controller file for handling inputs. As well, there is a
-game file that loads our dictionary and runs the game. The concept of the game
-is simple enough, words appear on screen as letters in circles and you have to
-type the letters you see on the keyboard in order or you will lose.
+Today we will be looking at another a C++ program using the GE211 game
+engine in a slightly more advanced example game. The concept of the game
+is simple enough: Words appear on screen as letters in circles, and you
+to type the letters you see on the keyboard in order.
 
-\section{The Game}
+This game uses the model--view--controller pattern not-yet-described in
+class, which allows defining the look, user interaction, and ``business
+logic'' of an interactive program as separate components. Provided are
+the \texttt{Model} class which defines the internal game state, the
+\texttt{View} class for rendering game to the screen, and the
+\texttt{Controller} class for reacting to user input and tieing it all
+together.
 
-\subsection{Getting the starter code}
+\section{Getting the starter code}
 
 For this lab, the starter code is provided as a ZIP file here:
 \url{\ThisLabUrl}. Extract the archive file into a directory in the
 location of your choosing. Once you have your new directory containing
-the starter files, you can open it in CLion.
-
+the starter files, you can open it\marginpar{
 Be careful, as CLion will only work correctly if you open the \emph{main
 project directory} with the \filename{CMakeLists.txt} in it. If you open
 any other directory, CLion may create a \filename{CMakeLists.txt} for
 you, but it won't work properly.
+} in CLion.
 
-\subsection{General Idea}
 
-You have been given a fully functioning type racer that loads a dictionary file
-(this file can be found at \filename{Resources/dictionary.dat}), then displays
-each word from the dictionary---in order---as letters inside yellow circles,
-and can then take keyboard input to udpate the players progress through the
-word. You progress through the word by either typing a correct letter (circle
-color changes to green) or an incorrect letter (color changes to red).
-Additionally, if you do not type the word in time you will finish---fail---that
-word. Upon finishing a word the game loads the next until all words in the
-dictionary have been exhausted. Try to identify these components and their
-interactions in the code provided before continuing!
+\section{General idea}
 
-\subsection{Randomize dictionary}
+You have been given a fully functioning Type Racer that loads a
+dictionary file (which can be found at
+\filename{Resources/dictionary.dat}), and then displays each word from
+the dictionary---in order---as letters inside colored circles. The
+player's goal is to type the word, and the controller takes keyboard
+input to update the player's progress through the word. The circles
+start out yellow, and as the player progresses through the word, each
+circle changes to green for a correctly typed letter, or red for a
+mistyped or timed-out letter. Upon finishing a word the game loads the
+next word, until all words in the dictionary have been exhausted. Try to
+identify these components and trace their logic in the source code
+provided before continuing.
 
-In \filename{controller.cpp} there is a helper function for loading in the
-dictionary file called \verb!load_dictionary()! which uses a \verb!std::vector!
-to keep track of the dictionary. Your job is to implement the Fisher–Yates
-shuffle algorithm and apply it to this vector before returning it so that each
-game is not the same set of words in the exact same order. The algorithm
-involves looping over the entire structure, choosing a random integer between 0
-and the current index, and swapping the element at that random index with the
-current index in your loop. Upon finishing the loop, your data will be
-perfectly random.
+\section{Randomize the dictionary}
 
-\subsection{Score keeping}
+In \filename{controller.cpp}, one of the constructors for the
+\verb^Controller^ class calls a helper function \verb!load_dictionary()!
+for loading the dictionary file into a \verb!std::vector<std::string>!.
+Since the dictionary file is alphabetized and the model goes through the
+word vector in order, this means that you see the same words, starting
+with ``a,'' every time.
 
-One thing that might be nice for this game is score keeping. Implement score
-keeping in this game by adding the ability to track a score in
-\filename{model.cpp}. As well, you will want to see the score you have while
-playing so make sure to add some score text to \filename{view.cpp} that you
-can update as the player progresses.The score keeping method you should use is
-5 points for every correct letter, \-10 for every incorrect letter, and \-30 for
-every word missed due to time.
+Your job is to modify the code of the \verb^Model^ and \verb^Controller^
+classes to randomize the order of the words after the words are read in.
+You will do this with a Fisher-Yates shuffle, which is a simple and
+efficient algorithm for randomly permuting the order of a vector. The
+algorithm\marginpar{
+      In other words, if the vector has length $n$, first you choose a
+      random element from index $0$ to $n - 1$ to put in position 0.
+      Then choose a random element from index $1$ to $n - 1$ to put in
+      position 1, and so on.
+   } is:
 
-\subsection{Testing}
+{
+\sffamily
+\begin{tabbing}
+\qquad\=\+
+  \textbf{procedure} $\textsc{Shuffle}(v{:}\;\textsf{vector})$: \\
+\qquad\=\+
+  \textbf{for} $i$ \textbf{in} $0$
+        \textbf{to} $\mathrm{len}(v) - 2$: \\
+\qquad\=\+
+  $r \gets \textrm{a random integer from between $i$ and $\mathrm{len}(v) - 1$}$; \\
+  $\mathrm{swap}(v[i], v[r])$
+\end{tabbing}
+}
 
-Unfortunately there is no reasonable way to test randomness but we can write
-some tests to verify that score keeping works. Make sure to set up the game so
-that it will give you the scoring condition you want, and then verify the score
-changed as you expected. Add this code to \filename{game\_test.cpp}.
+We don't want the model to randomize the words unconditionally, because
+that would make testing too difficult. So instead, the shuffling itself
+should happen in a new member function of the model at the controller's
+request. Here's one way you can do it:
+
+\begin{enumerate}
+
+  \item Add a public member function to the \verb^Model^ class whose
+    purpose is to shuffle the \verb^dictionary_^ vector. For a source of
+    randomness, this function should take a reference to a
+    \href{https://tov.github.io/ge211/classge211_1_1_random.html}
+    {\texttt{ge211::Random}}. If \verb^rng^ is a \verb^ge211::Random&^
+    then you can generate a random integer between \verb^a^ and \verb^b^
+    (inclusive) with the call \verb^rng.between(a, b)^.
+
+  \item Add a call to your shuffling function to the body of the
+    \texttt{Controller::\-Controller(std::string const\&)} constructor.
+    That way, when the game reads words from a file their order is
+    randomized, but you can also avoid the shuffling by providing the
+    vector directly.
+
+\end{enumerate}
+
+\section{Keep score}
+
+Another thing that would be nice for this game is to add score keeping
+of some kind. You could give $2$ points for every correct letter typed,
+$-5$ for every incorrect letter typed, $-1$ points for every letter
+timed out, and $10$ points for every word completed without errors. When
+the game ends, have it stop and display the score instead of looping on
+the word ``gameover.''
+
+Here's a plan:
+
+\begin{enumerate}
+  \item Add a private\marginpar{
+    Don't write a ``setter,'' because no one needs to set the score
+    from outside the model.
+    } member variable to the model to hold the score,
+    and a public member functiom to allow the view to access it.
+
+  \item Figure out how to detect the scoring events in the model code,
+    and update\marginpar{
+      Define constants for the event values. No magic numbers!
+    } the score for each.
+
+  \item Add private
+    \href{https://tov.github.io/ge211/classge211_1_1_font.html}{\texttt{ge211::Font}}
+    and
+    \href{https://tov.github.io/ge211/classge211_1_1sprites_1_1_text__sprite.html}{\texttt{ge211::Text_sprite}}
+    member variables to the view class. For creating the font, note that
+    \texttt{"sans.ttf"} is included with GE211. For the text sprite, the
+    initial text should be the number 0.
+
+  \item Modify \texttt{View::draw} to:
+    \begin{enumerate}
+      \item
+        \href{https://tov.github.io/ge211/classge211_1_1sprites_1_1_text__sprite.html\#afe7c024ae674fec2431b9d3eb9ad4173}{reconfigure}
+        the text sprite to contain the current score, and
+      \item add the score sprite to the sprite set.
+    \end{enumerate}
+    In order\marginpar{
+      You might also modify the view to keep track of the last score that it
+      saw, so that it only needs to reconfigure the text sprite when the score
+      changes.
+    } to reconfigure the text sprite, you will need to create
+    a
+    \href{https://tov.github.io/ge211/classge211_1_1sprites_1_1_text__sprite_1_1_builder.html}{\texttt{ge211::Text_sprite::Builder}}
+    and then add text to it. It looks something like this:
+\begin{Code}
+my_text_sprite_.reconfigure(
+    ge211::Text_sprite::Builder(my_font_) << my_value)
+\end{Code}
+\end{enumerate}
+
+\section{Testing}
+
+It's hard testing whether your shuffle is producing permutations
+uniformly. You could do repeated trials and check that you get a
+reasonable distribution, but that's fairly tricky as soon as $n > 2$.
+Easier, however, is to use
+\href{https://en.cppreference.com/w/cpp/algorithm/is_permutation}
+{\texttt{std::is_permutation}} to check that the result of your shuffle
+is a permutation of the original. \texttt{std::is_permutation} can take
+two begin--end pairs of \emph{iterators} to compare, and
+\texttt{std::vector} has public member functions \texttt{begin()} and
+\texttt{end()} for getting such iterator pairs. Thus, you can check
+whether two vectors \texttt{v} and \texttt{w} are permutations of each
+other with:
+
+\begin{Code}
+    CHECK( is_permutation(v.begin(), v.end(),
+                          w.begin(), w.end()) );
+\end{Code}
+
+You should also test that your model detects scoring events and keeps
+score properly.
+
+\section{Other ideas}
+
+What if the game displayed a count-down timer for each letter's timeout?
+(How can you format seconds with one decimal digit
+\href{https://en.cppreference.com/w/cpp/io/manip/setprecision}{using
+C++'s iotreams}?) Or instead of the numeric time, what if it showed a
+bar whose length shrunk as the time ran out? (Does that require creating
+a new \texttt{Rectangle_sprite} to change its size, or can you scale it
+by passing a
+\href{https://tov.github.io/ge211/classge211_1_1geometry_1_1_transform.html}
+{ge211::Transform} to
+\href{https://tov.github.io/ge211/classge211_1_1_sprite__set.html\#a567a6cc041710e43a2511234590cc8b9}
+{the four-argument form of \texttt{add_sprite}}?)
+
+Can you make the game time the entire word for 
+\texttt{2 * current_word_.size()} seconds
+instead of 2 seconds per letter as it does
+now? (Then you'd really want some kind of display of the time
+remaining.)
 
 \end{document}

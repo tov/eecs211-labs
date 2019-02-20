@@ -7,6 +7,8 @@ Publish: $(PDFS) $(ZIPS) $(TGZS)
 	echo index.html > $@
 	ls $^ > $@
 
+hard: Publish
+
 # The tufte-handout class we use works with pdflatex, but not
 # xelatex/lualatex.
 %.pdf: %.tex build/eecs211-lab.sty

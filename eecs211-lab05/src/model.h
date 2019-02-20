@@ -46,6 +46,9 @@ public:
     // the current word changed.
     bool update();
 
+    // Lets us see the word list. (For testing.)
+    std::vector<std::string> const& dictionary() const;
+
 private:
 
     ///
@@ -77,7 +80,7 @@ private:
     std::vector<bool> typing_progress_;
 
     // The source of words.
-    std::vector<std::string> words_;
+    std::vector<std::string> dictionary_;
 
     // The index of the next work for after the current word finishes.
     size_t next_word_index_ = 0;

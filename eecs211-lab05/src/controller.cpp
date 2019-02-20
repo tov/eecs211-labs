@@ -42,6 +42,10 @@ Controller::Controller(std::string const& filename)
         : Controller(load_dictionary(filename))
 { }
 
+Controller::Controller(std::initializer_list<std::string> words)
+        : Controller(std::vector<std::string>(words))
+{ }
+
 ///
 /// Public member functions
 ///

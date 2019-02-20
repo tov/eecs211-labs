@@ -25,6 +25,9 @@ public:
     // words for the model.
     explicit Controller(std::string const& filename);
 
+    // For passing in small word lists by hand.
+    Controller(std::initializer_list<std::string> words);
+
     ///
     /// Member functions
     ///
