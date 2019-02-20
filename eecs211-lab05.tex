@@ -6,57 +6,73 @@
 
 \usepackage{eecs211-lab}
 \title{EECS 211 Lab 5}
-\author{Game Development - Type Racer}
+\author{Type Racer}
 \date{Winter 2019}
 
 \begin{document}
 
 \maketitle
 
-Today we will be looking at another a C++ program using the eecs211 game engine
-in a simple example game called type racer. This program uses the Model, View,
+Today we will be looking at another a C++ program using the GE211 game engine
+in a slightly more advanced example game. This game uses the Model, View,
 Controller architecture described in class that allows you to define the look,
-interactions, and coordinating logic between these two components. Provided are
+interactions, and coordinating logic between these components. Provided are
 the model file which defines the game state, the view file for drawing elements
 on the screen, and a controller file for handling inputs. As well, there is a
-game file that loads our dictionary and a testing file. The game is simple,
-letters appear in circles on the screen and you have to type the letter you see
-on the keyboard or you will lose.
+game file that loads our dictionary and runs the game. The concept of the game
+is simple enough, words appear on screen as letters in circles and you have to
+type the letters you see on the keyboard in order or you will lose.
 
-\section{Game Code}
+\section{The Game}
 
-\subsection{Downloading}
+\subsection{Getting the starter code}
 
-For this lab we will be getting our project files from this url:
-\url{\ThisLabUrl}. Extract this file into \filename{\ThisLabBase}.
-Now, once we have our new directory \filename{\ThisLabBase} with its
-files, we can open it up in CLion. Be careful though as CLion will
-only work correctly if you open the main project directory with the
-CMakeLists.txt in it. Any other directory and CLion may create a
-CMakeLists.txt in it but this will not be properly configured.
+For this lab, the starter code is provided as a ZIP file here:
+\url{\ThisLabUrl}. Extract the archive file into a directory in the
+location of your choosing. Once you have your new directory containing
+the starter files, you can open it in CLion.
+
+Be careful, as CLion will only work correctly if you open the \emph{main
+project directory} with the \filename{CMakeLists.txt} in it. If you open
+any other directory, CLion may create a \filename{CMakeLists.txt} for
+you, but it won't work properly.
 
 \subsection{General Idea}
 
-You have been given a type racer that shows single letters in circles on
-the screen and gives you a short period of time to type that letter in. Upon
-typing the letter the circle changes color and then shows a new letter for you
-to type. Your goal is to make this type racer show words instead of letters.
-These words should be loaded from a dictionary file (
-\filename{Resources/dictionary.dat}) and each bubble should change color based
-on if you typed the correct letter in or not. When you finish a word, load the
-next in the dictionary until you hit the end of the file at which point you should
-end the game.
+You have been given a fully functioning type racer that loads a dictionary file
+(this file can be found at \filename{Resources/dictionary.dat}), then displays
+each word from the dictionary---in order---as letters inside yellow circles, and
+can then take keyboard input to udpate the players progress through the word. You
+progress through the word by either typing a correct letter (circle color changes
+to green) or an incorrect letter (color changes to red). Additionally, if you do
+not type the word in time you will finish---fail---that word. Upon finishing a
+word the game loads the next until all words in the dictionary have been exhausted.
+Try to identify these components and their interactions in the code provided before
+continuing!
 
-\subsection{Your edits 2}
+\subsection{Randomize dictionary}
 
-Stuff
+In the controller file there is a function for loading in the dictionary file which
+uses a std::vector to keep track of the dictionary. Your job is to implement the
+Fisher–Yates shuffle algorithm on this vector before returning it so that each game
+is not the same set of words in the exact same order. The algorithm involves looping
+over the entire structure, choosing a random integer between 0 and the current index,
+and swapping the element at that random index with the current index in your loop.
+Upon finishing the loop, your data will be perfectly random.
 
-\subsection{Your edits 3}
+\subsection{Score keeping}
 
-Stuff
+One thing that might be nice for this game is score keeping. Implement score keeping
+in this game by adding the ability to track a score in the model code. As well, you
+will want to see the score you have while playing so make sure to add some score text
+to the view that you can update as the player progresses. The score keeping method you
+should use is 5 points for every correct letter, -10 for every incorrect letter, and
+-30 for every word missed due to time.
 
 \subsection{Testing}
 
-Stuff
+Unfortunately there is no reasonable way to test randomness but we can write some
+tests to verify that score keepig works. Make sure to set up the game so that it will
+give you the scoring condition you want, and then verify the score changed as you expected.
 
 \end{document}
