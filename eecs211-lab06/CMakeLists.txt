@@ -4,6 +4,7 @@ include(.eecs211/cmake/CMakeLists.txt)
 
 # Builds program `game` from the four listed source files:
 add_program(game
+        src/tiles.cpp
         src/game.cpp
         src/model.cpp
         src/view.cpp
@@ -13,6 +14,7 @@ target_link_libraries(game ge211)
 # Builds test program `game_test` from the two listed source files:
 add_test_program(game_test
         test/game_test.cpp
-        src/model.cpp)
+        src/model.cpp
+        src/tiles.cpp)
 target_link_libraries(game_test ge211)
 
