@@ -34,7 +34,7 @@ void Model::swap (Board_Position p1, Board_Position p2)
 
 bool Model::is_valid_position(Board_Position p)
 {
-	return p.row>=0 && p.column>=0 && p.row < board_dimensions_.height && p.column < board_dimensions_.width;
+	return board_.is_valid(p);
 
 }
 ///

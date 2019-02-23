@@ -27,25 +27,7 @@ ge211::Position View::screen_position_(Tile_Data td, double p) const
 	return {(int) (x * 2 * tile_radius) + left_margin ,(int) (y * 2 * tile_radius) + top_margin};
 }
 
-
-Board_Position View::select_tile(ge211::Position position)
-{
-	Board_Position tile = board_position_(position);
-	
-	if (model_.is_valid_position(tile))
-	{
-		if (!model_.is_valid_position(selected_tile_))
-			selected_tile_=tile;
-		else
-		{
-			model_.swap(tile,selected_tile_);
-			selected_tile_={-1,-1};
-		}
-	}
-	return tile;
-}
-
-Board_Position View::board_position_(ge211::Position position)
+Board_Position View::board_position(ge211::Position position)
 {
 	return { (int) (position.y - top_margin) / (tile_radius * 2)  , (int) (position.x - left_margin) / (tile_radius * 2) };
 }
@@ -53,7 +35,7 @@ Board_Position View::board_position_(ge211::Position position)
 bool View::is_changed_(std::vector<Tile_Data> tiles_data)
 {
 	for (Tile_Data td : tiles_data)
-		if (!td.position.same(td.position_prev))
+		if (td.position != td.position_prev)
 			return true;
 	return false;
 }
@@ -77,13 +59,13 @@ void View::update ( double ft )
 	
 }
 
-void View::draw(ge211::Sprite_set& sprites) const
+void View::draw(ge211::Sprite_set& sprites, Board_Position selected_tile_) const
 {
 	for (Tile_Data tile_data : tiles_)
 	{
 		ge211::Position position = screen_position_( tile_data, animation_progress_ );
 		sprites.add_sprite(tiles_sprites_[tile_data.group], position,1 );
-		if (tile_data.position.same(selected_tile_))
+		if (tile_data.position == selected_tile_)
 			sprites.add_sprite(selection_sprite_, position,0 );
 	}
 }

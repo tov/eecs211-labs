@@ -57,6 +57,7 @@ private:
     ///
     /// Member variables
     ///
+	Board_Position selected_= Board_Position::empty();
 
     Model model_;
     View view_;
