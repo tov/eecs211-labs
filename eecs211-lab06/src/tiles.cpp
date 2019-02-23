@@ -58,28 +58,24 @@ bool Board::find_connected(Board_Position bp, std::vector<Board_Position> &conne
 	Board_Position bpl=bp.left();
 	if (is_valid(bpl) && map[bpl.hash()].group == group && !in(connected,bpl))
 	{
-	std::cout << "left :" << bpl.hash() << "\n";
 		find_connected( bpl, connected);
 	}
 	
 	Board_Position bpr=bp.right();
 	if (is_valid(bpr) && map[bpr.hash()].group == group && !in(connected, bpr))
 	{
-	std::cout << "right :" << bpr.hash() << "\n";
 		find_connected(bpr, connected);
 	}
 		
 	Board_Position bpu=bp.up();
 	if (is_valid(bpu) && map[bpu.hash()].group == group && !in(connected, bpu))
 	{
-	std::cout << "up :" << bpu.hash() << "\n";
 		find_connected(bpu, connected);
 	}
 		
 	Board_Position bpd=bpd.down();
 	if (is_valid(bpd) && map[bpd.hash()].group == group && !in(connected, bpd))
 	{
-	std::cout << "down :" << bp.hash() << "\n";
 		find_connected(bpd, connected);
 	}
 	
@@ -101,6 +97,31 @@ void Board::mark_group(std::vector<Board_Position> list)
 	}
 }	
 
+void Board::remove_tiles()
+{
+	for (int x = 0 ; x < board_dimensions_.width ; x ++)
+	{
+		for (int y=0 ;y< board_dimensions_.height; y ++)
+		{
+			Board_Position bp{y,x};
+			if (map[bp.hash()].marked)
+			{
+				while (bp.row>0)
+				{
+					Tile_Data td = map[bp.up().hash()];
+					td.position = bp;
+					map[bp.hash()]=td;
+					bp = bp.up();
+				}
+				int type = random_.between(0,0);
+				int group = random_.between(0,groups_-1);
+				Tile_Data td = {bp,{y-board_dimensions_.height,x},group, type};			
+				map[bp.hash()]=td;
+			}
+		}
+	}
+}
+
 bool Board::run_step ()
 {
 	std::cout << "here\n";
@@ -117,10 +138,14 @@ bool Board::run_step ()
 	for(Board_Position bp:updates)
 	{
 		map[bp.hash()].position_prev=map[bp.hash()].position;
-		std::vector<Board_Position> group=get_group(bp);
-		//if (group.size()>=3)
-			//mark_group(group);
+		if (!map[bp.hash()].marked)
+		{
+			std::vector<Board_Position> group=get_group(bp);
+			if (group.size()>=3)
+				mark_group(group);
+		}
 	}
+	remove_tiles();
 	std::cout << "done\n";
 }
 

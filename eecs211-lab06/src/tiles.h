@@ -66,4 +66,5 @@ struct Board
 	bool find_connected(Board_Position bp, std::vector<Board_Position> &connected);
 	std::vector<Board_Position> get_group(Board_Position bp);
 	void mark_group(std::vector<Board_Position> group);
+	void remove_tiles();
 };
