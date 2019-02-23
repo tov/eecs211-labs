@@ -51,9 +51,9 @@ bool in (std::vector<Board_Position> &list,Board_Position position )
 bool Board::find_connected(Board_Position bp, std::vector<Board_Position> &connected)
 {
 	connected.push_back(bp);
-	std::cout << "connected :" << bp.hash() << "," << connected.size() << "\n";
-
 	int group = map[bp.hash()].group;
+	std::cout << "connected :" << bp.hash() << "," << connected.size() << "," <<  group << "\n";
+
 
 	Board_Position bpl=bp.left();
 	if (is_valid(bpl) && map[bpl.hash()].group == group && !in(connected,bpl))
@@ -73,9 +73,11 @@ bool Board::find_connected(Board_Position bp, std::vector<Board_Position> &conne
 		find_connected(bpu, connected);
 	}
 		
-	Board_Position bpd=bpd.down();
+	Board_Position bpd=bp.down();
+	std::cout << "down :"  << bpd.hash() << "," << is_valid(bpd) << "," << map[bpd.hash()].group << "," <<   !in(connected, bpd)<< "\n";		
 	if (is_valid(bpd) && map[bpd.hash()].group == group && !in(connected, bpd))
 	{
+		std::cout << "got in\n";		
 		find_connected(bpd, connected);
 	}
 	
@@ -113,8 +115,8 @@ void Board::remove_tiles()
 					map[bp.hash()]=td;
 					bp = bp.up();
 				}
-				int type = random_.between(0,0);
-				int group = random_.between(0,groups_-1);
+				int type = random_.between( 0, 0 );
+				int group = random_.between( 0, groups_ - 1 );
 				Tile_Data td = {bp,{y-board_dimensions_.height,x},group, type};			
 				map[bp.hash()]=td;
 			}
