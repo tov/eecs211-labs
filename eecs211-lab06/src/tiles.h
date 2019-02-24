@@ -1,3 +1,5 @@
+#pragma once
+
 #include <ge211.h>
 #include <vector>
 #include<functional>
@@ -46,3 +48,21 @@ struct Tile_Data
 	int type;
 	bool marked=false;
 };
+
+class Tile_Handler {
+ public:
+     virtual std::vector<Board_Position> process_removal( 
+		Tile_Data td, 
+		int group, 
+		ge211::Dimensions d ) = 0;
+ };
+
+class Tile_Handler_Reference {
+	public:
+	Tile_Handler_Reference(Tile_Handler & _handler)
+	: handler(_handler) {};	
+	Tile_Handler & handler;
+};
+
+
+

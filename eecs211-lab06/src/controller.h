@@ -21,7 +21,8 @@ public:
     // For passing in small word lists by hand.
     Controller ( ge211::Dimensions board_dimensions, 
 	                  int groups,
-					  int types);
+					  int types,
+					  std::vector<Tile_Handler_Reference> handlers);
 
     ///
     /// Member functions

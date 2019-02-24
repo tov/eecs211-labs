@@ -20,7 +20,8 @@ public:
     Model ( ge211::Dimensions board_dimensions, 
 	            int groups, 
 				int types,
-				ge211::Random&  random);
+				ge211::Random&  random,
+			    std::vector<Tile_Handler_Reference> handlers);
 
     ///
     /// Public member functions
@@ -31,6 +32,7 @@ public:
 	void swap (Board_Position p1, Board_Position p2);
 	bool is_valid(Board_Position p);
 	bool is_valid_swap(Board_Position p1,Board_Position p2);
+
 private:
 
     ///
@@ -40,7 +42,7 @@ private:
 	std::vector<Board_Position> get_group_(Board_Position bp);
 	void mark_group_(std::vector<Board_Position> list);
 	void remove_tiles_();
-
+	bool in_(std::vector<Board_Position> &list, Board_Position bp);
     ///
     /// Private member variables
     ///
@@ -49,5 +51,5 @@ private:
 	int groups_;
 	int types_;
 	ge211::Random&  random_;
-	
+	std::vector<Tile_Handler_Reference> handlers_;
 };
