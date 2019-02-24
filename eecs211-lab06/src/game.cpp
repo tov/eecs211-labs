@@ -6,21 +6,26 @@
 
 ge211::Dimensions board_dimensions{10,8};
 int group_count = 5;
-int types_count = 2;
+int types_count = 2;// Normal and Horizontal Lazer
+int font_size = 24;
 
 int main()
 {
 ////    You can also provide an explicit list of words:
     try {
-
+	
 		Normal_Handler normal;
-		Horizontal_Laser_Handler horizontal_laser;
+		Horizontal_Lazer_Handler horizontal_lazer;
+		std::cout << "creating font \n";
+		ge211::Font sans_{"sans.ttf", font_size};
+		std::cout << "creating font \n";
 
-		std::vector<Tile_Handler_Reference> handlers ;
-		handlers.push_back(Tile_Handler_Reference(normal));
-        handlers.push_back(Tile_Handler_Reference(horizontal_laser));
-
-        Controller(board_dimensions,group_count, types_count, handlers).run();
+        Controller( board_dimensions,
+		                 group_count, 
+						 types_count, 
+						 { Tile_Handler_Reference(normal), 
+						   Tile_Handler_Reference(horizontal_lazer) },
+						 {" ","-"}).run();
 
     } catch (std::runtime_error const& e) {
         std::cerr << e.what() << "\n";

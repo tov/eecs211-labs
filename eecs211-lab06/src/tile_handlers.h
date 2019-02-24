@@ -6,9 +6,9 @@
      std::vector<Board_Position> process_removal( Tile_Data td, int group, ge211::Dimensions d ) ; 
  };
 
- class Horizontal_Laser_Handler : public Tile_Handler {
+ class Horizontal_Lazer_Handler : public Tile_Handler {
  public:
- Horizontal_Laser_Handler(){};
+ Horizontal_Lazer_Handler(){};
      std::vector<Board_Position> process_removal( Tile_Data td, int group, ge211::Dimensions d ) ; 
  };
 

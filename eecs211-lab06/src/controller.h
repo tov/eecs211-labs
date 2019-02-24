@@ -22,7 +22,8 @@ public:
     Controller ( ge211::Dimensions board_dimensions, 
 	                  int groups,
 					  int types,
-					  std::vector<Tile_Handler_Reference> handlers);
+					  std::vector<Tile_Handler_Reference> handlers,
+					  std::vector<std::string> type_sprites);
 
     ///
     /// Member functions

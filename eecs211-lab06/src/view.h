@@ -14,7 +14,8 @@ public:
     ///
     /// Public member functions
     ///
-    explicit View(Model &, int groups);
+    explicit View(Model &, int groups,
+					    std::vector<std::string> type_sprites);
     void draw(ge211::Sprite_set&, Board_Position select_tile) const;
 	bool is_busy ();
 	bool update ( double ft );
@@ -35,7 +36,8 @@ private:
 	double animation_progress_;
 
     // Sprites for tiles:
+	ge211::Font sans_{"sans.ttf", 24};
 	ge211::Rectangle_sprite selection_sprite_ { {tile_radius*2,tile_radius*2}, {127, 127, 127, 255}};
     std::vector<ge211::Circle_sprite> tiles_sprites_;
-	std::vector<ge211::Image_sprite> types_sprites;
+	std::vector<ge211::Text_sprite> type_sprites_;
 };

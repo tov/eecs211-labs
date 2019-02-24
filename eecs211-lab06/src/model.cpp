@@ -19,7 +19,7 @@ Model::Model( ge211::Dimensions board_dimensions,
 	{
 		for (int y=0 ;y< board_dimensions.height; y ++)
 		{
-			int type = random.between(0,0);
+			int type = random.between(0,types-1);
 			int group = random.between(0,groups-1);
 			Tile_Data td = {{y,x},{y-board_dimensions.height,x},group, type};
 				map_[td.position.hash()]=td;

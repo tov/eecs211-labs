@@ -9,9 +9,10 @@
 Controller::Controller(ge211::Dimensions board_dimensions, 
 	                  int groups,
 					  int types,
-					  std::vector<Tile_Handler_Reference> handlers)
+					  std::vector<Tile_Handler_Reference> handlers,
+					  std::vector<std::string> type_sprites)
         : model_(board_dimensions, groups, types, get_random(), handlers)
-        , view_(model_,groups)
+        , view_(model_,groups, type_sprites)
 { }
 
 ///

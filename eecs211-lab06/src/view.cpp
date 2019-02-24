@@ -5,13 +5,18 @@
 /// Constructor
 ///
 
-View::View(Model & model, int groups)
+View::View(Model & model, int groups,
+                  std::vector<std::string> type_sprites)
         : model_(model)
 {
 	for (int i=0;i<groups;i++)
 	{
 		double hue = 360 / (double) groups * (double) i;
 		tiles_sprites_.emplace_back(tile_radius, ge211::Color::from_hsva(hue, 1 , 1 , 1));
+	}
+	for (std::string type_text: type_sprites)
+	{
+		  type_sprites_.emplace_back(type_text, sans_);
 	}
 }
 
@@ -51,6 +56,7 @@ void View::draw(ge211::Sprite_set& sprites, Board_Position selected_tile_) const
 		sprites.add_sprite(tiles_sprites_[tile_data.group], position,1 );
 		if (tile_data.position == selected_tile_)
 			sprites.add_sprite(selection_sprite_, position,0 );
+		sprites.add_sprite( type_sprites_[tile_data.type], position,2 );
 	}
 }
 
