@@ -49,7 +49,7 @@ void Controller::on_mouse_up(ge211::Mouse_button button, ge211::Position positio
 	{
 		Board_Position bp = view_.board_position(position);
 		
-		if (model_.is_valid_position(bp))
+		if (model_.is_valid(bp))
 		{
 			if (selected_.is_empty())
 				selected_= bp;

@@ -46,25 +46,3 @@ struct Tile_Data
 	int type;
 	bool marked=false;
 };
-
-struct Board
-{
-	Board ( ge211::Dimensions board_dimensions,
-						ge211::Random &random,
-						int groups,
-						int types  );
-	std::vector<Tile_Data> tiles_data;
-	std::unordered_map<int, Tile_Data> map;
-	ge211::Random &random_;
-	int groups_;
-	int types_;
-	std::vector<Tile_Data> &get_tiles();
-	void swap (Board_Position p1, Board_Position p2);
-	bool is_valid (Board_Position position);
-	bool run_step();
-	ge211::Dimensions  board_dimensions_;
-	bool find_connected(Board_Position bp, std::vector<Board_Position> &connected);
-	std::vector<Board_Position> get_group(Board_Position bp);
-	void mark_group(std::vector<Board_Position> group);
-	void remove_tiles();
-};
