@@ -27,9 +27,7 @@ Model::Model(ge211::Dimensions board_dimensions, int groups,  int types, ge211::
 bool in (std::vector<Board_Position> &list,Board_Position position )
 {
 	for (Board_Position &bp: list)
-	{
 		if (position == bp) return true;
-	}
 	return false;
 }
 
@@ -97,7 +95,6 @@ void Model::mark_group_(std::vector<Board_Position> list)
 void Model::remove_tiles_()
 {
 	for (int x = 0 ; x < board_dimensions_.width ; x ++)
-	{
 		for (int y=0 ;y< board_dimensions_.height; y ++)
 		{
 			Board_Position bp{y,x};
@@ -116,7 +113,6 @@ void Model::remove_tiles_()
 				map_[bp.hash()]=td;
 			}
 		}
-	}
 }
 
 bool Model::run_step()
@@ -145,8 +141,14 @@ bool Model::run_step()
 	return false;
 }
 
+bool Model::is_valid_swap(Board_Position p1,Board_Position p2)
+{
+	return p1==p2.left() || p1==p2.right() || p1==p2.up() || p1==p2.down();
+}
+
 void Model::swap (Board_Position p1, Board_Position p2)
 {
+	if (!is_valid_swap(p1,p2)) return;
 	Tile_Data td1 = map_[p1.hash()];
 	Tile_Data td2 = map_[p2.hash()];
 	td1.position = p2;
