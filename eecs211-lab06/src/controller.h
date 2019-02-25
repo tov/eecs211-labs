@@ -20,10 +20,10 @@ public:
 
     // For passing in small word lists by hand.
     Controller ( ge211::Dimensions board_dimensions, 
-	                  int groups,
-					  int types,
-					  std::vector<Tile_Handler_Reference> handlers,
-					  std::vector<std::string> type_sprites);
+                      int groups,
+                      int types,
+                      std::vector<Tile_Handler_Reference> handlers,
+                      std::vector<std::string> type_sprites);
 
     ///
     /// Member functions
@@ -44,7 +44,7 @@ public:
     // Called by ge211 when the user press a key. We forward the keypress
     // to the model.
     void on_key(ge211::Key key) override;
-	
+    
     void on_mouse_up(ge211::Mouse_button button, ge211::Position position) override;
 
 
@@ -55,11 +55,11 @@ private:
     ///
 
     // Loads the current word into to the view.
-	
+    
     ///
     /// Member variables
     ///
-	Board_Position selected_= Board_Position::empty();
+    Board_Position selected_= Board_Position::empty();
 
     Model model_;
     View view_;

@@ -3,7 +3,7 @@
 
  class Normal_Handler : public Tile_Handler {
  public:
-	Normal_Handler(){};
+    Normal_Handler(){};
      std::vector<Board_Position> process_removal( Tile_Data td, ge211::Dimensions d ) ; 
  };
 
