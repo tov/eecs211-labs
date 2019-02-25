@@ -17,8 +17,8 @@ public:
     /// Constructors
     ///
     // Uses the dimensions of the board
-    Model ( ge211::Dimensions board_dimensions, 
-                int groups, 
+    Model ( ge211::Dimensions board_dimensions,
+                int groups,
                 int types,
                 ge211::Random&  random,
                 std::vector<Tile_Handler_Reference> handlers);
@@ -44,6 +44,7 @@ private:
     void remove_tiles_(std::vector<Board_Position> marked);
     bool in_(std::vector<Board_Position> &list, Board_Position bp);
     void find_connected_try_(Board_Position bp, int group, std::vector<Board_Position> &connected);
+
     ///
     /// Private member variables
     ///

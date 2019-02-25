@@ -2,11 +2,12 @@
 #include <fstream>
 #include <stdexcept>
 #include <iostream>
+
 ///
 /// Constructors
 ///
 
-Controller::Controller(ge211::Dimensions board_dimensions, 
+Controller::Controller(ge211::Dimensions board_dimensions,
                       int groups,
                       int types,
                       std::vector<Tile_Handler_Reference> handlers,
@@ -19,18 +20,10 @@ Controller::Controller(ge211::Dimensions board_dimensions,
 /// Public member functions
 ///
 
-void Controller::on_start()
-{
-}
-
 void Controller::on_frame(double dt)
 {
     if (view_.update(dt))
         model_.run_step();
-}
-
-void Controller::on_key(ge211::Key key)
-{
 }
 
 void Controller::draw(ge211::Sprite_set& sprites)
@@ -57,8 +50,4 @@ void Controller::on_mouse_up(ge211::Mouse_button button, ge211::Position positio
         }
     }
 }
-
-///
-/// Private member functions
-///
 
