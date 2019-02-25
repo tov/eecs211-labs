@@ -7,7 +7,6 @@
 ge211::Dimensions board_dimensions{10,8};
 int group_count = 5;
 int types_count = 2;// Normal and Horizontal Lazer
-int font_size = 24;
 
 int main()
 {
@@ -16,10 +15,7 @@ int main()
 	
 		Normal_Handler normal;
 		Horizontal_Lazer_Handler horizontal_lazer;
-		std::cout << "creating font \n";
-		ge211::Font sans_{"sans.ttf", font_size};
-		std::cout << "creating font \n";
-
+		
         Controller( board_dimensions,
 		                 group_count, 
 						 types_count, 

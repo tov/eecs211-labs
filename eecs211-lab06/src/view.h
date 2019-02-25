@@ -6,6 +6,7 @@ static int const tile_radius = 30;
 static int const top_margin = 80;
 static int const left_margin = 80;
 static double const animation_time = .4;
+static int const font_size = 34;
 
 // Controls how the game is shown to the user:
 class View
@@ -36,7 +37,7 @@ private:
 	double animation_progress_;
 
     // Sprites for tiles:
-	ge211::Font sans_{"sans.ttf", 24};
+	ge211::Font sans_{"sans.ttf", font_size};
 	ge211::Rectangle_sprite selection_sprite_ { {tile_radius*2,tile_radius*2}, {127, 127, 127, 255}};
     std::vector<ge211::Circle_sprite> tiles_sprites_;
 	std::vector<ge211::Text_sprite> type_sprites_;

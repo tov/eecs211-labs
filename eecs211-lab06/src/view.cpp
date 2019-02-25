@@ -56,7 +56,9 @@ void View::draw(ge211::Sprite_set& sprites, Board_Position selected_tile_) const
 		sprites.add_sprite(tiles_sprites_[tile_data.group], position,1 );
 		if (tile_data.position == selected_tile_)
 			sprites.add_sprite(selection_sprite_, position,0 );
-		sprites.add_sprite( type_sprites_[tile_data.type], position,2 );
+		ge211::Position type_sprite_position = position;
+		type_sprite_position.x += ( tile_radius - type_sprites_[tile_data.type].dimensions().width/2);
+		sprites.add_sprite( type_sprites_[tile_data.type], type_sprite_position ,2 );
 	}
 }
 
