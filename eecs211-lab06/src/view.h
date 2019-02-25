@@ -6,7 +6,7 @@ static int const tile_radius = 30;
 static int const top_margin = 80;
 static int const left_margin = 80;
 static double const animation_time = .4;
-static int const font_size = 34;
+static int const font_size = 75;
 
 // Controls how the game is shown to the user:
 class View

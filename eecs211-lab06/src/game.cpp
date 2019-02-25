@@ -5,12 +5,11 @@
 #include <stdexcept>
 
 ge211::Dimensions board_dimensions{10,8};
-int group_count = 5;
+int group_count = 6;
 int types_count = 2;// Normal and Horizontal Lazer
 
 int main()
 {
-////    You can also provide an explicit list of words:
     try {
 	
 		Normal_Handler normal;
