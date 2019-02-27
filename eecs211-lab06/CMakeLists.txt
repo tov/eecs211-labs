@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.3)
-project(lab05 CXX)
+project(lab06 CXX)
 include(.eecs211/cmake/CMakeLists.txt)
 
 # Builds program `game` from the six listed source files:
