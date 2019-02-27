@@ -1,13 +1,13 @@
 #include "model.h"
 #include <algorithm>
-#include<iostream>
+#include <iostream>
 
 ///
 /// Constructors
 ///
-Model::Model( ge211::Dimensions board_dimensions, 
-                       int groups,  
-                       int types, 
+Model::Model( ge211::Dimensions board_dimensions,
+                       int groups,
+                       int types,
                        ge211::Random& random,
                        std::vector<Tile_Handler_Reference> handlers)
         : board_dimensions_(board_dimensions)
@@ -16,13 +16,37 @@ Model::Model( ge211::Dimensions board_dimensions,
         , random_(random)
         , handlers_(handlers)
 {
-    for (int col = 0 ; col < board_dimensions.width ; col ++)
-        for (int row =0 ;row < board_dimensions.height; row ++)
+    for (int col = 0; col < board_dimensions.width; col ++)
+        for (int row = 0; row < board_dimensions.height; row ++)
         {
             Tile tile = new_tile_({row,col});
             map_2.insert(std::make_pair (tile.tile_data.position.hash(),tile));
         }
 }
+
+Model::Model( ge211::Dimensions board_dimensions,
+                       int groups,
+                       int types,
+                       ge211::Random& random,
+                       std::vector<Tile_Handler_Reference> handlers,
+                       std::vector<std::vector<int>> board_group_layout,
+                       std::vector<std::vector<int>> board_type_layout)
+        : board_dimensions_(board_dimensions)
+        , groups_(groups)
+        , types_(types)
+        , random_(random)
+        , handlers_(handlers)
+{
+    for (int col = 0; col < board_dimensions.width; col ++)
+        for (int row = 0; row < board_dimensions.height; row ++)
+        {
+            Tile tile = new_specific_tile_({row,col},
+                                           board_group_layout[row][col],
+                                           board_type_layout[row][col]);
+            map_2.insert(std::make_pair (tile.tile_data.position.hash(),tile));
+        }
+}
+
 
 ///
 /// Public member functions
@@ -37,6 +61,11 @@ std::vector<Tile_Data> Model::get_tiles()
 
 bool Model::run_step()
 {
+    remove_tiles_(find_tiles_to_delete());
+}
+
+std::vector<Board_Position> Model::find_tiles_to_delete()
+{
     // finds all the positions in the board that changed
     std::vector<Board_Position> updates;
     for (int col = 0 ; col < board_dimensions_.width ; col ++)
@@ -48,7 +77,7 @@ bool Model::run_step()
         }
 
     std::vector<Board_Position> marked;
-    
+
     bool new_updates = true;
     while (new_updates)
     {
@@ -56,16 +85,16 @@ bool Model::run_step()
         for(Board_Position bp:updates)
         {
         // updates the previus position to not catch the changes
-        //  again in the future 
+        //  again in the future
             map_2.at(bp.hash()).tile_data.position_prev=map_2.at(bp.hash()).tile_data.position;
 
         // if the position is part of a marked group it skips
             if (!in_(marked, bp))
             {
-        // get the tiles that are connected to the one that changed 
+        // get the tiles that are connected to the one that changed
         // and are part of the same group
                 std::vector<Board_Position> group=get_group_(bp);
-        // if the size of the connected group is big enough 
+        // if the size of the connected group is big enough
                 if (group.size()>=3)
                     for ( Board_Position bp: group )
                     {
@@ -88,8 +117,7 @@ bool Model::run_step()
         }
     }
     std::cout << "\n";
-    // removes the tiles
-    remove_tiles_(marked);
+    return marked;
 }
 
 bool Model::is_valid_swap(Board_Position p1,Board_Position p2)
@@ -100,7 +128,7 @@ bool Model::is_valid_swap(Board_Position p1,Board_Position p2)
 void Model::swap(Board_Position p1, Board_Position p2)
 {
     if (is_valid_swap(p1,p2))
-        swap_(p1,p2);    
+        swap_(p1,p2);
 }
 
 bool Model::is_valid(Board_Position p)
@@ -144,7 +172,7 @@ bool Model::find_connected_(Board_Position bp, int group, std::vector<Board_Posi
     find_connected_try_(bp.left(), group, connected);
     find_connected_try_(bp.right(), group, connected);
     find_connected_try_(bp.up(), group, connected);
-    find_connected_try_(bp.down(), group, connected);    
+    find_connected_try_(bp.down(), group, connected);
     return true;
 }
 
@@ -167,11 +195,11 @@ Tile Model::new_tile_(Board_Position bp)
     int type;
     if (random_.between(0,100)>95) //5% chances of special type
         type = random_.between(1,types_-1);
-    else 
+    else
         type = 0;
 
-    Tile new_tile = 
-    { 
+    Tile new_tile =
+    {
         //tile_data
         {
             //Position
@@ -188,7 +216,24 @@ Tile Model::new_tile_(Board_Position bp)
     return new_tile;
 }
 
+Tile Model::new_specific_tile_(Board_Position bp, int type, int group)
+{
+    // type must be between 1 and types_ - 1,
+    // group  must be between 0 and groups_ - 1
+    Tile new_tile =
+    {
+        {
+            bp,
+            {bp.row - board_dimensions_.height, bp.column},
+            group,
+            type
+        },
+        handlers_[type].get_handler()
+    };
+    return new_tile;
+}
+
 void Model::swap_(Board_Position p1, Board_Position p2)
 {
-    map_2.at(p1.hash()).swap(map_2.at(p2.hash()));    
+    map_2.at(p1.hash()).swap(map_2.at(p2.hash()));
 }
