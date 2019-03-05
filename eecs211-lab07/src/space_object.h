@@ -18,6 +18,8 @@ struct Control
 class Space_object
 {
 public:
+    static bool check_collision( Space_object *so1, Space_object *so2);
+
     using Dimensions = ge211::Basic_dimensions<double>;
     using Position = ge211::Basic_position<double>;
     using Angle = double; // in ° counterclockwise from N
@@ -35,30 +37,27 @@ public:
     Material material() const;
     Position position() const;
     Angle heading() const;
+    virtual double size() = 0;
+    
 
     // Just updates the position (no collision checking).
     virtual void integrate(double dt) = 0;
 
     // Object just dies by default; override to survive, delegate to die.
-    virtual void collide(
-        Space_object const& other,
-        Object_spawner&)
+    virtual void collide(Space_object const * other)
     {
         space_junk_ = true;
     }
 
-//    virtual Dimensions dimensions() const = 0;
-
     // Facing direction, may not match velocity
-
     virtual ~Space_object() = default;
 
     Position top_left_;
 protected:    
     Angle deg_ = 0.0;
+    bool space_junk_ = false;
 private:
     Material material_;
-    bool space_junk_ = false;
 };
 
 
@@ -80,6 +79,7 @@ protected:
     void set_angular_velocity(Angular_velocity vel);
     Velocity v_ = {0,0};
 
+
 private:
     Acceleration dv_ {0.0, 0.0};
     Angular_velocity ddeg_=0;
@@ -99,6 +99,8 @@ class Space_ship : public Inertial_space_object
     // Facing direction, may not match velocity
     Control &control();
     virtual void integrate(double dt) override;
+    virtual double size() override;
+    virtual void collide(Space_object const * other) override;
     
     private:
         double const heading_change = 180 ;
@@ -110,29 +112,32 @@ class Space_ship : public Inertial_space_object
 class Asteroid : public Inertial_space_object
 {
     public:
-    Asteroid(double mass, Position position, Dimensions speed, double as, Position top_left_margin, Position bottom_right_margin)
-        : Inertial_space_object (Space_object::Material::rock, position,speed,as)
-        , mass_(mass)
-        ,tl_margin(top_left_margin)
-        ,br_margin(bottom_right_margin)
-    {
-    }
+    Asteroid(double mass, Position position, Dimensions speed, double as, Position top_left_margin, Position bottom_right_margin);
     virtual void integrate(double dt) override;
-
+    double mass() const;
+    virtual double size() override;
+    virtual void collide(Space_object const * other) override;
+    
     private:
     double mass_;
     Position tl_margin;
     Position br_margin;
 };
 
+
+double const torpedo_speed = 400.0;
+
 class Torpedo : public Inertial_space_object
 {
     public:
-    Torpedo(Position position, Dimensions speed, double as)
-        : Inertial_space_object (Space_object::Material::light, position,speed,as)
-    {
-        
-    }
+    Torpedo(Position position, Angle heading, Dimensions screen_dimensions);
+    virtual void integrate(double dt) override;
+    virtual double size() override;
+    virtual void collide(Space_object const * other) override;
+    
+    private:
+        Dimensions screen_dimensions_;
+
 };
 
 

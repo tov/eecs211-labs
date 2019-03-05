@@ -33,6 +33,9 @@ void Controller::on_key_up(ge211::Key key)
         model_.thrust(false);
     if (key.code()==' ')
         model_.fire_torpedo();
+    if (key.code()=='q')
+        exit(0);
+    
 }
 void Controller::on_key_down(ge211::Key key) 
 {

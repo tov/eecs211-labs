@@ -25,4 +25,8 @@ private:
     ge211::Image_sprite asteroid_{"asteroid.png"};
     ge211::Image_sprite space_ship_{"space_ship.gif"};
     ge211::Image_sprite torpedo_{"torpedo.gif"};
+    
+    double asteroid_scale_= 1.0;
+    double space_ship_scale_= .3;
+    double torpedo_scale_= .03;
 };

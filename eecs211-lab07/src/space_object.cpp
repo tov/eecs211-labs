@@ -1,12 +1,34 @@
- #include"space_object.h"
+#include"space_object.h"
 #include <iostream> 
+#define TO_RADIANS(DEGREES)  (double)DEGREES/360*6.28
+#define DISTANCE(P1,P2) sqrt(pow(P1.x - P2.x,2)+pow(P1.y - P2.y,2))
+
 Space_object::Space_object(Material material, Position position)
     : top_left_(position)
     , material_(material)
 {
     
 }
- 
+
+bool Space_object::check_collision( Space_object *so1, Space_object *so2)
+{
+    if (so1->is_space_junk() || so2->is_space_junk()) return false;
+    double s1 = so1->size();
+    double s2 = so1->size();
+    Position p1 = so1->position();
+    Position p2 = so2->position();
+    if (DISTANCE(p1,p2)<(s1+s2)/2)
+    {
+        if (so1->material() != so2->material())
+        {
+            so1->collide(so2);
+            so2->collide(so1);
+            return true;
+        }
+    }
+    return false;
+}
+
 bool Space_object::is_space_junk() const
 {
     return space_junk_;
@@ -47,7 +69,7 @@ void Space_ship::integrate(double dt)
     if (deg_<0) deg_+=360;
     if (deg_>360) deg_-=360;
     if (control_.thrust)
-        v_+= {sin(deg_/360*6.28)* velocity_change*dt,-cos(deg_/360*6.28)* velocity_change*dt} ;
+        v_+= {sin(TO_RADIANS(deg_))* velocity_change*dt,-cos(TO_RADIANS(deg_))* velocity_change*dt} ;
     Inertial_space_object::integrate(dt);
     if (top_left_.x<0 || 
         top_left_.x>screen_dimensions_.width ||
@@ -74,6 +96,15 @@ Inertial_space_object::Acceleration Inertial_space_object::acceleration() const
     return dv_ ;
 }
 
+Asteroid::Asteroid(double mass, Position position, Dimensions speed, double as, Position top_left_margin, Position bottom_right_margin)
+    : Inertial_space_object (Space_object::Material::rock, position,speed,as)
+    , mass_(mass)
+    ,tl_margin(top_left_margin)
+    ,br_margin(bottom_right_margin)
+{
+}
+
+
 void Asteroid::integrate(double dt) 
 {
     Inertial_space_object::integrate(dt);
@@ -87,3 +118,58 @@ void Asteroid::integrate(double dt)
         top_left_.y=tl_margin.y;
 }
 
+double Asteroid::mass() const
+{
+    return mass_;
+}
+
+Torpedo::Torpedo(Position position, Angle heading, Dimensions screen_dimensions)
+    : Inertial_space_object (Space_object::Material::light, position,{sin(TO_RADIANS(heading))* torpedo_speed,-cos(TO_RADIANS(heading))* torpedo_speed},1440)
+    , screen_dimensions_(screen_dimensions)
+{
+}
+
+void Torpedo::integrate(double dt) 
+{
+    Inertial_space_object::integrate(dt);
+    if (top_left_.x<0 || 
+        top_left_.x>screen_dimensions_.width ||
+        top_left_.y<0 ||  
+        top_left_.y>screen_dimensions_.height)
+        space_junk_= true;
+}
+
+double Space_ship::size() 
+{
+    return 60;
+}
+
+double Asteroid::size() 
+{
+    return 80 * mass_;
+}
+
+double Torpedo::size() 
+{
+    return 8;
+}
+
+void Asteroid::collide (Space_object const* other)
+{
+    if (other->material()==Material::light)
+    {
+        space_junk_=true;
+    }
+}
+
+void Space_ship::collide (Space_object const* other)
+{
+    if (other->material()==Material::rock)
+        space_junk_=true;
+}
+
+void Torpedo::collide (Space_object const* other)
+{
+    if (other->material()==Material::rock)
+        space_junk_=true;
+}

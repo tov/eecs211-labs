@@ -43,15 +43,15 @@ private:
     ///
     /// Private helper functions
     ///
+    void new_asteroid_(double mass, Space_object::Position);
 
     ///
     /// Private member variables
     ///
-    std::vector<std::unique_ptr<Space_object>> space_objects_={};;
+    std::vector<std::unique_ptr<Space_object>> space_objects_;
     ge211::Dimensions screen_dimensions_;
     int asteroid_max_mass_;
     ge211::Random&  random_;
     Space_ship space_ship_;
     Control control_;
-    double const torpedo_speed_ = 400;
 };

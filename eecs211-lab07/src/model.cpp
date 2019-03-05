@@ -12,13 +12,7 @@ Model::Model( ge211::Dimensions screen_dimensions,
     space_objects_.emplace_back(&space_ship_);
     for (int i=0;i<10;i++)
     {
-        int x = random.between(0,screen_dimensions.width);
-        int y = random.between(0,screen_dimensions.height);
-        int xs = random.between(-5,5);
-        int ys = random.between(-5,5);
-        double as = random.between(10,100);
-       std::cout << "xy = (" << x <<" ,"<<y << ")\n";
-        space_objects_.emplace_back(new Asteroid(1.0,{(double)x,(double)y},{(double)xs,(double)ys},as,{-200,-200},{(double)screen_dimensions.width+200,(double)screen_dimensions.height+200}));
+        new_asteroid_(1.0, {-1,-1});
     }
 }
 
@@ -26,12 +20,46 @@ Model::Model( ge211::Dimensions screen_dimensions,
 /// Public member functions
 ///
 
+void Model::new_asteroid_(double mass, Space_object::Position pos)
+{
+    if (pos.x==-1)
+    {
+        pos.x = random_.between(0,screen_dimensions_.width);
+        pos.y = random_.between(0,screen_dimensions_.height);
+    }
+    int xs = random_.between(-5,5);
+    int ys = random_.between(-5,5);
+    double as = random_.between(10,100);
+    space_objects_.emplace_back(new Asteroid(mass,pos,{(double)xs,(double)ys},as,{-200,-200},{(double)screen_dimensions_.width+200,(double)screen_dimensions_.height+200}));
+}
+
 void Model::update ( double ft )
 {
     for(std::unique_ptr<Space_object> &so : space_objects_) 
     {
         so->integrate(ft);
     }
+    for(int i=0;i<space_objects_.size();i++) 
+        for(int j=i+1;j<space_objects_.size();j++) 
+        {
+            Space_object *so1=space_objects_[i].get();
+            Space_object *so2=space_objects_[j].get();
+            if (Space_object::check_collision(so1,so2))
+            {
+                Asteroid *a=NULL;
+                if (so1->material() == Space_object::Material::rock)
+                    a=dynamic_cast<Asteroid*> (so1);
+                if (so2->material() == Space_object::Material::rock)
+                    a=dynamic_cast<Asteroid*> (so2);
+                if (a && a->is_space_junk() && a->mass()>.1)
+                {
+                    new_asteroid_(a->mass()/2, a->position());
+                    new_asteroid_(a->mass()/2, a->position());
+                }
+            }
+        }
+    if (space_ship_.is_space_junk())
+        exit(1);
 }
 
 void Model::turn_right (bool state)
@@ -51,9 +79,7 @@ void Model::thrust (bool state)
 
 void Model::fire_torpedo ()
 {
-    double angle = space_ship_.heading();
-    ge211::Basic_dimensions<double> speed {sin(angle/360*6.28)* torpedo_speed_,-cos(angle/360*6.28)* torpedo_speed_} ;
-    space_objects_.emplace_back(new Torpedo (space_ship_.position(),speed,1440)); 
+    space_objects_.emplace_back(new Torpedo (space_ship_.position(),space_ship_.heading(), screen_dimensions_.into<double>())); 
 }
 
 std::vector<std::unique_ptr<Space_object>> &Model::space_objects()
