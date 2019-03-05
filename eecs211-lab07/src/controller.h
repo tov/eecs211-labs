@@ -20,6 +20,8 @@ public:
     // For passing in small word lists by hand.
     Controller ( ge211::Dimensions board_dimensions);
 
+    ge211::Dimensions initial_window_dimensions() const override;
+
     ///
     /// Member functions
     ///
@@ -30,6 +32,9 @@ public:
     // Called by ge211 when the game engine is ready. We use this to tell
     // the model to react to time passing.
     void on_frame(double dt) override;
+
+    void on_key_up(ge211::Key) override;
+    void on_key_down(ge211::Key) override;
 
     // Called by ge211 when the user press the mouse. We forward the mouse_up
     // to the model.
@@ -42,4 +47,5 @@ private:
     ///
     Model model_;
     View view_;
+    ge211::Dimensions screen_dimensions_;
 };

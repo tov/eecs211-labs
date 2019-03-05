@@ -11,20 +11,13 @@
 //  - the progress in the current word, and
 //  - the words to do next.
 
-
-struct Control
-{
-    bool left = false;
-    bool right = false;
-    bool thrust = false;
-};
-
 class Model
 {
 public:
 
+    static int const max_mass = 5;
     static int const torpedo_radius = 5;
-    static int const asteroid_radius_increase_by_mass_unit = 30;
+    static int const asteroid_radius_by_mass = 15;
 
     ///
     /// Constructors
@@ -36,10 +29,14 @@ public:
     ///
     /// Public member functions
     ///
-    std::vector<std::unique_ptr<Space_object>> get_space_objects();
+    std::vector<std::unique_ptr<Space_object>> &space_objects();
     void update ( double ft );
     void control_space_ship ( Control control );
     void launch_torpedo ();
+    Control &control();
+    void turn_right ( bool state );
+    void turn_left ( bool state );
+    void thrust ( bool state );
 
 private:
 
@@ -55,4 +52,5 @@ private:
     int asteroid_max_mass_;
     ge211::Random&  random_;
     Space_ship space_ship_;
+    Control control_;
 };

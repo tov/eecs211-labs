@@ -7,9 +7,9 @@ Model::Model( ge211::Dimensions screen_dimensions,
                        ge211::Random& random)
         : screen_dimensions_(screen_dimensions)
         , random_(random)
+        , space_ship_({100,100})//(double)(screen_dimensions_.width/2),(double)(screen_dimensions_.height/2)})
 {
-    std::unique_ptr<Space_object> ship(new Space_ship());
-    space_objects_.emplace_back(new Space_ship());
+    space_objects_.emplace_back(&space_ship_);
 }
 
 ///
@@ -24,12 +24,28 @@ void Model::update ( double ft )
     }
 }
 
-void Model::control_space_ship ( Control control )
+void Model::turn_right (bool state)
 {
+    space_ship_.control().right=state;
+}
+
+void Model::turn_left (bool state)
+{
+    space_ship_.control().left=state;
+}
+
+void Model::thrust (bool state)
+{
+    space_ship_.control().thrust=state;
 }
 
 void Model::launch_torpedo ()
 {
+}
+
+std::vector<std::unique_ptr<Space_object>> &Model::space_objects()
+{
+    return space_objects_;
 }
 
 ///

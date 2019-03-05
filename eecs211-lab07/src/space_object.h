@@ -7,6 +7,13 @@ struct Object_spawner
     virtual void spawn(std::unique_ptr<class Space_object>) = 0;
 };
 
+struct Control
+{
+    bool left = false;
+    bool right = false;
+    bool thrust = false;
+};
+
 class Space_object
 {
 public:
@@ -59,7 +66,8 @@ public:
     using Acceleration = ge211::Basic_dimensions<double>;
     using Angular_velocity = double;
     Inertial_space_object(Material, Position, Velocity = {0.0, 0.0}, Angular_velocity = 0.0);
-    void integrate(double dt) override;
+    virtual void integrate(double dt) override;
+    Angle heading();
 
 protected:
     Acceleration acceleration() const;
@@ -68,27 +76,54 @@ protected:
     // Currently rotation control is instantaneous rather than
     // mediated by angular acceleration.
     void set_angular_velocity(Angular_velocity vel);
+    Angle deg_ = 0.0;
 
 private:
     Velocity v_;
     Acceleration dv_ {0.0, 0.0};
-    Angle deg_ = 0.0;
-    Angular_velocity ddeg_;
+    Angular_velocity ddeg_=0;
 };
 
 
 class Space_ship : public Inertial_space_object
 {
     public:
-    Space_ship()
-        : Inertial_space_object (Space_object::Material::metal, {100,100})
+    Space_ship(Position position)
+        : Inertial_space_object (Space_object::Material::metal, position)
     {
         
     }
 
     // Facing direction, may not match velocity
-    Angle heading();
+    Control &control();
+    virtual void integrate(double dt) override;
     
     private:
-        Angle heading_;
+        double const heading_change = 180 ;
+        Control control_{false,false,false};
 };
+
+class Asteroid : public Inertial_space_object
+{
+    public:
+    Asteroid(double mass, Position position)
+        : Inertial_space_object (Space_object::Material::rock, position)
+        , mass_(mass)
+    {
+        
+    }
+    private:
+    double mass_;
+};
+
+class Torpedo : public Inertial_space_object
+{
+    public:
+    Torpedo(Position position)
+        : Inertial_space_object (Space_object::Material::light, position)
+    {
+        
+    }
+};
+
+

@@ -22,7 +22,7 @@ private:
     Model & model_;
 
     // Sprites for tiles:
-    std::vector<ge211::Circle_sprite> asteroids_;
-    std::vector<ge211::Image_sprite> space_ship_;
-    std::vector<ge211::Circle_sprite> torpedo_;   
+    ge211::Image_sprite asteroid_{"asteroid.png"};
+    ge211::Image_sprite space_ship_{"space_ship.gif"};
+    ge211::Circle_sprite torpedo_{model_.torpedo_radius, ge211::Color::medium_red()};   
 };
