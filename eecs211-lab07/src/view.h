@@ -24,5 +24,5 @@ private:
     // Sprites for tiles:
     ge211::Image_sprite asteroid_{"asteroid.png"};
     ge211::Image_sprite space_ship_{"space_ship.gif"};
-    ge211::Circle_sprite torpedo_{model_.torpedo_radius, ge211::Color::medium_red()};   
+    ge211::Image_sprite torpedo_{"torpedo.gif"};
 };

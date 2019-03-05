@@ -89,8 +89,9 @@ private:
 class Space_ship : public Inertial_space_object
 {
     public:
-    Space_ship(Position position)
-        : Inertial_space_object (Space_object::Material::metal, position)
+    Space_ship(Dimensions screen_dimensions)
+: Inertial_space_object (Space_object::Material::metal, {screen_dimensions.width/2, screen_dimensions.height/2})
+        , screen_dimensions_ (screen_dimensions)
     {
         
     }
@@ -103,26 +104,32 @@ class Space_ship : public Inertial_space_object
         double const heading_change = 180 ;
         double const velocity_change = 100 ;
         Control control_{false,false,false};
+        Dimensions screen_dimensions_;
 };
 
 class Asteroid : public Inertial_space_object
 {
     public:
-    Asteroid(double mass, Position position, Dimensions speed, double as)
+    Asteroid(double mass, Position position, Dimensions speed, double as, Position top_left_margin, Position bottom_right_margin)
         : Inertial_space_object (Space_object::Material::rock, position,speed,as)
         , mass_(mass)
+        ,tl_margin(top_left_margin)
+        ,br_margin(bottom_right_margin)
     {
-        std::cout << "here:" <<position.x << ","<< position.y << "\n";
     }
+    virtual void integrate(double dt) override;
+
     private:
     double mass_;
+    Position tl_margin;
+    Position br_margin;
 };
 
 class Torpedo : public Inertial_space_object
 {
     public:
-    Torpedo(Position position)
-        : Inertial_space_object (Space_object::Material::light, position)
+    Torpedo(Position position, Dimensions speed, double as)
+        : Inertial_space_object (Space_object::Material::light, position,speed,as)
     {
         
     }

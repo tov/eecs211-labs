@@ -28,7 +28,7 @@ void View::draw(ge211::Sprite_set& sprites) const
             case Space_object::Material::metal: // spaceship
             {
                 rotation.set_scale(.3);
-                sprites.add_sprite(space_ship_,pos,0,rotation);
+                sprites.add_sprite(space_ship_,pos,2,rotation);
             }
                 break;
             case Space_object::Material::rock: // asteroid
@@ -36,7 +36,8 @@ void View::draw(ge211::Sprite_set& sprites) const
                 //std::cout << pos.x << "," << pos.y << "\n";
                 break;
             case Space_object::Material::light: // light
-                sprites.add_sprite(torpedo_, pos,0);
+                rotation.set_scale(.03);
+                sprites.add_sprite(torpedo_, pos,1,rotation);
                 break;
         }
     }

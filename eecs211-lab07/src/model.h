@@ -32,7 +32,7 @@ public:
     std::vector<std::unique_ptr<Space_object>> &space_objects();
     void update ( double ft );
     void control_space_ship ( Control control );
-    void launch_torpedo ();
+    void fire_torpedo ();
     Control &control();
     void turn_right ( bool state );
     void turn_left ( bool state );
@@ -53,4 +53,5 @@ private:
     ge211::Random&  random_;
     Space_ship space_ship_;
     Control control_;
+    double const torpedo_speed_ = 400;
 };

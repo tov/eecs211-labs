@@ -31,6 +31,8 @@ void Controller::on_key_up(ge211::Key key)
         model_.turn_right(false);
     if (key==ge211::Key::up())
         model_.thrust(false);
+    if (key.code()==' ')
+        model_.fire_torpedo();
 }
 void Controller::on_key_down(ge211::Key key) 
 {

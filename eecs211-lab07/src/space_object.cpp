@@ -49,6 +49,11 @@ void Space_ship::integrate(double dt)
     if (control_.thrust)
         v_+= {sin(deg_/360*6.28)* velocity_change*dt,-cos(deg_/360*6.28)* velocity_change*dt} ;
     Inertial_space_object::integrate(dt);
+    if (top_left_.x<0 || 
+        top_left_.x>screen_dimensions_.width ||
+        top_left_.y<0 ||  
+        top_left_.y>screen_dimensions_.height)
+        exit (1);
 }
 
 void Inertial_space_object::integrate(double dt)
@@ -68,3 +73,17 @@ Inertial_space_object::Acceleration Inertial_space_object::acceleration() const
 {
     return dv_ ;
 }
+
+void Asteroid::integrate(double dt) 
+{
+    Inertial_space_object::integrate(dt);
+    if (top_left_.x<tl_margin.x)
+        top_left_.x=br_margin.x;
+    if (top_left_.x>br_margin.x)
+        top_left_.x=tl_margin.x;
+    if (top_left_.y<tl_margin.y)
+        top_left_.y=br_margin.y;
+    if (top_left_.y>br_margin.y)
+        top_left_.y=tl_margin.y;
+}
+
