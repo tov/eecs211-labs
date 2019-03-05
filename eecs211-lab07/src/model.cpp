@@ -10,6 +10,16 @@ Model::Model( ge211::Dimensions screen_dimensions,
         , space_ship_({100,100})//(double)(screen_dimensions_.width/2),(double)(screen_dimensions_.height/2)})
 {
     space_objects_.emplace_back(&space_ship_);
+    for (int i=0;i<10;i++)
+    {
+        int x = random.between(0,screen_dimensions.width);
+        int y = random.between(0,screen_dimensions.height);
+        int xs = random.between(-5,5);
+        int ys = random.between(-5,5);
+        double as = random.between(10,100);
+       std::cout << "xy = (" << x <<" ,"<<y << ")\n";
+        space_objects_.emplace_back(new Asteroid(1.0,{(double)x,(double)y},{(double)xs,(double)ys},as));
+    }
 }
 
 ///

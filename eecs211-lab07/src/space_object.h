@@ -1,6 +1,7 @@
 #pragma once
 #include<memory>
 #include <ge211.h>
+#include<iostream>
 
 struct Object_spawner
 {
@@ -33,6 +34,7 @@ public:
     bool is_space_junk() const;
     Material material() const;
     Position position() const;
+    Angle heading() const;
 
     // Just updates the position (no collision checking).
     virtual void integrate(double dt) = 0;
@@ -52,7 +54,8 @@ public:
     virtual ~Space_object() = default;
 
     Position top_left_;
-    
+protected:    
+    Angle deg_ = 0.0;
 private:
     Material material_;
     bool space_junk_ = false;
@@ -67,7 +70,6 @@ public:
     using Angular_velocity = double;
     Inertial_space_object(Material, Position, Velocity = {0.0, 0.0}, Angular_velocity = 0.0);
     virtual void integrate(double dt) override;
-    Angle heading();
 
 protected:
     Acceleration acceleration() const;
@@ -76,10 +78,9 @@ protected:
     // Currently rotation control is instantaneous rather than
     // mediated by angular acceleration.
     void set_angular_velocity(Angular_velocity vel);
-    Angle deg_ = 0.0;
+    Velocity v_ = {0,0};
 
 private:
-    Velocity v_;
     Acceleration dv_ {0.0, 0.0};
     Angular_velocity ddeg_=0;
 };
@@ -100,17 +101,18 @@ class Space_ship : public Inertial_space_object
     
     private:
         double const heading_change = 180 ;
+        double const velocity_change = 100 ;
         Control control_{false,false,false};
 };
 
 class Asteroid : public Inertial_space_object
 {
     public:
-    Asteroid(double mass, Position position)
-        : Inertial_space_object (Space_object::Material::rock, position)
+    Asteroid(double mass, Position position, Dimensions speed, double as)
+        : Inertial_space_object (Space_object::Material::rock, position,speed,as)
         , mass_(mass)
     {
-        
+        std::cout << "here:" <<position.x << ","<< position.y << "\n";
     }
     private:
     double mass_;

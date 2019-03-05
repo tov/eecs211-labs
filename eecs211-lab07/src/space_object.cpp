@@ -28,11 +28,12 @@ Control &Space_ship::control()
 
 Inertial_space_object::Inertial_space_object( Material material, Position position, Velocity velocity, Angular_velocity angular_velocity)
     : Space_object(material, position)
+    , ddeg_(angular_velocity)
+    ,dv_(velocity)
 {
-    
 }
 
-Space_object::Angle Inertial_space_object::heading()
+Space_object::Angle Space_object::heading() const
 {
     return deg_;
 }
@@ -45,8 +46,9 @@ void Space_ship::integrate(double dt)
         deg_-=heading_change * dt;
     if (deg_<0) deg_+=360;
     if (deg_>360) deg_-=360;
-    
-    std::cout<<"heading " << deg_ << "-"<< control_.left << "-" << control_.right << "\n";
+    if (control_.thrust)
+        v_+= {sin(deg_/360*6.28)* velocity_change*dt,-cos(deg_/360*6.28)* velocity_change*dt} ;
+    Inertial_space_object::integrate(dt);
 }
 
 void Inertial_space_object::integrate(double dt)

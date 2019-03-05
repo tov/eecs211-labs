@@ -9,9 +9,10 @@
 
 Controller::Controller(ge211::Dimensions screen_dimensions)
         : screen_dimensions_(screen_dimensions)
-        , model_(screen_dimensions_, get_random())
+        , model_(screen_dimensions, get_random())
         , view_(model_)
-{ }
+{ 
+}
 
 ///
 /// Public member functions

@@ -22,20 +22,18 @@ void View::draw(ge211::Sprite_set& sprites) const
         ge211::Position pos{0,0};
         pos.x=(int)so->position().x;
         pos.y=(int)so->position().y;
+        ge211::Transform rotation = ge211::Transform::rotation(so->heading());
         switch (so->material())
         {
             case Space_object::Material::metal: // spaceship
             {
-                Space_object *soo=so.get();
-                Space_ship *ss = dynamic_cast<Space_ship*> (soo);
-                double angle = ss->heading();
-                std::cout << angle << "\n";
-                ge211::Transform rotation = ge211::Transform::rotation(angle);
                 rotation.set_scale(.3);
                 sprites.add_sprite(space_ship_,pos,0,rotation);
             }
                 break;
             case Space_object::Material::rock: // asteroid
+                sprites.add_sprite(asteroid_,pos,0,rotation);
+                //std::cout << pos.x << "," << pos.y << "\n";
                 break;
             case Space_object::Material::light: // light
                 sprites.add_sprite(torpedo_, pos,0);
