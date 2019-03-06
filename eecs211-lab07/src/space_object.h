@@ -68,7 +68,7 @@ public:
     using Acceleration = ge211::Basic_dimensions<double>;
     using Angular_velocity = double;
     Inertial_space_object(Material, Position, Velocity = {0.0, 0.0}, Angular_velocity = 0.0);
-    virtual void integrate(double dt) override;
+    void integrate(double dt) override;
 
 protected:
     Acceleration acceleration() const;
@@ -98,9 +98,9 @@ class Space_ship : public Inertial_space_object
 
     // Facing direction, may not match velocity
     Control &control();
-    virtual void integrate(double dt) override;
-    virtual double size() override;
-    virtual void collide(Space_object const * other) override;
+    void integrate(double dt) override;
+    double size() override;
+    void collide(Space_object const * other) override;
     
     private:
         double const heading_change = 180 ;
@@ -113,10 +113,10 @@ class Asteroid : public Inertial_space_object
 {
     public:
     Asteroid(double mass, Position position, Dimensions speed, double as, Position top_left_margin, Position bottom_right_margin);
-    virtual void integrate(double dt) override;
+    void integrate(double dt) override;
     double mass() const;
-    virtual double size() override;
-    virtual void collide(Space_object const * other) override;
+    double size() override;
+    void collide(Space_object const * other) override;
     
     private:
     double mass_;
@@ -131,9 +131,9 @@ class Torpedo : public Inertial_space_object
 {
     public:
     Torpedo(Position position, Angle heading, Dimensions screen_dimensions);
-    virtual void integrate(double dt) override;
-    virtual double size() override;
-    virtual void collide(Space_object const * other) override;
+    void integrate(double dt) override;
+    double size() override;
+    void collide(Space_object const * other) override;
     
     private:
         Dimensions screen_dimensions_;
