@@ -1,5 +1,8 @@
 #include"model.h"
 
+double const initial_asteroid_mass = 1;
+double const min_asteroid_mass     = 0.1;
+
 ///
 /// Constructors
 ///
@@ -12,7 +15,7 @@ Model::Model( ge211::Dimensions screen_dimensions,
     space_objects_.emplace_back(&space_ship_);
     for (int i=0;i<10;i++)
     {
-        new_asteroid_(1.0, {-1,-1});
+        new_asteroid_(initial_asteroid_mass, {-1,-1});
     }
 }
 
@@ -35,29 +38,31 @@ void Model::new_asteroid_(double mass, Space_object::Position pos)
 
 void Model::update ( double ft )
 {
-    for(std::unique_ptr<Space_object> &so : space_objects_) 
-    {
+    for(std::unique_ptr<Space_object> &so : space_objects_) {
         so->integrate(ft);
     }
-    for(int i=0;i<space_objects_.size();i++) 
-        for(int j=i+1;j<space_objects_.size();j++) 
-        {
-            Space_object *so1=space_objects_[i].get();
-            Space_object *so2=space_objects_[j].get();
-            if (Space_object::check_collision(so1,so2))
-            {
-                Asteroid *a = nullptr;
+
+    for (int i = 0; i < space_objects_.size(); i++) {
+        for (int j = i + 1; j < space_objects_.size(); j++) {
+            Space_object* so1 = space_objects_[i].get();
+            Space_object* so2 = space_objects_[j].get();
+
+            if (Space_object::check_collision(so1, so2)) {
+                Asteroid* a = nullptr;
+
                 if (so1->material() == Space_object::Material::rock)
-                    a=dynamic_cast<Asteroid*> (so1);
-                if (so2->material() == Space_object::Material::rock)
-                    a=dynamic_cast<Asteroid*> (so2);
-                if (a && a->is_space_junk() && a->mass()>.1)
-                {
-                    new_asteroid_(a->mass()/2, a->position());
-                    new_asteroid_(a->mass()/2, a->position());
+                    a = dynamic_cast<Asteroid*>(so1);
+                else if (so2->material() == Space_object::Material::rock)
+                    a = dynamic_cast<Asteroid*>(so2);
+
+                if (a && a->is_space_junk() && a->mass() > min_asteroid_mass) {
+                    new_asteroid_(a->mass() / 2, a->position());
+                    new_asteroid_(a->mass() / 2, a->position());
                 }
             }
         }
+    }
+
     if (space_ship_.is_space_junk())
         exit(1);
 }
