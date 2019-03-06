@@ -1,0 +1,65 @@
+\RequirePackage{fixltx2e}
+\documentclass{tufte-handout}
+
+\def\ThisLabBase{eecs211-lab07}
+\def\ThisLabUrl{\LabBaseUrl/\ThisLabBase.zip}
+
+\usepackage{eecs211-lab}
+\title{EECS 211 Lab 7}
+\author{Asteroids}
+\date{Winter 2019}
+
+\begin{document}
+
+\maketitle
+
+Today is an exercise in software archaeology. You will be given a
+complete program---your goal is to understand it well enough to modify
+and improve it.
+
+\section{Getting the starter code}
+
+For this lab, the starter code is provided as a ZIP file here:
+\url{\ThisLabUrl}. Extract the archive file into a directory in the
+location of your choosing. Once you have your new directory containing
+the starter files, you can open it in CLion.
+\marginpar{ Be careful, as CLion will only work correctly if you open
+the \emph{main project directory} with the \filename{CMakeLists.txt} in
+it. If you open any other directory, CLion may create a
+\filename{CMakeLists.txt} for you, but it won't work properly.}
+
+\section{Getting oriented}
+
+Your first step in dealing with a new codebase is to gain a basic
+understanding of the structure and how it fits together. In
+particular, you need to understand what significant types (classes,
+structs, or enum classes) are defined by the code, and how they're
+related. Are any derived classes of any others (the \emph{is-a}
+relation)? Do any contain instances of or references to instances of any
+other (the \emph{has-a} relation)? Of particular interest in this
+assignment is the inheritance hierarchy, and how it produces the
+behaviors of different kinds of objects.
+
+\section{Possible goals}
+
+Here are some ways you could try modifying the program:
+
+\begin{itemize}
+
+  \item Instead of ending the game after dying once, keep a life count and
+    give the player multiple chances.
+
+   \item Add a game-over screen that allows the player to try again.
+
+   \item Make \marginpar{Like classic Asteroids.} objects wrap around at
+     the screen edge instead of colliding with it.
+
+   \item Add \marginpar{Power-ups should spawn randomly and disappear when
+     acquired.} power-ups, such as an extra life or faster spaceship.
+
+   \item Rate-limit the firing mechanism to allow $n$ shots before
+     requiring an $r$ second reloading delay.
+
+\end{itemize}
+
+\end{document}
