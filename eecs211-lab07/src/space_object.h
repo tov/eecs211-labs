@@ -4,11 +4,6 @@
 #include <ge211.h>
 #include<iostream>
 
-struct Object_spawner
-{
-    virtual void spawn(std::unique_ptr<class Space_object>) = 0;
-};
-
 struct Control
 {
     bool left = false;

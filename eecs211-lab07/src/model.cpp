@@ -46,7 +46,7 @@ void Model::update ( double ft )
             Space_object *so2=space_objects_[j].get();
             if (Space_object::check_collision(so1,so2))
             {
-                Asteroid *a=NULL;
+                Asteroid *a = nullptr;
                 if (so1->material() == Space_object::Material::rock)
                     a=dynamic_cast<Asteroid*> (so1);
                 if (so2->material() == Space_object::Material::rock)
