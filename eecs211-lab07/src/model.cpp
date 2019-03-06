@@ -33,7 +33,15 @@ void Model::new_asteroid_(double mass, Space_object::Position pos)
     int xs = random_.between(-5,5);
     int ys = random_.between(-5,5);
     double as = random_.between(10,100);
-    space_objects_.emplace_back(new Asteroid(mass,pos,{(double)xs,(double)ys},as,{-200,-200},{(double)screen_dimensions_.width+200,(double)screen_dimensions_.height+200}));
+    space_objects_.push_back(
+            std::make_unique<Asteroid>(
+                    mass,
+                    pos,
+                    Space_object::Dimensions{(double)xs, (double)ys},
+                    as,
+                    Space_object::Position{-200,-200},
+                    Space_object::Position{(double)screen_dimensions_.width + 200,
+                                           (double)screen_dimensions_.height + 200}));
 }
 
 void Model::update ( double ft )
