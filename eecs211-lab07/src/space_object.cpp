@@ -1,7 +1,17 @@
 #include"space_object.h"
-#include <iostream> 
-#define TO_RADIANS(DEGREES)  (double)DEGREES/360*6.28
-#define DISTANCE(P1,P2) sqrt(pow(P1.x - P2.x,2)+pow(P1.y - P2.y,2))
+#include <cmath>
+#include <iostream>
+
+static double degrees_to_radian(double degrees)
+{
+    return acos(-1) * degrees / 180;
+}
+
+static double distance(Space_object::Position a, Space_object::Position b)
+{
+    Space_object::Dimensions d = a - b;
+    return sqrt(d.width * d.width + d.height * d.height);
+}
 
 Space_object::Space_object(Material material, Position position)
     : top_left_(position)
@@ -17,7 +27,7 @@ bool Space_object::check_collision( Space_object *so1, Space_object *so2)
     double s2 = so1->size();
     Position p1 = so1->position();
     Position p2 = so2->position();
-    if (DISTANCE(p1,p2)<(s1+s2)/2)
+    if (distance(p1,p2)<(s1+s2)/2)
     {
         if (so1->material() != so2->material())
         {
@@ -69,7 +79,7 @@ void Space_ship::integrate(double dt)
     if (deg_<0) deg_+=360;
     if (deg_>360) deg_-=360;
     if (control_.thrust)
-        v_+= {sin(TO_RADIANS(deg_))* velocity_change*dt,-cos(TO_RADIANS(deg_))* velocity_change*dt} ;
+        v_+= {sin(degrees_to_radian(deg_))* velocity_change*dt,-cos(degrees_to_radian(deg_))* velocity_change*dt} ;
     Inertial_space_object::integrate(dt);
     if (top_left_.x<0 || 
         top_left_.x>screen_dimensions_.width ||
@@ -124,7 +134,7 @@ double Asteroid::mass() const
 }
 
 Torpedo::Torpedo(Position position, Angle heading, Dimensions screen_dimensions)
-    : Inertial_space_object (Space_object::Material::light, position,{sin(TO_RADIANS(heading))* torpedo_speed,-cos(TO_RADIANS(heading))* torpedo_speed},1440)
+    : Inertial_space_object (Space_object::Material::light, position,{sin(degrees_to_radian(heading))* torpedo_speed,-cos(degrees_to_radian(heading))* torpedo_speed},1440)
     , screen_dimensions_(screen_dimensions)
 {
 }
