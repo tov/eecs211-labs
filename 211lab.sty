@@ -1,0 +1,48 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{211lab}[2020/1/6 0.2]
+
+\RequirePackage{fancyvrb}
+\RequirePackage{microtype}
+\RequirePackage{hyperref}
+\RequirePackage{url}
+\RequirePackage{underscore}
+
+\hypersetup{
+    colorlinks=true
+}
+
+\urlstyle{sf}
+
+\newcommand\progname[1]{\emph{#1}}
+\newcommand\hostname[1]{\emph{#1}}
+\newcommand\filename[1]{\textsf{#1}}
+\newcommand\varname[1]{\textsf{#1}}
+\newcommand\functionname[1]{\emph{#1}}
+\newcommand\promptchar{\%}
+\newcommand\prompt[1][\promptchar]{{\normalfont\ttfamily\itshape#1}}
+\newcommand\metavar[1]{{\normalfont\ensuremath{\langle\textit{#1}\rangle}}}
+\newcommand\cmdline[1]{\fbox{\normalfont\ttfamily#1}}
+\newcommand\keycombo[1]{\textsf{#1}}
+
+\DefineVerbatimEnvironment%
+  {CmdLine}{Verbatim}
+  {commandchars=\\\{\}}
+
+\DefineVerbatimEnvironment%
+  {Code}{Verbatim}
+  {}
+
+\newcommand\LabBaseUrl
+  {https://users.cs.northwestern.edu/~jesse/course/cs211/lab}
+\newcommand\LabHostnamesUrl
+  {http://it.eecs.northwestern.edu/info/2015/11/03/info-labs.html}
+\newcommand\ThisLabUrl
+  {\LabBaseUrl/\ThisLabBase.tgz}
+
+\newcommand\LabInfo[2]{
+  \def\ThisLabBase{cs211-lab#1}
+  \title{CS 211 Lab #1}
+  \author{#2}
+  \date{Winter 2020}
+}
+

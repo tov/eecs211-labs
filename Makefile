@@ -11,7 +11,7 @@ hard: Publish
 
 # The tufte-handout class we use works with pdflatex, but not
 # xelatex/lualatex.
-%.pdf: %.tex build/cs211-lab.sty
+%.pdf: %.tex build/211lab.sty
 	@mkdir -p build
 	( cd build; pdflatex -interaction=nonstopmode ../$< )
 	cp build/$@ .

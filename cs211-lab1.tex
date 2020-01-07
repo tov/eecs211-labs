@@ -1,0 +1,376 @@
+\RequirePackage{fixltx2e}
+\documentclass{tufte-handout}
+
+% Be sure to check and update this:
+\def\PuTTYurl{https://the.earth.li/~sgtatham/putty/latest/w32/putty-0.73-installer.msi}
+
+\usepackage{211lab}
+
+\LabInfo{1}{Navigating the Unix Shell}
+
+\begin{document}
+
+\maketitle
+
+Today we are going over the basics of how to log into a remote computer,
+use shell commands to create and edit files, and compile and run C
+code.
+\marginnote{There are different shells with slightly different syntax.
+In this class, we will use a shell called \progname{zsh}, which is also the
+default in the new version of macOS. Other shells include
+\progname{tcsh} (the default on the EECS servers) and \progname{bash}
+(the default on most Linux systems).}
+
+The shell works as a textual conversation. It presents a prompt, like
+\verb![wsc147@robin]~/cs211%!. (The default EECS prompt shows the
+username, the hostname, and the current working directory.) You type a
+command and press enter. The shell executes the command and then prints
+another prompt, waiting for further commands. For example, to list the
+files in the current directory, you will run the \progname{ls} command
+by typing it at the prompt:
+
+\begin{CmdLine}
+  \prompt ls
+\end{CmdLine}
+
+\marginnote[-\baselineskip]{Don't type the \prompt. That stands for your
+shell prompt.}
+
+\noindent
+Before you can do that, though, we have to get you logged in.
+
+\section{Logging in}
+
+For the majority of you who are unfamiliar with the Unix shell, it
+probably seems like a scary foreign concept reserved for computer
+hackers on TV shows and movies.  However, in reality, with a little bit
+of time and a few basic commands, you will realize that the Unix shell
+is not something to be scared of, and in fact a very useful tool to
+embrace as you continue your computer science education. Don't get
+frustrated if it seems hard at first! Every great computer scientist was
+at one point also unfamiliar with the shell, just like you, but with a
+little bit of exposure, it will start to make sense.
+
+SSH (secure shell) is a protocol that allows you to login remotely onto
+an external system. We will be using it in order to create a connection
+onto a Northwestern remote server, where we will be learning our first
+Unix skills. For the first step of establishing the connection, it will
+be different for Windows and Mac/Linux, but for the rest it should not
+matter which OS you are on, since you'll be using the remote Unix
+machine.
+
+\subsection{Windows}
+
+Download the \hyperlink{\PuTTYurl}{SSH client PuTTY}%
+\marginnote{\url{\PuTTYurl}}; we recommend the
+MSI installer, since it’s usually easier.
+The link on the right will take you
+directly to the Windows installer.
+After you install PuTTY, open it up. You'll need to enter a hostname to
+login to. The link on the right will take you to a list of student lab
+hostnames\marginnote{You can find a list here: \url{\LabHostnamesUrl}}
+(such as 
+\hostname{batgirl.eecs.northwestern.edu}
+or
+\hostname{finagle.wot.eecs.northwestern.edu}). Ensure SSH is selected, then
+press Open. You should get some sort of message asking whether or not
+you trust the host. Press yes. From here, login as your EECS username
+(probably the same as NetID), and your EECS password (not necessarily
+your NetID password). You should now be logged into one of the
+Northwestern EECS boxes!
+
+(Note that you can configure PuTTY so that you don't have to do all of
+this every time.)
+
+\subsection{Mac/Linux}
+
+For those of you on Mac or Linux, everything you need is already
+installed. Open up your terminal\marginnote{Mac users: search
+for ``terminal'' in Spotlight} and at the prompt
+type a single command of the form
+
+\begin{CmdLine}
+  \prompt ssh \metavar{eecs-id}@\metavar{eecs-host}.eecs.northwestern.edu
+\end{CmdLine}
+\marginnote[-\baselineskip]{Don't type the \prompt.}
+
+\noindent where \metavar{eecs-id} is your EECS username (probably your NetID)
+and \metavar{eecs-host} is replaced by one of the EECS hostnames from the list
+of student lab hostnames%
+\marginnote{\url{\LabHostnamesUrl}}
+(such as \hostname{alfred.eecs.northwestern.edu} or
+\hostname{robin.eecs.northwestern.edu}).
+
+You should get a message saying that the authenticity of the host
+can't be established, and you should be asked if you want to continue
+connecting.  Type ``yes'' as prompted and press Enter. Now type in your
+EECS account password (not necessarily your NetID password), press
+Enter again, and you should be logged in remotely!
+
+\section{Basic shell navigation}
+
+There are a few basic commands we will be using frequently throughout
+this exercise in our shell: \progname{cd}, \progname{ls}, and
+\progname{pwd}, and \progname{man}.
+
+\progname{cd} stands for ``change directory,'' and is used to change the
+current directory we are looking at in our shell (our working
+directory). You can think of a directory as a folder from your regular
+interactions with your computer. For example the command \cmdline{cd
+Documents} \marginnote{As usual, don't type the \prompt.} will look for a
+directory inside our current directory called \filename{Documents}, and
+if it exists, our working directory will become that
+\filename{Documents} directory. If you ever want to go back to your home
+directory, the command \cmdline{cd} with no argument will switch your
+working directory back to your home directory. The command \cmdline{cd
+..} will switch your working directory up one level from where you
+currently are.
+
+\progname{pwd} stands for ``print working directory,'' and is used to
+print out the current working directory of your shell. For example, if
+you have been navigating around for a while and you are lost you can
+type in the command \cmdline{pwd} and you will see your directory
+printed out into the shell.
+
+\progname{ls} is short for the word ``list,'' and is used to list the contents
+and subdirectories within your current working directory. You can type
+the command \cmdline{ls} into your shell, and you will see all files and
+directories within your current working directory.
+
+Play around with these three commands for a few minutes in your shell,
+and see what directories and files already exist on your EECS box!
+
+\progname{man} is short for ``manual,'' and is used to access the system
+manuals. For example, you can read the manual pages for \progname{pwd}
+and \progname{ls} by running the commands \cmdline{man pwd} and
+\cmdline{man ls}.\marginnote{Hit \keycombo{q} to quit.} To learn about
+man, you can of course run \cmdline{man man}.
+
+Once you are done playing around, type \cmdline{cd} in to navigate back
+to your home directory. We will be making a new directory for this lab
+using the \progname{mkdir} command.
+
+\section{Creating new content}
+
+\progname{mkdir} stands for make directory, and is used to create a new
+directory within our current working directory. For example,
+\cmdline{mkdir fun-project} will create a new directory inside our
+current one called \filename{fun-project} that we can \progname{cd} into
+if we so desire. We can create hierarchies of directories to keep our
+files well organized.
+
+Create a new directory inside your home directory called
+\filename{lab1-dir}. Change your current working directory to
+\filename{lab1-dir}, and we will now practice editing and compiling
+some C source files!
+
+The \cmdline{emacs} command in the shell will open up the Emacs text%
+\marginnote{Text editor preferences can be a fairly contentious issue
+among software engineers, and if you already have experience with one
+of Vim or Emacs, feel free to use whichever you already have
+experience with instead of Emacs. However, for the purpose of this
+class, we will be teaching using Emacs. Emacs can also seem scary at
+first, but after you learn a few simple commands, it will quickly
+start making sense. } editor. (On Mac/Linux, you will probably want to
+use \cmdline{emacs -nw} to avoid starting the X Window System..) Pass in
+a file that you want to edit (even if it hasn't been created yet), and
+you can start editing that file! For example type \cmdline{emacs -nw
+my\_code.c} and you can start editing a file called
+\filename{my\_code.c} within your current working directory.
+
+Inside your \filename{lab1-dir} directory create and open a file
+using Emacs called \filename{animals.txt}. Note that the .c file
+extension is what we will be using to indicate C files. You will see a
+text editor pop up that does not look dissimilar to a
+\progname{Notepad.exe} or \progname{TextEdit.app} editor from your
+Windows or Mac. However, you will notice that clicking a location using
+your cursor will not move your cursor to where you click :(
+
+Inside this text editor, type in a list of your 3 favorite animals. Once
+you have typed in your list, you are going to want to save your file so
+you can use it later. On Emacs, saving is slightly different than other
+programs. Instead of using \keycombo{Command-} or \keycombo{Ctrl-s}, you
+are going to use \keycombo{Ctrl-x} followed by
+\keycombo{Ctrl-s}.\marginnote{If you are curious about more Emacs
+  commands, there is a nice basic list here:
+\url{http://www.cs.cornell.edu/courses/cs312/2003sp/handouts/emacs.htm}.
+You can also run an Emacs tutorial inside Emacs. Press \keycombo{C-h
+t} -- that is, \keycombo{Ctrl-h} followed by \keycombo{t} (no
+\keycombo{Ctrl}).}
+(In Emacs, this is spelled ``\keycombo{C-x C-s}.'') This will save your
+file to your current working directory. Now, we want to close our Emacs
+window and get back to our Unix shell. In order to close our Emacs
+window, we will type \keycombo{C-x C-c} (that is, \keycombo{Ctrl-x}
+followed by \keycombo{Ctrl-c}).
+
+We can ensure that our file was properly created by using the
+\progname{cat} command in the shell. \progname{cat} is short for
+``catenate,'' and prints out contents of a given file.  \cmdline{cat
+\metavar{filename}} will print the contents of the file to the shell. If
+you run \cmdline{cat animals.txt} you should see the file you just
+created on your shell.
+
+\section{Creating our build system}
+
+Please navigate back to your home directory (using just the \cmdline{cd}
+command). Once your current working directory is your home directory, we
+are going to set up a configuration file so that you will be using the
+correct version of the toolchain (the C compiler and associated tools),
+and that it will be correct each time you remotely login to your EECS
+account. Don't worry about understanding what is going on right here, it
+is something that just needs to be configured for this quarter. To do
+this we will be creating a file called \filename{.tcshrc} in your home
+directory (note the period, and ensure this name is spelled exactly
+correct).\marginnote{Remember to create this file and edit it using
+Emacs we will type in \cmdline{emacs .tcshrc}.} Once this is open, type
+the following line exactly into your file, save, and exit it:
+
+\begin{verbatim}
+  source /home/jesse/pub/etc/csh_profile
+\end{verbatim}
+
+Now, for this time only, type in \cmdline{exec tcsh} into the shell to
+reload.
+
+Each time you open up your remote connection (including right now) and
+plan on compiling code (probably every time for first few weeks of the
+class), type the \cmdline{dev} command into your shell.  This will
+ensure that everyone is on the same (and correct) developer toolset.
+
+\section{Using our build system}
+
+As briefly mentioned in class, \progname{make} is our build system we
+will be using for the first few weeks of the course at least.  We will
+usually be giving some sort of starting structure for the projects you
+will work on, and right now is no exception.  This structure is found in
+a .tgz
+\marginpar{
+  The .tgz file extension is used for
+  “\href{https://en.wikipedia.org/wiki/Gzip}{gzipped}
+  \href{https://en.wikipedia.org/wiki/Tar_(computing)}{tarball},” which
+  is like the Linux equivalent of a .ZIP file.
+}
+file that you need to downloaded onto your remote shell.
+Linux provides a command called \progname{wget} which will help download
+things from the internet for us.
+
+\progname{wget} stands for ``web get,'' and downloads things from the web using the
+following command format:
+
+\begin{CmdLine}
+  \prompt wget \metavar{url}
+\end{CmdLine}
+
+\noindent
+For this example, we will be getting our file from this url:
+\url{\ThisLabUrl}. However, the shell setup we did earlier defined
+an \emph{environment variable} to contain the URL of the EECS 211
+website. Thus, our command will be:
+
+\begin{CmdLine}
+  \prompt wget \$URL211/lab/\ThisLabBase.tgz
+\end{CmdLine}
+
+Once we have our .tgz file, we will need to turn it from a compressed
+file into a new directory, using the \progname{tar} command. Use the
+following command to extract archive file into a directory called
+\filename{\ThisLabBase}:
+
+\begin{CmdLine}
+  \prompt tar xvf \ThisLabBase.tgz
+\end{CmdLine}
+
+Now, once we have our new directory with its files, change your
+directory to \filename{\ThisLabBase} using the \progname{cd} command.
+Now list its contents using \progname{ls}, and notice that there is a
+\filename{Makefile} file, and a \filename{src/} directory. The
+\filename{Makefile} file is a \progname{make} configuration file which
+you won't have to worry about too much right now; the \filename{src/}
+directory contains the file \progname{hello.c}, which we have provided
+you.
+
+You can build your program using the command \progname{make}.
+
+The basic purpose of \progname{make} is to build your project into an
+executable file. In your build directory, each time you update your
+code, you can run
+
+\begin{CmdLine}
+  \prompt make \metavar{target-name}
+\end{CmdLine}
+
+\noindent to create your executable called \metavar{target-name}.  In
+this case, run \cmdline{make build/hello} to build a program called
+\filename{hello}, which will be put in a directory called
+\filename{build/} (which \progname{make} will create for you as
+necessary). You can run the executable as follows:
+
+\begin{CmdLine}
+  \prompt build/hello
+\end{CmdLine}
+
+\noindent
+This should spit out a nice greeting.
+
+\section{Updating our code}
+
+So, we gave you a basic function and you were able to run it, but how do
+you change the code?
+
+Open up the \filename{src/hello.c} file using Emacs, and edit it so it
+now says ``Aloha 211 student!'' instead of ``Hello 211 student!.'' Make
+sure to save and exit Emacs.\marginnote{Remember \keycombo{C-x C-s} to
+save and \keycombo{C-x C-c} to exit.}
+
+Then try running \cmdline{build/hello} again. Did anything change?
+
+The reason why you still see ``Hello 211 student!'' on your screen is
+because while you changed your C++ code, your computer doesn't
+understand the C++ code, but only the machine code you create by using
+\progname{make}.  So now, run \cmdline{make build/hello} once again, and
+try \cmdline{build/hello}. Notice how you now have the correct output!
+Each time we want to change our code, we are going to need to remember
+to rebuild our executable. Don't worry if you have error messages your
+first few times trying to write new code, this is completely normal.
+Even the best developers in the world usually need a few tries before
+they can properly build their files, so just take a deep breath, and try
+and figure out what went wrong.
+
+\section{Conclusion}
+
+Knowing how to use the shell is an extremely important tool in computer
+science. Don't worry if it is still hard for you to use, like much of
+life, it is one of those things you'll just need to practice with until
+it seems much more familiar!  On your own time, it would be a good idea
+to continue learning more about the shell and playing around with some
+more commands.\marginnote{A good resource for some basic commands is
+  here:
+\url{http://www.computerworld.com/article/2598082/linux/linux-linux-command-line-cheat-sheet.html}.}
+Of course, come to office hours or post on Piazza with any questions or
+if you want any more challenges!
+
+\section{Useful links}
+
+\begin{description}
+
+  \item[Lab 1 Project]
+\url{\ThisLabUrl}
+
+\item[EECS login server hostnames]
+\url{\LabHostnamesUrl}
+
+\item[Simple command line cheat sheet]
+\url{http://www.computerworld.com/article/2598082/linux/linux-linux-command-line-cheat-sheet.html}
+
+\item[PuTTY MSI installer]
+\url{\PuTTYurl}
+
+\item[Nice Emacs guide]
+\url{http://www.cs.cornell.edu/courses/cs312/2003sp/handouts/emacs.htm}
+
+\item[Nice Vim guide]
+\url{http://www.openvim.com/}
+
+\end{description}
+
+\end{document}
