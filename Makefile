@@ -3,9 +3,11 @@ PDFS = $(TEXS:.tex=.pdf)
 ZIPS = $(TEXS:.tex=.zip)
 TGZS = $(TEXS:.tex=.tgz)
 
-Publish: $(PDFS) $(ZIPS) $(TGZS)
-	echo index.html > $@
-	ls $^ > $@
+PUBLISH = $(PDFS) $(ZIPS) $(TGZS)
+
+Publish: Publish.include $(PUBLISH)
+	cp $< $@
+	ls $(PUBLISH) >> $@
 
 hard: Publish
 
