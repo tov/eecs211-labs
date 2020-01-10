@@ -17,3 +17,9 @@ clean:
 	rm -Rf build
 
 .PHONY: all clean
+
+# Ensure we have the correct C compiler version:
+CSHOST = cs.northwestern.edu
+ifeq ($(DEV211)$(CSHOST),$(findstring $(CSHOST),$(shell hostname)))
+  $(error You need to run ‘dev’ first)
+endif
