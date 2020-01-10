@@ -1,4 +1,4 @@
-TEXS = $(wildcard cs211-lab*.tex)
+TEXS = $(wildcard lab*.tex)
 PDFS = $(TEXS:.tex=.pdf)
 ZIPS = $(TEXS:.tex=.zip)
 TGZS = $(TEXS:.tex=.tgz)
