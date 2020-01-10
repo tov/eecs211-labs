@@ -7,6 +7,12 @@
 \RequirePackage{url}
 \RequirePackage{underscore}
 
+\newcommand\@pad@two[1]{\@pad@two@check#1\\}
+\newcommand\@pad@two@check[2]{%
+  \ifx#2\\\relax0\fi
+  #1%
+}
+
 \hypersetup{
     colorlinks=true
 }
@@ -39,10 +45,10 @@
 \newcommand\ThisLabUrl
   {\LabBaseUrl/\ThisLabBase.tgz}
 
-\newcommand\LabInfo[3][]{
-  \def\ThisLabBase{cs211-lab#1#2}
-  \title{CS 211 Lab #2}
-  \author{#3}
+\newcommand\LabInfo[2]{
+  \def\ThisLabBase{cs211-lab\@pad@two{#1}}
+  \title{CS 211 Lab #1}
+  \author{#2}
   \date{Winter 2020}
 }
 
