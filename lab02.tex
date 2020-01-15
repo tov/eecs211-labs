@@ -11,7 +11,10 @@
 Today we are going to practice navigating in the shell and writing basic C code. 
 
 \section{Getting Started}
-Let's get started by logging into a remote Northwestern server. We did this last week, but if you need help remembering the steps, they are included below.\marginnote{The list of remote Northwestern servers can be found here: \url{http://www.mccormick.northwestern.edu/eecs/documents/current-students/student-lab-hostnames.pdf}}
+Let's get started by logging into a remote Northwestern server. We did
+this last week, but if you need help remembering the steps, they are
+included below.\marginnote{The list of remote Northwestern servers can
+be found here: \url{\LabHostnamesUrl}}
 
 \subsection{Windows}
 Open PuTTY. You'll need to enter a hostname to login to. The link on the right will take you to a list of student lab hostnames (such as \hostname{batman.eecs.northwestern.edu}).  Ensure SSH is selected, then press Open. When prompted, enter your EECS username and password (not necessarily the same as your NetID password) and you're good to go.
@@ -51,7 +54,8 @@ Navigate to your \filename{\LabBaseUrl} directory, and open up
 Notice that there is already some skeletons of functions and some code in \functionname{main()} here.
 
 \subsection{Iteration}
-First, find the function called \functionname{sumNumbers}.\marginnote{Notice that \functionname{sumNumbers} is going to return an int.}We are going to use this function to sum up all of the numbers from 1 to \varname{num}.  If you remember from class, we have a few ways of iterating through numbers, most notably \functionname{for} and \functionname{while}.  We will be using both, but first we will be using \functionname{while}.
+First, find the function called
+\functionname{sum\_numbers}.\marginnote{Notice that \functionname{sum\_numbers} is going to return an int.}We are going to use this function to sum up all of the numbers from 1 to \varname{num}.  If you remember from class, we have a few ways of iterating through numbers, most notably \functionname{for} and \functionname{while}.  We will be using both, but first we will be using \functionname{while}.
 
 \subsection{While loops}
 As we learned in class, a  \functionname{while} loop has the following
@@ -65,7 +69,7 @@ syntax:\marginnote{Note that in while loops we usually will use a boolean expres
 \end{Code}
 
 
-Use a while loop inside our \functionname{sumNumbers} in order to add the numbers from 1 to \varname{num} together.\marginnote{Remember that we have the \functionname{++} and \functionname{+=} functions to help us.}
+Use a while loop inside our \functionname{sum\_numbers} in order to add the numbers from 1 to \varname{num} together.\marginnote{Remember that we have the \functionname{++} and \functionname{+=} functions to help us.}
 Make sure to use a \functionname{return} statement to return the sum that we aggregated!
 
 Once you think that your function works as intended, save and exit emacs\marginnote{\keycombo{C-x C-s} to save and \keycombo{C-x C-c} to exit}. If you remember from last week, we used the \functionname{make} command in order to turn our C file into machine code. Run:
@@ -78,7 +82,9 @@ If everything works, if we list our files, we should now see a file called \file
   \prompt build/lab2
 \end{CmdLine}
 See if your value looks right!  If it doesn't, don't worry, Rome wasn't
-built in a day.  Try and try and see what went wrong.\marginnote{Error messages may look scary, but in reality, they're there to help you!  Not intimidate you!}  Play around with the value of \varname{numBound} and see how it affects the result.
+built in a day.  Try and try and see what went wrong.\marginnote{Error
+messages may look scary, but in reality, they're there to help you!  Not
+intimidate you!}  Play around with the value of \varname{num} and see how it affects the result.
 
 \subsection{For loops}
 
@@ -93,7 +99,7 @@ Once we have everything working with our \functionname{while} loop, let's work o
     }
 \end{Code}
 
-Go back to our \functionname{sumNumbers} function, and try to replace your \functionname{while} loop expression with a \functionname{for} loop to accomplish the same task.
+Go back to our \functionname{sum\_numbers} function, and try to replace your \functionname{while} loop expression with a \functionname{for} loop to accomplish the same task.
 
 Once you are done, make and run your file.  See if everything looks the same!  If not, no worries, go back and try again!
 
@@ -118,15 +124,19 @@ So far, we've been filling in skeleton functions that were provided for
 you. Now it's time to write your own function from scratch.  Remember
 how annoying it was to type out the \functionname{printf} lines each time you wanted to print out your animal?  We're going to abstract that out and replace it with a simple call to a function! 
 
-Write a function called printAnimal that uses \functionname{printf} to print out your animal's three attributes.  Note that this should take in one argument(of the same type as your animal struct).  Think about what type your function should be!\marginnote{Note that the \varname{void} return type signifies that nothing is returned}
+Write a function called \texttt{print\_animal} that uses \functionname{printf} to print out your animal's three attributes.  Note that this should take in one argument(of the same type as your animal struct).  Think about what type your function should be!\marginnote{Note that the \varname{void} return type signifies that nothing is returned}
 
-Once you wrote your function, go to your \functionname{main} function and replace your print statement with a call to \functionname{printAnimal()}.\marginnote{remember to pass your animal instance to the function}
+Once you wrote your function, go to your \functionname{main} function
+and replace your print statement with a call to
+\functionname{print\_animal()}.\marginnote{remember to pass your animal instance to the function}
 
 Make and run lab2, and see if everything still works!  
 
 \subsection{Control statements}
 
-Now that we have gotten the hang of structs and functions, let's practice our control statements.  Go back to our \functionname{printAnimal} function.  Remember from hw1 and class that if statements have the basic following syntax:
+Now that we have gotten the hang of structs and functions, let's
+practice our control statements.  Go back to our
+\functionname{print\_animal} function.  Remember from hw1 and class that if statements have the basic following syntax:
 \begin{Code}
     if (<test-expression>) {
         // run if <test-expression> evaluates to true
@@ -137,7 +147,7 @@ Now that we have gotten the hang of structs and functions, let's practice our co
 \end{Code}
 
 Using an if and else statement, check your animals age and add to your
-\functionname{printAnimal} function a line to print out ``This animal is
+\functionname{print\_animal} function a line to print out ``This animal is
 old!'' if the animal is at least 10 and print out ``This animal is not
 that old'' if the animal is younger than 10.   
 
