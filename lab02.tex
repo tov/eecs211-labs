@@ -14,7 +14,7 @@ Today we are going to practice navigating in the shell and writing basic C code.
 Let's get started by logging into a remote Northwestern server. We did this last week, but if you need help remembering the steps, they are included below.\marginnote{The list of remote Northwestern servers can be found here: \url{http://www.mccormick.northwestern.edu/eecs/documents/current-students/student-lab-hostnames.pdf}}
 
 \subsection{Windows}
-Open PuTTY. You'll need to enter a hostname to login to. The link on the right will take you to a list of student lab hostnames (such as  \hostname{tlab-03.eecs.northwestern.edu} or \hostname{batman.eecs.northwestern.edu}).  Ensure SSH is selected, then press Open. When prompted, enter your EECS username and password (not necessarily the same as your NetID password) and you're good to go.
+Open PuTTY. You'll need to enter a hostname to login to. The link on the right will take you to a list of student lab hostnames (such as \hostname{batman.eecs.northwestern.edu}).  Ensure SSH is selected, then press Open. When prompted, enter your EECS username and password (not necessarily the same as your NetID password) and you're good to go.
 
 \subsection{Mac/Linux}
 Open up your terminal. At the prompt, use the ssh command of the form
@@ -23,23 +23,16 @@ Open up your terminal. At the prompt, use the ssh command of the form
 \end{CmdLine}
 \noindent where \metavar{eecs-id} is your EECS username (probably your NetID)
 and \metavar{eecs-host} is replaced by one of the EECS hostnames from the list
-of student lab hostnames (such as \hostname{tlab-03.eecs.northwestern.edu} or
+of student lab hostnames (such as
 \hostname{batman.eecs.northwestern.edu}).
 When prompted, type in your EECS username and password (not necessarily your NetID password), press
 Enter again, and you should be logged in remotely!
 
 \section{Getting the code}
-Recall our basic Unix commands: \progname{cd}, \progname{ls}, \progname{mkdir}, and \progname{pwd}. What do they stand for and what do they do? Ask your TA if you don't remember.\marginnote{Or ask Google.} Use the following \progname{wget} command to download the code into your directory of choice. We suggest that you keep your EECS 211 files in an \filename{eecs211/} subdirectory of your home directory, but it's up to you.
+Recall our basic Unix commands: \progname{cd}, \progname{ls}, \progname{mkdir}, and \progname{pwd}. What do they stand for and what do they do? Ask your TA if you don't remember.\marginnote{Or ask Google.} Use the following \progname{wget} command to download the code into your directory of choice. We suggest that you keep your CS 211 files in an \filename{cs211/} subdirectory of your home directory, but it's up to you.
 
 \begin{CmdLine}
-  \prompt wget \$URL211/\ThisLabBase.tgz
-\end{CmdLine}
-
-Once we have our .tgz file, we will need to turn it from a compressed
-file into a new directory, using the \progname{tar} command:
-
-\begin{CmdLine}
-  \prompt tar xvf \ThisLabBase.tgz
+  \prompt wget -O- \$URL211/lab/\ThisLabBase.tgz | tar zxvk
 \end{CmdLine}
 
 You should now have a directory called \filename{\ThisLabBase}.
