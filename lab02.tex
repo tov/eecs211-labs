@@ -84,7 +84,8 @@ If everything works, if we list our files, we should now see a file called \file
 \begin{CmdLine}
   \prompt build/lab2
 \end{CmdLine}
-See if your value looks right!  If it doesn't, don't worry, Rome wasn't built in a day.  Tory and try and see what went wrong.\marginnote{Error messages may look scary, but in reality, they're there to help you!  Not intimidate you!}  Play around with the value of \varname{numBound} and see how it affects the result.
+See if your value looks right!  If it doesn't, don't worry, Rome wasn't
+built in a day.  Try and try and see what went wrong.\marginnote{Error messages may look scary, but in reality, they're there to help you!  Not intimidate you!}  Play around with the value of \varname{numBound} and see how it affects the result.
 
 \subsection{For loops}
 
@@ -95,7 +96,7 @@ Once we have everything working with our \functionname{while} loop, let's work o
     for (int i = 1; i <= 5; ++i) {
         // Note that the code inside the curly braces is the code
         // That is ran each iteration of the for loop
-        cout << i << '\n';
+        printf("%d\n", i);
     }
 \end{Code}
 
@@ -120,9 +121,11 @@ Make and run lab2, and see if your new animal shows up the way that you intended
 
 
 \subsection{Creating your own function}
-So far, we've been filling in skeleton functions that were provided for you. Now it's time to write your own function from scratch.  Remember how annoying it was to type out the \functionname{cout} lines each time you wanted to print out your animal?  We're going to abstract that out and replace it with a simple call to a function! 
+So far, we've been filling in skeleton functions that were provided for
+you. Now it's time to write your own function from scratch.  Remember
+how annoying it was to type out the \functionname{printf} lines each time you wanted to print out your animal?  We're going to abstract that out and replace it with a simple call to a function! 
 
-Write a function called printAnimal that uses \functionname{cout} to print out your animal's three attributes.  Note that this should take in one argument(of the same type as your animal struct).  Think about what type your function should be!\marginnote{Note that the \varname{void} return type signifies that nothing is returned}
+Write a function called printAnimal that uses \functionname{printf} to print out your animal's three attributes.  Note that this should take in one argument(of the same type as your animal struct).  Think about what type your function should be!\marginnote{Note that the \varname{void} return type signifies that nothing is returned}
 
 Once you wrote your function, go to your \functionname{main} function and replace your print statement with a call to \functionname{printAnimal()}.\marginnote{remember to pass your animal instance to the function}
 
