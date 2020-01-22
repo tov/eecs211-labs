@@ -1,13 +1,9 @@
 \RequirePackage{fixltx2e}
 \documentclass{tufte-handout}
 
-\def\ThisLabBase{eecs211-lab03}
-\def\ThisLabUrl{\LabBaseUrl/\ThisLabBase.tgz}
+\usepackage{211lab}
 
-\usepackage{eecs211-lab}
-\title{EECS 211 Lab 3}
-\author{Strings}
-\date{Winter 2019}
+\LabInfo{3}{Strings}
 
 \begin{document}
 
@@ -16,10 +12,12 @@
 Today we are going to practice manipulating "strings".
 
 \section{Getting Started}
-Let's get started by logging into a remote Northwestern server. We did this last week, but if you need help remembering the steps, they are included below.\marginnote{The list of remote Northwestern servers can be found here: \url{http://www.mccormick.northwestern.edu/eecs/documents/current-students/student-lab-hostnames.pdf}}
+Let's get started by logging into a remote Northwestern server. We did this last week, but if you need help remembering the steps, they are included below.\marginnote{The list of remote Northwestern servers can
+be found here: \url{\LabHostnamesUrl}}
 
 \subsection{Windows}
-Open PuTTY. You'll need to enter a hostname to login to. The link on the right will take you to a list of student lab hostnames (such as  \hostname{tlab-03.eecs.northwestern.edu} or \hostname{batman.eecs.northwestern.edu}).  Ensure SSH is selected, then press Open. When prompted, enter your EECS username and password (not necessarily the same as your NetID password) and you're good to go.
+Open PuTTY. You'll need to enter a hostname to login to. The link on the
+right will take you to a list of student lab hostnames (such as \hostname{alfred.eecs.northwestern.edu} or \hostname{batman.eecs.northwestern.edu}).  Ensure SSH is selected, then press Open. When prompted, enter your EECS username and password (not necessarily the same as your NetID password) and you're good to go.
 
 \subsection{Mac/Linux}
 Open up your terminal. At the prompt, use the ssh command of the form
@@ -28,7 +26,7 @@ Open up your terminal. At the prompt, use the ssh command of the form
 \end{CmdLine}
 \noindent where \metavar{eecs-id} is your EECS username (probably your NetID)
 and \metavar{eecs-host} is replaced by one of the EECS hostnames from the list
-of student lab hostnames (such as \hostname{tlab-03.eecs.northwestern.edu} or
+of student lab hostnames (such as \hostname{alfred.eecs.northwestern.edu} or
 \hostname{batman.eecs.northwestern.edu}).
 When prompted, type in your EECS username and password (not necessarily your NetID password), press
 Enter again, and you should be logged in remotely!
@@ -43,7 +41,7 @@ code into your directory of choice. We suggest that you keep your EECS
 but it's up to you.
 
 \begin{CmdLine}
-  \prompt curl \$URL211/lab/\ThisLabBase.tgz | tar zxv
+  \prompt curl \$URL211/lab/\ThisLabBase.tgz | tar zxvk
 \end{CmdLine}
 
 You should now have a directory called \filename{\ThisLabBase}.
@@ -55,16 +53,20 @@ open a remote connection and plan on compiling C code.
 
 \section{Writing the code}
 Navigate to your \filename{\ThisLabBase} directory, and open up
-\filename{src/lab2.c} in Emacs using
+\filename{src/lab3.c} in Emacs using
 \begin{CmdLine}
   \prompt emacs -nw src/lab3.c
 \end{CmdLine}
+
+\noindent
 Notice that there is already some skeletons of functions and some code in \functionname{main()} here.
+
+Now open \filename{src/lab3\_funs.c}.
 
 \subsection{{const char *str\_chr(const char *s, char c)}}
 First, find the function called
 \functionname{str\_chr}.\marginnote{Notice that \functionname{str\_chr}
-is going to return a \texttt{const char *}.}
+is going to return a \verb^const char *^.}
 We are going to use this function to determine if the character
 \varname{c} exists in the string \varname{s}, and if so, where. If you
 remember from class, we have a few ways of iterating, most notably
@@ -87,7 +89,7 @@ Use a while loop inside our \functionname{str\_chr} in order to see if
 \varname{c} is every equal to any one of the charcters in
 \varname{s}.\marginnote{Remember that we have the \texttt{++} operator to help us.}
 Make sure to use a \texttt{return} statement to return the
-\texttt{char *} if we find it (or a \texttt{NULL} if nothing is found).
+\verb!char *! if we find it (or a \texttt{NULL} if nothing is found).
 
 Once you think that your function works as intended, save and and try
 compiling and running it.\marginnote{\keycombo{C-x C-s} to save} If you
@@ -114,7 +116,7 @@ move on to a similar function called
 function is similar to \functionname{str\_chr} in that it loops through
 a string to find something, but the difference here is that we are
 looking for a substring - not just a character. Since both of the inputs
-are ``strings'' (\texttt{char *}), you will need to check that not only one character matches in the substring (\varname{needle}), but that every character matches. Return true if the \varname{needle} is fully contained by the \varname{haystack}.
+are ``strings'' (\verb!char *!), you will need to check that not only one character matches in the substring (\varname{needle}), but that every character matches. Return true if the \varname{needle} is fully contained by the \varname{haystack}.
 
 Once you are done, make and run your file. See if your function properly identifies prefixes. If not, no worries, go back and try again!
 
@@ -131,19 +133,19 @@ Make and run lab3, and see if \functionname{str\_str} works the way that you int
 Now using what we have learned about how to manipulate strings we are
 going to write our own version of \functionname{sprintf}(3) (a relative
 of \functionname{printf}(3)) called
-\functionname{interpolate}. Interpolate will return a \texttt{char *}, and takes
-as input a \texttt{const char *}, an array of \texttt{const char *}, and
-a final \texttt{char *}. The
-first input (\texttt{const char *}) \varname{format} will contain our format
+\functionname{interpolate}. Interpolate will return a \verb!char *!, and takes
+as input a \verb!const char *!, an array of \verb!const char *!, and
+a final \verb!char *!. The
+first input (\verb!const char *!) \varname{format} will contain our format
 string. This string is what our program will work through to try and
 come up with an output string. The second input is \varname{args} and
 this holds the elements that we will be placing into the new string. The
 final input is simply our \varname{buffer}, where we will build
 everything to return. The rules for our format string are going to be
-that you will fill in text any time you see \texttt{\{\}}. So, a string that
-looks like \texttt{"Hello \{\}!"} with and argument of \texttt{"Jason"} would return
-\texttt{"Hello Jason"}. As well, we want to allow our format strings to have
-modifiers. If you just see \texttt{\{\}}, then return exactly what you got as
+that you will fill in text any time you see \verb!{}!. So, a string that
+looks like \verb^"Hello {}!!"^ with and argument of \texttt{"Jason"} would return
+\verb!"Hello Jason"!. As well, we want to allow our format strings to have
+modifiers. If you just see \verb^{}^, then return exactly what you got as
 input but if you see \verb!{^}! then make the input uppercase and if you see
 \texttt{\{v\}} then make the input lowercase. This is a complex problem so it might be useful to break it down into the component parts: identifying format string and modifiers, filling the string in (modified).
 

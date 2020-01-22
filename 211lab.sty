@@ -38,6 +38,11 @@
   {Code}{Verbatim}
   {}
 
+\let\sup^
+\catcode`^\active
+\relax
+\def^#1^{\verb!#1!}
+
 \newcommand\LabBaseUrl
   {https://users.cs.northwestern.edu/~jesse/course/cs211/lab}
 \newcommand\LabHostnamesUrl
