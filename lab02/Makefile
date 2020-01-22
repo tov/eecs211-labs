@@ -1,4 +1,4 @@
-# For building EECS 211 Lab 2
+# For building CS 211 Lab 2
 
 CFLAGS     = -std=c11 -pedantic -Wall
 # CFLAGS    += -fsanitize=address -fsanitize=undefined
