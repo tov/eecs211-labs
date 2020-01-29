@@ -15,7 +15,8 @@ hard: Publish
 # xelatex/lualatex.
 %.pdf: %.tex build/211lab.sty
 	@mkdir -p build
-	( cd build; pdflatex -interaction=nonstopmode ../$< )
+	fgrep -q tufte-handout $< && LA=pdf || LA=lua; \
+	cd build && $${LA}latex -interaction=nonstopmode ../$<
 	cp build/$@ .
 
 include ../../lib/Makefile

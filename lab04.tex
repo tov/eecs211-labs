@@ -1,0 +1,223 @@
+\documentclass[11pt]{article}
+
+\let\marginpar\footnote
+\usepackage{microtype}
+\usepackage{fullpage}
+\usepackage{xcolor}
+\usepackage{charter}
+\usepackage{titlesec}
+\usepackage{multicol}
+\usepackage{211lab}
+\usepackage{parskip}
+
+\def\LabTGZ{\$URL211/lab/lab04.tgz}
+
+\newcommand\dbc[2]{{%
+  \sffamily\upshape\mdseries
+  \textbf{\textcolor{Abbreviation} {#1}}%
+  #2}}
+\newcommand\abw[1]{$\langle\mathit{#1}\rangle$}
+
+\newenvironment{commands}
+{\bgroup
+  \let\olditem\item
+  \def\item[##1]{\olditem[{\sffamily\upshape\bfseries##1}]}%
+  \begin{description}}
+  {\end{description}\egroup}
+
+\titleformat{\section}
+  {\normalfont\sffamily\LARGE\mdseries}
+  {\thesection}{0.6em}{}
+\titleformat{\subsection}
+  {\normalfont\sffamily\Large\mdseries}
+  {\thesubsection}{0.8em}{}
+
+\pagestyle{empty}
+\definecolor{Abbreviation}{HTML}{000000}
+
+\setlength{\columnsep}{1cm}
+\raggedright
+
+\begin{document}%
+
+\begin{center}
+  \sffamily
+  CS 211 – Spring 2020
+  \par
+  \Huge
+  Debugging
+  \Large
+  with GDB \& Emacs
+\end{center}
+
+\begin{multicols}{2}
+
+GDB is a debugger lets you see inside your program while it runs. You
+  can step through it line by line, or you can choose a particular place
+  to stop—a \emph{breakpoint}—and then have it continue at full speed
+  until it reaches the point where you’ve asked it to pause. You can
+  print out the values of objects, modify their values, and even call
+  functions.
+
+  A few things before we get started:
+
+  % \begin{itemize}
+
+      1) You’ll need some code to debug. You might try your current
+      homework or previous one, or there’s some string and linked list
+      code from lecture, prepared for this lab, that you can download
+      from \textsf{\LabTGZ} (using \verb!curl! and \verb!tar zxvk!
+      like usual).
+
+      2) To use the debugger, you need to compile your C code with the
+      \verb!-g! flag. The \verb!Makefile! that comes in
+      \textsf{lab04.tgz} has
+      the line you want, but commented out:
+      \begin{verbatim}
+      # CFLAGS    += -g\end{verbatim}
+
+      Removing the \verb!#! at the beginning of the line will enable the
+      option.
+
+      The \verb!Makefile! of other code you want to debug, such as your
+      homework, may or may not have \verb!-g! in its \verb!CFLAGS!, so
+      you’ll need to check and add it if it isn’t there.
+
+      3) GDB can be run directly from the the shell, but if you run it
+      in Emacs then Emacs will help you out by showing you the
+      debugger’s position in your code. The way GDB does that on its own
+      is not very friendly. But to use GDB from Emacs, you’ll want to
+      learn a bit more Emacs. In particular, you need to understand
+      windows and buffers, and you need to be able to issue Emacs
+      “\textsf{M-x}” commands.
+
+  % \end{itemize}
+
+\section*{Emacs Keys \& Commands}
+
+\subsection*{Windows \& Buffers}
+
+Emacs lets you edit more than one file at a time, and that can include
+  files that are open but aren’t currently displayed. Each thing you’re
+  working on (usually a file, but possibly a compilation or GDB
+  session), whether visible or not, is kept in a \emph{buffer}. The
+  rectangles on the screen that some buffers are displayed in are called
+  \emph{windows}. You can open and close windows, switch between them,
+  and switch which buffer is displayed in each window.
+
+\begin{commands}
+\item[C-x 2] Split this window in 2.
+\item[C-x 1] Close all windows but this 1.
+\item[C-x 0] Close the current window. (That's a zero.)
+\item[C-x o] Other window, go there.
+\item[C-x b] View a different buffer in this window.
+\item[C-x C-b] Show a list of buffers.
+\end{commands}
+
+\subsection*{Running Things}
+
+\textsf{M-x} introduces commands that are whole words (or Emacs Lisp
+  variable names) rather than just keystrokes. So when you press it, a
+  command line will open at the bottom of Emacs for you to type the rest
+  of the command (and press Enter).
+
+  Ah, but how do you type \textsf{M(eta)-}, a modifier key that your
+  keyboard likely doesn’t have? You can configure your terminal to send
+  a key you do have as \textsf{Meta}—usually you’d map \textsf{Alt} on
+  Windows or \textsf{Option} on Mac. But if you haven’t set that up, you
+  can always type an \textsf{M-}$k$ combination by typing
+  \textsf{Escape} followed by the particular $k$.
+
+\begin{commands}
+
+\item[M-x compile] Run the compiler. (Emacs will ask what command to run.
+  Change it to \verb!cd .. && make -k! so that Make can find the
+  Makefile.)
+
+\item[M-x recompile] Run the compiler again with the same command.
+
+\item[M-x shell] Open a shell in a buffer.
+
+\item[M-x gdb] Start GDB. (The default command that Emacs suggests is
+  good.)
+
+\end{commands}
+
+\subsection*{Help}
+
+\begin{commands}
+\item[C-h a] Search for commands \emph{apropos to} a word.
+\item[C-h d] Search the documentation.
+\item[C-h k] Get help on a key combination.
+\item[C-h l] Show your last 300 keystrokes (to find
+  out what you did just now).
+\item[C-h ?] Get help on help.
+\end{commands}
+
+\section*{GDB Commands}
+
+\begin{description}
+
+  \item[\dbc{h}{elp}] Displays help; follow it with a command name to
+    get help on that command.
+
+  \item[$\mathit{Enter}$] Repeats the previous command
+    again.
+
+\end{description}
+
+\subsection*{Finding \& Loading}
+
+\begin{description}
+  \item[\dbc{file}{} \abw{FILE}] Tells GDB where to load your program
+    from. This is relative to GDB’s working directory, so
+    something like \verb!../build/count!.
+
+  \item[\dbc{pwd}{}] Prints GDB’s working directory.
+
+  \item[\dbc{cd}{} \abw{DIR}] Changes GDB’s working directory.
+\end{description}
+
+\subsection*{Starting \& Stopping}
+\begin{description}
+
+  \item[\dbc{b}{reak} \abw{point}] Sets a breakpoint at a function, a
+    line number, or \abw{file}:\abw{line}).
+
+  \item[\dbc{clear}{} \abw{point}] Deletes any breakpoints at
+    \abw{point}; omit \abw{point} to clear a breakpoint on the current
+    line.
+
+  \item[\dbc{r}{un} \abw{args}\ldots] Runs your program from the start;
+    optionally passes \abw{args} as command-line arguments.
+
+  \item[\dbc{n}{ext}] Executes until the next line of your program, not
+    looking inside function calls.
+
+  \item[\dbc{s}{tep}] Executes one small step of your program, including
+    stepping into function calls.
+
+  \item[\dbc{c}{ontinue}] Resumes your program from where it’s paused
+    and runs to the next breakpoint.
+
+  \item[\dbc{fin}{ish}] Resumes your program for the remainder of the
+    current function call.
+
+\end{description}
+
+\subsection*{Peeking \& Poking}
+\begin{description}
+
+  \item[\dbc{p}{rint} \abw{EXPR}] Prints the value of a variable in your
+    program (in scope at the execution point), or the value of a larger
+    expression in the context of your program. (Can even call
+    functions!)
+
+  \item[\dbc{set}{ variable} \abw{VARNAME} = \abw{EXPR}] Modifies the
+    value of a variable in your program.
+
+\end{description}
+
+\end{multicols}
+
+\end{document}

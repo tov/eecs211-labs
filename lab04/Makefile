@@ -2,8 +2,10 @@
 
 # C compiler options (language version & warnings):
 CFLAGS     = -std=c11 -pedantic -Wall
-# Extra C compiler options for debugging and catching errors:
-CFLAGS    += -g -fsanitize=address,undefined -fno-omit-frame-pointer
+# C compiler flags to do extra checking:
+CFLAGS    + -fsanitize=address,undefined -fno-omit-frame-pointer
+# C compiler flag to include debugger symbols:
+# CFLAGS    += -g
 # Linker options:
 LDFLAGS   += -l211
 
