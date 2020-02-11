@@ -60,7 +60,7 @@ TEST_CASE("get collision state not touching")
     Model model;
 
     //
-    // YOUR TESTS HERE
+    // YOUR SETUP HERE
     //
 
     CHECK( model.get_state() == Collision_state::not_touching );
