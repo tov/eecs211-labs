@@ -51,6 +51,50 @@
 \newcommand\LabHostnamesUrl
   {http://it.eecs.northwestern.edu/info/2015/11/03/info-labs.html}
 
+\newcommand\CxxSetupUrl{\WEBROOT/notes/toolchain_setup.html}
+\newcommand\CxxLinuxUrl{\WEBROOT/notes/ge211_linux.html}
+
+\newcommand\CxxPrelims@toolchain{
+  \subsection{Toolchain setup}
+
+  Like the remaining homeworks, this lab is designed to be done on your
+  own computer, which means you need a C++14 toolchain and the SDL2
+  libraries installed. Follow \href{\CxxSetupUrl}{these
+  instructions} to setup your computer for C++ and GE211.
+  \marginpar{
+    If you ever need to work on one of the lab computers,
+    you can find \href{\CxxLinuxUrl}{instructions here}.
+  }
+}
+
+\newcommand\CxxPrelims@project{
+  \subsection{Project setup}
+
+  For C++ projects, including this lab, the starter code is provided as
+  a ZIP file for you to download: \url{\ThisLabZip}. Extract the archive
+  file into a directory in the location of your choosing. Once you have
+  your new directory containing the starter files, you can open it in
+  CLion.
+
+  Be careful, as CLion will only work correctly if you open the
+  \emph{main project directory} (which has the the
+  \filename{CMakeLists.txt} in it). If you open any other directory,
+  CLion will create a \filename{CMakeLists.txt} for you, but it won't
+  work properly.
+}
+
+\newcommand\CxxPrelims{
+  \section{Lab setup}
+
+  \@ifnextchar*{
+    \CxxPrelims@toolchain
+    \CxxPrelims@project
+    \@gobble
+  }{
+    \CxxPrelims@project
+  }%
+}
+
 \newcommand\LabInfo[2]{
   \def\ThisLabBase{lab\@pad@two{#1}}
   \title{CS 211 Lab #1}
