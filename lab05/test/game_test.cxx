@@ -20,15 +20,19 @@ TEST_CASE("move large circle right")
 TEST_CASE("move large circle up")
 {
     Model model;
-    // YOUR TEST CODE HERE
-    // YOUR CHECK( ... ); HERE
+
+    //
+    // YOUR TESTS HERE
+    //
 }
 
 TEST_CASE("move large circle down")
 {
     Model model;
-    // YOUR TEST CODE HERE
-    // YOUR CHECK( ... ); HERE
+
+    //
+    // YOUR TESTS HERE
+    //
 }
 
 TEST_CASE("move small circle to")
@@ -54,6 +58,10 @@ TEST_CASE("get collision state touching")
 TEST_CASE("get collision state not touching")
 {
     Model model;
-    // YOUR TEST CODE HERE
+
+    //
+    // YOUR TESTS HERE
+    //
+
     CHECK( model.get_state() == Collision_state::not_touching );
 }
