@@ -43,12 +43,13 @@
 \relax
 \def^#1^{\verb!#1!}
 
-\newcommand\LabBaseUrl
-  {https://users.cs.northwestern.edu/~jesse/course/cs211/lab}
+\newcommand\WEBROOT{https://users.cs.northwestern.edu/~jesse/course/cs211}
+
+\newcommand\LabBaseUrl{\WEBROOT/lab}
+\newcommand\ThisLabTgz{\LabBaseUrl/\ThisLabBase.tgz}
+\newcommand\ThisLabZip{\LabBaseUrl/\ThisLabBase.zip}
 \newcommand\LabHostnamesUrl
   {http://it.eecs.northwestern.edu/info/2015/11/03/info-labs.html}
-\newcommand\ThisLabUrl
-  {\LabBaseUrl/\ThisLabBase.tgz}
 
 \newcommand\LabInfo[2]{
   \def\ThisLabBase{lab\@pad@two{#1}}
