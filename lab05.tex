@@ -3,42 +3,27 @@
 \usepackage{211lab}
 \LabInfo{5}{Welcome to C++}
 
-% Be sure to check and update this:
-\def\cLionurl{https://www.jetbrains.com/clion/download}
-\def\macSDLurl{https://users.eecs.northwestern.edu/~jesse/course/eecs211/files/SDL2-all.dmg}
-\def\MinGWSDLurl{https://users.eecs.northwestern.edu/~jesse/course/eecs211/files/MinGW-SDL2.exe}
-\def\appleclangurl{https://developer.apple.com/downloads/}
-\def\jetbrainsAccounturl{https://www.jetbrains.com/shop/eform/students}
-
 \begin{document}
+
+\catcode`\#=12
 
 \maketitle
 
 Today we begin programming in C++ and the GE211 game engine in a minimal
-example game. The game is quite simple: You control two circles on the
-screen---one with the mouse and one with the keyboard---and when the two
-circles overlap, one changes color. As you will see, however, it comes
-with a bug.
+example game. The game is quite simple: The player controls two circles
+on the screen---one with the mouse and one with the keyboard---and when
+the two circles overlap, one changes color. As you will see, however, it
+comes with a bug.
 
-Before we can get started we need to install our C++ and GE211
-development environment. You'll need a C++ compiler, the CLion IDE, and
-the SDL2 graphics libraries. Read on\ldots
+Before you can get started, you’ll need to install a C++ and GE211
+development environment. This means you’ll be setting up a C++ compiler,
+the CLion IDE, and the SDL2 graphics libraries. Read on\ldots.
+
+\CxxPrelims*
 
 \section{The game}
 
-\subsection{Getting the starter code}
-
-For this lab, the starter code is provided as a ZIP file here:
-\url{\ThisLabUrl}. Extract the archive file into a directory in the
-location of your choosing. Once you have your new directory containing
-the starter files, you can open it in CLion.
-
-Be careful, as CLion will only work correctly if you open the \emph{main
-project directory} with the \filename{CMakeLists.txt} in it. If you open
-any other directory, CLion may create a \filename{CMakeLists.txt} for
-you, but it won't work properly.
-
-\subsection{Inverted control}
+\subsection{Broken control}
 
 Currently, there is an bug in this code. Run the program and try to
 control the circle with your left and right arrow keys, and you will
@@ -51,11 +36,10 @@ done try running your code against the tests.
 \subsection{Up and down}
 
 As you have seen, the circle that is controlled by the keyboard only
-moves horizontally right now.
-Add two member functions to the \verb!Model! struct,
-\verb!Model::move_large_circle_up()! and
-\verb!Model::move_large_circle_down()!, and connect them to the keyboard
-by modifying the \verb!Game::on_key(Key)! member function in
+moves horizontally right now. Add two member functions to the
+\verb!Model! struct, \texttt{Model::move\_large\_circle\_up()} and
+\texttt{Model::move\_large\_circle\_down()}, and connect them to the
+keyboard by modifying the \texttt{Game::on\_key(Key)} member function in
 \filename{game.cpp}.
 
 \subsection{Click, not hover}
@@ -63,9 +47,12 @@ by modifying the \verb!Game::on_key(Key)! member function in
 Currently, the position of the smaller circle tracks the position of the
 mouse. However, what if we want the game to only update the position of
 smaller circle when we click? To detect mouse clicks, you will have to
-override the \verb!Abstract_game::on_mouse_down(Mouse_button, Position)!
-function in the \verb!Game! struct. See the documentation
-\href{https://tov.github.io/ge211/classge211_1_1_abstract__game.html\#a6d88b5777c0a08fe261bc39c0694dd4f}{here}.
+override the
+\href{https://bit.ly/39jNovM}
+{\texttt{Abstract\_game::on\_mouse\_down(Mouse\_button, Position)}}
+function in the \verb!Game! struct.
+\marginpar{The function signature
+is a link to the function’s documentation.}
 
 \subsection{Testing}
 
