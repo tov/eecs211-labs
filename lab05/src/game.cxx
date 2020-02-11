@@ -1,9 +1,9 @@
 #include "model.hxx"
 #include <ge211.hxx>
 
-static ge211::Color const small_color         = ge211::Color::medium_yellow();
-static ge211::Color const large_normal_color  = ge211::Color::medium_green();
-static ge211::Color const large_collide_color = ge211::Color::medium_red();
+static const ge211::Color small_color         = ge211::Color::medium_yellow();
+static const ge211::Color large_normal_color  = ge211::Color::medium_green();
+static const ge211::Color large_collide_color = ge211::Color::medium_red();
 
 // UI object
 struct Game : ge211::Abstract_game

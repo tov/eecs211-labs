@@ -4,8 +4,8 @@
 
 ge211::Dimensions const scene_dimensions{1024, 768};
 
-int const large_radius = 30;
-int const small_radius = 10;
+const int large_radius = 30;
+const int small_radius = 10;
 
 enum class Collision_state
 {

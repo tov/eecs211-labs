@@ -23,8 +23,8 @@ static double distance(ge211::Position pos1, ge211::Position pos2)
     return sqrt(dx * dx + dy * dy);
 }
 
-static ge211::Dimensions const small_dims{2 * small_radius, 2 * small_radius};
-static ge211::Dimensions const large_dims{2 * large_radius, 2 * large_radius};
+static const ge211::Dimensions small_dims{2 * small_radius, 2 * small_radius};
+static const ge211::Dimensions large_dims{2 * large_radius, 2 * large_radius};
 
 Collision_state Model::get_state() const
 {
