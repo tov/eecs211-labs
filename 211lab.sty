@@ -7,9 +7,9 @@
 \RequirePackage{url}
 \RequirePackage{underscore}
 
-\newcommand\@pad@two[1]{\@pad@two@check#1\\}
+\newcommand\@pad@two[1]{\@pad@two@check#1\relax}
 \newcommand\@pad@two@check[2]{%
-  \ifx#2\\ 0\fi
+  \ifx#2\relax0\fi
   #1%
 }
 
