@@ -4,5 +4,14 @@ build.*
 cmake-build-*
 
 # CLion configuration
+*/.idea
+.idea/*.iml
+.idea/encodings.xml
+.idea/$CACHE_FILE$
+.idea/inspectionProfiles/
+.idea/dbnavigator.xml
+.idea/vcs.xml
 .idea/workspace.xml
-.idea/
+.idea/modules.xml
+.idea/.name
+.idea/misc.xml
