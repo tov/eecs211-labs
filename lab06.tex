@@ -1,0 +1,209 @@
+\documentclass{tufte-handout}
+
+\usepackage{211lab}
+\LabInfo{6}{Type Racer}
+
+\begin{document}
+
+\maketitle
+
+Today we will be looking at another a C++ program using the GE211 game
+engine in a slightly more advanced example game. The concept of the game
+is simple enough: Words appear on screen as letters in circles, and you
+to type the letters you see on the keyboard in order.
+
+This game uses the model--view--controller pattern not-yet-described in
+class, which allows defining the look, user interaction, and ``business
+logic'' of an interactive program as separate components. Provided are
+the \texttt{Model} class which defines the internal game state, the
+\texttt{View} class for rendering game to the screen, and the
+\texttt{Controller} class for reacting to user input and tieing it all
+together.
+
+\CxxPrelims*
+
+\newpage
+
+\section{General idea}
+
+You have been given a fully functioning Type Racer that loads a
+dictionary file (which can be found at
+\filename{Resources/dictionary.dat})\marginpar{Your computer’s filesystem
+may be \href{https://en.wikipedia.org/wiki/Case_sensitivity}{case
+sensitive or insensitive}, and if case insensitive it may still be
+\href{https://en.wikipedia.org/wiki/Case_preservation}{case preserving}.
+If you aren’t careful, this can cause trouble if you share code with
+someone else whose filesystem is different from yours. If you name your
+resources directory \filename{resources/} instead of
+\filename{Resources/} then it may work on some systems but fail to find
+your resource files on others.}, and then displays each word from the
+dictionary---in order---as letters inside colored circles. The player's
+goal is to type the word, and the controller takes keyboard input to
+update the player's progress through the word. The circles start out
+yellow, and as the player progresses through the word, each circle
+changes to green for a correctly typed letter, or red for a mistyped or
+timed-out letter. Upon finishing a word the game loads the next word,
+until all words in the dictionary have been exhausted. Try to identify
+these components and trace their logic in the source code provided
+before continuing.
+
+\section{Randomize the dictionary}
+
+In \filename{controller.cpp}, one of the constructors for the
+\verb^Controller^ class calls a helper function \verb!load_dictionary()!
+for loading the dictionary file into a \verb!std::vector<std::string>!.
+Since the dictionary file is alphabetized and the model goes through the
+word vector in order, this means that you see the same words, starting
+with ``a,'' every time.
+
+Your job is to modify the code of the \verb^Model^ and \verb^Controller^
+classes to randomize the order of the words after the words are read in.
+You will do this with a Fisher-Yates shuffle, which is a simple and
+efficient algorithm for randomly permuting the order of a vector. The
+algorithm\marginpar{
+      In other words, if the vector has length $n$, first you choose a
+      random element from index $0$ to $n - 1$ to put in position 0.
+      Then choose a random element from index $1$ to $n - 1$ to put in
+      position 1, and so on.
+   } is:
+
+{
+\sffamily
+\begin{tabbing}
+\qquad\=\+
+  \textbf{procedure} $\textsc{Shuffle}(v{:}\;\textsf{vector})$: \\
+\qquad\=\+
+  \textbf{for} $i$ \textbf{in} $0$
+        \textbf{to} $\mathrm{len}(v) - 2$: \\
+\qquad\=\+
+  $r \gets \textrm{a random integer from between $i$ and $\mathrm{len}(v) - 1$}$; \\
+  $\mathrm{swap}(v[i], v[r])$
+\end{tabbing}
+}
+
+We don't want the model to randomize the words unconditionally, because
+that would make testing too difficult. So instead, the shuffling itself
+should happen in a new member function of the model at the controller's
+request. Here's one way you can do it:
+
+\begin{enumerate}
+
+  \item Add a public member function to the \verb^Model^ class whose
+    purpose is to shuffle the \verb^dictionary_^ vector. For a source of
+    randomness, this function should take a reference to a
+    \href{https://tov.github.io/ge211/classge211_1_1_random.html}
+    {\texttt{ge211::Random}}. If \verb^rng^ is a \verb^ge211::Random&^
+    then you can generate a random integer between \verb^a^ and \verb^b^
+    (inclusive) with the call \verb^rng.between(a, b)^.
+
+  \item Add a call to your shuffling function to the body of the
+    \texttt{Controller::\-Controller(std::string const\&)} constructor.
+    That way, when the game reads words from a file their order is
+    randomized, but you can also avoid the shuffling by providing the
+    vector directly.
+
+\end{enumerate}
+
+\section{Keep score}
+
+Another thing that would be nice for this game is to add score keeping
+of some kind. You could give $2$ points for every correct letter typed
+and $10$ points for every word completed with no errors, but take away
+$5$ points for every incorrect letter typed and $1$ point for every
+letter timed out. When the game ends, have it stop and display the score
+instead of looping on the word ``gameover.''
+
+Here's a plan:
+
+\begin{enumerate}
+  \item Add a private\marginpar{
+    Don't write a ``setter,'' because no one needs to set the score
+    from outside the model.
+    } member variable to the model to hold the score,
+    and a public member function to allow the view to access it.
+
+  \item Figure out how to detect the scoring events in the model code,
+    and update\marginpar{
+      Define constants for the event values. No magic numbers!
+    } the score for each.
+
+  \item Add private
+    \href{https://tov.github.io/ge211/classge211_1_1_font.html}{\texttt{ge211::Font}}
+    and
+    \href{https://tov.github.io/ge211/classge211_1_1sprites_1_1_text__sprite.html}{\texttt{ge211::Text_sprite}}
+    member variables to the view class. For creating the font, note that
+    \texttt{"sans.ttf"} is included with GE211. For the text sprite, the
+    initial text should be the number 0.
+
+  \item Modify \texttt{View::draw} to:
+    \begin{enumerate}
+      \item
+        \href{https://bit.ly/2SZr7N0}{reconfigure}
+        the text sprite to contain the current score, and
+      \item add the score sprite to the sprite set.
+    \end{enumerate}
+    In order\marginpar{
+      You might also modify the view to keep track of the last score that it
+      saw, so that it only needs to reconfigure the text sprite when the score
+      changes.
+    } to reconfigure the text sprite, you will need to create
+    a
+    \href{https://tov.github.io/ge211/classge211_1_1sprites_1_1_text__sprite_1_1_builder.html}{\texttt{ge211::Text_sprite::Builder}}
+    and then add text to it. It looks something like this:
+\begin{Code}
+my_text_sprite_.reconfigure(
+    ge211::Text_sprite::Builder(my_font_) << my_value)
+\end{Code}
+\end{enumerate}
+
+\section{Testing}
+
+It's hard testing whether your shuffle is producing permutations
+uniformly. You could do repeated trials and check that you get a
+reasonable distribution, but that's fairly tricky as soon as $n > 2$.
+Easier, however, is to use
+\href{https://en.cppreference.com/w/cpp/algorithm/is_permutation}
+{\texttt{std::is_permutation()}} to check that the result of your shuffle
+is a permutation of the original. \texttt{std::is_permutation()} can take
+two begin--end pairs of \emph{iterators} to compare, and
+\verb!std::vector<>! has public member functions \texttt{begin()} and
+\texttt{end()} for getting such iterator pairs. Thus, you can check
+whether two vectors \texttt{v} and \texttt{w} are permutations of each
+other with:
+
+\noindent
+\bgroup\ttfamily
+\strut~~~~CHECK(~std::is_permutation(v.begin(),~v.end(),
+\marginpar{\rmfamily
+  \texttt{std::is_permutation()} also has a three-argument form where
+  you can omit the second end, provided you know the ranges are the same
+  size. I guess you know that here, but this version seemed easier to
+  explain.%
+  } \\ \noindent
+\strut~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~w.begin(),~w.end())~);
+\egroup\par\medskip
+
+You should also test that your model detects scoring events and keeps
+score properly.
+
+\section{Other ideas}
+
+What if the game displayed a count-down timer for each letter's timeout?
+(How can you format seconds with one decimal digit
+\href{https://en.cppreference.com/w/cpp/io/manip/setprecision}{using
+C++'s iotreams}?) Or instead of the numeric time, what if it showed a
+bar whose length shrunk as the time ran out? (Does that require creating
+a new \texttt{Rectangle_sprite} to change its size, or can you scale it
+by passing a
+\href{https://tov.github.io/ge211/classge211_1_1geometry_1_1_transform.html}
+{\texttt{ge211::Transform}} to
+\href{https://bit.ly/2SDxmHC}
+{the four-argument form of \texttt{ge211::Sprite_set::add_sprite()}}?)
+
+Can you make the game time the entire word for
+\texttt{2 * current_word_.size()} seconds
+instead of 2 seconds per letter as it does
+now? (Then you'd really want some kind of display of the time
+remaining.)
+
+\end{document}
