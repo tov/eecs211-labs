@@ -1,7 +1,7 @@
 \documentclass{tufte-handout}
 
 \usepackage{211lab}
-\LabInfo{6}{Type Racer}
+\LabInfo{6}{Key Racer}
 
 \begin{document}
 
@@ -26,7 +26,7 @@ together.
 
 \section{General idea}
 
-You have been given a fully functioning Type Racer that loads a
+You have been given a fully functioning \textsc{Key Racer} that loads a
 dictionary file (which can be found at
 \filename{Resources/dictionary.dat})\marginpar{Your computer’s filesystem
 may be \href{https://en.wikipedia.org/wiki/Case_sensitivity}{case
@@ -49,7 +49,7 @@ before continuing.
 
 \section{Randomize the dictionary}
 
-In \filename{controller.cpp}, one of the constructors for the
+In \filename{controller.cxx}, one of the constructors for the
 \verb^Controller^ class calls a helper function \verb!load_dictionary()!
 for loading the dictionary file into a \verb!std::vector<std::string>!.
 Since the dictionary file is alphabetized and the model goes through the
