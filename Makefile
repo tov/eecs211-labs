@@ -1,22 +1,47 @@
-TEXS = $(wildcard lab*.tex)
-PDFS = $(TEXS:.tex=.pdf)
-ZIPS = $(TEXS:.tex=.zip)
-TGZS = $(TEXS:.tex=.tgz)
+# The default lab to build when running just `make`:
+DEFAULT = lab06
 
-PUBLISH = $(PDFS) $(ZIPS) $(TGZS)
+TEXS    = $(wildcard lab*.tex)
+PDFS    = $(TEXS:.tex=.pdf)
+TEXOPTS = -interaction=nonstopmode
 
-Publish: Publish.include $(PUBLISH)
+# Build just the lab PDF we're working on:
+default: $(DEFAULT).pdf
+
+# Build everything:
+all: $(PDFS)
+
+# To build a lab PDF, build it in the build/ directory and then
+# copy it here:
+%.pdf: build/%.pdf
 	cp $< $@
-	ls $(PUBLISH) >> $@
 
-hard: Publish
+# Build one lab PDF in the build directory:
+build/%.pdf: build/%.tex build/%.cmd build/211lab.sty
+	cd build && `cat $*.cmd` $(TEXOPTS) ../$<
 
-# The tufte-handout class we use works with pdflatex, but not
-# xelatex/lualatex.
-%.pdf: %.tex build/211lab.sty
+# Copy LaTeX source files to the build directory:
+build/%.tex: %.tex
 	@mkdir -p build
-	fgrep -q tufte-handout $< && LA=pdf || LA=lua; \
-	cd build && $${LA}latex -interaction=nonstopmode ../$<
-	cp build/$@ .
+	cp $< $@
 
-include ../../lib/Makefile
+# Copy LaTeX style files to the build directory:
+build/%.sty: %.sty
+	@mkdir -p build
+	cp $< $@
+
+# Figure out which version of LaTeX to use and save its
+# name in a file:
+build/%.cmd: %.tex
+	@mkdir -p build
+	@if fgrep -q tufte-handout $<; \
+	  then echo pdflatex; \
+	  else echo lualatex; \
+	fi >| $@
+
+# Delete all build products:
+clean:
+	$(RM) *.pdf
+	$(RM) -R build
+
+.PHONY: default all clean
