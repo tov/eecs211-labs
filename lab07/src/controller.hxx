@@ -18,11 +18,11 @@ public:
     /// Constructors
     ///
     // For passing in small word lists by hand.
-    Controller ( ge211::Dimensions board_dimensions,
-                      int groups,
-                      int types,
-                      std::vector<Tile_Handler_Reference> handlers,
-                      std::vector<std::string> type_sprites);
+    Controller(ge211::Dimensions board_dimensions,
+               int groups,
+               int types,
+               std::vector<Tile_Handler_Reference> handlers,
+               std::vector<std::string> type_sprites);
 
     ///
     /// Member functions
@@ -37,7 +37,8 @@ public:
 
     // Called by ge211 when the user press the mouse. We forward the mouse_up
     // to the model.
-    void on_mouse_up(ge211::Mouse_button button, ge211::Position position) override;
+    void
+    on_mouse_up(ge211::Mouse_button button, ge211::Position position) override;
 
 private:
 
@@ -47,5 +48,5 @@ private:
     Board_position selected_ = Board_position::empty();
 
     Model model_;
-    View view_;
+    View  view_;
 };
