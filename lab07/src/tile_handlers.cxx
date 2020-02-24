@@ -3,7 +3,7 @@
 #include <iostream>
 
 std::vector<Board_position>
-Normal_Handler::process_removal(Tile_data td, ge211::Dimensions d)
+Normal_handler::process_removal(Tile_data td, ge211::Dimensions d)
 {
     std::vector<Board_position> v = {td.position};
     return v;

@@ -6,14 +6,14 @@
 
 ge211::Dimensions board_dimensions{10, 8};
 
-int               group_count = 6;
+int group_count = 6;
 
-int               types_count = 2; // Normal and Horizontal Lazer
+int types_count = 2; // Normal and Horizontal Lazer
 
 int main()
 {
     try {
-        Normal_Handler           normal;
+        Normal_handler           normal;
         Horizontal_lazer_handler horizontal_lazer;
 
         Controller(board_dimensions,
@@ -21,7 +21,8 @@ int main()
                    types_count,
                    {Tile_handler_reference(normal),
                     Tile_handler_reference(horizontal_lazer)},
-                   {" ", "-"}).run();
+                   {" ", "-"})
+                .run();
     } catch (std::runtime_error const& e) {
         std::cerr << e.what() << "\n";
         return 1;

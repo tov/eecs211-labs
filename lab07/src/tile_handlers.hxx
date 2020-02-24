@@ -2,10 +2,10 @@
 
 #include <vector>
 
-class Normal_Handler : public Tile_handler
+class Normal_handler : public Tile_handler
 {
 public:
-    Normal_Handler()
+    Normal_handler()
     { };
 
     std::vector<Board_position>
