@@ -1,6 +1,7 @@
 #pragma once
 
 #include "tiles.hxx"
+
 #include <ge211.hxx>
 
 // Encapsulates the internal state of the game:
@@ -29,21 +30,21 @@ public:
     std::vector<Tile_Data> get_tiles();
     bool run_step();
     void update ( double ft );
-    void swap (Board_Position p1, Board_Position p2);
-    bool is_valid(Board_Position p);
-    bool is_valid_swap(Board_Position p1,Board_Position p2);
+    void swap (Board_position p1, Board_position p2);
+    bool is_valid(Board_position p);
+    bool is_valid_swap(Board_position p1, Board_position p2);
 
 private:
 
     ///
     /// Private helper functions
     ///
-    Tile new_tile_(Board_Position bp);
-    bool find_connected_(Board_Position bp, int group, std::vector<Board_Position> &connected);
-    std::vector<Board_Position> get_group_(Board_Position bp);
-    void remove_tiles_(std::vector<Board_Position> marked);
-    bool in_(std::vector<Board_Position> &list, Board_Position bp);
-    void find_connected_try_(Board_Position bp, int group, std::vector<Board_Position> &connected);
+    Tile new_tile_(Board_position bp);
+    bool find_connected_(Board_position bp, int group, std::vector<Board_position> &connected);
+    std::vector<Board_position> get_group_(Board_position bp);
+    void remove_tiles_(std::vector<Board_position> marked);
+    bool in_(std::vector<Board_position> &list, Board_position bp);
+    void find_connected_try_(Board_position bp, int group, std::vector<Board_position> &connected);
 
     ///
     /// Private member variables
@@ -54,5 +55,5 @@ private:
     int types_;
     ge211::Random&  random_;
     std::vector<Tile_Handler_Reference> handlers_;
-    void swap_(Board_Position p1, Board_Position p2);
+    void swap_(Board_position p1, Board_position p2);
 };

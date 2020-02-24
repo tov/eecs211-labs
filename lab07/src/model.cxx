@@ -1,6 +1,7 @@
 #include "model.hxx"
+
 #include <algorithm>
-#include<iostream>
+#include <iostream>
 
 ///
 /// Constructors
@@ -40,21 +41,21 @@ std::vector<Tile_Data> Model::get_tiles()
 bool Model::run_step()
 {
     // finds all the positions in the board that changed
-    std::vector<Board_Position> updates;
+    std::vector<Board_position> updates;
     for (int                    col = 0; col < board_dimensions_.width; col++)
         for (int row = 0; row < board_dimensions_.height; row++) {
-            Board_Position bp{row, col};
+            Board_position bp{row, col};
             if (map_2.at(bp.hash()).tile_data.position_prev !=
                 map_2.at(bp.hash()).tile_data.position)
                 updates.push_back(bp);
         }
 
-    std::vector<Board_Position> marked;
+    std::vector<Board_position> marked;
 
     bool new_updates = true;
     while (new_updates) {
         new_updates = false;
-        for (Board_Position bp:updates) {
+        for (Board_position bp:updates) {
             // updates the previus position to not catch the changes
             //  again in the future
             map_2.at(bp.hash()).tile_data.position_prev =
@@ -64,10 +65,10 @@ bool Model::run_step()
             if (!in_(marked, bp)) {
                 // get the tiles that are connected to the one that changed
                 // and are part of the same group
-                std::vector<Board_Position> group = get_group_(bp);
+                std::vector<Board_position> group = get_group_(bp);
                 // if the size of the connected group is big enough
                 if (group.size() >= 3)
-                    for (Board_Position     bp: group) {
+                    for (Board_position     bp: group) {
                         //marks every tile in the group for deletion
                         //runs the handlers for the types and get the affected positions
                         Tile                tile     =
@@ -76,13 +77,13 @@ bool Model::run_step()
                                             thr      =
                                                     handlers_[tile.tile_data
                                                                   .type];
-                        std::vector<Board_Position>
+                        std::vector<Board_position>
                                             affected =
                                                     thr.get_handler()
                                                        .process_removal(
                                                                tile.tile_data,
                                                                board_dimensions_);
-                        for (Board_Position bpa: affected) {
+                        for (Board_position bpa: affected) {
                             //and adds them to the list to execute the handlers.
                             if (!in_(marked, bpa)) {
                                 marked.push_back(bpa);
@@ -99,20 +100,20 @@ bool Model::run_step()
     remove_tiles_(marked);
 }
 
-bool Model::is_valid_swap(Board_Position p1, Board_Position p2)
+bool Model::is_valid_swap(Board_position p1, Board_position p2)
 {
     return is_valid(p1) && is_valid(p2) &&
            (p1 == p2.left() || p1 == p2.right() || p1 == p2.up() ||
             p1 == p2.down());
 }
 
-void Model::swap(Board_Position p1, Board_Position p2)
+void Model::swap(Board_position p1, Board_position p2)
 {
     if (is_valid_swap(p1, p2))
         swap_(p1, p2);
 }
 
-bool Model::is_valid(Board_Position p)
+bool Model::is_valid(Board_position p)
 {
     return p.row >= 0 && p.column >= 0 && p.row < board_dimensions_.height &&
            p.column < board_dimensions_.width;
@@ -122,13 +123,13 @@ bool Model::is_valid(Board_Position p)
 /// Private member functions
 ///
 
-void Model::remove_tiles_(std::vector<Board_Position> marked)
+void Model::remove_tiles_(std::vector<Board_position> marked)
 {
     for (int row = 0; row < board_dimensions_.height; row++)
         for (int col = 0; col < board_dimensions_.width; col++) {
-            Board_Position mbp{row, col};
+            Board_position mbp{row, col};
             if (in_(marked, mbp)) {
-                Board_Position bp = mbp;
+                Board_position bp = mbp;
                 while (bp.row > 0) {
                     swap_(bp, bp.up());
                     bp = bp.up();
@@ -139,18 +140,18 @@ void Model::remove_tiles_(std::vector<Board_Position> marked)
         }
 }
 
-void Model::find_connected_try_(Board_Position bp,
+void Model::find_connected_try_(Board_position bp,
                                 int group,
-                                std::vector<Board_Position>& connected)
+                                std::vector<Board_position>& connected)
 {
     if (is_valid(bp) && map_2.at(bp.hash()).tile_data.group == group &&
         !in_(connected, bp))
         find_connected_(bp, group, connected);
 }
 
-bool Model::find_connected_(Board_Position bp,
+bool Model::find_connected_(Board_position bp,
                             int group,
-                            std::vector<Board_Position>& connected)
+                            std::vector<Board_position>& connected)
 {
     connected.push_back(bp);
     find_connected_try_(bp.left(), group, connected);
@@ -160,21 +161,21 @@ bool Model::find_connected_(Board_Position bp,
     return true;
 }
 
-std::vector<Board_Position> Model::get_group_(Board_Position bp)
+std::vector<Board_position> Model::get_group_(Board_position bp)
 {
-    std::vector<Board_Position> connected;
+    std::vector<Board_position> connected;
     find_connected_(bp, map_2.at(bp.hash()).tile_data.group, connected);
     return connected;
 }
 
-bool Model::in_(std::vector<Board_Position>& list, Board_Position position)
+bool Model::in_(std::vector<Board_position>& list, Board_position position)
 {
-    for (Board_Position& bp: list)
+    for (Board_position& bp: list)
         if (position == bp) return true;
     return false;
 }
 
-Tile Model::new_tile_(Board_Position bp)
+Tile Model::new_tile_(Board_position bp)
 {
     int type;
 
@@ -202,7 +203,7 @@ Tile Model::new_tile_(Board_Position bp)
     return new_tile;
 }
 
-void Model::swap_(Board_Position p1, Board_Position p2)
+void Model::swap_(Board_position p1, Board_position p2)
 {
     map_2.at(p1.hash()).swap(map_2.at(p2.hash()));
 }

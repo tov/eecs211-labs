@@ -17,11 +17,11 @@ public:
     ///
     explicit View(Model &, int groups,
                         std::vector<std::string> type_sprites);
-    void draw(ge211::Sprite_set&, Board_Position select_tile) const;
+    void draw(ge211::Sprite_set&, Board_position select_tile) const;
     bool is_busy ();
     bool update ( double ft );
-    Board_Position board_position(ge211::Position position); 
-    
+    Board_position board_position(ge211::Position position);
+
 private:
     ///
     /// Private helper functions

@@ -24,7 +24,7 @@ View::View(Model & model, int groups,
 /// Member functions
 ///
 
-Board_Position View::board_position(ge211::Position position)
+Board_position View::board_position(ge211::Position position)
 {
     return { (int) (position.y - top_margin) / (tile_radius * 2)  , (int) (position.x - left_margin) / (tile_radius * 2) };
 }
@@ -48,7 +48,7 @@ bool View::update( double ft )
     return false;
 }
 
-void View::draw(ge211::Sprite_set& sprites, Board_Position selected_tile_) const
+void View::draw(ge211::Sprite_set& sprites, Board_position selected_tile_) const
 {
     for (Tile_Data tile_data : tiles_)
     {

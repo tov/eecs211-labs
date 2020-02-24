@@ -1,7 +1,4 @@
 #include "controller.hxx"
-#include <fstream>
-#include <stdexcept>
-#include <iostream>
 
 ///
 /// Constructors
@@ -36,7 +33,7 @@ void Controller::on_mouse_up(ge211::Mouse_button button, ge211::Position positio
 {
     if (!view_.is_busy())
     {
-        Board_Position bp = view_.board_position(position);
+        Board_position bp = view_.board_position(position);
         if (model_.is_valid(bp))
         {
             if (selected_.is_empty())
@@ -45,7 +42,7 @@ void Controller::on_mouse_up(ge211::Mouse_button button, ge211::Position positio
             {
                 if (bp!=selected_)
                     model_.swap(bp,selected_);
-                selected_=Board_Position::empty();
+                selected_=Board_position::empty();
             }
         }
     }
