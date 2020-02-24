@@ -2,23 +2,23 @@
 
 #include <vector>
 
-class Normal_Handler : public Tile_Handler
+class Normal_Handler : public Tile_handler
 {
 public:
     Normal_Handler()
     { };
 
     std::vector<Board_position>
-    process_removal(Tile_Data td, ge211::Dimensions d);
+    process_removal(Tile_data td, ge211::Dimensions d);
 };
 
-class Horizontal_Lazer_Handler : public Tile_Handler
+class Horizontal_lazer_handler : public Tile_handler
 {
 public:
-    Horizontal_Lazer_Handler()
+    Horizontal_lazer_handler()
     { };
 
     std::vector<Board_position>
-    process_removal(Tile_Data td, ge211::Dimensions d);
+    process_removal(Tile_data td, ge211::Dimensions d);
 };
 

@@ -14,13 +14,13 @@ int main()
 {
     try {
         Normal_Handler           normal;
-        Horizontal_Lazer_Handler horizontal_lazer;
+        Horizontal_lazer_handler horizontal_lazer;
 
         Controller(board_dimensions,
                    group_count,
                    types_count,
-                   {Tile_Handler_Reference(normal),
-                    Tile_Handler_Reference(horizontal_lazer)},
+                   {Tile_handler_reference(normal),
+                    Tile_handler_reference(horizontal_lazer)},
                    {" ", "-"}).run();
     } catch (std::runtime_error const& e) {
         std::cerr << e.what() << "\n";

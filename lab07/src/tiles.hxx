@@ -3,8 +3,6 @@
 #include <ge211.hxx>
 
 #include <vector>
-#include <functional>
-#include <unordered_map>
 
 struct Board_position
 {
@@ -57,7 +55,7 @@ struct Board_position
     }
 };
 
-struct Tile_Data
+struct Tile_data
 {
     Board_position position;
     Board_position position_prev;
@@ -66,18 +64,18 @@ struct Tile_Data
     bool           marked = false;
 };
 
-class Tile_Handler
+class Tile_handler
 {
 public:
     virtual std::vector<Board_position> process_removal(
-            Tile_Data td,
+            Tile_data td,
             ge211::Dimensions d) = 0;
 };
 
 struct Tile
 {
-    Tile_Data   tile_data;
-    Tile_Handler& handler;
+    Tile_data tile_data;
+    Tile_handler& handler;
 
     Tile& operator=(const Tile& tile)
     {
@@ -99,20 +97,20 @@ struct Tile
     }
 };
 
-class Tile_Handler_Reference
+class Tile_handler_reference
 {
 public:
-    Tile_Handler_Reference(Tile_Handler& handler)
+    Tile_handler_reference(Tile_handler& handler)
             : handler_(handler)
     { };
 
-    Tile_Handler& get_handler()
+    Tile_handler& get_handler()
     {
         return handler_;
     }
 
 private:
-    Tile_Handler& handler_;
+    Tile_handler& handler_;
 };
 
 

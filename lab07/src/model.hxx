@@ -22,12 +22,12 @@ public:
           int groups,
           int types,
           ge211::Random& random,
-          std::vector<Tile_Handler_Reference> handlers);
+          std::vector<Tile_handler_reference> handlers);
 
     ///
     /// Public member functions
     ///
-    std::vector<Tile_Data> get_tiles();
+    std::vector<Tile_data> get_tiles();
 
     bool run_step();
 
@@ -68,7 +68,7 @@ private:
     int                           groups_;
     int                           types_;
     ge211::Random& random_;
-    std::vector<Tile_Handler_Reference> handlers_;
+    std::vector<Tile_handler_reference> handlers_;
 
     void swap_(Board_position p1, Board_position p2);
 };

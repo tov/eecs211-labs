@@ -3,14 +3,14 @@
 #include <iostream>
 
 std::vector<Board_position>
-Normal_Handler::process_removal(Tile_Data td, ge211::Dimensions d)
+Normal_Handler::process_removal(Tile_data td, ge211::Dimensions d)
 {
     std::vector<Board_position> v = {td.position};
     return v;
 }
 
 std::vector<Board_position>
-Horizontal_Lazer_Handler::process_removal(Tile_Data td, ge211::Dimensions d)
+Horizontal_lazer_handler::process_removal(Tile_data td, ge211::Dimensions d)
 {
     std::vector<Board_position> v;
 

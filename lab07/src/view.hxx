@@ -34,15 +34,15 @@ private:
     ///
     /// Private helper functions
     ///
-    bool is_changed_(std::vector<Tile_Data> tiles_data);
+    bool is_changed_(std::vector<Tile_data> tiles_data);
 
-    ge211::Position screen_position_(Tile_Data td, double p) const;
+    ge211::Position screen_position_(Tile_data td, double p) const;
 
     // The view can look at the model but doesn't change it.
     Model& model_;
 
     // The tiles.
-    std::vector<Tile_Data> tiles_;
+    std::vector<Tile_data> tiles_;
     double                 animation_progress_;
 
     // Sprites for tiles:

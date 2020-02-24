@@ -10,7 +10,7 @@ Model::Model(ge211::Dimensions board_dimensions,
              int groups,
              int types,
              ge211::Random& random,
-             std::vector<Tile_Handler_Reference> handlers)
+             std::vector<Tile_handler_reference> handlers)
         : board_dimensions_(board_dimensions),
           groups_(groups),
           types_(types),
@@ -28,9 +28,9 @@ Model::Model(ge211::Dimensions board_dimensions,
 ///
 /// Public member functions
 ///
-std::vector<Tile_Data> Model::get_tiles()
+std::vector<Tile_data> Model::get_tiles()
 {
-    std::vector<Tile_Data> tiles_data;
+    std::vector<Tile_data> tiles_data;
 
     for (std::pair<int, Tile> pair : map_2)
         tiles_data.push_back(pair.second.tile_data);
@@ -73,7 +73,7 @@ bool Model::run_step()
                         //runs the handlers for the types and get the affected positions
                         Tile                tile     =
                                                     map_2.at(bp.hash());
-                        Tile_Handler_Reference
+                        Tile_handler_reference
                                             thr      =
                                                     handlers_[tile.tile_data
                                                                   .type];

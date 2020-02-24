@@ -49,7 +49,7 @@ bool View::update(double ft)
 
 void View::draw(ge211::Sprite_set& sprites, Board_position selected_tile_) const
 {
-    for (Tile_Data tile_data : tiles_) {
+    for (Tile_data tile_data : tiles_) {
         ge211::Position
                 position = screen_position_(tile_data, animation_progress_);
         sprites.add_sprite(tiles_sprites_[tile_data.group], position, 1);
@@ -78,7 +78,7 @@ bool View::is_busy()
 /// Private members
 ///
 
-ge211::Position View::screen_position_(Tile_Data td, double p) const
+ge211::Position View::screen_position_(Tile_data td, double p) const
 {
     double
             x =
@@ -92,9 +92,9 @@ ge211::Position View::screen_position_(Tile_Data td, double p) const
             (int) (y * 2 * tile_radius) + top_margin};
 }
 
-bool View::is_changed_(std::vector<Tile_Data> tiles_data)
+bool View::is_changed_(std::vector<Tile_data> tiles_data)
 {
-    for (Tile_Data td : tiles_data)
+    for (Tile_data td : tiles_data)
         if (td.position != td.position_prev)
             return true;
     return false;
