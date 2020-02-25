@@ -3,7 +3,7 @@ project(lab07 CXX)
 include(.cs211/cmake/CMakeLists.txt)
 
 # Builds program `bejeweled` from the six listed source files:
-add_program(bejeweled ASAN UBSAN
+add_program(bejeweled
         src/bejeweled.cxx
         src/controller.cxx
         src/view.cxx

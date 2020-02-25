@@ -6,7 +6,6 @@
 #include <ge211.hxx>
 
 #include <queue>
-#include <unordered_map>
 
 class Model
 {

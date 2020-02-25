@@ -1,5 +1,4 @@
 #include "model.hxx"
-#include "board.hxx"
 
 #include <ge211.hxx>
 
