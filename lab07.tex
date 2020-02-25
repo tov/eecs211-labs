@@ -22,30 +22,20 @@ the \texttt{Model} class which defines the internal game state, the
 \texttt{View} class for rendering game to the screen, and the
 \texttt{Controller} class for reacting to user input and tying it all
 together. In addition, because the tiles in this game are rather complex
-themselves, we have \filename{tiles.hxx} which sets up \texttt{Board\_Position}
+themselves, we have \filename{tiles.hxx} which sets up \texttt{Board\_position}
 (where something is on a board, basic operators for that position, and
-functions for finding what is around it), the \texttt{Tile\_Data} (uses board
-positions), defines a \texttt{Tile\_Handler} for processing special types of
+functions for finding what is around it), the \texttt{Tile\_data} (uses board
+positions), defines a \texttt{Tile\_handler} for processing special types of
 tiles, the \texttt{Tile} struct (a combination of tile data and handlers with
 the function for swapping with another tile), and finally a
-\texttt{Tile\_Handler\_Reference} that points to the specific handler to be
+\texttt{Tile\_handler\_reference} that points to the specific handler to be
 used in a given tile. All of this allows for the creation of more tile handlers
 which can each have special destructive powers. You can see that we have provided
 the normal handler (just delete the set of tiles we created) and a horizontal
 lazer (deletes all tiles in the row in addition to the set we created by swapping)
 inside the \filename{tile\_handlers.cxx}.
 
-\section{Getting the starter code}
-
-For this lab, the starter code is provided as a ZIP file here:
-\url{\ThisLabUrl}. Extract the archive file into a directory in the
-location of your choosing. Once you have your new directory containing
-the starter files, you can open it in CLion.
-\marginpar{ Be careful, as CLion will only work correctly if you open
-the \emph{main project directory} with the \filename{CMakeLists.txt} in
-it. If you open any other directory, CLion may create a
-\filename{CMakeLists.txt} for you, but it won't work properly.}
-
+\CxxPrelims
 
 \section{General idea}
 
@@ -126,7 +116,7 @@ destroy all tiles on the diagonals (X) handlers. You will also need to modify
 
     \item Inside the \verb!main()! function the tile handlers are instantiated
       and used in the call to \verb!Controller(...)! by adding a
-      \verb!Tile_Handler_Reference! to the set of handlers the game knows about.
+      \verb!Tile_handler_reference! to the set of handlers the game knows about.
       Instantiate your own handlers and add the references to the game.
 \end{enumerate}
 

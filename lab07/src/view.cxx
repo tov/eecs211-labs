@@ -1,21 +1,39 @@
 #include "view.hxx"
 #include <iostream>
 
+static ge211::Color const selection_color{180, 200, 190, 255};
+
 ///
 /// Constructor
 ///
 
-View::View(Model& model, int groups,
-           std::vector<std::string> type_sprites)
-        : model_(model)
+static ge211::Color from_hue(double hue)
 {
-    for (int         i = 0; i < groups; i++) {
-        double hue = 360 / (double) groups * (double) i;
-        tiles_sprites_.emplace_back(tile_radius,
-                                    ge211::Color::from_hsva(hue, 1, 1, 1));
+    return ge211::Color::from_hsva(hue, 1, 1, 1);
+}
+
+View::View(const Model& model, ge211::Dimensions window)
+        : model_(model),
+          geometry_(model.board().dimensions(), window),
+          sans_("sans.ttf", 2 * geometry_.grid_size),
+          selection_sprite_(geometry_.grid_dims(), selection_color)
+{
+    const int    groups = model_.number_of_groups();
+    const double step   = 360.0 / groups;
+
+    double hue = 0;
+
+    for (int i = 0; i < groups; ++i) {
+        tile_sprites_.emplace_back(geometry_.tile_radius(), from_hue(hue));
+        hue += step;
     }
-    for (std::string type_text: type_sprites) {
-        type_sprites_.emplace_back(type_text, sans_);
+
+    for (auto action : model_.actions()) {
+        const std::string& type = action->symbol();
+        if (type.empty()) continue;
+
+        ge211::Text_sprite::Builder builder{sans_};
+        type_sprites_.emplace(type, (builder << type).build());
     }
 }
 
@@ -23,80 +41,76 @@ View::View(Model& model, int groups,
 /// Member functions
 ///
 
-Board_position View::board_position(ge211::Position position)
+void View::draw(ge211::Sprite_set& sprites, Board::Position selection) const
 {
-    return {(int) (position.y - top_margin) / (tile_radius * 2),
-            (int) (position.x - left_margin) / (tile_radius * 2)};
-}
+    const Board& board = model_.board();
+    auto ldims = board.dimensions();
 
-bool View::update(double ft)
-{
-    if (animation_progress_ == 1) {
-        tiles_ = model_.get_tiles();
-        if (is_changed_(tiles_)) {
-            animation_progress_ = 0;
-            return true;
+    for (Board::Coordinate col = 0; col < ldims.width; ++col) {
+        for (Board::Coordinate row = 0; row < ldims.height; ++row) {
+            Board::Position lpos{col, row};
+            ge211::Position ppos = board_to_screen(lpos);
+            const Tile& tile = board[lpos];
+
+            if (lpos == selection) {
+                sprites.add_sprite(selection_sprite_, ppos, 0);
+            }
+
+            if (tile.is_empty()) continue;
+
+            sprites.add_sprite(tile_sprites_.at(tile.group()), ppos, 1);
+
+            auto iter = type_sprites_.find(tile.action_symbol());
+            if (iter != type_sprites_.end()) {
+                const auto& sprite = iter->second;
+                auto extra = geometry_.grid_dims() - sprite.dimensions();
+                sprites.add_sprite(sprite, ppos + extra / 2, 2);
+            }
         }
-    } else {
-        const int
-                & r =
-                std::min(animation_progress_ + (ft / animation_time), 1.00);
-        animation_progress_ =
-                std::min(animation_progress_ + (ft / animation_time), 1.00);
-    }
-    return false;
-}
-
-void View::draw(ge211::Sprite_set& sprites, Board_position selected_tile_) const
-{
-    for (Tile_data tile_data : tiles_) {
-        ge211::Position
-                position = screen_position_(tile_data, animation_progress_);
-        sprites.add_sprite(tiles_sprites_[tile_data.group], position, 1);
-        if (tile_data.position == selected_tile_)
-            sprites.add_sprite(selection_sprite_, position, 0);
-        ge211::Position type_sprite_position = position;
-        type_sprite_position.y
-                +=
-                (tile_radius -
-                 type_sprites_[tile_data.type].dimensions().height / 2);
-        type_sprite_position.x
-                +=
-                (tile_radius -
-                 type_sprites_[tile_data.type].dimensions().width / 2);
-        sprites.add_sprite(type_sprites_[tile_data.type], type_sprite_position,
-                           2);
     }
 }
 
-bool View::is_busy()
+Model::Position View::screen_to_board(Model::Position pos) const
 {
-    return animation_progress_ < 1;
+    return geometry_.screen_to_board(pos);
 }
 
-///
-/// Private members
-///
-
-ge211::Position View::screen_position_(Tile_data td, double p) const
+Model::Position View::board_to_screen(Model::Position pos) const
 {
-    double
-            x =
-            (double) td.position_prev.column * (1 - p) +
-            (double) td.position.column * (p);
-    double
-            y =
-                    (double) td.position_prev.row * (1 - p) +
-                    (double) td.position.row * (p);
-    return {(int) (x * 2 * tile_radius) + left_margin,
-            (int) (y * 2 * tile_radius) + top_margin};
+    return geometry_.board_to_screen(pos);
 }
 
-bool View::is_changed_(std::vector<Tile_data> tiles_data)
+View::Geometry::Geometry(View::Geometry::Dimensions ldims,
+                         View::Geometry::Dimensions pdims)
 {
-    for (Tile_data td : tiles_data)
-        if (td.position != td.position_prev)
-            return true;
-    return false;
+    int hfit = pdims.width / (ldims.width + 1);
+    int vfit = pdims.height / (ldims.height + 1);
+
+    grid_size = std::min(hfit, vfit);
+    margin    = (pdims - grid_size * ldims) / 2;
+}
+
+View::Geometry::Position
+View::Geometry::screen_to_board(Position pos) const
+{
+    Position o(0, 0);
+    return o + (pos - o - margin) / grid_size;
+}
+
+View::Geometry::Position
+View::Geometry::board_to_screen(Position pos) const
+{
+    Position o(0, 0);
+    return o + (pos - o) * grid_size + margin;
+}
+
+int View::Geometry::tile_radius() const
+{
+    return grid_size / 2;
+}
+
+View::Geometry::Dimensions View::Geometry::grid_dims() const
+{
+    return {grid_size, grid_size};
 }
 

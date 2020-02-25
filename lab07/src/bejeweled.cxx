@@ -1,30 +1,30 @@
 #include "controller.hxx"
-#include "tile_handlers.hxx"
+#include "actions.hxx"
 
 #include <iostream>
 #include <stdexcept>
 
-ge211::Dimensions board_dimensions{10, 8};
+static const Model::Dimensions board_dimensions{8, 10};
 
-int group_count = 6;
+static const int min_group_size = 4;
 
-int types_count = 2; // Normal and Horizontal Lazer
+static const int number_of_groups = 6;
 
-int main()
+static const Normal_action normal;
+
+static const Horizontal_lazer_action hlazer;
+
+int main() try
 {
-    try {
-        Normal_handler           normal;
-        Horizontal_lazer_handler horizontal_lazer;
+    Model model(board_dimensions, number_of_groups, min_group_size);
 
-        Controller(board_dimensions,
-                   group_count,
-                   types_count,
-                   {Tile_handler_reference(normal),
-                    Tile_handler_reference(horizontal_lazer)},
-                   {" ", "-"})
-                .run();
-    } catch (std::runtime_error const& e) {
-        std::cerr << e.what() << "\n";
-        return 1;
-    }
+    model.add_action(normal)
+         .add_action(hlazer);
+
+    Controller(model).run();
+}
+
+catch (std::runtime_error const& e) {
+    std::cerr << e.what() << "\n";
+    return 1;
 }

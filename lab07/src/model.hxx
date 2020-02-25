@@ -1,74 +1,64 @@
 #pragma once
 
-#include "tiles.hxx"
+#include "board.hxx"
+#include "tile.hxx"
 
 #include <ge211.hxx>
 
-// Encapsulates the internal state of the game:
-//
-//  - the current word,
-//  - the progress in the current word, and
-//  - the words to do next.
+#include <queue>
+#include <unordered_map>
 
 class Model
 {
 public:
+    using Coordinate     = Board::Coordinate;
+    using Dimensions     = Board::Dimensions;
+    using Position       = Board::Position;
+    using Position_set   = Board::Position_set;
 
-    ///
-    /// Constructors
-    ///
-    // Uses the dimensions of the board
-    Model(ge211::Dimensions board_dimensions,
-          int groups,
-          int types,
-          ge211::Random& random,
-          std::vector<Tile_handler_reference> handlers);
+    Model(Dimensions board_dimensions,
+          int number_of_groups,
+          int min_group_size = 3);
 
-    ///
-    /// Public member functions
-    ///
-    std::vector<Tile_data> get_tiles();
+    Model& add_action(const Tile::Action&);
 
-    bool run_step();
+    const Board& board() const
+    { return board_; }
 
-    void update(double ft);
+    int number_of_groups() const
+    { return number_of_groups_; }
 
-    void swap(Board_position p1, Board_position p2);
+    const Tile::Action_list& actions() const
+    { return actions_; }
 
-    bool is_valid(Board_position p);
+    // Runs the model for one step. Returns true if work was done,
+    // or false if there was nothing to do.
+    bool step();
 
-    bool is_valid_swap(Board_position p1, Board_position p2);
+    // Lets the controller tell the model about a user action.
+    void swap_tiles(Position, Position);
+
+    // Lets the controller give the model access to randomness.
+    void set_random(ge211::Random&);
 
 private:
+    bool contagion_step_();
 
-    ///
-    /// Private helper functions
-    ///
-    Tile new_tile_(Board_position bp);
+    bool falling_step_();
 
-    bool find_connected_(Board_position bp,
-                         int group,
-                         std::vector<Board_position>& connected);
+    bool scavenge_step_();
 
-    std::vector<Board_position> get_group_(Board_position bp);
+    bool scavenge_position_(Position);
 
-    void remove_tiles_(std::vector<Board_position> marked);
+    void condemn_position_(Position);
 
-    bool in_(std::vector<Board_position>& list, Board_position bp);
+    Position_set gather_group_(Position);
 
-    void find_connected_try_(Board_position bp,
-                             int group,
-                             std::vector<Board_position>& connected);
+    Board                board_;
+    int                  number_of_groups_;
+    int                  min_group_size_;
+    Tile::Action_list    actions_;
+    std::queue<Position> condemned_;
 
-    ///
-    /// Private member variables
-    ///
-    std::unordered_map<int, Tile> map_2;
-    ge211::Dimensions             board_dimensions_;
-    int                           groups_;
-    int                           types_;
-    ge211::Random& random_;
-    std::vector<Tile_handler_reference> handlers_;
-
-    void swap_(Board_position p1, Board_position p2);
+    ge211::Random* random_ = nullptr;
 };

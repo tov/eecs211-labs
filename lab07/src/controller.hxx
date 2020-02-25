@@ -13,40 +13,44 @@
 class Controller : public ge211::Abstract_game
 {
 public:
-
     ///
-    /// Constructors
+    /// Constructor
     ///
-    // For passing in small word lists by hand.
-    Controller(ge211::Dimensions board_dimensions,
-               int groups,
-               int types,
-               std::vector<Tile_handler_reference> handlers,
-               std::vector<std::string> type_sprites);
+    explicit Controller(Model&);
 
+protected:
     ///
-    /// Member functions
+    /// Overridden member functions
     ///
-    // Called by ge211 when it needs to redraw the screen. Delegates to
-    // the view.
-    void draw(ge211::Sprite_set& sprites) override;
 
-    // Called by ge211 when the game engine is ready. We use this to tell
-    // the model to react to time passing.
-    void on_frame(double dt) override;
+    void draw(ge211::Sprite_set&) override;
 
-    // Called by ge211 when the user press the mouse. We forward the mouse_up
-    // to the model.
-    void
-    on_mouse_up(ge211::Mouse_button button, ge211::Position position) override;
+    void on_frame(double) override;
+
+    void on_mouse_up(ge211::Mouse_button, ge211::Position) override;
+
+    void on_start() override;
+
+    void on_key(ge211::Key key) override;
 
 private:
+    ///
+    /// Helper functions
+    ///
+
+    void start_animating_();
+
+    bool can_animate_();
 
     ///
     /// Member variables
     ///
-    Board_position selected_ = Board_position::empty();
 
-    Model model_;
-    View  view_;
+    Model& model_;
+    View            view_;
+    Board::Position selection_{-1, -1};
+
+    bool          animating_       = true;
+    ge211::Timer  animation_time_;
+    unsigned long animation_steps_ = 0;
 };

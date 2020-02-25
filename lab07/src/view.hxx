@@ -1,16 +1,9 @@
 #pragma once
-#include <algorithm>
+
 #include "model.hxx"
 
-static int const    tile_radius    = 30;
-
-static int const    top_margin     = 80;
-
-static int const    left_margin    = 80;
-
-static double const animation_time = .4;
-
-static int const    font_size      = 75;
+#include <algorithm>
+#include <map>
 
 // Controls how the game is shown to the user:
 class View
@@ -19,39 +12,46 @@ public:
     ///
     /// Public member functions
     ///
-    explicit View(Model&, int groups,
-                  std::vector<std::string> type_sprites);
+    View(const Model& model, ge211::Dimensions window_dimensions);
 
-    void draw(ge211::Sprite_set&, Board_position select_tile) const;
+    void draw(ge211::Sprite_set&, Board::Position selected) const;
 
-    bool is_busy();
+    Model::Position screen_to_board(ge211::Position) const;
 
-    bool update(double ft);
-
-    Board_position board_position(ge211::Position position);
+    ge211::Position board_to_screen(Model::Position) const;
 
 private:
     ///
     /// Private helper functions
     ///
-    bool is_changed_(std::vector<Tile_data> tiles_data);
-
-    ge211::Position screen_position_(Tile_data td, double p) const;
 
     // The view can look at the model but doesn't change it.
-    Model& model_;
+    const Model& model_;
 
-    // The tiles.
-    std::vector<Tile_data> tiles_;
-    double                 animation_progress_;
+    // A geometry.
+    struct Geometry
+    {
+        using Position    = Model::Position;
+        using Dimensions  = Model::Dimensions;
+
+        Geometry(Dimensions logical, Dimensions physical);
+
+        Position screen_to_board(Position) const;
+
+        Position board_to_screen(Position) const;
+
+        int tile_radius() const;
+
+        Dimensions grid_dims() const;
+
+        int        grid_size;
+        Dimensions board; // logical
+        Dimensions margin; // physical
+    }          geometry_;
 
     // Sprites for tiles:
-    ge211::Font                       sans_{"sans.ttf", font_size};
-    ge211::Rectangle_sprite
-                                      selection_sprite_
-                                              {{tile_radius * 2,
-                                                       tile_radius * 2},
-                                               {127,   127, 127, 255}};
-    std::vector<ge211::Circle_sprite> tiles_sprites_;
-    std::vector<ge211::Text_sprite>   type_sprites_;
+    ge211::Font                               sans_;
+    std::vector<ge211::Circle_sprite>         tile_sprites_;
+    std::map<std::string, ge211::Text_sprite> type_sprites_;
+    ge211::Rectangle_sprite                   selection_sprite_;
 };

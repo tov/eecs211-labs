@@ -1,209 +1,169 @@
 #include "model.hxx"
+#include "board.hxx"
+
+#include <ge211.hxx>
 
 #include <algorithm>
-#include <iostream>
 
 ///
 /// Constructors
 ///
-Model::Model(ge211::Dimensions board_dimensions,
-             int groups,
-             int types,
-             ge211::Random& random,
-             std::vector<Tile_handler_reference> handlers)
-        : board_dimensions_(board_dimensions),
-          groups_(groups),
-          types_(types),
-          random_(random),
-          handlers_(handlers)
-{
-    for (int col = 0; col < board_dimensions.width; col++) {
-        for (int row = 0; row < board_dimensions.height; row++) {
-            Tile tile = new_tile_({row, col});
-            map_2.insert(std::make_pair(tile.tile_data.position.hash(), tile));
-        }
-    }
-}
+Model::Model(Dimensions board_dimensions,
+             int number_of_groups,
+             int min_group_size)
+        : board_(board_dimensions),
+          number_of_groups_(number_of_groups),
+          min_group_size_(min_group_size)
+{ }
 
 ///
 /// Public member functions
 ///
-std::vector<Tile_data> Model::get_tiles()
+
+bool Model::step()
 {
-    std::vector<Tile_data> tiles_data;
-
-    for (std::pair<int, Tile> pair : map_2)
-        tiles_data.push_back(pair.second.tile_data);
-
-    return tiles_data;
+    return contagion_step_() || falling_step_() || scavenge_step_();
 }
 
-bool Model::run_step()
+void Model::swap_tiles(Position p1, Position p2)
 {
-    // finds all the positions in the board that changed
-    std::vector<Board_position> updates;
-    for (int                    col = 0; col < board_dimensions_.width; col++)
-        for (int row = 0; row < board_dimensions_.height; row++) {
-            Board_position bp{row, col};
-            if (map_2.at(bp.hash()).tile_data.position_prev !=
-                map_2.at(bp.hash()).tile_data.position)
-                updates.push_back(bp);
-        }
-
-    std::vector<Board_position> marked;
-
-    bool new_updates = true;
-    while (new_updates) {
-        new_updates = false;
-        for (Board_position bp:updates) {
-            // updates the previus position to not catch the changes
-            //  again in the future
-            map_2.at(bp.hash()).tile_data.position_prev =
-                    map_2.at(bp.hash()).tile_data.position;
-
-            // if the position is part of a marked group it skips
-            if (!in_(marked, bp)) {
-                // get the tiles that are connected to the one that changed
-                // and are part of the same group
-                std::vector<Board_position> group = get_group_(bp);
-                // if the size of the connected group is big enough
-                if (group.size() >= 3)
-                    for (Board_position     bp: group) {
-                        //marks every tile in the group for deletion
-                        //runs the handlers for the types and get the affected positions
-                        Tile                tile     =
-                                                    map_2.at(bp.hash());
-                        Tile_handler_reference
-                                            thr      =
-                                                    handlers_[tile.tile_data
-                                                                  .type];
-                        std::vector<Board_position>
-                                            affected =
-                                                    thr.get_handler()
-                                                       .process_removal(
-                                                               tile.tile_data,
-                                                               board_dimensions_);
-                        for (Board_position bpa: affected) {
-                            //and adds them to the list to execute the handlers.
-                            if (!in_(marked, bpa)) {
-                                marked.push_back(bpa);
-                                std::cout << "row " << bp.row << " col "
-                                          << bp.column << "\n";
-                            }
-                        }
-                    }
-            }
-        }
+    if (board_.adjacent_positions(p1, p2)) {
+        std::swap(board_[p1], board_[p2]);
     }
-    std::cout << "\n";
-    // removes the tiles
-    remove_tiles_(marked);
 }
 
-bool Model::is_valid_swap(Board_position p1, Board_position p2)
-{
-    return is_valid(p1) && is_valid(p2) &&
-           (p1 == p2.left() || p1 == p2.right() || p1 == p2.up() ||
-            p1 == p2.down());
-}
 
-void Model::swap(Board_position p1, Board_position p2)
+void Model::set_random(ge211::Random& rnd)
 {
-    if (is_valid_swap(p1, p2))
-        swap_(p1, p2);
-}
-
-bool Model::is_valid(Board_position p)
-{
-    return p.row >= 0 && p.column >= 0 && p.row < board_dimensions_.height &&
-           p.column < board_dimensions_.width;
+    random_ = &rnd;
 }
 
 ///
 /// Private member functions
 ///
 
-void Model::remove_tiles_(std::vector<Board_position> marked)
+bool Model::contagion_step_()
 {
-    for (int row = 0; row < board_dimensions_.height; row++)
-        for (int col = 0; col < board_dimensions_.width; col++) {
-            Board_position mbp{row, col};
-            if (in_(marked, mbp)) {
-                Board_position bp = mbp;
-                while (bp.row > 0) {
-                    swap_(bp, bp.up());
-                    bp = bp.up();
-                }
-                Tile tile = new_tile_(bp);
-                map_2.at(bp.hash()) = tile;
-            }
-        }
-}
+    if (condemned_.empty()) return false;
 
-void Model::find_connected_try_(Board_position bp,
-                                int group,
-                                std::vector<Board_position>& connected)
-{
-    if (is_valid(bp) && map_2.at(bp.hash()).tile_data.group == group &&
-        !in_(connected, bp))
-        find_connected_(bp, group, connected);
-}
+    Position pos = condemned_.front();
 
-bool Model::find_connected_(Board_position bp,
-                            int group,
-                            std::vector<Board_position>& connected)
-{
-    connected.push_back(bp);
-    find_connected_try_(bp.left(), group, connected);
-    find_connected_try_(bp.right(), group, connected);
-    find_connected_try_(bp.up(), group, connected);
-    find_connected_try_(bp.down(), group, connected);
+    Position_set  next = board_[pos].apply_action(pos, board_);
+    for (Position next_pos : next) {
+        condemn_position_(next_pos);
+    }
+
+    board_[pos].remove();
+    condemned_.pop();
+
     return true;
 }
 
-std::vector<Board_position> Model::get_group_(Board_position bp)
+void Model::condemn_position_(Position pos)
 {
-    std::vector<Board_position> connected;
-    find_connected_(bp, map_2.at(bp.hash()).tile_data.group, connected);
-    return connected;
+    Tile& tile = board_[pos];
+
+    if (tile.is_full()) {
+        tile.condemn();
+        condemned_.push(pos);
+    }
 }
 
-bool Model::in_(std::vector<Board_position>& list, Board_position position)
+bool Model::falling_step_()
 {
-    for (Board_position& bp: list)
-        if (position == bp) return true;
-    return false;
+    auto dims = board_.dimensions();
+
+    bool changed = false;
+
+    for (Coordinate col = 0; col < dims.width; ++col) {
+        for (Coordinate row = dims.height - 1; row > 0; --row) {
+            Position pos{col, row};
+
+            if (board_[pos].is_empty()) {
+                changed = true;
+                std::swap(board_[pos], board_[pos.up_by(1)]);
+            }
+        }
+
+        Position top{col, 0};
+
+        if (board_[top].is_empty() && random_) {
+            changed = true;
+            board_[top].restore(number_of_groups_, actions_, *random_);
+        }
+    }
+
+    return changed;
 }
 
-Tile Model::new_tile_(Board_position bp)
+bool Model::scavenge_step_()
 {
-    int type;
+    bool changed = false;
 
-    // 1-in-20 (5%) chance of special type:
-    if (random_.between(1, 20) == 1)
-        type = random_.between(1, types_ - 1);
-    else
-        type = 0;
+    for (Position pos : board_.positions()) {
+        if (scavenge_position_(pos)) {
+            changed = true;
+        }
+    }
 
-    Tile new_tile = {
-            // tile_data
-            {
-                    // Position
-                    bp,
-                    // Position Prev (outside the screen)
-                    {bp.row - board_dimensions_.height, bp.column},
-                    // random group (color)
-                    random_.between(0, +groups_ - 1),
-                    // type
-                    type
-            },
-            handlers_[type].get_handler()
+    return changed;
+}
+
+bool Model::scavenge_position_(Model::Position pos)
+{
+    Position_set set = gather_group_(pos);
+
+    if (set.size() < min_group_size_) return false;
+
+    for (Position neighbor : set) {
+        condemn_position_(neighbor);
+    }
+
+    return true;
+}
+
+Board::Position_set Model::gather_group_(Position start)
+{
+    // The set we are building to return:
+    Position_set result{start};
+
+    // The positions whose neighbors we need to look at:
+    std::vector<Position> todo{start};
+
+    // The group (color) of tile to include.
+    const int goal = board_[start].group();
+
+    // (A local helper function written using a lambda.)
+    //
+    // This takes a position, and if the position is in bounds, has the right
+    // group, and isn't yet in the result set, then we add it to the result set
+    // and to the to-do list of positions whose neighbors we need to visit in
+    // the future.
+    auto consider = [&](Position pos) {
+        if (!board_.contains(pos)) return;
+        if (!board_[pos].has_group(goal)) return;
+        if (result.count(pos)) return;
+
+        result.insert(pos);
+        todo.push_back(pos);
     };
 
-    return new_tile;
+    while (!todo.empty()) {
+        Position pos = todo.back();
+        todo.pop_back();
+
+        consider(pos.up_by(1));
+        consider(pos.down_by(1));
+        consider(pos.left_by(1));
+        consider(pos.right_by(1));
+    }
+
+    return result;
 }
 
-void Model::swap_(Board_position p1, Board_position p2)
+Model& Model::add_action(const Tile::Action& a)
 {
-    map_2.at(p1.hash()).swap(map_2.at(p2.hash()));
+    actions_.push_back(&a);
+    return *this;
 }
+
