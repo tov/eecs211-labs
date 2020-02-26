@@ -21,13 +21,20 @@ the \texttt{Model} class which defines the internal game state, the
 \texttt{View} class for rendering game to the screen, and the
 \texttt{Controller} class for reacting to user input and tying it all
 together. In addition, because the tiles in this game are rather complex
-themselves, we have \filename{tile.hxx} which sets up \texttt{Board::position}
-,  an \texttt{Tile::apply_action} function to apply an action which is presumed to be a subclass of \texttt{Tile::Action} to the tile. (a different subclass of \texttt{Tile::Action} can provide different actions for special types of
-tiles), a \texttt{Tile::symbol} to represent the text inside the tile (for special types in this case. We can also use another representation strings for normal tiles). All this allows creation of more tile handlers
-which can each have special destructive powers. You can see that we have provided
-the normal action handler (which returns an empty set, meaning that for the specific action, we just want to follow the normal Bejeweled rules), and a horizontal
-lazer (deletes all tiles in the row in addition to the set we created by swapping),
-inside \filename{actions.cxx}.
+themselves, we have \filename{tile.hxx} which sets up
+\texttt{Board::position},  an \texttt{Tile::apply_action} function to
+apply an action which is presumed to be a subclass of
+\texttt{Tile::Action} to the tile. (a different subclass of
+\texttt{Tile::Action} can provide different actions for special types of
+tiles), a \texttt{Tile::symbol} to represent the text inside the tile
+(for special types in this case. We can also use another representation
+strings for normal tiles). All this allows creation of more tile
+handlers which can each have special destructive powers. You can see
+that we have provided the normal action handler (which returns an empty
+set, meaning that for the specific action, we just want to follow the
+normal Bejeweled rules), and a horizontal lazer (deletes all tiles in
+the row in addition to the set we created by swapping), inside
+\filename{actions.cxx}.
 
 \CxxPrelims
 
