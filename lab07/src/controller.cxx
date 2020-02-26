@@ -70,13 +70,14 @@ void Controller::start_animating_()
 }
 
 bool Controller::can_animate_()
+
 {
     if (!animating_) return false;
 
     auto animation_seconds = animation_time_.elapsed_time().seconds();
-    bool
-         result            =
-                 animation_steps_ < steps_per_second * animation_seconds;
+
+    bool result = animation_steps_ < steps_per_second * animation_seconds;
+
     if (result) ++animation_steps_;
     return result;
 }
