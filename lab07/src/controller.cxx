@@ -24,11 +24,6 @@ void Controller::on_frame(double dt)
             break;
         }
     }
-
-    auto now  = ge211::Time_point::now();
-    auto diff = now - get_frame_start_time();
-
-    if (!animating_) animation_steps_ = 0;
 }
 
 void Controller::draw(ge211::Sprite_set& sprites)
