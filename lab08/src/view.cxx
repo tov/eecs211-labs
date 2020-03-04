@@ -1,4 +1,4 @@
-#include "view.h"
+#include "view.hxx"
 #include <iostream>
 
 ///

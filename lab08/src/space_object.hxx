@@ -1,7 +1,7 @@
 #pragma once
 
 #include<memory>
-#include <ge211.h>
+#include <ge211.hxx>
 #include<iostream>
 
 struct Control

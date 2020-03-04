@@ -1,13 +1,7 @@
-\RequirePackage{fixltx2e}
 \documentclass{tufte-handout}
 
-\def\ThisLabBase{eecs211-lab07}
-\def\ThisLabUrl{\LabBaseUrl/\ThisLabBase.zip}
-
-\usepackage{eecs211-lab}
-\title{EECS 211 Lab 7}
-\author{Asteroids}
-\date{Winter 2019}
+\usepackage{211lab}
+\LabInfo{8}{Asteroid}
 
 \begin{document}
 
@@ -17,16 +11,7 @@ Today is an exercise in software archaeology. You will be given a
 complete program---your goal is to understand it well enough to modify
 and improve it.
 
-\section{Getting the starter code}
-
-For this lab, the starter code is provided as a ZIP file here:
-\url{\ThisLabUrl}. Extract the archive file into a directory in the
-location of your choosing. Once you have your new directory containing
-the starter files, you can open it in CLion.
-\marginpar{ Be careful, as CLion will only work correctly if you open
-the \emph{main project directory} with the \filename{CMakeLists.txt} in
-it. If you open any other directory, CLion may create a
-\filename{CMakeLists.txt} for you, but it won't work properly.}
+\CxxPrelims
 
 \section{Getting oriented}
 

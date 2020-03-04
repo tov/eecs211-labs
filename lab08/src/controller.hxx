@@ -1,9 +1,9 @@
 #pragma once
 
-#include "model.h"
-#include "view.h"
+#include "model.hxx"
+#include "view.hxx"
 
-#include <ge211.h>
+#include <ge211.hxx>
 
 #include <string>
 #include <vector>

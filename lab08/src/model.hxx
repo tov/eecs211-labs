@@ -1,9 +1,9 @@
 #pragma once
-#include "space_object.h"
+#include "space_object.hxx"
 #include<memory>
 #include<algorithm>
 #include<iostream>
-#include <ge211.h>
+#include <ge211.hxx>
 
 // Encapsulates the internal state of the game:
 //

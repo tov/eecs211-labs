@@ -1,4 +1,4 @@
-#include "controller.h"
+#include "controller.hxx"
 #include <fstream>
 #include <stdexcept>
 #include <iostream>

@@ -1,4 +1,4 @@
-#include"space_object.h"
+#include"space_object.hxx"
 #include <cmath>
 #include <iostream>
 

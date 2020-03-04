@@ -1,4 +1,4 @@
-#include"model.h"
+#include"model.hxx"
 
 double const initial_asteroid_mass = 1;
 double const min_asteroid_mass     = 0.1;

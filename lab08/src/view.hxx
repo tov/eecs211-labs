@@ -1,6 +1,6 @@
 #pragma once
 #include <algorithm>
-#include "model.h"
+#include "model.hxx"
 
 // Controls how the game is shown to the user:
 class View
