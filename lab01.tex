@@ -12,13 +12,13 @@
 \maketitle
 
 Today we are going over the basics of how to log into a remote computer,
-use shell commands to create and edit files, and compile and run C
-code.
+use shell commands to create and edit files, and compile and run C code.
 \marginnote{There are different shells with slightly different syntax.
-In this class, we will use a shell called \progname{zsh}, which is also the
-default in the new version of macOS. Other shells include
-\progname{tcsh} (the default on the EECS servers) and \progname{bash}
-(the default on most Linux systems).}
+In this class, we will use a shell called \progname{fish} (for
+``Friendly Interactive SHell''). Other shells include \progname{tcsh}
+(the default on the EECS servers), \progname{bash} (the default on most
+Linux systems), and \progname{zsh} (the default on recent versions of
+Mac OS).}
 
 The shell works as a textual conversation. It presents a prompt, like
 \verb![wsc147@robin]~/cs211%!. (The default EECS prompt shows the
@@ -67,7 +67,7 @@ The link on the right will take you
 directly to the Windows installer.
 After you install PuTTY, open it up. You'll need to enter a hostname to
 login to. The link on the right will take you to a list of student lab
-hostnames\marginnote{You can find a list here: \url{\LabHostnamesUrl}}
+hostnames\marginnote{You can find a list here: \LabHostnamesLink}
 (such as 
 \hostname{batgirl.eecs.northwestern.edu}
 or
@@ -96,7 +96,7 @@ type a single command of the form
 \noindent where \metavar{eecs-id} is your EECS username (probably your NetID)
 and \metavar{eecs-host} is replaced by one of the EECS hostnames from the list
 of student lab hostnames%
-\marginnote{\url{\LabHostnamesUrl}}
+\marginnote{\LabHostnamesLink}
 (such as \hostname{alfred.eecs.northwestern.edu} or
 \hostname{robin.eecs.northwestern.edu}).
 
@@ -267,7 +267,7 @@ an \emph{environment variable} to contain the URL of the CS 211
 website. Thus, our command will be:
 
 \begin{CmdLine}
-  \prompt wget \$URL211/lab/\ThisLabBase.tgz
+  \prompt wget \$LAB211/\ThisLabBase.tgz
 \end{CmdLine}
 
 Once we have our .tgz file, we will need to turn it from a compressed
@@ -299,13 +299,12 @@ code, you can run
 \end{CmdLine}
 
 \noindent to create your executable called \metavar{target-name}.  In
-this case, run \cmdline{make build/hello} to build a program called
-\filename{hello}, which will be put in a directory called
-\filename{build/} (which \progname{make} will create for you as
-necessary). You can run the executable as follows:
+this case, run \cmdline{make hello} to build a program called
+\filename{hello}, which will be put in the current directory. You can
+run the program like this:
 
 \begin{CmdLine}
-  \prompt build/hello
+  \prompt ./hello
 \end{CmdLine}
 
 \noindent
@@ -321,13 +320,13 @@ now says ``Aloha 211 student!'' instead of ``Hello 211 student!.'' Make
 sure to save and exit Emacs.\marginnote{Remember \keycombo{C-x C-s} to
 save and \keycombo{C-x C-c} to exit.}
 
-Then try running \cmdline{build/hello} again. Did anything change?
+Then try running \cmdline{./hello} again. Did anything change?
 
 The reason why you still see ``Hello 211 student!'' on your screen is
 because while you changed your C++ code, your computer doesn't
 understand the C++ code, but only the machine code you create by using
-\progname{make}.  So now, run \cmdline{make build/hello} once again, and
-try \cmdline{build/hello}. Notice how you now have the correct output!
+\progname{make}.  So now, run \cmdline{make hello} once again, and
+try \cmdline{./hello}. Notice how you now have the correct output!
 Each time we want to change our code, we are going to need to remember
 to rebuild our executable. Don't worry if you have error messages your
 first few times trying to write new code, this is completely normal.
@@ -353,7 +352,7 @@ if you want any more challenges!
 \begin{description}
 
 \item[EECS login server hostnames]
-\url{\LabHostnamesUrl}
+\LabHostnamesLink
 
 \item[Simple command line cheat sheet]
 \url{http://www.computerworld.com/article/2598082/linux/linux-linux-command-line-cheat-sheet.html}

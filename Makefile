@@ -1,5 +1,5 @@
 # The default lab to build when running just `make`:
-DEFAULT = lab07
+DEFAULT = lab01
 
 TEXS    = $(wildcard lab*.tex)
 PDFS    = $(TEXS:.tex=.pdf)
@@ -7,6 +7,9 @@ TEXOPTS = -interaction=nonstopmode
 
 # Build just the lab PDF we're working on:
 default: $(DEFAULT).pdf
+
+hard: $(DEFAULT).pdf
+	open $<
 
 # Build everything:
 all: $(PDFS)
