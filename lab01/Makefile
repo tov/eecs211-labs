@@ -1,20 +1,19 @@
 # For building EECS 211 Lab 1
 
-CFLAGS     = -std=c11 -pedantic -Wall
-CFLAGS    += -fsanitize=address,undefined
+CFLAGS     = -std=c11 -pedantic -Wall -fsanitize=address,undefined
 LDFLAGS    =
+CC        ?= cc
 
-all: build/hello
+all: hello
 
-build/hello: build/hello.o
-	cc -o $@ $^ $(CFLAGS) $(LDFLAGS)
+hello: src/hello.o
+	$(CC) -o $@ $^ $(CFLAGS) $(LDFLAGS)
 
-build/%.o: src/%.c
-	@mkdir -p build
-	cc -o $@ -c $< $(CFLAGS)
+%.o: %.c
+	$(CC) -o $@ -c $< $(CPPFLAGS) $(CFLAGS)
 
 clean:
-	rm -Rf build
+	rm -f hello src/*.o
 
 .PHONY: all clean
 
