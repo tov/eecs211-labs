@@ -251,44 +251,42 @@ As briefly mentioned in class, \progname{make} is our build system we
 will be using for the first few weeks of the course at least.  We will
 usually be giving some sort of starting structure for the projects you
 will work on, and right now is no exception.  This structure is found in
-a .tgz
-\marginnote{
-  The .tgz file extension is used for
-  “\href{https://en.wikipedia.org/wiki/Gzip}{gzipped}
-  \href{https://en.wikipedia.org/wiki/Tar_(computing)}{tarball},” which
-  is like the Linux equivalent of a .ZIP file.
-}
-file that you need to downloaded onto your remote shell.
-Linux provides a command called \progname{wget} which will help download
-things from the internet for us.
-
-\progname{wget} stands for ``web get,'' and downloads things from the web using the
-following command format:
+a .tgz \marginnote{ The .tgz file extension is used for
+“\href{https://en.wikipedia.org/wiki/Gzip}{gzipped}
+\href{https://en.wikipedia.org/wiki/Tar_(computing)}{tarball},” which is
+like the Linux equivalent of a .ZIP file. } file that you need to
+downloaded onto your remote shell. Linux provides a command called
+\progname{curl} that we will use to download a
+``tarball''\marginnote{``tar'' stands for ``tape archive''; it’s a kind
+of archive file, like ZIP, but most commonly used on Unix systems.}, and
+also a command \progname{tar} to extract the contents of the archive.
+\progname{curl} takes a URL as a command-line argument, downloads the
+file, and sends the result to its output; \progname{tar} reads an
+archive from its input and extracts it. We can use a Unix pipe, written
+with the \verb!|! character, to connect \progname{curl}’s output to
+\progname{tar}’s input:
 
 \begin{CmdLine}
-  \prompt wget \metavar{url}
+  \prompt curl \metavar{url} | tar zxvk
 \end{CmdLine}
 
-\noindent
-For this example, we will be getting our file from this url:
+\marginnote[-\baselineskip]{The letters after \texttt{tar} give the
+details of what to do: \texttt z specifies the kind of compression that
+the archive uses, \texttt x means to extract (rather than create or
+list), \texttt v increases the verbosity (without it, \progname{tar} is
+silent), and \texttt k prevents \progname{tar} from overwriting existing
+files.}
+
+\noindent In this case, we will be getting our file from this url:
 \url{\ThisLabTgz}. However, the shell setup we did earlier defined
-an \emph{environment variable} to contain the URL of the CS 211
-website. Thus, our command will be:
+several \emph{environment variables} containing URLs of various parts of
+the CS 211 website. Thus, our command will be:
 
 \begin{CmdLine}
-  \prompt wget \$LAB211/\ThisLabBase.tgz
+  \prompt curl \$LAB211/\ThisLabBase.tgz | tar zxvk
 \end{CmdLine}
 
-Once we have our .tgz file, we will need to turn it from a compressed
-file into a new directory, using the \progname{tar} command. Use the
-following command to extract archive file into a directory called
-\filename{\ThisLabBase}:
-
-\begin{CmdLine}
-  \prompt tar xvf \ThisLabBase.tgz
-\end{CmdLine}
-
-Now, once we have our new directory with its files, change your
+Now, we have our new directory with the files we need, so change your
 directory to \filename{\ThisLabBase} using the \progname{cd} command.
 Now list its contents using \progname{ls}, and notice that there is a
 \filename{Makefile} file, and a \filename{src/} directory. The
