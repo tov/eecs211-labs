@@ -171,9 +171,9 @@ experience with instead of Emacs. However, for the purpose of this
 class, we will be teaching using Emacs. Emacs can also seem scary at
 first, but after you learn a few simple commands, it will quickly
 start making sense. } editor. (On Mac/Linux, you will probably want to
-use \cmdline{emacs -nw} to avoid starting the X Window System..) Pass in
+use \cmdline{emacs} to avoid starting the X Window System..) Pass in
 a file that you want to edit (even if it hasn't been created yet), and
-you can start editing that file! For example type \cmdline{emacs -nw
+you can start editing that file! For example type \cmdline{emacs
 my\_code.c} and you can start editing a file called
 \filename{my\_code.c} within your current working directory.
 
@@ -209,27 +209,36 @@ We can ensure that our file was properly created by using the
 you run \cmdline{cat animals.txt} you should see the file you just
 created on your shell.
 
-\section{Creating our build system}
+\section{Setting up the CS 211 development environment}
 
-Please navigate back to your home directory (using just the \cmdline{cd}
-command). Once your current working directory is your home directory, we
-are going to set up a configuration file so that you will be using the
-correct version of the toolchain (the C compiler and associated tools),
-and that it will be correct each time you remotely login to your EECS
-account. Don't worry about understanding what is going on right here, it
-is something that just needs to be configured for this quarter. To do
-this we will be creating a file called \filename{.tcshrc} in your home
-directory (note the period, and ensure this name is spelled exactly
-correct).\marginnote{Remember to create this file and edit it using
-Emacs we will type in \cmdline{emacs -nw .tcshrc}.} Once this is open, type
-the following line exactly into your file, save, and exit it:
+As you saw in class, you will need to use CS 211’s \progname{dev} command
+to get access to the correct version of the C compiler we’re
+using\marginnote{The GNU C Compiler, version 8.3.1}. Additionally,
+editing programs will work better if you have a basic Emacs setup.
 
-\begin{verbatim}
-  source /home/jesse/pub/etc/csh_profile
-\end{verbatim}
+Both of these things are configured in \emph{hidden}\marginnote{On
+Unix-line operating systems, include Linux and Mac OS, files whose name
+begin with a period (\texttt{.}) are omitted from directory listings by
+default. Passing the \texttt{-a} flag to \progname{ls} causes it to show
+these hidden files as well.} files in your home
+directory. The \progname{dev} command must be defined in a file
+called \filename{.tcshrc}, and Emacs looks for its configuration in a
+file called \filename{.emacs}.
 
-Now, for this time only, type in \cmdline{exec tcsh} into the shell to
-reload.
+We’ve provided a script to create these files for you. If you already
+have these files, it will first back them up and tell you the names of
+the backup files. Here is the command to run:
+
+\begin{CmdLine}
+  \prompt /home/jesse/pub/setup211
+\end{CmdLine}
+
+\marginnote[-\baselineskip]{Remember not to type the
+\href{https://bit.ly/2yJyeD2}{prompt}.}
+
+\noindent The changes will take effect the next time \progname{tcsh}
+restarts. You can log out and back in, or the command \cmdline{exec
+tcsh} to reload \progname{tcsh}.
 
 Each time you open up your remote connection (including right now) and
 plan on compiling code (probably every time for first few weeks of the
@@ -243,7 +252,7 @@ will be using for the first few weeks of the course at least.  We will
 usually be giving some sort of starting structure for the projects you
 will work on, and right now is no exception.  This structure is found in
 a .tgz
-\marginpar{
+\marginnote{
   The .tgz file extension is used for
   “\href{https://en.wikipedia.org/wiki/Gzip}{gzipped}
   \href{https://en.wikipedia.org/wiki/Tar_(computing)}{tarball},” which
