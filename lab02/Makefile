@@ -4,16 +4,16 @@ CFLAGS     = -std=c11 -pedantic -Wall -fsanitize=address,undefined
 LDFLAGS    =
 CC        ?= cc
 
-all: lab2
+all: lab
 
-lab2: src/lab2.o
+lab: src/lab.o
 	$(CC) -o $@ $^ $(CFLAGS) $(LDFLAGS)
 
 %.o: %.c
 	$(CC) -c -o $@ $< $(CPPFLAGS) $(CFLAGS)
 
 clean:
-	rm -f lab2 src/*.o
+	rm -f lab src/*.o
 
 # Targets that are not actually files we can build:
 .PHONY: all clean

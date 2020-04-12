@@ -60,9 +60,9 @@ You should now have a directory called \filename{\ThisLabBase}.
 
 \section{Writing the code}
 Navigate to your \filename{\LabBaseUrl} directory, and open up
-\filename{src/lab2.c} in Emacs using 
+\filename{src/lab.c} in Emacs using 
 \begin{CmdLine*}
-  \C emacs src/lab2.c\\
+  \C emacs src/lab.c\\
 \end{CmdLine*}
 Notice that there is already some skeletons of functions and some code in \functionref{main}{} here.
 
@@ -101,15 +101,15 @@ exit}. If you remember from last week, we used the \filename{make}
 command in order to turn our C file into machine code. Run:
 
 \begin{CmdLine*}
-  \C make lab2\\
+  \C make lab\\
 \end{CmdLine*}
 \marginnote{Remember, make works as follows: \cmdline{make [target]}. Target is the name of the executable file that will be built by the make command.}
 
 If everything works, if we list our files, we should now see a file
-called \filename{lab2}. To run it, the command is:
+called \filename{lab}. To run it, the command is:
 
 \begin{CmdLine*}
-  \C ./lab2\\
+  \C ./lab\\
 \end{CmdLine*}
 
 See if your value looks right!  If it doesn't, don't worry, Rome wasn't
@@ -141,7 +141,7 @@ Once you are done, make and run your file.  See if everything looks the same!  I
 
 
 Structs are an important tool in C for grouping data together.  In your
-\filename{lab2.c} you will notice that we created an ^apple^ structure
+\filename{lab.c} you will notice that we created an ^apple^ structure
 for you.\marginnote{How 'bout 'dem apples?}  This is so that we can
 organize attributes of ^struct apple^s together in a convenient way.  If
 you look inside our ^apple^ struct, we decided that we will want to know
@@ -149,9 +149,10 @@ the weight, the variety, and the color of our apples.  In our
 \functionref{main}{}, we created an example of a Red Delicious apple.
 Now, create your own type of apple (you'll need to define it as a type
 ^struct apple^), and give it those three attributes.  Add in a print
-statement (we gave you an example one) to print out your new
-^struct apple^.  Make and run your lab2 program!  Hopefully everything works as
-expected!  If not, don't fret or get upset, go back and make changes!
+statement (we gave you an example one) to print out your new ^struct
+apple^.  Make and run your \progname{lab} program!  Hopefully everything
+works as expected!  If not, don't fret or get upset, go back and make
+changes!
 
 Now that we know all about ^struct apple^s, let's create our own
 structure. Define a structure of your favorite animal, and give your
@@ -166,7 +167,7 @@ then create a print statement to print out information about your
 animal.  These print statements are getting annoying; we'll tackle that
 soon.
 
-Make and run \progname{lab2}, and see if your new animal shows up the way that
+Make and run \progname{lab}, and see if your new animal shows up the way that
 you intended.  Hopefully everything works!  If not, as usual, go back
 and try and find what went wrong and update your code. 
 
@@ -191,7 +192,7 @@ and replace your print statement with a call to
 \functionref{print\_animal}{}.\marginnote{remember to pass your animal
 instance to the function.}
 
-Make and run \progname{lab2}, and see if everything still works!  
+Make and run \progname{lab}, and see if everything still works!  
 
 \subsection{Control statements}
 
@@ -216,6 +217,6 @@ Using an ^if^--^else^ statement, check your animals age and add to your
 old!'' if the animal is at least 10 and print out ``This animal is not
 that old'' if the animal is younger than 10.   
 
-Make and run \progname{lab2} and see if this feature is working!
+Make and run \progname{lab} and see if this feature is working!
 
 \end{document}
