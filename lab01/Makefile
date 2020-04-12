@@ -1,4 +1,4 @@
-# For building EECS 211 Lab 1
+# For building CS 211 Lab 1
 
 CFLAGS     = -std=c11 -pedantic -Wall -fsanitize=address,undefined
 LDFLAGS    =
@@ -10,11 +10,12 @@ hello: src/hello.o
 	$(CC) -o $@ $^ $(CFLAGS) $(LDFLAGS)
 
 %.o: %.c
-	$(CC) -o $@ -c $< $(CPPFLAGS) $(CFLAGS)
+	$(CC) -c -o $@ $< $(CPPFLAGS) $(CFLAGS)
 
 clean:
 	rm -f hello src/*.o
 
+# Targets that are not actually files we can build:
 .PHONY: all clean
 
 # Ensure we have the correct C compiler version:

@@ -1,9 +1,9 @@
 # The default lab to build when running just `make`:
-DEFAULT = lab01
+DEFAULT = lab02
 
 TEXS    = $(wildcard lab*.tex)
 PDFS    = $(TEXS:.tex=.pdf)
-TEXOPTS = -interaction=nonstopmode
+TEXOPTS = -interaction=errorstopmode
 
 # Build just the lab PDF we're working on:
 default: $(DEFAULT).pdf
@@ -14,33 +14,29 @@ hard: $(DEFAULT).pdf
 # Build everything:
 all: $(PDFS)
 
+# Update 211common.sty:
+211common.sty: ../../lib/211common.sty
+	cp $< $@
+
 # To build a lab PDF, build it in the build/ directory and then
 # copy it here:
 %.pdf: build/%.pdf
 	cp $< $@
 
 # Build one lab PDF in the build directory:
-build/%.pdf: build/%.tex build/%.cmd build/211lab.sty
-	cd build && `cat $*.cmd` $(TEXOPTS) ../$<
-
-# Copy LaTeX source files to the build directory:
-build/%.tex: %.tex
-	@mkdir -p build
-	cp $< $@
-
-# Copy LaTeX style files to the build directory:
-build/%.sty: %.sty
-	@mkdir -p build
-	cp $< $@
+build/%.pdf: %.tex build/%.cmd 211lab.sty 211common.sty
+	`cat build/$*.cmd` $< </dev/null
 
 # Figure out which version of LaTeX to use and save its
 # name in a file:
-build/%.cmd: %.tex
+build/%.cmd: %.tex Makefile
 	@mkdir -p build
 	@if fgrep -q tufte-handout $<; \
-	  then echo pdflatex; \
-	  else echo lualatex; \
+	  then printf pdflatex; \
+	  else printf lualatex; \
 	fi >| $@
+	@printf " $(TEXOPTS)" >> $@
+	@printf " --output-directory=`pwd`/build" >> $@
 
 # Delete all build products:
 clean:

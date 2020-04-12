@@ -1,20 +1,19 @@
 # For building CS 211 Lab 2
 
-CFLAGS     = -std=c11 -pedantic -Wall
-# CFLAGS    += -fsanitize=address -fsanitize=undefined
+CFLAGS     = -std=c11 -pedantic -Wall -fsanitize=address,undefined
 LDFLAGS    =
+CC        ?= cc
 
-all: build/lab2
+all: lab2
 
-build/lab2: build/lab2.o
-	cc -o $@ $^ $(CFLAGS) $(LDFLAGS)
+lab2: src/lab2.o
+	$(CC) -o $@ $^ $(CFLAGS) $(LDFLAGS)
 
-build/%.o: src/%.c
-	@mkdir -p build
-	cc -o $@ -c $< $(CFLAGS)
+%.o: %.c
+	$(CC) -c -o $@ $< $(CPPFLAGS) $(CFLAGS)
 
 clean:
-	rm -Rf build
+	rm -f lab2 src/*.o
 
 # Targets that are not actually files we can build:
 .PHONY: all clean

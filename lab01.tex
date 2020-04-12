@@ -28,9 +28,9 @@ another prompt, waiting for further commands. For example, to list the
 files in the current directory, you will run the \progname{ls} command
 by typing it at the prompt:
 
-\begin{CmdLine}
-  \prompt ls
-\end{CmdLine}
+\begin{CmdLine*}
+  \C ls \\
+\end{CmdLine*}
 
 \marginnote[-\baselineskip]{Don't type the \prompt. That stands for your
 shell prompt.}
@@ -88,9 +88,9 @@ installed. Open up your terminal\marginnote{Mac users: search
 for ``terminal'' in Spotlight} and at the prompt
 type a single command of the form
 
-\begin{CmdLine}
-  \prompt ssh \metavar{eecs-id}@\metavar{eecs-host}.eecs.northwestern.edu
-\end{CmdLine}
+\begin{CmdLine*}
+  \C ssh \metavar{eecs-id}@\metavar{eecs-host}.eecs.northwestern.edu\\
+\end{CmdLine*}
 \marginnote[-\baselineskip]{Don't type the \prompt.}
 
 \noindent where \metavar{eecs-id} is your EECS username (probably your NetID)
@@ -229,9 +229,9 @@ We’ve provided a script to create these files for you. If you already
 have these files, it will first back them up and tell you the names of
 the backup files. Here is the command to run:
 
-\begin{CmdLine}
-  \prompt /home/jesse/pub/setup211
-\end{CmdLine}
+\begin{CmdLine*}
+  \C /home/jesse/pub/setup211\\
+\end{CmdLine*}
 
 \marginnote[-\baselineskip]{Remember not to type the
 \href{https://bit.ly/2yJyeD2}{prompt}.}
@@ -266,9 +266,9 @@ archive from its input and extracts it. We can use a Unix pipe, written
 with the \verb!|! character, to connect \progname{curl}’s output to
 \progname{tar}’s input:
 
-\begin{CmdLine}
-  \prompt curl \metavar{url} | tar zxvk
-\end{CmdLine}
+\begin{CmdLine*}
+  \C curl \metavar{url} | tar zxvk\\
+\end{CmdLine*}
 
 \marginnote[-\baselineskip]{The letters after \texttt{tar} give the
 details of what to do: \texttt z specifies the kind of compression that
@@ -282,9 +282,9 @@ files.}
 several \emph{environment variables} containing URLs of various parts of
 the CS 211 website. Thus, our command will be:
 
-\begin{CmdLine}
-  \prompt curl \$LAB211/\ThisLabBase.tgz | tar zxvk
-\end{CmdLine}
+\begin{CmdLine*}
+  \C curl \$LAB211/\ThisLabBase.tgz | tar zxvk\\
+\end{CmdLine*}
 
 Now, we have our new directory with the files we need, so change your
 directory to \filename{\ThisLabBase} using the \progname{cd} command.
@@ -301,18 +301,18 @@ The basic purpose of \progname{make} is to build your project into an
 executable file. In your build directory, each time you update your
 code, you can run
 
-\begin{CmdLine}
-  \prompt make \metavar{target-name}
-\end{CmdLine}
+\begin{CmdLine*}
+  \C make \metavar{target-name}\\
+\end{CmdLine*}
 
 \noindent to create your executable called \metavar{target-name}.  In
 this case, run \cmdline{make hello} to build a program called
 \filename{hello}, which will be put in the current directory. You can
 run the program like this:
 
-\begin{CmdLine}
-  \prompt ./hello
-\end{CmdLine}
+\begin{CmdLine*}
+  \C ./hello\\
+\end{CmdLine*}
 
 \noindent
 This should spit out a nice greeting.

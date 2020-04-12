@@ -1,62 +1,14 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{211lab}[2020/1/6 0.2]
+\ProvidesPackage{211lab}[2020/4/11 0.3]
 
-\RequirePackage{fancyvrb}
-\RequirePackage{microtype}
-\RequirePackage{hyperref}
-\RequirePackage{url}
-\RequirePackage{underscore}
+\DeclareOption*{\PassOptionsToPackage{\CurrentOption}{211common}}
+\ProcessOptions\relax
 
-\newcommand\@pad@two[1]{\@pad@two@check#1\relax}
-\newcommand\@pad@two@check[2]{%
-  \ifx#2\relax0\fi
-  #1%
-}
-
-\hypersetup{
-    colorlinks=true
-}
-
-\urlstyle{sf}
-
-\newcommand\progname[1]{\emph{#1}}
-\newcommand\hostname[1]{\emph{#1}}
-\newcommand\filename[1]{\textsf{#1}}
-\newcommand\varname[1]{\textsf{#1}}
-\newcommand\functionname[1]{\emph{#1}}
-\newcommand\promptchar{\%}
-\newcommand\prompt[1][\promptchar]{{\normalfont\ttfamily\itshape#1}}
-\newcommand\metavar[1]{{\normalfont\ensuremath{\langle\textit{#1}\rangle}}}
-\newcommand\cmdline[1]{\fbox{\normalfont\ttfamily#1}}
-\newcommand\keycombo[1]{\textsf{#1}}
-
-\DefineVerbatimEnvironment%
-  {CmdLine}{Verbatim}
-  {commandchars=\\\{\}}
-
-\DefineVerbatimEnvironment%
-  {Code}{Verbatim}
-  {}
-
-\let\sup^
-\catcode`^\active
-\relax
-\def^#1^{\verb!#1!}
-
-\newcommand\WEBROOT{https://users.cs.northwestern.edu/~jesse/course/cs211}
+\RequirePackage{211common}
 
 \newcommand\LabBaseUrl{\WEBROOT/lab}
 \newcommand\ThisLabTgz{\LabBaseUrl/\ThisLabBase.tgz}
 \newcommand\ThisLabZip{\LabBaseUrl/\ThisLabBase.zip}
-\newcommand\LabHostnames@Url
-  {it.eecs.northwestern.edu/info/2015/11/03/info-labs.html\#workstations}
-\newcommand\LabHostnames@ShortUrl
-  {https://bit.ly/3c1qyui}
-\newcommand\LabHostnamesLink
-  {\href{\LabHostnames@ShortUrl}{{\UrlFont{\LabHostnames@Url}}}}
-
-\newcommand\CxxSetupUrl{\WEBROOT/notes/toolchain_setup.html}
-\newcommand\CxxLinuxUrl{\WEBROOT/notes/ge211_linux.html}
 
 \newcommand\CxxPrelims@toolchain{
   \subsection{Toolchain setup}
