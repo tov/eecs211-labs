@@ -16,7 +16,7 @@ struct apple
 // Function declarations
 //
 
-int some_numbers(int);
+int sum_numbers(int);
 
 
 //
@@ -31,7 +31,7 @@ int main()
            delicious.variety, delicious.color, delicious.weight);
 }
 
-int some_numbers(int num)
+int sum_numbers(int num)
 {
     // TODO: FIX ME
     return -1;
