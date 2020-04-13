@@ -15,18 +15,17 @@
 \newcommand\Cxx@setup@local{\WEBROOT/notes/toolchain_setup.html}
 \newcommand\Cxx@setup@linux{\WEBROOT/notes/ge211_linux.html}
 
-\newif\if@cxx\@cxxfalse
-\DeclareOption{cxx}{\@cxxtrue}
+\DeclareOption*{\PassOptionsToPackage{\CurrentOption}{211lang}}
 \ProcessOptions\relax
 
 \RequirePackage{fancyvrb}
 \RequirePackage{microtype}
 \RequirePackage{url}
 \RequirePackage{underscore}
-\RequirePackage[final]{listings}
 \RequirePackage{amsmath}
 \RequirePackage[dvipsnames]{xcolor}
 \RequirePackage{hyperref}
+\RequirePackage{211lang}
 
 \newcommand\@pad@two[1]{\@pad@two@check#1\\}
 \newcommand\@pad@two@check[2]{%
@@ -56,7 +55,7 @@
 \newcommand\functionref[2]{\functionname{#1}(#2)}
 \newcommand\promptchar{\%}
 \newcommand\prompt{{\normalfont\ttfamily\itshape\promptchar}}
-\newcommand\cmdline[1]{\prompt{\normalfont\ttfamily\bfseries~#1}}
+\newcommand\cmdline[1]{\prompt{\normalfont\ttfamily~#1}}
 \newcommand\keycombo[1]{\textsf{#1}}
 
 \newcommand\codeBasicstyle{\ttfamily}
@@ -64,7 +63,7 @@
 \newcommand\codeKeywordstyle{\codeBasicstyle\bfseries}
 \newcommand\codeSpecialstyle{\codeKeywordstyle\color{red!30!black!80!white}}
 
-\colorlet{metavar@color}{DarkMagenta}
+\colorlet{metavar@color}{DarkCyan}
 \newcommand\metavar[1]{%
   \textcolor{metavar@color}{%
     \ensuremath\langle
@@ -82,37 +81,6 @@
   keywordstyle=[3]\codeSpecialstyle,
   escapeinside={‹}{›},
 }
-
-\lstdefinelanguage[211]{C}[ANSI]{C}%
-  {%
-    morekeywords={%
-      assert,%
-      size_t,%
-    },
-    % lib211 definitions
-    morekeywords=[2]{%
-      CHECK,%
-      CHECK_CHAR,%
-      CHECK_INT,CHECK_UINT,%
-      CHECK_LONG,CHECK_ULONG,CHECK_SIZE,%
-      CHECK_DOUBLE,%
-      CHECK_STRING,%
-      CHECK_POINTER,%
-    },
-    % weird shit
-    morekeywords=[3]{%
-      NULL,%
-    },
-  }
-
-\lstdefinelanguage[211]{C++}[11]{C++}%
-  {%
-    morekeywords={%
-      size_t,%
-      CHECK,%
-      TEST_CASE%
-    },
-  }
 
 \newcommand\set@current@lang[1]{%
   \if@cxx

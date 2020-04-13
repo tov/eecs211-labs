@@ -1,0 +1,44 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{211lang}[2020/04/13 0.0.1]
+
+\RequirePackage[final]{listings}
+
+\newif\if@cxx\@cxxfalse
+\DeclareOption{cxx}{\@cxxtrue}
+\ProcessOptions\relax
+
+\lstdefinelanguage[211]{C}[ANSI]{C}%
+  {%
+    morekeywords={%
+      assert,%
+      size_t,%
+    },
+    % lib211 definitions
+    morekeywords=[2]{%
+      CHECK,%
+      CHECK_CHAR,%
+      CHECK_INT,CHECK_UINT,%
+      CHECK_LONG,CHECK_ULONG,CHECK_SIZE,%
+      CHECK_DOUBLE,%
+      CHECK_STRING,%
+      CHECK_POINTER,%
+    },
+    % weird shit
+    morekeywords=[3]{%
+      NULL,%
+    },
+  }
+
+\lstdefinelanguage[211]{C++}[11]{C++}%
+  {%
+    morekeywords=[1]{override},
+    keywords=[2]{size_t, ssize_t},
+    keywords=[3]{assert, abs, printf, scanf, sqrt, cin, cout, cerr,
+      toupper, strcmp, malloc, free,
+      fprintf, getchar,
+      stdin, stdout, stderr,
+      INT_MIN, INT_MAX, M_PI, NULL},
+    keywords=[4]{TEST_CASE, CHECK, CHECK_THROWS_AS, CHECK_FALSE},
+    morecomment=[l][\ImportTok]{\#}%
+  }
+
