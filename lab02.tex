@@ -78,7 +78,7 @@ be using both, but first we will be using ^while^.
 
 \subsection{{\codeKeywordstyle while} loops} As we learned in class, a  ^while^
 loop has the following syntax:\marginnote{Note that in while loops we usually
-will use a Boolean expression for ‹\metavar{test-expression}› (an expression
+will use a Boolean expression for \metavar{test-expression} (an expression
 which evaluates to `true` or `false`)}
 
 \begin{Code}
@@ -181,7 +181,15 @@ time you wanted to print out your animal?  We're going to abstract that
 out and replace it with a simple call to a function! 
 
 Write a function called \functionref{print\_animal}{} that uses
-\functionref{printf}3 to print out your animal's three attributes.
+\functionref{printf}3\marginnote{
+  The ``\functionref{}3'' after ``\functionname{printf}'' gives the
+  section in the Unix manual that contains the documentation for the
+  \functionref{printf}{} function, which means you can look it up with
+  the command \cmdline{man 3 printf}. If you omit the section number 3
+  and run just \cmdline{man printf}, you get documentation for the
+  shell's ^printf^ command rather than the C library’s
+  \functionref{printf}{} function.
+} to print out your animal's three attributes.
 Note that this should take in one argument(of the same type as your
 animal struct).  Think about what type your function should
 be!\marginnote{Note that the \varname{void} return type signifies that
