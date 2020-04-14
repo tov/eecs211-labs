@@ -1,44 +1,142 @@
+% vim: se et:
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{211lang}[2020/04/13 0.0.1]
-
-\RequirePackage[final]{listings}
 
 \newif\if@cxx\@cxxfalse
 \DeclareOption{cxx}{\@cxxtrue}
 \ProcessOptions\relax
 
+\RequirePackage[final]{listings}
+\RequirePackage{newunicodechar}
+
+\lstdefinelanguage[211]{make}
+  {otherkeywords={$<,$@,$\%,$?,$^,$+,$*},%
+   keywords=[3]{CC,CFLAGS,CPPFLAGS,LDFLAGS,SHELL,MAKE,MAKEFLAGS},%
+   sensitive=true,%
+   morecomment=[l]\#,%
+   morestring=[b]",%
+  }[keywords,comments,strings]%
+
 \lstdefinelanguage[211]{C}[ANSI]{C}%
-  {%
-    morekeywords={%
-      assert,%
-      size_t,%
-    },
-    % lib211 definitions
-    morekeywords=[2]{%
-      CHECK,%
-      CHECK_CHAR,%
-      CHECK_INT,CHECK_UINT,%
-      CHECK_LONG,CHECK_ULONG,CHECK_SIZE,%
-      CHECK_DOUBLE,%
-      CHECK_STRING,%
-      CHECK_POINTER,%
-    },
-    % weird shit
-    morekeywords=[3]{%
-      NULL,%
-    },
-  }
+{%
+  % C library types
+  morekeywords=[2]{%
+    size_t,ssize_t,%
+  },
+  % C definitions
+  morekeywords=[3]{%
+    assert,%
+    NULL,%
+  },
+  keywords=[3]{assert, abs, printf, scanf, sqrt,
+    toupper, strcmp, malloc, free,
+    fprintf, getchar,
+    stdin, stdout, stderr,
+    INT_MIN, INT_MAX, M_PI, NULL},
+  % lib211 definitions
+  keywords=[4]{%
+    CHECK,%
+    CHECK_CHAR,%
+    CHECK_INT,CHECK_UINT,%
+    CHECK_LONG,CHECK_ULONG,CHECK_SIZE,%
+    CHECK_DOUBLE,%
+    CHECK_STRING,%
+    CHECK_POINTER,%
+  },
+  morecomment=[l][\PreprocessorTok]{\#},%
+}
 
 \lstdefinelanguage[211]{C++}[11]{C++}%
-  {%
-    morekeywords=[1]{override},
-    keywords=[2]{size_t, ssize_t},
-    keywords=[3]{assert, abs, printf, scanf, sqrt, cin, cout, cerr,
-      toupper, strcmp, malloc, free,
-      fprintf, getchar,
-      stdin, stdout, stderr,
-      INT_MIN, INT_MAX, M_PI, NULL},
-    keywords=[4]{TEST_CASE, CHECK, CHECK_THROWS_AS, CHECK_FALSE},
-    morecomment=[l][\ImportTok]{\#}%
+{%
+  % actual reserved words
+  morekeywords=[1]{override},
+  % library types
+  keywords=[2]{size_t, ssize_t},
+  % library functions, macros, etc.
+  keywords=[3]{assert, abs, printf, scanf, sqrt, cin, cout, cerr,
+    toupper, strcmp, malloc, free,
+    fprintf, getchar,
+    stdin, stdout, stderr,
+    INT_MIN, INT_MAX, M_PI, NULL},
+  keywords=[4]{TEST_CASE, CHECK, CHECK_THROWS_AS, CHECK_FALSE},
+  morecomment=[l][\PreprocessorTok]{\#},%
+}
+
+\newcommand\set@current@lang[1]{%
+  \if@cxx
+    \lstset{language=[211]C++,#1}%
+  \else
+    \lstset{language=[211]C,#1}%
+  \fi
+}
+
+\newcommand\@old@dagger{†}
+\let\@current@dagger=\@old@dagger
+\newunicodechar{†}{\@current@dagger}
+
+\def\InstructionPointerColor{}
+\def\IPMARK{\InstructionPointerColor{\ensuremath{\blacktriangleright}}}
+\def\IP@plain#1{\uncover<#1>{\IPMARK}}
+\def\IP@pointy<#1>{\IP@plain{#1}}
+\def\IP{\@ifnextchar<\IP@pointy\IP@plain}
+
+\lstnewenvironment{Code}[1][]
+{%
+  \begingroup
+  \let\@current@dagger=\IP
+  \set@current@lang{#1}
+}
+{%
+  \endgroup
+}
+
+\newsavebox{\CodeHeading@savebox}
+
+\lstnewenvironment{CodeHeading}[2][]
+{%
+  \addcontentsline{toc}{subsubsection}{-- #2}%
+  \set@current@lang{%
+    aboveskip=2pt plus 0pt,
+    belowskip=2pt plus 0pt,
+    linewidth=0.95\linewidth,
+    #1
+  }%
+  \global\setbox\CodeHeading@savebox\vbox\bgroup
+}
+{%
+  \egroup
+  \vspace{.5ex plus 0.1ex}
+  \begin{trivlist}
+    \item\framebox[\linewidth]{\usebox{\CodeHeading@savebox}}
+  \end{trivlist}
+  \vspace{.25ex plus 0.05ex}
+}
+
+\lstnewenvironment{Make}[1][]
+{%
+  \begingroup
+  \lstset{%
+    language=[211]make,%
   }
+}
+{%
+  \endgroup
+}
+
+\newcommand{\textCode}{%
+  \set@current@lang{}%
+  \lstinline
+}
+
+\let\sup^
+\catcode`^\active
+\def^{\@ifnextchar^\nb@textCode\br@textCode}
+\def\nb@textCode^#1^^{\textCode{#1}}
+\def\br@textCode#1^{{%
+  \lstset{
+    breaklines=true,
+    breakatwhitespace=true,
+  }%
+  \textCode{#1}%
+}}
 
