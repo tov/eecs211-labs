@@ -1,8 +1,14 @@
 # For building CS 211 Lab 2
 
-CFLAGS     = -std=c11 -pedantic -Wall -fsanitize=address,undefined
-LDFLAGS    =
-CC        ?= cc
+### C compiler and flags
+# The C compiler to use:
+CC         ?= cc
+# Extra options for catching bad stuff:
+SANFLAGS    = -fsanitize=undefined,address
+# Flags for compiling individual files:
+CFLAGS      = -g -std=c11 -pedantic -Wall $(SANFLAGS)
+# Flags for linking the final program:
+LDFLAGS     = $(SANFLAGS)
 
 all: lab
 
