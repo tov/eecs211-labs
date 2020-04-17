@@ -59,10 +59,22 @@
 \newcommand\cmdline[1]{\prompt{\normalfont\ttfamily~#1}}
 \newcommand\keycombo[1]{\textsf{#1}}
 
-\newcommand\codeBasicstyle{\ttfamily}
-\newcommand\codeCommentstyle{\codeBasicstyle\color{gray}}
-\newcommand\codeKeywordstyle{\codeBasicstyle\bfseries}
-\newcommand\codeSpecialstyle{\codeKeywordstyle\color{red!30!black!80!white}}
+\newcommand\codestyleBasic       {\ttfamily\color{black}}
+\newcommand\codestyleComment     {\rmfamily\color{gray}\slshape}
+
+\newcommand\codestyle@color[1]   {\ttfamily\color{#1!black}}
+
+\newcommand\codestyleLiteral     {\codestyle@color{violet!90}\slshape}
+\newcommand\codestyleKeyword     {\codestyle@color{green!30}\bfseries}
+
+\newcommand\codestyleStdMacro    {\codestyle@color{orange!40}\bfseries}
+\newcommand\codestyleLibMacro    {\codestyle@color{orange!40}\bfseries}
+
+\newcommand\codestyleStdType     {\codestyle@color{cyan!60}}
+\newcommand\codestyleLibType     {\codestyle@color{cyan!60}}
+
+\newcommand\codestyleStdObject   {\codestyle@color{blue!60}}
+\newcommand\codestyleLibObject   {\codestyle@color{blue!60}}
 
 \colorlet{metavar@color}{DarkCyan}
 \newcommand\metavar[1]{%
@@ -75,20 +87,28 @@
 
 \lstset{%
   upquote=true,
-  basicstyle=\codeBasicstyle,
-  commentstyle=\codeCommentstyle,
-  keywordstyle=\codeKeywordstyle,
-  keywordstyle=[2]\codeKeywordstyle,
-  keywordstyle=[3]\codeSpecialstyle,
+  basicstyle=\codestyleBasic,
+  commentstyle=\codestyleComment,
+  keywordstyle=\codestyleKeyword,
+  keywordstyle=[2]\codestyleStdMacro,
+  keywordstyle=[3]\codestyleLibMacro,
+  keywordstyle=[4]\codestyleStdType,
+  keywordstyle=[5]\codestyleLibType,
+  keywordstyle=[6]\codestyleStdObject,
+  keywordstyle=[7]\codestyleLibObject,
+  stringstyle=\codestyleLiteral,
+  numberstyle=\codestyleLiteral,
   escapeinside={‹}{›},
 }
+
+\newcommand\inputText[1]{\textbf{\textcolor{magenta!60!black}{#1}}}
 
 \newenvironment{CmdLine}[1][3em]
   {%
     \ttfamily
     \def\O##1\\{\item{##1}}%
-    \def\C##1\\{\O\prompt~\textbf{##1}\\}%
-    \def\I##1\\{\O\textbf{##1}\\}%
+    \def\C##1\\{\O\prompt~\inputText{##1}\\}%
+    \def\I##1\\{\O\inputText{##1}\\}%
     \def\E##1\\{\O\underline{##1}\\}%
     \def\ETC{\O\ensuremath{\vdots}\\}%
     \def\finish@CmdLine{\O\prompt\\}%

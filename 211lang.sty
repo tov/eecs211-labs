@@ -19,22 +19,18 @@
 
 \lstdefinelanguage[211]{C}[ANSI]{C}%
 {%
-  % C library types
+  % C library macros
   morekeywords=[2]{%
-    size_t,ssize_t,%
-  },
-  % C definitions
-  morekeywords=[3]{%
     assert,%
-    NULL,%
+    CHAR_MIN,CHAR_MAX,UCHAR_MAX,SCHAR_MIN,SCHAR_MAX,
+    SHRT_MIN,SHRT_MAX,USHRT_MAX,
+    INT_MIN,INT_MAX,UINT_MAX,
+    LONG_MIN,LONG_MAX,ULONG_MAX,
+    LLONG_MIN,LLONG_MAX,ULLONG_MAX,
+    M_PI,NULL,%
   },
-  keywords=[3]{assert, abs, printf, scanf, sqrt,
-    toupper, strcmp, malloc, free,
-    fprintf, getchar,
-    stdin, stdout, stderr,
-    INT_MIN, INT_MAX, M_PI, NULL},
-  % lib211 definitions
-  keywords=[4]{%
+  % lib211 macros
+  morekeywords=[3]{%
     CHECK,%
     CHECK_CHAR,%
     CHECK_INT,CHECK_UINT,%
@@ -43,23 +39,74 @@
     CHECK_STRING,%
     CHECK_POINTER,%
   },
-  morecomment=[l][\PreprocessorTok]{\#},%
+  % C library types
+  morekeywords=[4]{%
+    FILE,size_t,ssize_t,%
+  },
+  % lib211 types
+  morekeywords=[5]{%
+  },
+  % C library functions
+  morekeywords=[6]{%
+    abs,fabs,fprintf,free,fscanf,%
+    getchar,islower,isupper,malloc,printf,%
+    scanf,sqrt,stderr,stdin,stdout,%
+    strcmp,toupper,%
+  },
+  % lib211 functions
+  morekeywords=[7]{%
+    eprintf,%
+    read_line,%
+    fread_line,%
+    prompt_line,%
+  },
+  % morecomment=[l][\PreprocessorTok]{\#},%
 }
 
 \lstdefinelanguage[211]{C++}[11]{C++}%
 {%
   % actual reserved words
-  morekeywords=[1]{override},
-  % library types
-  keywords=[2]{size_t, ssize_t},
-  % library functions, macros, etc.
-  keywords=[3]{assert, abs, printf, scanf, sqrt, cin, cout, cerr,
-    toupper, strcmp, malloc, free,
-    fprintf, getchar,
-    stdin, stdout, stderr,
-    INT_MIN, INT_MAX, M_PI, NULL},
-  keywords=[4]{TEST_CASE, CHECK, CHECK_THROWS_AS, CHECK_FALSE},
-  morecomment=[l][\PreprocessorTok]{\#},%
+  morekeywords=[1]{%
+    override,%
+  },
+  % C/C++ library macros
+  morekeywords=[2]{%
+    assert,%
+    static_assert,%
+    INT_MIN,INT_MAX,M_PI,NULL,%
+  },
+  % catch macros
+  morekeywords=[3]{%
+    TEST_CASE,CHECK,CHECK_THROWS_AS,CHECK_FALSE,%
+  }
+  % Standard library types
+  morekeywords=[4]{%
+    % C
+    FILE,size_t,ssize_t,%
+    % C++
+    string,vector,%
+    istream,ostream,%
+    ifstream,ofstream,%
+  },
+  % ge211 types
+  morekeywords=[5]{%
+    Sprite,%
+  },
+  % Standard library functions
+  morekeywords=[6]{%
+    % C
+    abs,fabs,fprintf,free,fscanf,%
+    getchar,isupper,malloc,printf,%
+    scanf,sqrt,stderr,stdin,stdout,%
+    strcmp,toupper,%
+    % C++:
+    cin,cout,cerr,%
+    getline,%
+  },
+  % ge211 functions
+  morekeywords=[7]{%
+  },
+  % morecomment=[l][\PreprocessorTok]{\#},%
 }
 
 \newcommand\set@current@lang[1]{%
