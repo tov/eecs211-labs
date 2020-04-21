@@ -122,10 +122,17 @@
 \newunicodechar{†}{\@current@dagger}
 
 \def\InstructionPointerColor{}
-\def\IPMARK{\InstructionPointerColor{\ensuremath{\blacktriangleright}}}
-\def\IP@plain#1{\uncover<#1>{\IPMARK}}
-\def\IP@pointy<#1>{\IP@plain{#1}}
-\def\IP{\@ifnextchar<\IP@pointy\IP@plain}
+\def\ReturnAddressColor{}
+
+\def\IPMARK#1{%
+  \alt<#1>
+    {\InstructionPointerColor{\ensuremath{\blacktriangleright}}}
+    {\ReturnAddressColor{\ensuremath{\blacktriangleleft}}}%
+}
+
+\def\IP@plain#1#2{\uncover<#1,#2>{\IPMARK{#2}}}
+\def\IP@pointy#1<#2>{\IP@plain{#1}{#2}}
+\newcommand\IP[1][0]{\@ifnextchar<{\IP@pointy{#1}}{\IP@plain{#1}}}
 
 \lstnewenvironment{Code}[1][]
 {%
