@@ -12,7 +12,7 @@ Today we are going to practice manipulating "strings".
 
 \section{Getting Started}
 Let's get started by logging into a remote Northwestern server. We did this last week, but if you need help remembering the steps, they are included below.\marginnote{The list of remote Northwestern servers can
-be found here: \url{\LabHostnamesUrl}}
+be found here: \LabHostnamesLink}
 
 \subsection{Windows}
 Open PuTTY. You'll need to enter a hostname to login to. The link on the
@@ -20,9 +20,9 @@ right will take you to a list of student lab hostnames (such as \hostname{alfred
 
 \subsection{Mac/Linux}
 Open up your terminal. At the prompt, use the ssh command of the form
-\begin{CmdLine}
-  \prompt ssh \metavar{eecs-id}@\metavar{eecs-host}.eecs.northwestern.edu
-\end{CmdLine}
+\begin{CmdLine*}
+  \C ssh \metavar{eecs-id}@\metavar{eecs-host}.eecs.northwestern.edu \\
+\end{CmdLine*}
 \noindent where \metavar{eecs-id} is your EECS username (probably your NetID)
 and \metavar{eecs-host} is replaced by one of the EECS hostnames from the list
 of student lab hostnames (such as \hostname{alfred.eecs.northwestern.edu} or
@@ -39,9 +39,9 @@ code into your directory of choice. We suggest that you keep your EECS
 211 files in an \filename{eecs211/} subdirectory of your home directory,
 but it's up to you.
 
-\begin{CmdLine}
-  \prompt curl \$URL211/lab/\ThisLabBase.tgz | tar zxvk
-\end{CmdLine}
+\begin{CmdLine*}
+  \C curl \$LAB211/\ThisLabBase.tgz | tar zxvk\\
+\end{CmdLine*}
 
 You should now have a directory called \filename{\ThisLabBase}.
 
@@ -53,9 +53,9 @@ open a remote connection and plan on compiling C code.
 \section{Writing the code}
 Navigate to your \filename{\ThisLabBase} directory, and open up
 \filename{src/lab3.c} in Emacs using
-\begin{CmdLine}
-  \prompt emacs -nw src/lab3.c
-\end{CmdLine}
+\begin{CmdLine*}
+  \C emacs -nw src/lab3.c\\
+\end{CmdLine*}
 
 \noindent
 Notice that there is already some skeletons of functions and some code in \functionname{main()} here.
@@ -94,15 +94,15 @@ Once you think that your function works as intended, save and and try
 compiling and running it.\marginnote{\keycombo{C-x C-s} to save} If you
 remember from last week, we used the \functionname{make} command in
 order to turn our C file into machine code. Run:
-\begin{CmdLine}
-  \prompt make build/lab3
-\end{CmdLine}
+\begin{CmdLine*}
+  \C make lab3\\
+\end{CmdLine*}
 \marginnote{Remember, make works as follows: \cmdline{make [target]}.
 Target is usually the name of the executable file that will be built by the make command.}
-If everything works, if we list the files in \texttt{build}, we should now see a file called \filename{lab3}.  Enter the command
-\begin{CmdLine}
-  \prompt build/lab3
-\end{CmdLine}
+If everything works, if we list the files in \texttt{.}, we should now see a file called \filename{lab3}.  Enter the command
+\begin{CmdLine*}
+  \C ./lab3\\
+\end{CmdLine*}
 See if your value looks right!  If it doesn't, don't worry, Rome wasn't built in a day. Try and see what went wrong.\marginnote{Error messages may look scary, but in reality, they're there to help you!  Not intimidate you!}  Play around with the value of \varname{s} and \varname{c} to see how it affects the result.
 
 \subsection{{bool is\_prefix\_of(const char *haystack,
