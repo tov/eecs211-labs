@@ -103,13 +103,28 @@
 
 \newcommand\inputText[1]{\textbf{\textcolor{magenta!60!black}{#1}}}
 
+\def\Cmd@output#1\\{\item{#1}}
+\def\Cmd@prompt@cont#1#2\\{\Cmd@output#1\prompt~\inputText{#2}\\}
+\def\Cmd@input#1\\{\Cmd@output\inputText{#1}\\}
+\def\Cmd@error#1\\{\Cmd@output\underline{#1}\\}
+
+\newcommand\Cmd@status[1]{%
+  \ifx#1\relax\else
+    \textcolor{red!70!black}{[\textbf{#1}]}%
+  \fi
+}
+
+\newcommand\Cmd@prompt[1][\relax]{%
+  \Cmd@prompt@cont{\Cmd@status{#1}}%
+}
+
 \newenvironment{CmdLine}[1][3em]
   {%
     \ttfamily
-    \def\O##1\\{\item{##1}}%
-    \def\C##1\\{\O\prompt~\inputText{##1}\\}%
-    \def\I##1\\{\O\inputText{##1}\\}%
-    \def\E##1\\{\O\underline{##1}\\}%
+    \let\O\Cmd@output
+    \let\C\Cmd@prompt
+    \let\I\Cmd@input
+    \let\E\Cmd@error
     \def\ETC{\O\ensuremath{\vdots}\\}%
     \def\finish@CmdLine{\O\prompt\\}%
     \def\NoPrompt{\let\finish@CmdLine\relax}%
