@@ -100,7 +100,7 @@ static int dbl(int z) { return z * 2; }
 
 static void dblp(int* pz) { *pz *= 2; }
 
-int main()
+int main(void)
 {
     print_list(empty);
 

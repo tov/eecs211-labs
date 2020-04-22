@@ -52,18 +52,18 @@ void strip_concat_test(void)
 {
     const char* input[] = {
         "// the simplest C program",
-        "int main()",
+        "int main(void)",
         "{",
         "    // optional:",
         "    return 0;",
         "}"
     };
-    const char* expected = "int main()\n{\n    return 0;\n}\n";
+    const char* expected = "int main(void)\n{\n    return 0;\n}\n";
 
     check_strip_concat(input, ARRAYLEN(input), expected);
 }
 
-int main()
+int main(void)
 {
     string_concat_test();
     tiny_strip_concat_test();

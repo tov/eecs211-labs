@@ -1,27 +1,19 @@
 # For building CS 211 Lab 4
 
-# C compiler options (language version & warnings):
-CFLAGS     = -std=c11 -pedantic -Wall
-# C compiler flags to do extra checking:
-CFLAGS    + -fsanitize=address,undefined -fno-omit-frame-pointer
-# C compiler flag to include debugger symbols:
-# CFLAGS    += -g
-# Linker options:
-LDFLAGS   += -l211
+### C compiler and flags
+# The C compiler to use:
+CC         ?= cc
+# Extra options for catching bad stuff:
+SANFLAGS    = -fsanitize=undefined,address
+# Flags for compiling individual files:
+CFLAGS      = -g -std=c11 -pedantic @.Wflags $(SANFLAGS)
+# Flags for linking the final program:
+LDFLAGS     = -l211 $(SANFLAGS)
 
+TESTS       = test_cons test_heap_string test_string_fun
+EXES        = asan_example $(TESTS)
 
-# Plain C compiler command:
-CC        ?= cc
-# Command for compiling one C source file:
-COMPILE.c  = $(CC) -c -o $@ $< $(CPPFLAGS) $(CFLAGS)
-# Command for linking a C program:
-LINK.c     = $(CC) -o $@ $^ $(CFLAGS) $(LDFLAGS)
-
-
-TESTS = build/test_cons build/test_heap_string build/test_string_fun
-ALL   = build/asan_example $(TESTS)
-
-all: $(ALL)
+all: $(EXES)
 
 test: $(TESTS)
 	for i in $^; do \
@@ -30,41 +22,35 @@ test: $(TESTS)
 	  echo; \
 	done
 
-build/asan_example: build/src/asan_example.o
-	$(LINK.c)
+asan_example: src/asan_example.o
+	$(CC) -o $@ $^ $(CFLAGS) $(LDFLAGS)
 
-build/test_cons: build/test/test_cons.o build/src/cons.o
-	$(LINK.c)
+test_cons: test/test_cons.o src/cons.o
+	$(CC) -o $@ $^ $(CFLAGS) $(LDFLAGS)
 
-build/test_string_fun: build/test/test_string_fun.o \
-                       build/src/string_fun.o \
-                       build/src/heap_string.o \
-		       build/src/ptr_string.o
-	$(LINK.c)
+test_string_fun: test/test_string_fun.o src/string_fun.o \
+                 src/heap_string.o src/ptr_string.o
+	$(CC) -o $@ $^ $(CFLAGS) $(LDFLAGS)
 
-build/test_heap_string: build/test/test_heap_string.o \
-                        build/src/heap_string.o \
-			build/src/ptr_string.o
-	$(LINK.c)
+test_heap_string: test/test_heap_string.o src/heap_string.o src/ptr_string.o
+	$(CC) -o $@ $^ $(CFLAGS) $(LDFLAGS)
 
-build/%.o: %.c
-	@mkdir -p "$$(dirname "$@")"
-	$(COMPILE.c)
+%.o: %.c
+	$(CC) -c -o $@ $< $(CPPFLAGS) $(CFLAGS)
 
 clean:
-	rm -Rf build
+	$(RM) $(EXES) */*.o
 
 # Targets that are not actually files we can build:
 .PHONY: all test clean
 
 # Dependencies:
-build/src/ptr_string.o: src/ptr_string.h
-build/src/heap_string.o: src/ptr_string.h src/heap_string.h
-build/test/test_heap_string.o: src/ptr_string.h src/heap_string.h
-build/src/string_fun.o: src/ptr_string.h src/heap_string.h src/string_fun.h
-build/test/test_string_fun.o: src/ptr_string.h src/heap_string.h \
-                              src/string_fun.h
-build/test/test_cons.o: src/cons.h
+src/heap_string.o: src/ptr_string.h src/heap_string.h
+src/ptr_string.o: src/ptr_string.h
+src/string_fun.o: src/ptr_string.h src/heap_string.h src/string_fun.h
+test/test_cons.o: src/cons.h
+test/test_heap_string.o: src/ptr_string.h src/heap_string.h
+test/test_string_fun.o: src/ptr_string.h src/heap_string.h src/string_fun.h
 
 # Ensure we have the correct C compiler version:
 CSHOST = .northwestern.edu

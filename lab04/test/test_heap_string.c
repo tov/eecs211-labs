@@ -15,7 +15,7 @@ void test_str_toupper_clone(void)
     free(clone);
 }
 
-int main()
+int main(void)
 {
     test_str_toupper_clone();
 }
