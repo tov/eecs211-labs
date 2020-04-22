@@ -13,7 +13,7 @@ void test_str_chr()
     assert( str_chr(hello, '!') == NULL );
 }
 
-int main()
+int main(void)
 {
     test_str_chr();
 }

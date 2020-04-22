@@ -23,7 +23,7 @@ int sum_numbers(int);
 // Function definitions
 //
 
-int main()
+int main(void)
 {
     struct apple delicious = { 0.3, "Red Delicious", "red" };
 
