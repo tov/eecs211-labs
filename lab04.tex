@@ -1,16 +1,20 @@
 \documentclass[11pt]{article}
 
-\let\marginpar\footnote
 \usepackage{microtype}
+\usepackage{mathspec}
 \usepackage{fullpage}
-\usepackage{xcolor}
-\usepackage{charter}
+\usepackage[dvipsnames]{xcolor}
 \usepackage{titlesec}
 \usepackage{multicol}
-\usepackage{211lab}
 \usepackage{parskip}
 
-\def\LabTGZ{\$URL211/lab/lab04.tgz}
+\setallmainfonts{Charter}
+\setallsansfonts{Latin Modern Sans}
+\setallmonofonts[Scale=MatchLowercase]{Menlo}
+
+\newcommand\keyterm[1]{\textcolor[HTML]{006600}{\emph{#1}}}
+
+\def\LabTGZ{\$LAB211/lab04.tgz}
 
 \newcommand\dbc[2]{{%
   \sffamily\upshape\mdseries
@@ -29,7 +33,7 @@
   {\normalfont\sffamily\LARGE\mdseries}
   {\thesection}{0.6em}{}
 \titleformat{\subsection}
-  {\normalfont\sffamily\Large\mdseries}
+  {\normalfont\sffamily\large\mdseries}
   {\thesubsection}{0.8em}{}
 
 \pagestyle{empty}
@@ -54,7 +58,7 @@
 
 GDB is a debugger lets you see inside your program while it runs. You
   can step through it line by line, or you can choose a particular place
-  to stop—a \emph{breakpoint}—and then have it continue at full speed
+  to stop—a \keyterm{breakpoint}—and then have it continue at full speed
   until it reaches the point where you’ve asked it to pause. You can
   print out the values of objects, modify their values, and even call
   functions.
@@ -64,29 +68,27 @@ GDB is a debugger lets you see inside your program while it runs. You
   % \begin{itemize}
 
       1) You’ll need some code to debug. You might try your current
-      homework or previous one, or there’s some string and linked list
-      code from lecture, prepared for this lab, that you can download
-      from \textsf{\LabTGZ} (using \verb!curl! and \verb!tar zxvk!
-      like usual).
+      homework or previous one, or there’s some code from lecture
+      involving strings and linked lists, prepared for this lab, that
+      you can download from \textsf{\LabTGZ} (using \verb!curl! and
+      \verb!tar zxvk! like usual).
 
       2) To use the debugger, you need to compile your C code with the
-      \verb!-g! flag. The \verb!Makefile! that comes in
-      \textsf{lab04.tgz} has
-      the line you want, but commented out:
+      \verb!-g! flag. The \verb!Makefile!'s we supply you with usually
+      come with that already, but the \verb!Makefile! in
+      \textsf{lab04.tgz} has it commented out, like so:
+
       \begin{verbatim}
       # CFLAGS    += -g\end{verbatim}
 
-      Removing the \verb!#! at the beginning of the line will enable the
-      option.
+      You need to remove the \verb!#! at the beginning of the line to
+      enable the option.
 
-      The \verb!Makefile! of other code you want to debug, such as your
-      homework, may or may not have \verb!-g! in its \verb!CFLAGS!, so
-      you’ll need to check and add it if it isn’t there.
-
-      3) GDB can be run directly from the the shell, but if you run it
+      3) GDB can be run directly from the shell, but if you run it
       in Emacs then Emacs will help you out by showing you the
-      debugger’s position in your code. The way GDB does that on its own
-      is not very friendly. But to use GDB from Emacs, you’ll want to
+      debugger’s position in your code. You \emph{definitely} want that,
+      because the way GDB shows context on its own
+      is not very friendly. But to use GDB from Emacs, you’ll need to
       learn a bit more Emacs. In particular, you need to understand
       windows and buffers, and you need to be able to issue Emacs
       “\textsf{M-x}” commands.
@@ -99,10 +101,10 @@ GDB is a debugger lets you see inside your program while it runs. You
 
 Emacs lets you edit more than one file at a time, and that can include
   files that are open but aren’t currently displayed. Each thing you’re
-  working on (usually a file, but possibly a compilation or GDB
-  session), whether visible or not, is kept in a \emph{buffer}. The
-  rectangles on the screen that some buffers are displayed in are called
-  \emph{windows}. You can open and close windows, switch between them,
+  working on (usually a file, but possibly a compiler run or GDB
+  session), whether visible or not, is kept in a \keyterm{buffer}. The
+  rectangles in the terminal that some buffers are displayed in are called
+  \keyterm{windows}. You can open and close windows, switch between them,
   and switch which buffer is displayed in each window.
 
 \begin{commands}
@@ -117,9 +119,9 @@ Emacs lets you edit more than one file at a time, and that can include
 \subsection*{Running Things}
 
 \textsf{M-x} introduces commands that are whole words (or Emacs Lisp
-  variable names) rather than just keystrokes. So when you press it, a
-  command line will open at the bottom of Emacs for you to type the rest
-  of the command (and press Enter).
+  function names) rather than just keystrokes. So when you press it, a
+  command line (called the ``minibuffer'') will open at the bottom of
+  Emacs for you to type the rest of the command (and press Enter).
 
   Ah, but how do you type \textsf{M(eta)-}, a modifier key that your
   keyboard likely doesn’t have? You can configure your terminal to send
@@ -143,13 +145,22 @@ Emacs lets you edit more than one file at a time, and that can include
 
 \end{commands}
 
+\subsection*{Getting Unstuck}
+
+At some point, you may find yourself stuck in the minibuffer with Emacs
+complaining about every keystroke. To get out, use:
+
+\begin{commands}
+\item[C-g] Quit the current operation.
+\end{commands}
+
 \subsection*{Help}
 
 \begin{commands}
-\item[C-h a] Search for commands \emph{apropos to} a word.
-\item[C-h d] Search the documentation.
-\item[C-h k] Get help on a key combination.
-\item[C-h l] Show your last 300 keystrokes (to find
+\item[C-h a] Search for commands \emph{\underline  apropos to} a word.
+\item[C-h d] Search the \underline  documentation.
+\item[C-h k] Get help on a \underline  key combination.
+\item[C-h l] See your \underline  last 300 keystrokes (to find
   out what you did just now).
 \item[C-h ?] Get help on help.
 \end{commands}
@@ -171,7 +182,7 @@ Emacs lets you edit more than one file at a time, and that can include
 \begin{description}
   \item[\dbc{file}{} \abw{FILE}] Tells GDB where to load your program
     from. This is relative to GDB’s working directory, so
-    something like \verb!../build/count!.
+    something like \verb!../count!.
 
   \item[\dbc{pwd}{}] Prints GDB’s working directory.
 
