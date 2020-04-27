@@ -6,9 +6,14 @@ CC         ?= cc
 # Extra options for catching bad stuff:
 SANFLAGS    = -fsanitize=undefined,address
 # Flags for compiling individual files:
-CFLAGS      = -g -std=c11 -pedantic @.Wflags $(SANFLAGS)
+CFLAGS      = -std=c11 -pedantic @.Wflags $(SANFLAGS)
 # Flags for linking the final program:
 LDFLAGS     = -l211 $(SANFLAGS)
+
+
+### Uncommenting the next line will enable debugging:
+# CFLAGS     += -g
+
 
 TESTS       = test_cons test_heap_string test_string_fun
 EXES        = asan_example $(TESTS)
@@ -17,8 +22,8 @@ all: $(EXES)
 
 test: $(TESTS)
 	for i in $^; do \
-	  echo "Running $$i:"; \
-	  $$i; \
+	  echo "*** Running $$i: ***"; \
+	  ./$$i; \
 	  echo; \
 	done
 
