@@ -22,10 +22,12 @@
   #2}}
 \newcommand\abw[1]{$\langle\mathit{#1}\rangle$}
 
+\newcommand\keycombo[1]{{\sffamily\upshape\bfseries#1}}
+
 \newenvironment{commands}
 {\bgroup
   \let\olditem\item
-  \def\item[##1]{\olditem[{\sffamily\upshape\bfseries##1}]}%
+  \def\item[##1]{\olditem[\keycombo{##1}]}%
   \begin{description}}
   {\end{description}\egroup}
 
@@ -114,6 +116,7 @@ Emacs lets you edit more than one file at a time, and that can include
 \item[C-x o] Other window, go there.
 \item[C-x b] View a different buffer in this window.
 \item[C-x C-b] Show a list of buffers.
+\item[C-x C-f] Find a file to open in this window.
 \end{commands}
 
 \subsection*{Running Things}
