@@ -1,5 +1,5 @@
 # The default lab to build when running just `make`:
-DEFAULT = lab03
+DEFAULT = lab04
 
 TEXS      = $(wildcard lab*.tex)
 PDFS      = $(TEXS:.tex=.pdf)
@@ -32,7 +32,7 @@ build/%.cmd: %.tex Makefile | build
 	@(                                                 \
 	    if fgrep -q tufte-handout $<;                  \
 	        then LATEX=pdflatex;                       \
-	        else LATEX=lualatex;                       \
+	        else LATEX=xelatex;                       \
 	    fi;                                            \
 	    printf 'TEXINPUTS="%s" %s %s $< </dev/null\n'  \
 	           "$(TEXINPUTS)" "$$LATEX" "$(TEXOPTS)";  \
