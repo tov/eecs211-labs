@@ -52,9 +52,8 @@ char* strip_concat(const char* lines[], size_t count)
 
     for (size_t i = 0; i < count; ++i) {
         if (! is_comment(lines[i])) {
-            // stpcpy is like strcpy, but it returns a pointer to where
-            // it put the terminating '\0'.
-            fill = stpcpy(fill, lines[i]);
+            strcpy(fill, lines[i]);
+            fill += strlen(lines[i]);
             *fill++ = '\n';
         }
     }
