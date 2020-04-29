@@ -4,11 +4,11 @@
 # The C compiler to use:
 CC         ?= cc
 # Extra options for catching bad stuff:
-SANFLAGS    = -fsanitize=undefined,address
+SANFLAGS   += -fsanitize=undefined,address
 # Flags for compiling individual files:
-CFLAGS      = -std=c11 -pedantic @.Wflags $(SANFLAGS)
+CFLAGS     += -std=c11 -pedantic @.Wflags $(SANFLAGS)
 # Flags for linking the final program:
-LDFLAGS     = -l211 $(SANFLAGS)
+LDFLAGS    += -l211 $(SANFLAGS)
 
 
 ### Uncommenting the next line will enable debugging:
