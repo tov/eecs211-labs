@@ -76,15 +76,9 @@ GDB is a debugger lets you see inside your program while it runs. You
       \verb!tar zxvk! like usual).
 
       2) To use the debugger, you need to compile your C code with the
-      \verb!-g! flag. The \verb!Makefile!'s we supply you with usually
-      come with that already, but the \verb!Makefile! in
-      \textsf{lab04.tgz} has it commented out, like so:
-
-      \begin{verbatim}
-      # CFLAGS    += -g\end{verbatim}
-
-      You need to remove the \verb!#! at the beginning of the line to
-      enable the option.
+      \verb!-g! flag. The \verb!Makefile!'s we supply you with come
+      with that enabled already, so you should be all set. But if you
+      run \verb!cc! by hand, don't forget to tell it \verb!-g!.
 
       3) GDB can be run directly from the shell, but if you run it
       in Emacs then Emacs will help you out by showing you the
