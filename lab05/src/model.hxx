@@ -7,12 +7,6 @@ ge211::Dimensions const scene_dimensions{1024, 768};
 const int large_radius = 30;
 const int small_radius = 10;
 
-enum class Collision_state
-{
-    touching,
-    not_touching,
-};
-
 struct Model
 {
     // Member functions
@@ -23,7 +17,7 @@ struct Model
     void move_large_circle_up();
     void move_large_circle_down();
 
-    Collision_state get_state() const;
+    bool is_touching() const;
 
     ge211::Position large_upper_left() const;
     ge211::Position small_upper_left() const;

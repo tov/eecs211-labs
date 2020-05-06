@@ -52,7 +52,7 @@ TEST_CASE("get collision state touching")
     pos.y += large_radius - small_radius;
     model.move_small_circle_to(pos);
 
-    CHECK( model.get_state() == Collision_state::touching );
+    CHECK( model.is_touching() );
 }
 
 TEST_CASE("get collision state not touching")
@@ -63,5 +63,5 @@ TEST_CASE("get collision state not touching")
     // YOUR SETUP HERE
     //
 
-    CHECK( model.get_state() == Collision_state::not_touching );
+    CHECK_FALSE( model.is_touching() );
 }

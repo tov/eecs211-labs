@@ -26,12 +26,10 @@ static double distance(ge211::Position pos1, ge211::Position pos2)
 static const ge211::Dimensions small_dims{2 * small_radius, 2 * small_radius};
 static const ge211::Dimensions large_dims{2 * large_radius, 2 * large_radius};
 
-Collision_state Model::get_state() const
+bool Model::is_touching() const
 {
-    if (distance(small_center_, large_center_) <= large_radius + small_radius)
-        return Collision_state::touching;
-    else
-        return Collision_state::not_touching;
+    double dist = distance(small_center_, large_center_);
+    return dist <= large_radius + small_radius;
 }
 
 ge211::Position Model::large_upper_left() const

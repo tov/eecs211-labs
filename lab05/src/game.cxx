@@ -47,16 +47,12 @@ void Game::draw(ge211::Sprite_set& sprites)
 {
     sprites.add_sprite(small_sprite_, model_.small_upper_left());
 
-    switch (model_.get_state()) {
-        case Collision_state::touching:
-            sprites.add_sprite(large_sprite_collide_,
-                               model_.large_upper_left());
-            break;
-
-        case Collision_state::not_touching:
-            sprites.add_sprite(large_sprite_normal_,
-                               model_.large_upper_left());
-            break;
+    if (model_.is_touching()) {
+        sprites.add_sprite(large_sprite_collide_,
+                           model_.large_upper_left());
+    } else {
+        sprites.add_sprite(large_sprite_normal_,
+                           model_.large_upper_left());
     }
 }
 
