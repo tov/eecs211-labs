@@ -1,11 +1,10 @@
 \documentclass{tufte-handout}
 
-\usepackage{211lab}
+\usepackage[cxx]{211lab}
+
 \LabInfo{5}{Welcome to C++}
 
 \begin{document}
-
-\catcode`\#=12
 
 \maketitle
 
@@ -16,7 +15,8 @@ the two circles overlap, one changes color. As you will see, however, it
 comes with a bug.
 
 Before you can get started, you’ll need to install a C++ and GE211
-development environment. This means you’ll be setting up a C++ compiler,
+development environment. This means you’ll be setting up\marginpar{The
+C++ setup instructions are \href{\CxxSetupUrl}{here}.} a C++ compiler,
 the CLion IDE, and the SDL2 graphics libraries. Read on\ldots.
 
 \CxxPrelims*
@@ -37,9 +37,9 @@ done try running your code against the tests.
 
 As you have seen, the circle that is controlled by the keyboard only
 moves horizontally right now. Add two member functions to the
-\verb!Model! struct, \texttt{Model::move\_large\_circle\_up()} and
-\texttt{Model::move\_large\_circle\_down()}, and connect them to the
-keyboard by modifying the \texttt{Game::on\_key(Key)} member function in
+^Model^ struct, ^Model::move_large_circle_up()^ and
+^Model::move_large_circle_down()^, and connect them to the
+keyboard by modifying the ^Game::on_key(Key)^ member function in
 \filename{game.cpp}.
 
 \subsection{Click, not hover}
@@ -49,8 +49,8 @@ mouse. However, what if we want the game to only update the position of
 smaller circle when we click? To detect mouse clicks, you will have to
 override the
 \href{https://bit.ly/39jNovM}
-{\texttt{Abstract\_game::on\_mouse\_down(Mouse\_button, Position)}}
-function in the \verb!Game! struct.
+{^Abstract_game::on_mouse_down(Mouse_button, Position)^}
+function in the ^Game^ struct.
 \marginpar{The function signature
 is a link to the function’s documentation.}
 
@@ -60,8 +60,8 @@ The current tests include a few examples that should pass
 for your code. Add two new test cases for the new functions you added to
 the model, and verify that they do what you expect.
 
-There is a test case that checks that the state will sometimes be
-\verb!Collision_state::touching!. Fill in the final test for checking
-when the circles aren't touching.
+There is a test case that checks that ^Model::is_touching()^ will
+sometimes return ^true^ to indicate that the circles are touching.
+Fill in the final test for checking when the circles aren't touching.
 
 \end{document}
