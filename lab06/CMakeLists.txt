@@ -4,7 +4,7 @@ include(.cs211/cmake/CMakeLists.txt)
 
 # Builds program `key_racer` from the four listed source files:
 add_program(key_racer
-        src/main.cxx
+        src/key_racer.cxx
         src/model.cxx
         src/view.cxx
         src/controller.cxx)
@@ -15,4 +15,3 @@ add_test_program(model_test
         test/model_test.cxx
         src/model.cxx)
 target_link_libraries(model_test ge211)
-
