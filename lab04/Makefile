@@ -6,7 +6,7 @@ CC         ?= cc
 # Extra options for catching bad stuff:
 SANFLAGS   += -fsanitize=undefined,address
 # Flags for compiling individual files:
-CFLAGS     += -g -std=c11 -pedantic @.Wflags $(SANFLAGS)
+CFLAGS     += -g -O1 -std=c11 -pedantic @.Wflags $(SANFLAGS)
 # Flags for linking the final program:
 LDFLAGS    += -l211 $(SANFLAGS)
 
