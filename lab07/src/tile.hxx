@@ -14,7 +14,7 @@ class Tile
     };
 
 public:
-    struct Action;
+    class Action;
     using Action_list = std::vector<const Action*>;
 
     Tile();

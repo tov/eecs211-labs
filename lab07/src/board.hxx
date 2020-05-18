@@ -5,7 +5,7 @@
 #include <unordered_set>
 #include <vector>
 
-struct Tile;
+class Tile;
 
 class Board
 {
