@@ -45,4 +45,19 @@ build:
 clean:
 	$(RM) -R build *.pdf
 
-.PHONY: default hard all clean
+watch:
+	fswatch $(TEXS) | $(MAKE) watch-stdin
+
+watch1:
+	(printf '%s\n' $(TEXS); fswatch $(TEXS)) | $(MAKE) watch-stdin
+
+watch-stdin:
+	@while read tex; do \
+	  pdf=$$(basename $$tex .tex).pdf; \
+	  clear; \
+	  echo "=== Building $$pdf ==="; \
+	  $(MAKE) $$(basename $$pdf); \
+	  echo "=== Done: $$? ==="; \
+	done
+
+.PHONY: default hard all clean watch watch1 watch-stdin
