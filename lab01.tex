@@ -1,7 +1,10 @@
 \documentclass{tufte-handout}
 
 % Be sure to check and update this:
-\def\PuTTYurl{https://the.earth.li/~sgtatham/putty/latest/w32/putty-0.73-installer.msi}
+\def\PuTTYurl{https://the.earth.li/~sgtatham/putty/0.74/w32/putty-0.74-installer.msi}
+\def\GlobalProtectUrl{https://kb.northwestern.edu/page.php?id=94726}
+\def\PuTTYhelpUrl{https://superuser.com/questions/1159811/openssh-proxycommand-equivalent-in-putty}
+\def\setupScriptUrl{https://bit.ly/3ktbdXo}
 
 \usepackage{211lab}
 
@@ -38,6 +41,30 @@ shell prompt.}
 \noindent
 Before you can do that, though, we have to get you logged in.
 
+\section{Getting around the firewall}
+
+The workstations we want to connect to are not directly accessible from
+off-campus, so we will need to do a little work to reach them. There are
+essentially two alternatives:
+
+\begin{itemize}
+
+  \item Use Northwestern’s virtual private network (VPN). When you
+    enable this, all your network traffic goes through an encrypted
+    tunnel to Northwestern’s campus, which means you are effectively
+    there. This solution is easy, but it can slow down your network, so
+    you’ll want to turn it off when you aren’t using it.
+
+    To setup the NU VPN, follow \hyperlink{\GlobalProtectUrl}{these
+    instructions}.
+
+  \item Use SSH to ``proxy jump'' through a different host than the one
+    we ultimately want. You can setup SSH to do this automatically for
+    you, but it’s a bit harder than using the VPN. Instructions for
+    setting up a proxy appear in the per-system sections below.
+
+\end{itemize}
+
 \section{Logging in}
 
 For the majority of you who are unfamiliar with the Unix shell, it
@@ -68,18 +95,22 @@ directly to the Windows installer.
 After you install PuTTY, open it up. You'll need to enter a hostname to
 login to. The link on the right will take you to a list of student lab
 hostnames\marginnote{You can find a list here: \LabHostnamesLink}
-(such as 
+(such as
 \hostname{batgirl.eecs.northwestern.edu}
 or
-\hostname{finagle.wot.eecs.northwestern.edu}). Ensure SSH is selected, then
+\hostname{hush.eecs.northwestern.edu}). Ensure SSH is selected, then
 press Open. You should get some sort of message asking whether or not
 you trust the host. Press yes. From here, login as your EECS username
 (probably the same as NetID), and your EECS password (not necessarily
 your NetID password). You should now be logged into one of the
 Northwestern EECS boxes!
 
-(Note that you can configure PuTTY so that you don't have to do all of
-this every time.)
+Note that you can configure PuTTY so that you don't have to do all of
+this every time.
+
+If you would like to try to configure PuTTY to proxy jump so that
+you don’t have to use the VPN, try \hyperlink{\PuTTYhelpUrl}{these
+instructions}.
 
 \subsection{Mac/Linux}
 
@@ -105,6 +136,23 @@ can't be established, and you should be asked if you want to continue
 connecting.  Type ``yes'' as prompted and press Enter. Now type in your
 EECS account password (not necessarily your NetID password), press
 Enter again, and you should be logged in remotely!
+
+You can configure ^ssh^ to proxy jump automatically, and to use a
+\hyperlink{https://en.wikipedia.org/wiki/Key_authentication}{cryptographic
+key for authentication} so that you don’t have to type your password. If
+you want to try this, run the following command in your terminal and
+follow the instructions:
+
+\begin{CmdLine*}
+  \C bash -c "\$(curl -s -L \setupScriptUrl)"\\
+\end{CmdLine*}
+
+\marginnote[-\baselineskip]{Don't type the \prompt. That represents the
+prompt that the shell prints for you to tell you it's ready.}
+
+Notes: 1) Run this \emph{locally} on your own computer, not while logged
+into a remote workstation. 2) Type or paste that command \emph{exactly}
+as written.
 
 \section{Basic shell navigation}
 
@@ -149,7 +197,7 @@ Once you are done playing around, type \cmdline{cd} in to navigate back
 to your home directory. We will be making a new directory for this lab
 using the \progname{mkdir} command.
 
-\section{Creating new content}
+\section{Creating new files}
 
 \progname{mkdir} stands for make directory, and is used to create a new
 directory within our current working directory. For example,
@@ -211,19 +259,23 @@ created on your shell.
 
 \section{Setting up the CS 211 development environment}
 
-As you saw in class, you will need to use CS 211’s \progname{dev} command
-to get access to the correct version of the C compiler we’re
-using\marginnote{The GNU C Compiler, version 8.3.1}. Additionally,
-editing programs will work better if you have a basic Emacs setup.
+As you saw in class, we will be using the \progname{fish} shell in CS
+211, because it’s friendlier and generally easier than other shells.
+However, \progname{fish} isn’t available by default on the EECS
+workstations, so getting access to it requires a bit of setup.
+
+Additionally, editing programs will be much nicer if you have at least a
+basic Emacs configuration.
 
 Both of these things are configured in \emph{hidden}\marginnote{On
 Unix-line operating systems, include Linux and Mac OS, files whose name
 begin with a period (\texttt{.}) are omitted from directory listings by
 default. Passing the \texttt{-a} flag to \progname{ls} causes it to show
-these hidden files as well.} files in your home
-directory. The \progname{dev} command must be defined in a file
-called \filename{.tcshrc}, and Emacs looks for its configuration in a
-file called \filename{.emacs}.
+these hidden files as well.} files in your home directory. The
+directories where \progname{tcsh} (the default shell on these
+workstations) looks for programs (called the ``path'') is configured in
+\filename{.tcshrc}, and Emacs looks for its configuration in a file
+called \filename{.emacs}.
 
 We’ve provided a script to create these files for you. If you already
 have these files, it will first back them up and tell you the names of
@@ -237,57 +289,76 @@ the backup files. Here is the command to run:
 \href{https://bit.ly/2yJyeD2}{prompt}.}
 
 \noindent The changes will take effect the next time \progname{tcsh}
-restarts. You can log out and back in, or the command \cmdline{exec
+restarts. You can log out and back in, or run the command \cmdline{exec
 tcsh} to reload \progname{tcsh}.
 
-Each time you open up your remote connection (including right now) and
-plan on compiling code (probably every time for first few weeks of the
-class), type the \cmdline{dev} command into your shell.  This will
-ensure that everyone is on the same (and correct) developer toolset.
+Once you’ve done so, you should be able to start \progname{fish}:
 
-\section{Using our build system}
+\begin{CmdLine*}
+  \C fish \\
+\end{CmdLine*}
 
-As briefly mentioned in class, \progname{make} is our build system we
-will be using for the first few weeks of the course at least.  We will
-usually be giving some sort of starting structure for the projects you
-will work on, and right now is no exception.  This structure is found in
-a .tgz \marginnote{ The .tgz file extension is used for
-“\href{https://en.wikipedia.org/wiki/Gzip}{gzipped}
+You only need to do the above setup once, but you’ll
+want to run \progname{fish} each time you log in.
+
+
+\section{Getting the files}
+
+We provide archives of starter code for both this lab and the homework
+assignments (as well as code from the lectures) on the EECS login boxes
+in a place where you can access them to make a copy. You'll want to use
+these rather than starting from scratch because they include the build
+system we’ll be using (more on this below) as well as configuration
+options that you need.
+
+So, you will find lab code in found in \verb^~cs211/lab^,%
+\marginnote{On Unix, \verb^~^ in front of a user's name is the path to
+their home directory, so this means the \filename{lab/} subdirectory of
+belonging to a user named ^cs211^.} and the code for this lab in
+particular may be found in \verb^~cs211/lab/lab01.tgz^. But what is a ^.tgz^
+file and how can you use it?\marginnote{The ^.tgz^ file extension is
+used for “\href{https://en.wikipedia.org/wiki/Gzip}{gzipped}
 \href{https://en.wikipedia.org/wiki/Tar_(computing)}{tarball},” which is
-like the Linux equivalent of a .ZIP file. } file that you need to
-downloaded onto your remote shell. Linux provides a command called
-\progname{curl} that we will use to download a
-``tarball''\marginnote{``tar'' stands for ``tape archive''; it’s a kind
-of archive file, like ZIP, but most commonly used on Unix systems.}, and
-also a command \progname{tar} to extract the contents of the archive.
-\progname{curl} takes a URL as a command-line argument, downloads the
-file, and sends the result to its output; \progname{tar} reads an
-archive from its input and extracts it. We can use a Unix pipe, written
-with the \verb!|! character, to connect \progname{curl}’s output to
-\progname{tar}’s input:
+like the Linux equivalent of a .ZIP file. The name ``tar'' stands for
+``tape archive,'' because it was invented when computer systems still
+stored backups on magentic tape.}
+
+In order to extract the contents of an archive into your current working
+directory, the command is:
 
 \begin{CmdLine*}
-  \C curl \metavar{url} | tar zxvk\\
+  \C tar -kxvf \metavar{archive}\\
 \end{CmdLine*}
 
-\marginnote[-\baselineskip]{The letters after \texttt{tar} give the
-details of what to do: \texttt z specifies the kind of compression that
-the archive uses, \texttt x means to extract (rather than create or
-list), \texttt v increases the verbosity (without it, \progname{tar} is
-silent), and \texttt k prevents \progname{tar} from overwriting existing
-files.}
+\noindent
+This week, \metavar{archive} should be \verb^~cs211/lab/lab01.tgz^.
 
-\noindent In this case, we will be getting our file from this url:
-\url{\ThisLabTgz}. However, the shell setup we did earlier defined
-several \emph{environment variables} containing URLs of various parts of
-the CS 211 website. Thus, our command will be:
+The letters after the hyphen are \emph{flags}, which specify various
+options to the program:
 
-\begin{CmdLine*}
-  \C curl \$LAB211/\ThisLabBase.tgz | tar zxvk\\
-\end{CmdLine*}
+\begin{description}
 
-Now, we have our new directory with the files we need, so change your
-directory to \filename{\ThisLabBase} using the \progname{cd} command.
+  \item[k] tells ^tar^ to \textbf keep any existing files rather than
+    overwrite them, which is the default. You might want to make a habit
+    of this so that you never accidentally replace your completed
+    homework with starter code, but you can leave the ^k^ out if you
+    feel like living dangerously.
+
+  \item[x] tells ^tar^ you want to e\textbf{xtract} files from the
+    archive, as opposed to \textbf creating an archive or just \textbf
+    telling you what's in it.
+
+  \item[v] tells ^tar^ to be verbose, meaning it will print out the
+    names of the files that it extracts; so if you don’t like seeing
+    that part, you can leave it out.
+
+  \item[f] tells ^tar^ to extract from the file whose name follows (as
+    opposed to from some other place, like its \emph{standard input}).
+
+\end{description}
+
+Now, you have our new directory with the files you need, so change your
+directory to \filename{lab01/} using the \progname{cd} command.
 Now list its contents using \progname{ls}, and notice that there is a
 \filename{Makefile} file, and a \filename{src/} directory. The
 \filename{Makefile} file is a \progname{make} configuration file which
@@ -295,7 +366,39 @@ you won't have to worry about too much right now; the \filename{src/}
 directory contains the file \progname{hello.c}, which we have provided
 you.
 
-You can build your program using the command \progname{make}.
+\section{Using our build system}
+
+As briefly mentioned in class, \progname{make} is our build system we
+will be using for the first few weeks of the course at least.  We will
+usually be giving some sort of starting structure for the projects you
+will work on, and right now is no exception.
+
+If you are the directory with the \filename{Makefile}\marginnote{This
+means you should see it when you run \progname{ls}.}
+then can build your program using the command \progname{make}.
+
+% Linux provides a command called
+% \progname{curl} that we will use to download a
+% ``tarball'', and
+% also a command \progname{tar} to extract the contents of the archive.
+% \progname{curl} takes a URL as a command-line argument, downloads the
+% file, and sends the result to its output; \progname{tar} reads an
+% archive from its input and extracts it. We can use a Unix pipe, written
+% with the \verb!|! character, to connect \progname{curl}’s output to
+% \progname{tar}’s input:
+
+% \begin{CmdLine*}
+%   \C curl \metavar{url} | tar zxvk\\
+% \end{CmdLine*}
+
+% \noindent In this case, we will be getting our file from this url:
+% \url{\ThisLabTgz}. However, the shell setup we did earlier defined
+% several \emph{environment variables} containing URLs of various parts of
+% the CS 211 website. Thus, our command will be:
+
+% \begin{CmdLine*}
+%   \C curl \$LAB211/\ThisLabBase.tgz | tar zxvk\\
+% \end{CmdLine*}
 
 The basic purpose of \progname{make} is to build your project into an
 executable file. In your build directory, each time you update your
@@ -367,11 +470,17 @@ if you want any more challenges!
 \item[PuTTY MSI installer]
 \url{\PuTTYurl}
 
+\item[PuTTY ``proxy jump'' instructions]
+\url{\PuTTYhelpUrl}
+
 \item[Nice Emacs guide]
 \url{http://www.cs.cornell.edu/courses/cs312/2003sp/handouts/emacs.htm}
 
 \item[Nice Vim guide]
 \url{http://www.openvim.com/}
+
+\item[VPN instructions]
+\url{\GlobalProtectUrl}
 
 \end{description}
 
