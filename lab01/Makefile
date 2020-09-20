@@ -3,8 +3,12 @@
 ### C compiler and flags
 # The C compiler to use:
 CC         ?= cc
+# Extra options for catching bad stuff:
+SANFLAGS   += -fsanitize=undefined,address
 # Flags for compiling individual files:
-CFLAGS      = -g -O1 -std=c11 -pedantic @.Wflags
+CFLAGS     += -g -O1 -std=c11 -pedantic-errors @.Wflags $(SANFLAGS)
+# Flags for linking the final program:
+LDFLAGS    += $(SANFLAGS) @.Wflags
 
 all: hello
 
