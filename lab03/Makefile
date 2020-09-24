@@ -33,9 +33,3 @@ clean:
 # Dependencies:
 # (All three object files depend on the header.)
 src/lab3.o src/lab3_funs.o test/lab3_test.o: src/lab3_funs.h
-
-# Ensure we have the correct C compiler version:
-CSHOST = .northwestern.edu
-ifeq ($(DEV211)$(CSHOST),$(findstring $(CSHOST),$(shell hostname)))
-  $(error You need to run ‘dev’ first)
-endif

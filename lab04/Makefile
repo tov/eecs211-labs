@@ -52,9 +52,3 @@ src/string_fun.o: src/ptr_string.h src/heap_string.h src/string_fun.h
 test/test_cons.o: src/cons.h
 test/test_heap_string.o: src/ptr_string.h src/heap_string.h
 test/test_string_fun.o: src/ptr_string.h src/heap_string.h src/string_fun.h
-
-# Ensure we have the correct C compiler version:
-CSHOST = .northwestern.edu
-ifeq ($(DEV211)$(CSHOST),$(findstring $(CSHOST),$(shell hostname)))
-  $(error You need to run ‘dev’ first)
-endif
