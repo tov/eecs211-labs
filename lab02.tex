@@ -13,58 +13,57 @@ C code.
 
 \section{Getting Started}
 
-Let's get started by logging into a remote Northwestern server. We did
-this last week, but if you need help remembering the steps, they are
-included below.\marginnote{The list of remote Northwestern servers can
-be found here: \LabHostnamesLink}
-
-\subsection{Windows}
-
-Open PuTTY. You'll need to enter a hostname to login to. The link on the
-right will take you to a list of student lab hostnames (such as
-\hostname{batman.eecs.northwestern.edu}).  Ensure SSH is selected, then
-press Open. When prompted, enter your EECS username and password (not
-necessarily the same as your NetID password) and you're good to go.
-
-\subsection{Mac/Linux}
-
-Open up your terminal. At the prompt, use the ssh command of the form
-
-\begin{CmdLine*}
-  \C ssh \metavar{eecs-id}@\metavar{eecs-host}.eecs.northwestern.edu\\
-\end{CmdLine*}
-
-\noindent where \metavar{eecs-id} is your EECS username (probably your
-NetID) and \metavar{eecs-host} is replaced by one of the EECS hostnames
-from the list of student lab hostnames (such as
-\hostname{batman.eecs.northwestern.edu}). When prompted, type in your
-EECS username and password (not necessarily your NetID password), press
-Enter again, and you should be logged in remotely!
+Let's get started by logging into a remote Northwestern workstation. We
+did this last week, but if you need help remembering the steps, they are
+included below.\marginnote{The list of remote Northwestern workstations
+can be found here: \LabHostnamesLink}
 
 \section{Enabling the CS 211 build environment}
 
-Type the \cmdline{dev} command into the shell to ensure that you are
-using the correct developer toolset. You must do this every time you
-open a remote connection and plan on compiling C code.
+Type the command \cmdline{exec fish} into the shell to execute
+\progname{fish} in place of your current shell. (If your shell says that
+\progname{fish} isn’t found, that likely means you missed the step in
+Lab 1 where you were supposed to run \cmdline{~jesse/setup211}.)
 
 \section{Getting the code}
 
-Recall our basic Unix commands: \progname{cd}, \progname{ls}, \progname{mkdir}, and \progname{pwd}. What do they stand for and what do they do? Ask your TA if you don't remember.\marginnote{Or ask Google.} Use the following \progname{wget} command to download the code into your directory of choice. We suggest that you keep your CS 211 files in an \filename{cs211/} subdirectory of your home directory, but it's up to you.
+Recall our basic Unix commands: \progname{cd}, \progname{ls},
+\progname{mkdir}, and \progname{pwd}. What do they stand for and what do
+they do? If you don't remember, try reading\marginnote{Run \cmdline{man
+ls} or \cmdline{man pwd}.} their manual pages.
+
+We suggest that organize your home directory by keeping your CS 211
+files in subdirectory named \filename{cs211/},\marginnote{Note that the
+  directories \filename{cs211/} and \filename{\plaintilde cs211/} do not
+  mean the same thing. The former means a subdirectory of the current
+  directory named ``cs$211$,'' whereas the latter means the home directory
+  for a user named ``cs$211$.'' When \filename{\plaintilde}
+  is written by itself, it means the \emph{current user’s} home
+  directory. Given all that, what do you think
+\filename{\plaintilde/cs211/} means?} but it's up to you. If you have
+such a directory, change into it and then extract the tarball for this
+lab:
 
 \begin{CmdLine*}
   \C cd cs211\\
-  \C curl \$LAB211/\ThisLabBase.tgz | tar zxvk\\
+  \C tar -xkvf \plaintilde cs211/lab/\ThisLabBase.tgz\\
 \end{CmdLine*}
 
-You should now have a directory called \filename{\ThisLabBase}.
+\noindent
+You should now have a directory called
+\filename{\ThisLabBase}.
 
 \section{Writing the code}
-Navigate to your \filename{\LabBaseUrl} directory, and open up
-\filename{src/lab.c} in Emacs using 
+Navigate into to your \filename{\ThisLabBase} directory using
+\progname{cd}, and open up \filename{src/lab.c} in Emacs using
+
 \begin{CmdLine*}
   \C emacs src/lab.c\\
 \end{CmdLine*}
-Notice that there is already some skeletons of functions and some code in \functionref{main}{} here.
+
+\noindent
+Notice that there is already some skeletons of functions and some code
+in \functionref{main}{} here.
 
 \subsection{Iteration}
 
