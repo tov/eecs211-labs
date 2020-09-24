@@ -9,7 +9,7 @@
 \maketitle
 
 Today we are going to practice navigating in the shell and writing basic
-C code. 
+C code.
 
 \section{Getting Started}
 
@@ -88,7 +88,7 @@ which evaluates to `true` or `false`)}
     }
 \end{Code}
 
-
+\noindent
 Use a while loop inside our \functionref{sum\_numbers}{} in order to
 add the numbers from 1 to \varname{num} together.\marginnote{Remember
 that we have the ^++^ and ^+=^ operators if we need them.} Make sure to
@@ -104,6 +104,7 @@ command in order to turn our C file into machine code. Run:
 \end{CmdLine*}
 \marginnote{Remember, make works as follows: \cmdline{make [target]}. Target is the name of the executable file that will be built by the make command.}
 
+\noindent
 If everything works, if we list our files, we should now see a file
 called \filename{lab}. To run it, the command is:
 
@@ -111,6 +112,7 @@ called \filename{lab}. To run it, the command is:
   \C ./lab\\
 \end{CmdLine*}
 
+\noindent
 See if your value looks right!  If it doesn't, don't worry, Rome wasn't
 built in a day.  Try and try and see what went wrong.\marginnote{Error
 messages may look scary, but in reality, they're there to help you!  Not
@@ -120,13 +122,14 @@ how it affects the result.
 \subsection{{\codestyleKeyword for} loops}
 
 Once we have everything working with our ^while^ loop, let's work on
-using a ^for^ loop.  To help you remember the syntax, here is an example of a for loop to print out the values from 1 to 5
+using a ^for^ loop.  To help you remember the syntax, here is an example
+of a ^for^ loop to print out the values from 1 to 5:
 
 \begin{Code}
-    for (int i = 1; i <= 5; ++i) {
+    for (size_t i = 1; i <= 5; ++i) {
         // Note that the code inside the curly braces is the code
         // that is executed for each iteration of the `for` loop.
-        printf("%d\n", i);
+        printf("%zu\n", i);
     }
 \end{Code}
 
@@ -168,38 +171,38 @@ soon.
 
 Make and run \progname{lab}, and see if your new animal shows up the way that
 you intended.  Hopefully everything works!  If not, as usual, go back
-and try and find what went wrong and update your code. 
+and try and find what went wrong and update your code.
 
 
 \subsection{Creating your own function}
 
-So far, we've been filling in skeleton functions that were provided for
+
+So far,\marginnote{The ``\functionref{}3'' after
+  ``\functionname{printf}'' gives the section in the Unix manual that
+  contains the documentation for the \functionref{printf}{} function,
+  which means you can look it up with the command \cmdline{man 3
+  printf}. If you omit the section number 3 and run just \cmdline{man
+  printf}, you get documentation for the shell's ^printf^ command rather
+  than the C library’s \functionref{printf}{} function.}
+we've been filling in skeleton functions that were provided for
 you. Now it's time to write your own function from scratch.  Remember
 how annoying it was to type out the ^printf^ lines each
 time you wanted to print out your animal?  We're going to abstract that
-out and replace it with a simple call to a function! 
+out and replace it with a simple call to a function!
 
 Write a function called \functionref{print\_animal}{} that uses
-\functionref{printf}3\marginnote{
-  The ``\functionref{}3'' after ``\functionname{printf}'' gives the
-  section in the Unix manual that contains the documentation for the
-  \functionref{printf}{} function, which means you can look it up with
-  the command \cmdline{man 3 printf}. If you omit the section number 3
-  and run just \cmdline{man printf}, you get documentation for the
-  shell's ^printf^ command rather than the C library’s
-  \functionref{printf}{} function.
-} to print out your animal's three attributes.
-Note that this should take in one argument(of the same type as your
-animal struct).  Think about what type your function should
-be!\marginnote{Note that the \varname{void} return type signifies that
+\functionref{printf}3 to print out your animal's three attributes.
+Note that this should take in one argument (of the same type as your
+animal struct). Think about what type your function should
+return!\marginnote{Note that the \varname{void} return type signifies that
 nothing is returned.}
 
 Once you wrote your function, go to your \functionref{main}{} function
 and replace your print statement with a call to
-\functionref{print\_animal}{}.\marginnote{remember to pass your animal
+\functionref{print\_animal}{}.\marginnote{Remember to pass your animal
 instance to the function.}
 
-Make and run \progname{lab}, and see if everything still works!  
+Make and run \progname{lab}, and see if everything still works!
 
 \subsection{Control statements}
 
@@ -222,8 +225,8 @@ practice our control statements.  Go back to our
 Using an ^if^--^else^ statement, check your animals age and add to your
 \functionref{print\_animal}{} function a line to print out ``This animal is
 old!'' if the animal is at least 10 and print out ``This animal is not
-that old'' if the animal is younger than 10.   
+that old'' if the animal is younger than 10.
 
-Make and run \progname{lab} and see if this feature is working!
+Build and run \progname{lab}, and see if this feature is working.
 
 \end{document}

@@ -1,27 +1,27 @@
 #include <stdio.h>
 
-//
-// Struct definitions
-//
+/*
+ * Struct definitions
+ */
 
 struct apple
 {
     double weight;
-    char*  variety;
-    char*  color;
+    const char* variety;
+    const char* color;
 };
 
 
-//
-// Function declarations
-//
+/*
+ * Function declarations
+ */
 
 int sum_numbers(int);
 
 
-//
-// Function definitions
-//
+/*
+ * Function definitions
+ */
 
 int main(void)
 {
