@@ -4,7 +4,8 @@
 \def\PuTTYurl{https://the.earth.li/~sgtatham/putty/0.74/w32/putty-0.74-installer.msi}
 \def\GlobalProtectUrl{https://kb.northwestern.edu/page.php?id=94726}
 \def\PuTTYhelpUrl{https://superuser.com/questions/1159811/openssh-proxycommand-equivalent-in-putty}
-\def\setupScriptUrl{https://bit.ly/3ktbdXo}
+\def\setupScriptUrl{https://bit.ly/2RXwrkb}
+\def\setupScriptLink{\href{\setupScriptUrl}{\setupScriptUrl}}
 
 \usepackage{211lab}
 
@@ -35,8 +36,8 @@ by typing it at the prompt:
   \C ls \\
 \end{CmdLine*}
 
-\marginnote[-\baselineskip]{Don't type the \prompt. That stands for your
-shell prompt.}
+\marginnote[-\baselineskip]{Don't type the \prompt. That represents the
+prompt that the shell prints for you to tell you it's ready.}
 
 \noindent
 Before you can do that, though, we have to get you logged in.
@@ -123,7 +124,8 @@ type a single command of the form
 \begin{CmdLine*}
   \C ssh \metavar{eecs-id}@\metavar{eecs-host}.eecs.northwestern.edu\\
 \end{CmdLine*}
-\marginnote[-\baselineskip]{Don't type the \prompt.}
+\marginnote[-\baselineskip]{Don't type the \prompt. That stands for your
+shell prompt.}
 
 \noindent where \metavar{eecs-id} is your EECS username (probably your NetID)
 and \metavar{eecs-host} is replaced by one of the EECS hostnames from the list
@@ -145,11 +147,11 @@ you want to try this, run the following command in your terminal and
 follow the instructions:
 
 \begin{CmdLine*}
-  \C bash -c "\$(curl -s -L \setupScriptUrl)"\\
+  \C bash -c "\$(curl -fsLS \setupScriptLink)"\\
 \end{CmdLine*}
-
-\marginnote[-\baselineskip]{Don't type the \prompt. That represents the
-prompt that the shell prints for you to tell you it's ready.}
+\marginnote[-\baselineskip]{If you’d like to see the script, run just
+  the \progname{curl} command that’s inside the parentheses (not including
+the parentheses), or click the link.}
 
 Notes: 1) Run this \emph{locally} on your own computer, not while logged
 into a remote workstation. 2) Type or paste that command \emph{exactly}
