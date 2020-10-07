@@ -51,7 +51,8 @@ const char *str_str(const char *haystack, const char *needle)
     return NULL;
 }
 
-bool concat_arg(char** buf, const char** arg, int format_case) {
+static bool
+concat_arg(char** buf, const char** arg, int format_case) {
     if (!*arg) {
         // unexpected number of arguments
         return false;
