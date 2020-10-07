@@ -5,7 +5,7 @@
 
 const char *str_chr(const char *s, char c)
 {
-    while (*s != '\0') {
+    while (*s != 0) {
         if (c == *s) {
             return s;
         }
@@ -17,8 +17,8 @@ const char *str_chr(const char *s, char c)
 
 bool is_prefix_of(const char *haystack, const char *needle)
 {
-    while (*needle != '\0') {
-        if (*haystack == '\0' || *haystack != *needle) {
+    while (*needle != 0) {
+        if (*haystack == 0 || *haystack != *needle) {
             return false;
         }
         needle++;
@@ -30,7 +30,7 @@ bool is_prefix_of(const char *haystack, const char *needle)
 
 const char *str_str(const char *haystack, const char *needle)
 {
-    while (*haystack != '\0') {
+    while (*haystack != 0) {
         if(is_prefix_of(haystack, needle)) {
             return haystack;
         }
@@ -42,7 +42,7 @@ const char *str_str(const char *haystack, const char *needle)
 static bool
 concat_arg(char** buf, const char** arg, int format_case)
 {
-    while (*arg && **arg != '\0') {
+    while (*arg && **arg != 0) {
         **buf = **arg;
         switch (format_case) {
             case 1:
@@ -100,5 +100,5 @@ void interpolate(const char *format, const char *args[], char *buffer)
         group = end;
     }
 
-    *buf_it = '\0';
+    *buf_it = 0;
 }
