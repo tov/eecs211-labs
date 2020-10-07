@@ -9,7 +9,7 @@ const char *str_chr(const char *s, char c)
         if (c == *s) {
             return s;
         }
-        s++;
+        ++s;
     }
 
     return NULL;
@@ -21,8 +21,8 @@ bool is_prefix_of(const char *haystack, const char *needle)
         if (*haystack == 0 || *haystack != *needle) {
             return false;
         }
-        needle++;
-        haystack++;
+        ++needle;
+        ++haystack;
     }
 
     return true;
@@ -34,7 +34,7 @@ const char *str_str(const char *haystack, const char *needle)
         if(is_prefix_of(haystack, needle)) {
             return haystack;
         }
-        haystack++;
+        ++haystack;
     }
     return NULL;
 }
@@ -52,11 +52,11 @@ concat_arg(char** buf, const char** arg, int format_case)
                 **buf = tolower(**buf);
                 break;
         }
-        (*buf)++;
-        (*arg)++;
+        ++*buf;
+        ++*arg;
     }
     // moves to the next argument
-    (*arg)++;
+    ++*arg;
     return true;
 }
 
@@ -69,9 +69,7 @@ void interpolate(const char *format, const char *args[], char *buffer)
 
     while ( (end = str_chr(end, '{')) ) {
        while (group < end) {
-            *buf_it = *group;
-            buf_it++;
-            group++;
+            *buf_it++ = *group++;
         }
 
         if (is_prefix_of(end, "{^}")) {
@@ -92,9 +90,7 @@ void interpolate(const char *format, const char *args[], char *buffer)
             end += 2;
 
         } else {
-            *buf_it = *group;
-            buf_it++;
-            end++;
+            *buf_it++ = *group++;
         }
 
         group = end;
