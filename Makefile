@@ -3,7 +3,7 @@ DEFAULT = lab02
 
 TEXS      = $(wildcard lab*.tex)
 PDFS      = $(TEXS:.tex=.pdf)
-STYS      = 211lang.sty 211common.sty 211lab.sty
+STYS      = 211base.sty 211lang.sty 211common.sty 211lab.sty
 STY_DEPS  = $(STYS:%=latex/%)
 TEXOPTS   = -output-directory=build -interaction=errorstopmode
 TEXINPUTS = .:./latex:
