@@ -43,62 +43,45 @@ const char *str_str(const char *haystack, const char *needle)
     return NULL;
 }
 
-enum format_type { TOUPPER, TOLOWER, LITERAL };
-
-static bool concat_arg(char** buf, const char** arg, enum format_type ft)
+static void copy_toupper(char** bufp, const char* arg)
 {
-    while (**arg) {
-        switch (ft) {
-
-        case TOUPPER:
-            **buf = toupper(**arg);
-            break;
-
-        case TOLOWER:
-            **buf = tolower(**arg);
-            break;
-
-        case LITERAL:
-            **buf = **arg;
-            break;
-
-        }
-
-        ++*buf;
-        ++*arg;
+    while (*arg) {
+        **bufp = toupper(*arg);
+        ++*bufp;
+        ++arg;
     }
+}
 
-    // moves to the next argument
-    ++*arg;
+static void copy_tolower(char** bufp, const char* arg)
+{
+    while (*arg) {
+        // Does the same thing as in copy_toupper:
+        *(*bufp)++ = tolower(*arg++);
+    }
+}
 
-    return true;
+static void copy_literal(char** bufp, const char* arg)
+{
+    while (*arg) {
+        *(*bufp)++ = *arg++;
+    }
 }
 
 void interpolate(const char *format, const char *args[], char *buffer)
 {
-    const char *group = format;
-    const char *end   = format;
-    const char *arg_it = *args;
-
-    while ( (end = str_chr(end, '{')) ) {
-        while (group < end) {
-            *buffer++ = *group++;
-        }
-
-        if (is_prefix_of(end, "{^}")) {
-            concat_arg(&buffer, &arg_it, TOUPPER);
-            end += 3;
-        } else if (is_prefix_of(end, "{v}")) {
-            concat_arg(&buffer, &arg_it, TOLOWER);
-            end += 3;
-        } else if (is_prefix_of(end, "{}")) {
-            concat_arg(&buffer, &arg_it, LITERAL);
-            end += 2;
+    while (*format) {
+        if (is_prefix_of(format, "{^}")) {
+            format += 3;
+            copy_toupper(&buffer, *args++);
+        } else if (is_prefix_of(format, "{v}")) {
+            format += 3;
+            copy_tolower(&buffer, *args++);
+        } else if (is_prefix_of(format, "{}")) {
+            format += 2;
+            copy_literal(&buffer, *args++);
         } else {
-            *buffer++ = *group++;
+            *buffer++ = *format++;
         }
-
-        group = end;
     }
 
     *buffer = 0;
