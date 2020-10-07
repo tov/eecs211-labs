@@ -43,18 +43,25 @@ const char *str_str(const char *haystack, const char *needle)
     return NULL;
 }
 
-static bool concat_arg(char** buf, const char** arg, int format_case)
-{
-    while (*arg && **arg) {
-        **buf = **arg;
+enum format_type { TOUPPER, TOLOWER, LITERAL };
 
-        switch (format_case) {
-        case 1:
-            **buf = toupper(**buf);
+static bool concat_arg(char** buf, const char** arg, enum format_type ft)
+{
+    while (**arg) {
+        switch (ft) {
+
+        case TOUPPER:
+            **buf = toupper(**arg);
             break;
-        case 2:
-            **buf = tolower(**buf);
+
+        case TOLOWER:
+            **buf = tolower(**arg);
             break;
+
+        case LITERAL:
+            **buf = **arg;
+            break;
+
         }
 
         ++*buf;
@@ -69,37 +76,30 @@ static bool concat_arg(char** buf, const char** arg, int format_case)
 
 void interpolate(const char *format, const char *args[], char *buffer)
 {
-    char* buf_it = buffer;
     const char *group = format;
-    const char *end = format;
+    const char *end   = format;
     const char *arg_it = *args;
 
     while ( (end = str_chr(end, '{')) ) {
         while (group < end) {
-            *buf_it++ = *group++;
+            *buffer++ = *group++;
         }
 
         if (is_prefix_of(end, "{^}")) {
-            if (!concat_arg(&buf_it, &arg_it, 1)) {
-                break;
-            }
+            concat_arg(&buffer, &arg_it, TOUPPER);
             end += 3;
         } else if (is_prefix_of(end, "{v}")) {
-            if (!concat_arg(&buf_it, &arg_it, 2)) {
-                break;
-            }
+            concat_arg(&buffer, &arg_it, TOLOWER);
             end += 3;
         } else if (is_prefix_of(end, "{}")) {
-            if (!concat_arg(&buf_it, &arg_it, 3)) {
-                break;
-            }
+            concat_arg(&buffer, &arg_it, LITERAL);
             end += 2;
         } else {
-            *buf_it++ = *group++;
+            *buffer++ = *group++;
         }
 
         group = end;
     }
 
-    *buf_it = 0;
+    *buffer = 0;
 }
