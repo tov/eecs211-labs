@@ -8,53 +8,27 @@
 
 \maketitle
 
-Today we are going to practice manipulating "strings".
+Today we are going to practice manipulating \emph{strings.}
 
 \section{Getting Started}
-Let's get started by logging into a remote Northwestern server. We did this last week, but if you need help remembering the steps, they are included below.\marginnote{The list of remote Northwestern servers can
-be found here: \LabHostnamesLink}
 
-\subsection{Windows}
-Open PuTTY. You'll need to enter a hostname to login to. The link on the
-right will take you to a list of student lab hostnames (such as \hostname{alfred.eecs.northwestern.edu} or \hostname{batman.eecs.northwestern.edu}).  Ensure SSH is selected, then press Open. When prompted, enter your EECS username and password (not necessarily the same as your NetID password) and you're good to go.
-
-\subsection{Mac/Linux}
-Open up your terminal. At the prompt, use the ssh command of the form
-\begin{CmdLine*}
-  \C ssh \metavar{eecs-id}@\metavar{eecs-host}.eecs.northwestern.edu \\
-\end{CmdLine*}
-\noindent where \metavar{eecs-id} is your EECS username (probably your NetID)
-and \metavar{eecs-host} is replaced by one of the EECS hostnames from the list
-of student lab hostnames (such as \hostname{alfred.eecs.northwestern.edu} or
-\hostname{batman.eecs.northwestern.edu}).
-When prompted, type in your EECS username and password (not necessarily your NetID password), press
-Enter again, and you should be logged in remotely!
-
-\section{Getting the code} Recall our basic Unix commands:
-\progname{cd}, \progname{ls}, \progname{mkdir}, and \progname{pwd}. What
-do they stand for and what do they do? Ask your TA if you don't
-remember.\marginnote{Or ask Google.} Use the following
-\progname{curl}-and-\progname{tar} pipeline to download and extract the
-code into your directory of choice. We suggest that you keep your EECS
-211 files in an \filename{eecs211/} subdirectory of your home directory,
-but it's up to you.
+The starter code is available at \filename{\ThisLabTgz}, so you can
+extract it into your current working directory with the command
 
 \begin{CmdLine*}
-  \C curl \$LAB211/\ThisLabBase.tgz | tar zxvk\\
+  \C tar -xkvf \ThisLabTgz\\
 \end{CmdLine*}
 
-You should now have a directory called \filename{\ThisLabBase}.
-
-\subsection{Setting up the build system}
-Type the \cmdline{dev} command into the shell to ensure that you are
-using the correct developer toolset. You must do this every time you
-open a remote connection and plan on compiling C code.
+\noindent Your current working directory should now contain a
+subdirectory called \filename{\ThisLabBase}.
 
 \section{Writing the code}
-Navigate to your \filename{\ThisLabBase} directory, and open up
-\filename{src/lab3.c} in Emacs using
+
+Navigate to your \filename{\ThisLabBase} directory and open up
+\filename{src/lab3.c} in Emacs:
+
 \begin{CmdLine*}
-  \C emacs -nw src/lab3.c\\
+  \C emacs src/lab3.c \\
 \end{CmdLine*}
 
 \noindent

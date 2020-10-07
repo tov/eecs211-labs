@@ -1,16 +1,15 @@
 #include "../src/lab3_funs.h"
+#include <lib211.h>
+#include <stddef.h>
 
-#include <assert.h>
-#include <stddef.h>             // for NULL
-
-void test_str_chr()
+static void test_str_chr(void)
 {
     const char* hello = "hello";
-    assert( str_chr(hello, 'h') == hello );
-    assert( str_chr(hello, 'e') == hello + 1 );
-    assert( str_chr(hello, 'l') == hello + 2 );
-    assert( str_chr(hello, 'o') == hello + 4 );
-    assert( str_chr(hello, '!') == NULL );
+    CHECK_POINTER( str_chr(hello, 'h'), hello );
+    CHECK_POINTER( str_chr(hello, 'e'), hello + 1 );
+    CHECK_POINTER( str_chr(hello, 'l'), hello + 2 );
+    CHECK_POINTER( str_chr(hello, 'o'), hello + 4 );
+    CHECK_POINTER( str_chr(hello, '!'), NULL );
 }
 
 int main(void)
