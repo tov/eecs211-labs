@@ -1,5 +1,5 @@
 # The default lab to build when running just `make`:
-DEFAULT = lab02
+DEFAULT = lab04
 
 TEXS      = $(wildcard lab*.tex)
 PDFS      = $(TEXS:.tex=.pdf)

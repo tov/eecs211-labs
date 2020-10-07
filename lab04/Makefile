@@ -10,16 +10,15 @@ CFLAGS     += -g -O1 -std=c11 -pedantic @.Wflags $(SANFLAGS)
 # Flags for linking the final program:
 LDFLAGS    += -l211 $(SANFLAGS)
 
-
 TESTS       = test_cons test_heap_string test_string_fun
 EXES        = asan_example $(TESTS)
 
 all: $(EXES)
 
 test: $(TESTS)
-	for i in $^; do \
-	  echo "*** Running $$i: ***"; \
-	  ./$$i; \
+	for program in $^; do \
+	  echo "*** Running $$program: ***"; \
+	  ./$$program; \
 	  echo; \
 	done
 
@@ -39,12 +38,6 @@ test_heap_string: test/test_heap_string.o src/heap_string.o src/ptr_string.o
 %.o: %.c
 	$(CC) -c -o $@ $< $(CPPFLAGS) $(CFLAGS)
 
-clean:
-	$(RM) $(EXES) */*.o
-
-# Targets that are not actually files we can build:
-.PHONY: all test clean
-
 # Dependencies:
 src/heap_string.o: src/ptr_string.h src/heap_string.h
 src/ptr_string.o: src/ptr_string.h
@@ -52,3 +45,9 @@ src/string_fun.o: src/ptr_string.h src/heap_string.h src/string_fun.h
 test/test_cons.o: src/cons.h
 test/test_heap_string.o: src/ptr_string.h src/heap_string.h
 test/test_string_fun.o: src/ptr_string.h src/heap_string.h src/string_fun.h
+
+clean:
+	$(RM) $(EXES) */*.o
+
+# Targets that are not actually files we can build:
+.PHONY: all test clean

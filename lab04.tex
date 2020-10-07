@@ -7,14 +7,15 @@
 \usepackage{titlesec}
 \usepackage{multicol}
 \usepackage{parskip}
+\usepackage{211base}
+
+\LabInfo{4}{Debugging}
 
 \setallmainfonts{Charter}
 \setallsansfonts{Latin Modern Sans}
 \setallmonofonts[Scale=MatchLowercase]{Menlo}
 
 \newcommand\keyterm[1]{\textcolor[HTML]{006600}{\emph{#1}}}
-
-\def\LabTGZ{\$LAB211/lab04.tgz}
 
 \newcommand\dbc[2]{{%
   \sffamily\upshape\mdseries
@@ -48,8 +49,7 @@
 
 \begin{center}
   \sffamily
-  CS 211 – Spring 2020
-  \par
+  \COURSENO\ – \TERM\par
   \Huge
   Debugging
   \Large
@@ -69,18 +69,23 @@ GDB is a debugger lets you see inside your program while it runs. You
 
   % \begin{itemize}
 
-      1) You’ll need some code to debug. You might try your current
-      homework or previous one, or there’s some code from lecture
-      involving strings and linked lists, prepared for this lab, that
-      you can download from \textsf{\LabTGZ} (using \verb!curl! and
-      \verb!tar zxvk! like usual).
+      1) We’ve improved our Emacs configuration since most of you
+      installed it during Lab 1, so you should re-run the installer now:
 
-      2) To use the debugger, you need to compile your C code with the
-      \verb!-g! flag. The \verb!Makefile!s we supply you with come
+      \verb!  % setup211!
+
+      2) You’ll need some code to debug. You might try your current
+      homework or previous one, or there’s some code from class
+      involving strings and linked lists, prepared for this lab, that
+      you can extract from \textsf{\ThisLabTgz} (using \verb!tar -xkvf!
+      like usual).
+
+      3) To use the debugger, you need to compile your C code with the
+      \verb!-g! flag. The \verb!Makefile!s we supply you with comes
       with that enabled already, so you should be all set. But if you
       run \verb!cc! by hand, don't forget to tell it \verb!-g!.
 
-      3) GDB can be run directly from the shell, but if you run it
+      4) GDB can be run directly from the shell, but if you run it
       in Emacs then Emacs will help you out by showing you the
       debugger’s position in your code. You \emph{definitely} want that,
       because the way GDB shows context on its own
@@ -127,11 +132,18 @@ Emacs lets you edit more than one file at a time, and that can include
   can always type an \textsf{M-}$k$ combination by typing
   \textsf{Escape} followed by the particular $k$.
 
+  So to type \textsf{M-x}, you can press \textsf{Escape} followed by
+  \textsf{x}, regardless of your particular hardware or configuration.
+  \textsf{Option-x} or \textsf{Alt-x} can be made to work and might
+  already.
+
 \begin{commands}
 
-\item[M-x compile] Run the compiler. (Emacs will ask what command to run.
-  Change it to \verb!cd .. && make -k! so that Make can find the
-  Makefile.)
+\item[M-x compile] Run the compiler. (Emacs will ask what command to
+    run. If you’re currently editing a file in \verb!src/! or
+    \verb!test/! then Make won’t find the Makefile in there; change the
+    compilation command to \verb!cd .. && make -k! to \verb!cd! up a
+    level before running Make.)
 
 \item[M-x recompile] Run the compiler again with the same command.
 

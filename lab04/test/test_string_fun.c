@@ -7,8 +7,8 @@
 
 
 // This is a C preprocessor macro. It defines ARRAYLEN(A)
-// to be replaced by the icky thing to its right, so that we
-// can avoid typing that icky things later.
+// to be replaced by the ugly thing to its right, so that we
+// can avoid typing that ugly thing later.
 #define ARRAYLEN(A) ((sizeof(A))/(sizeof(*(A))))
 
 

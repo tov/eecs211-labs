@@ -1,18 +1,25 @@
 #include "../src/cons.h"
 
-// Uncomment the following `#define` line to see what’s happening in the
-// program. If `ENABLE_DEBUGF` is #defined above the #include <lib211.h>
-// for your program then it defines `debugf` to be like `printf` for
-// debugging; if `ENABLE_DEBUGF` isn’t #defined then `debugf` does
-// nothing.
+// There’s another way to see what’s happening in your program while it
+// runs—printing stuff! But even that can be done more cleanly than
+// adding `printf(3)` calls all over the place (and then having to go
+// find them later to delete them).
+//
+// When `ENABLE_TRACEF` is #defined above the #include <lib211.h> for
+// your program, then <lib211.h> defines `tracef` to be like `printf`
+// but for tracing (printing out information about what’s happening in
+// your program); if `ENABLE_TRACEF` isn’t #defined then <lib211.h>
+// defines `tracef` to do nothing. That way, you can turn tracing off
+// and on by changing just one line at the top of the file.
+//
+// Thus, uncommenting the following #define will enable tracing for this
+// compilation unit:
 
-// #define ENABLE_DEBUGF
+// #define ENABLE_TRACEF
 
 #include <lib211.h>
 
-#include <assert.h>
-#include <printf.h>
-#include <stdint.h>
+#include <stdio.h>
 
 // Computes the length of a list. Recursive, which means it will “blow
 // the stack” on a sufficiently long list.
@@ -83,15 +90,15 @@ list_t iota(size_t length)
 // Tries length function `len_fun` on a list of length `n`.
 void try_len(size_t (*lenf)(list_t), size_t n)
 {
-    debugf("Trying n = %zu: iota()...", n);
+    tracef("Trying n = %zu: iota()...", n);
     list_t lst = iota(n);
-    debugf(" len()...");
-#ifdef ENABLE_DEBUGF
+    tracef(" len()...");
+#ifdef ENABLE_TRACEF
     size_t len = lenf(lst);
 #endif
-    debugf(" got %zu! uncons_all()... ", len);
+    tracef(" got %zu! uncons_all()... ", len);
     uncons_all(lst);
-    debugf("done.\n");
+    tracef("done.\n");
 }
 
 // Little functions for passing to `map`:
