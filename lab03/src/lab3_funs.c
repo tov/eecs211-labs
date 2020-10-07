@@ -9,6 +9,7 @@ const char *str_chr(const char *s, char c)
         if (c == *s) {
             return s;
         }
+
         ++s;
     }
 
@@ -21,6 +22,7 @@ bool is_prefix_of(const char *haystack, const char *needle)
         if (*haystack == 0 || *haystack != *needle) {
             return false;
         }
+
         ++needle;
         ++haystack;
     }
@@ -31,32 +33,37 @@ bool is_prefix_of(const char *haystack, const char *needle)
 const char *str_str(const char *haystack, const char *needle)
 {
     while (*haystack) {
-        if(is_prefix_of(haystack, needle)) {
+        if (is_prefix_of(haystack, needle)) {
             return haystack;
         }
+
         ++haystack;
     }
+
     return NULL;
 }
 
-static bool
-concat_arg(char** buf, const char** arg, int format_case)
+static bool concat_arg(char** buf, const char** arg, int format_case)
 {
     while (*arg && **arg) {
         **buf = **arg;
+
         switch (format_case) {
-            case 1:
-                **buf = toupper(**buf);
-                break;
-            case 2:
-                **buf = tolower(**buf);
-                break;
+        case 1:
+            **buf = toupper(**buf);
+            break;
+        case 2:
+            **buf = tolower(**buf);
+            break;
         }
+
         ++*buf;
         ++*arg;
     }
+
     // moves to the next argument
     ++*arg;
+
     return true;
 }
 
@@ -68,7 +75,7 @@ void interpolate(const char *format, const char *args[], char *buffer)
     const char *arg_it = *args;
 
     while ( (end = str_chr(end, '{')) ) {
-       while (group < end) {
+        while (group < end) {
             *buf_it++ = *group++;
         }
 
@@ -77,7 +84,6 @@ void interpolate(const char *format, const char *args[], char *buffer)
                 break;
             }
             end += 3;
-
         } else if (is_prefix_of(end, "{v}")) {
             if (!concat_arg(&buf_it, &arg_it, 2)) {
                 break;
@@ -88,7 +94,6 @@ void interpolate(const char *format, const char *args[], char *buffer)
                 break;
             }
             end += 2;
-
         } else {
             *buf_it++ = *group++;
         }
