@@ -10,6 +10,7 @@ add_program(circle_game
         src/game_main.cxx
         src/ui.cxx
         src/model.cxx)
+
 # Links `circle_game` against the GE211 game engine:
 target_link_libraries(circle_game ge211)
 
@@ -17,6 +18,7 @@ target_link_libraries(circle_game ge211)
 add_test_program(model_test
         test/model_test.cxx
         src/model.cxx)
+
 # Links `game_test` against the GE211 game engine:
 target_link_libraries(model_test ge211)
 

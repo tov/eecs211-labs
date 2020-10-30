@@ -10,8 +10,8 @@ TEST_CASE("move large circle left")
 
     model.move_large_circle_left();
 
-    CHECK( model.large_center.x == old.x - 10 );
-    CHECK( model.large_center.y == old.y );
+    CHECK(model.large_center.x == old.x - 10);
+    CHECK(model.large_center.y == old.y);
 }
 
 TEST_CASE("move large circle right")
@@ -21,8 +21,8 @@ TEST_CASE("move large circle right")
 
     model.move_large_circle_right();
 
-    CHECK( model.large_center.x == old.x + 10 );
-    CHECK( model.large_center.y == old.y );
+    CHECK(model.large_center.x == old.x + 10);
+    CHECK(model.large_center.y == old.y);
 }
 
 TEST_CASE("move large circle up")
@@ -48,7 +48,7 @@ TEST_CASE("move small circle to")
     Model model;
     Posn<int> pos{120, 150};
     model.move_small_circle_to(pos);
-    CHECK( model.small_center == pos );
+    CHECK(model.small_center == pos);
 }
 
 TEST_CASE("get collision state touching")
@@ -56,11 +56,11 @@ TEST_CASE("get collision state touching")
     Model model;
 
     Posn<int> pos = model.large_center;
-    pos.x += large_radius - small_radius;
-    pos.y += large_radius - small_radius;
+    pos.x += model.large_radius - model.small_radius;
+    pos.y += model.large_radius - model.small_radius;
     model.move_small_circle_to(pos);
 
-    CHECK(model.overlapped() );
+    CHECK(model.overlapped());
 }
 
 TEST_CASE("get collision state not touching")
@@ -71,5 +71,5 @@ TEST_CASE("get collision state not touching")
     // YOUR SETUP HERE
     //
 
-    CHECK_FALSE(model.overlapped() );
+    CHECK_FALSE(model.overlapped());
 }
