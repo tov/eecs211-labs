@@ -1,8 +1,15 @@
-# CMake build directories:
-build
-build.*
-builds
-cmake-build-*
+# User-specific CLion (IDEA) settings:
+.idea/**/tasks.xml
+.idea/**/usage.statistics.xml
+.idea/**/dictionaries
+.idea/**/shelf/
+.idea/**/workspace.xml
+.idea/**/vcs.xml
 
-# CLion configuration
-.idea/
+# build directories:
+build/
+build.*/
+cmake-build-*/
+
+# Mac OS Finder configuration:
+.DS_Store
