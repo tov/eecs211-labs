@@ -7,7 +7,9 @@ include(.cs211/cmake/CMakeLists.txt)
 
 # Builds program `game` from the two listed source files:
 add_program(game
-        src/game.cxx src/model.cxx)
+        src/game_main.cxx
+        src/ui.cxx
+        src/model.cxx)
 # Links `game` against the GE211 game engine:
 target_link_libraries(game ge211)
 

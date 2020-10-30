@@ -1,45 +1,47 @@
 #include "model.hxx"
+
 #include <cmath>
+
+typedef ge211::Posn<int> Position;
+typedef ge211::Dims<int> Dimensions;
 
 void Model::move_large_circle_left()
 {
-    large_center_.x += 10;
+    large_center.x += 10;
 }
 
 void Model::move_large_circle_right()
 {
-    large_center_.x -= 10;
+    large_center.x -= 10;
 }
 
-void Model::move_small_circle_to(ge211::Position pos)
+void Model::move_small_circle_to(Position pos)
 {
-    small_center_ = pos;
+    small_center = pos;
 }
 
-static double distance(ge211::Position pos1, ge211::Position pos2)
+static double sqr_distance(Position p, Position q)
 {
-    int dx = pos1.x - pos2.x;
-    int dy = pos1.y - pos2.y;
-    return sqrt(dx * dx + dy * dy);
+    int dx = p.x - q.x;
+    int dy = p.y - q.y;
+    return dx * dx + dy * dy;
 }
-
-static const ge211::Dimensions small_dims{2 * small_radius, 2 * small_radius};
-static const ge211::Dimensions large_dims{2 * large_radius, 2 * large_radius};
 
 bool Model::is_touching() const
 {
-    double dist = distance(small_center_, large_center_);
-    return dist <= large_radius + small_radius;
+    double radii = large_radius + small_radius;
+    return sqr_distance(small_center, large_center) <= radii * radii;
 }
 
-ge211::Position Model::large_upper_left() const
+Position Model::large_upper_left() const
 {
-    return {large_center_.x - large_radius, large_center_.y - large_radius};
-
+    return large_center.up_left_by({large_radius, large_radius});
 }
 
-ge211::Position Model::small_upper_left() const
+Position Model::small_upper_left() const
 {
-    return {small_center_.x - small_radius, small_center_.y - small_radius};
+    Position p = small_center;
+    p.x -= small_radius;
+    p.y -= small_radius;
+    return p;
 }
-

@@ -25,10 +25,11 @@ the CLion IDE, and the SDL2 graphics libraries. Read on\ldots.
 
 \subsection{Broken control}
 
-Currently, there is an bug in this code. Run the program and try to
-control the circle with your left and right arrow keys, and you will
-move in the opposite direction of what you intend. Locate the code for
-this---hint: it's in the model---and fix it.
+Currently, there is an bug in this code. Run the program by clicking the
+green “play” button in the toolbar. Then try to control the circle with
+your left and right arrow keys, and the small circle should likely move
+in the opposite direction of what you intend. A bug!. Locate the code
+for this---hint: look in the ^src/model.cxx^---and fix it.
 
 There are test cases for checking the model's movement, so when you are
 done try running your code against the tests.
@@ -36,11 +37,14 @@ done try running your code against the tests.
 \subsection{Up and down}
 
 As you have seen, the circle that is controlled by the keyboard only
-moves horizontally right now. Add two member functions to the
-^Model^ struct, ^Model::move_large_circle_up()^ and
-^Model::move_large_circle_down()^, and connect them to the
-keyboard by modifying the ^Game::on_key(Key)^ member function in
-\filename{game.cpp}.
+moves horizontally right now. There are two \emph{member functions} for
+moving the large circle up and down,
+^Model::move_^\-^large_^\-^circle_^\-^up()^ and
+^Model::move_^\-^large_^\-^circle_^\-^down()^, declared as part of the
+^Model^ struct in ^src/model.hxx^. Write their definitions in
+^src/model.cxx^, following the pattern of the similar member functions.
+Then connect them to the keyboard by modifying the ^Game::on_key(Key)^
+member function in \filename{ui.cpp} to handle additional keys.
 
 \subsection{Click, not hover}
 
@@ -63,5 +67,26 @@ the model, and verify that they do what you expect.
 There is a test case that checks that ^Model::is_touching()^ will
 sometimes return ^true^ to indicate that the circles are touching.
 Fill in the final test for checking when the circles aren't touching.
+
+\section{Other things to try}
+
+\begin{itemize}
+
+  \item Make the small circle change colors when it's touching
+    the large circle.
+
+  \item Make the small circle change to a different color when it's
+    touching the edge of the window.
+
+  \item Make a circle change size when touching the other.
+
+  \item Let the user change the colors by pressing different keys on the
+    keyboard.
+
+  \item Change a circle to a rectangle.
+
+  % \item Change a circle to an image you find on the internet.
+
+\end{itemize}
 
 \end{document}

@@ -1,20 +1,28 @@
 #include "model.hxx"
 #include <catch.hxx>
 
+using namespace ge211;
+
 TEST_CASE("move large circle left")
 {
     Model model;
-    int old_x = model.large_center_.x;
+    Posn<int> old = model.large_center;
+
     model.move_large_circle_left();
-    CHECK( model.large_center_.x == old_x - 10 );
+
+    CHECK( model.large_center.x == old.x - 10 );
+    CHECK( model.large_center.y == old.y );
 }
 
 TEST_CASE("move large circle right")
 {
     Model model;
-    int old_x = model.large_center_.x;
+    Posn<int> old = model.large_center;
+
     model.move_large_circle_right();
-    CHECK( model.large_center_.x == old_x + 10 );
+
+    CHECK( model.large_center.x == old.x + 10 );
+    CHECK( model.large_center.y == old.y );
 }
 
 TEST_CASE("move large circle up")
@@ -38,16 +46,16 @@ TEST_CASE("move large circle down")
 TEST_CASE("move small circle to")
 {
     Model model;
-    ge211::Position pos{120, 150};
+    Posn<int> pos{120, 150};
     model.move_small_circle_to(pos);
-    CHECK( model.small_center_ == pos );
+    CHECK( model.small_center == pos );
 }
 
 TEST_CASE("get collision state touching")
 {
     Model model;
 
-    ge211::Position pos = model.large_center_;
+    Posn<int> pos = model.large_center;
     pos.x += large_radius - small_radius;
     pos.y += large_radius - small_radius;
     model.move_small_circle_to(pos);
