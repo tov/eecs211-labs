@@ -2,7 +2,6 @@ dot-cs211
 Publish
 build/
 dist/
-.idea/
 *.tgz
 *.zip
 *.pdf
