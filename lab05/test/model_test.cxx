@@ -60,7 +60,7 @@ TEST_CASE("get collision state touching")
     pos.y += large_radius - small_radius;
     model.move_small_circle_to(pos);
 
-    CHECK( model.is_touching() );
+    CHECK(model.overlapped() );
 }
 
 TEST_CASE("get collision state not touching")
@@ -71,5 +71,5 @@ TEST_CASE("get collision state not touching")
     // YOUR SETUP HERE
     //
 
-    CHECK_FALSE( model.is_touching() );
+    CHECK_FALSE(model.overlapped() );
 }

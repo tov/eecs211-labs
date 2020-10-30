@@ -20,6 +20,7 @@ void Model::move_small_circle_to(Position pos)
     small_center = pos;
 }
 
+// Returns the square of the distance between two points.
 static double sqr_distance(Position p, Position q)
 {
     int dx = p.x - q.x;
@@ -27,7 +28,7 @@ static double sqr_distance(Position p, Position q)
     return dx * dx + dy * dy;
 }
 
-bool Model::is_touching() const
+bool Model::overlapped() const
 {
     double radii = large_radius + small_radius;
     return sqr_distance(small_center, large_center) <= radii * radii;

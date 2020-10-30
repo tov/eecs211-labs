@@ -6,16 +6,17 @@ project(lab05 CXX)
 include(.cs211/cmake/CMakeLists.txt)
 
 # Builds program `game` from the two listed source files:
-add_program(game
+add_program(circle_game
         src/game_main.cxx
         src/ui.cxx
         src/model.cxx)
-# Links `game` against the GE211 game engine:
-target_link_libraries(game ge211)
+# Links `circle_game` against the GE211 game engine:
+target_link_libraries(circle_game ge211)
 
 # Builds test program `game_test`:
 add_test_program(model_test
-        test/model_test.cxx src/model.cxx)
+        test/model_test.cxx
+        src/model.cxx)
 # Links `game_test` against the GE211 game engine:
 target_link_libraries(model_test ge211)
 

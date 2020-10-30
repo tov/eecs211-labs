@@ -22,7 +22,7 @@ Game::draw(ge211::Sprite_set& sprites)
 {
     sprites.add_sprite(small_sprite, model.small_upper_left(), -1);
 
-    if (model.is_touching()) {
+    if (model.overlapped()) {
         sprites.add_sprite(large_sprite_touch,
                            model.large_upper_left());
     } else {
