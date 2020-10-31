@@ -1,16 +1,22 @@
 # The default lab to build when running just `make`:
 DEFAULT   = lab05
 
-TEXS      = $(wildcard lab*.tex)
-PDFS      = $(TEXS:.tex=.pdf)
-LABS      = $(wildcard lab??)
+TEXS     ?= $(wildcard lab*.tex)
+LAB_DIRS ?= $(wildcard lab??)
 STYS      = 211base.sty 211lang.sty 211common.sty 211lab.sty
-STY_DEPS  = $(STYS:%=latex/%)
+
+TEX_DIR   = latex
 BUILD_DIR = build
 DIST_DIR  = dist
 DEP_DIR   = $(BUILD_DIR)/depend
-TEXOPTS   = -output-directory=$(BUILD_DIR) -interaction=errorstopmode
-TEXINPUTS = .:./latex:
+
+TEXINPUTS = .:./$(TEX_DIR):
+TEXOPTS   = -output-directory=$(BUILD_DIR) \
+            -interaction=errorstopmode
+
+PDFS      = $(TEXS:.tex=.pdf)
+STY_DEPS  = $(STYS:%=$(TEX_DIR)/%)
+LAB_DEPS  = $(LAB_DIRS:%=$(DEP_DIR)/%.d)
 
 # Build just the lab PDF we're working on:
 pdf: $(DEFAULT).pdf
@@ -25,6 +31,12 @@ hard: $(DEFAULT).pdf
 # Build archives for distribution
 zip: $(DEFAULT).zip
 tgz: $(DEFAULT).tgz
+
+thisclean: $(DEFAULT).clean
+
+%.clean:
+	$(RM) -R $(DIST_DIR)/$*
+	$(RM) $*.zip $*.pdf $*.tgz
 
 # To build a lab PDF, build it in the $(BUILD_DIR)/ directory and then
 # copy it here:
@@ -41,28 +53,27 @@ $(BUILD_DIR)/%.pdf: $(BUILD_DIR)/%.cmd $(STY_DEPS)
 %.tgz: $(DIST_DIR)/%
 	cd $(DIST_DIR) && tar -czvf ../$@ $*
 
-FOR_SUBS    = git -C dot-cs211 submodule foreach
-STASH_CMD   = git stash push --quiet --all --message='building $@'
-UNSTASH_CMD = git stash pop --quiet
+QUIET_GIT  ?= --quiet
+FOR_SUBS    = git -C dot-cs211 submodule $(QUIET_GIT) foreach
+STASH_CMD   = git stash push $(QUIET_GIT) --all --message="for make $@"
+UNSTASH_CMD = git stash pop $(QUIET_GIT)
 STS         = something-to-stash
-FIND_CMD    = find $@
-SED_SEARCH  = s@ @\\&@g; s@$(DIST_DIR)/(.*)
-FIND_DEPS   = { $(FIND_CMD) | sed -E '$(SED_SEARCH)@$@: \1@' && \
-                $(FIND_CMD) | sed -E '$(SED_SEARCH)@\1:@'; }
+FIND_DEPS   = ( cd $(@D) && \
+                find $(@F) | \
+                sed 's@ @\\&@g; h; s@$$@:@; p; g; s@^@$@: @' )
 
 $(DIST_DIR)/%: | $(DEP_DIR) $(DIST_DIR)
 	$(RM) -R $@
-	$(FOR_SUBS) touch $(STS) && touch $*/$(STS)
-	$(FOR_SUBS) $(STASH_CMD) && $(STASH_CMD) $*/'*'
+	@$(FOR_SUBS) touch $(STS) && touch $*/$(STS)
+	@$(FOR_SUBS) $(STASH_CMD) && $(STASH_CMD) '$*/*'
 	rsync -rvL $*/ $@
-	$(FIND_DEPS) > $(DEP_DIR)/$*.d
-	$(UNSTASH_CMD)  && $(FOR_SUBS) $(UNSTASH_CMD)
-	$(RM) $*/$(STS) && $(FOR_SUBS) $(RM) $(STS)
+	@$(FIND_DEPS) > $(DEP_DIR)/$*.d
+	@$(RM) $*/$(STS) && $(FOR_SUBS) $(RM) $(STS)
+	@$(UNSTASH_CMD)  && $(FOR_SUBS) $(UNSTASH_CMD)
+	@$(RM) $*/$(STS) && $(FOR_SUBS) $(RM) $(STS)
 	touch $@
 
-$(DEP_DIR)/%.d: $(DIST_DIR)/%
-
--include $(LABS:%=$(DEP_DIR)/%.d)
+-include $(LAB_DEPS)
 
 # Figure out which version of LaTeX to use and save its
 # name in a file:
@@ -108,4 +119,4 @@ watch-stdin:
 .PRECIOUS: $(DIST_DIR)/%
 
 .PHONY: pdf pdfs hard zip tgz
-.PHONY: clean watch watch1 watch-stdin
+.PHONY: clean %.clean thisclean watch watch1 watch-stdin
