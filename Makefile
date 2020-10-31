@@ -65,7 +65,7 @@ FIND_DEPS   = ( cd $(@D) && \
 $(DIST_DIR)/%: | $(DEP_DIR) $(DIST_DIR)
 	$(RM) -R $@
 	@$(FOR_SUBS) touch $(STS) && touch $*/$(STS)
-	@$(FOR_SUBS) $(STASH_CMD) && $(STASH_CMD) '$*/*'
+	@$(FOR_SUBS) $(STASH_CMD) && $(STASH_CMD) '${*}/*'
 	rsync -rvL $*/ $@
 	@$(FIND_DEPS) > $(DEP_DIR)/$*.d
 	@$(RM) $*/$(STS) && $(FOR_SUBS) $(RM) $(STS)
