@@ -1,8 +1,8 @@
 # The default lab to build when running just `make`:
 DEFAULT   = lab05
 
-TEXS     ?= $(wildcard lab*.tex)
-LAB_DIRS ?= $(wildcard lab??)
+TEXS      = $(wildcard lab*.tex)
+LAB_DIRS  = $(wildcard lab??)
 STYS      = 211base.sty 211lang.sty 211common.sty 211lab.sty
 
 TEX_DIR   = latex
@@ -32,8 +32,10 @@ hard: $(DEFAULT).pdf
 zip: $(DEFAULT).zip
 tgz: $(DEFAULT).tgz
 
+# Clean the current target:
 thisclean: $(DEFAULT).clean
 
+# Clean the specified target:
 %.clean:
 	$(RM) -R $(DIST_DIR)/$*
 	$(RM) $*.zip $*.pdf $*.tgz
@@ -56,21 +58,28 @@ $(BUILD_DIR)/%.pdf: $(BUILD_DIR)/%.cmd $(STY_DEPS)
 QUIET_GIT  ?= --quiet
 FOR_SUBS    = git -C dot-cs211 submodule $(QUIET_GIT) foreach
 STASH_CMD   = git stash push $(QUIET_GIT) --all --message="for make $@"
+CLEAN_CMD   = git clean -dfx
 UNSTASH_CMD = git stash pop $(QUIET_GIT)
 STS         = something-to-stash
-FIND_DEPS   = ( cd $(@D) && \
-                find $(@F) | \
-                sed 's@ @\\&@g; h; s@$$@:@; p; g; s@^@$@: @' )
+FIND_DEPS   = ( cd $@ && find . | sed ' \
+                  s@ @\\&@g;            \
+                  s@^[.]@$<@;           \
+                  h;                    \
+                  s@$$@:@;              \
+                  p;                    \
+                  g;                    \
+                  s@^@$@: @             \
+                ' )
 
-$(DIST_DIR)/%: | $(DEP_DIR) $(DIST_DIR)
+$(DIST_DIR)/%: % | $(DEP_DIR) $(DIST_DIR)
 	$(RM) -R $@
-	@$(FOR_SUBS) touch $(STS) && touch $*/$(STS)
-	@$(FOR_SUBS) $(STASH_CMD) && $(STASH_CMD) '${*}/*'
-	rsync -rvL $*/ $@
-	@$(FIND_DEPS) > $(DEP_DIR)/$*.d
-	@$(RM) $*/$(STS) && $(FOR_SUBS) $(RM) $(STS)
+	@$(FOR_SUBS) touch $(STS) && touch $</$(STS)
+	@$(FOR_SUBS) $(STASH_CMD) && $(STASH_CMD) -- $<
+	@$(FOR_SUBS) $(CLEAN_CMD) && $(CLEAN_CMD) -- $<
+	rsync -rvL $</ $@
+	@$(FIND_DEPS) > $(DEP_DIR)/$(@F).d
 	@$(UNSTASH_CMD)  && $(FOR_SUBS) $(UNSTASH_CMD)
-	@$(RM) $*/$(STS) && $(FOR_SUBS) $(RM) $(STS)
+	@$(RM) $</$(STS) && $(FOR_SUBS) $(RM) $(STS)
 	touch $@
 
 -include $(LAB_DEPS)
@@ -119,4 +128,5 @@ watch-stdin:
 .PRECIOUS: $(DIST_DIR)/%
 
 .PHONY: pdf pdfs hard zip tgz
-.PHONY: clean %.clean thisclean watch watch1 watch-stdin
+.PHONY: %.clean thisclean
+.PHONY: clean watch watch1 watch-stdin
