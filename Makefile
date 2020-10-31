@@ -1,34 +1,72 @@
 # The default lab to build when running just `make`:
-DEFAULT = lab04
+DEFAULT   = lab05
 
 TEXS      = $(wildcard lab*.tex)
 PDFS      = $(TEXS:.tex=.pdf)
+LABS      = $(wildcard lab??)
 STYS      = 211base.sty 211lang.sty 211common.sty 211lab.sty
 STY_DEPS  = $(STYS:%=latex/%)
-TEXOPTS   = -output-directory=build -interaction=errorstopmode
+BUILD_DIR = build
+DIST_DIR  = dist
+DEP_DIR   = $(BUILD_DIR)/depend
+TEXOPTS   = -output-directory=$(BUILD_DIR) -interaction=errorstopmode
 TEXINPUTS = .:./latex:
 
 # Build just the lab PDF we're working on:
-default: $(DEFAULT).pdf
+pdf: $(DEFAULT).pdf
 
+# Build all PDFs:
+pdfs: $(PDFS)
+
+# Build and open:
 hard: $(DEFAULT).pdf
 	open $<
 
-# Build everything:
-all: $(PDFS)
+# Build archives for distribution
+zip: $(DEFAULT).zip
+tgz: $(DEFAULT).tgz
 
-# To build a lab PDF, build it in the build/ directory and then
+# To build a lab PDF, build it in the $(BUILD_DIR)/ directory and then
 # copy it here:
-%.pdf: build/%.pdf
+%.pdf: $(BUILD_DIR)/%.pdf
 	cp $< $@
 
-# Build one lab PDF in the build directory:
-build/%.pdf: build/%.cmd $(STY_DEPS)
+# Build one lab PDF in the $(BUILD_DIR) directory:
+$(BUILD_DIR)/%.pdf: $(BUILD_DIR)/%.cmd $(STY_DEPS)
 	sh $<
+
+%.zip: $(DIST_DIR)/%
+	cd $(DIST_DIR) && zip -r ../$@ $*
+
+%.tgz: $(DIST_DIR)/%
+	cd $(DIST_DIR) && tar -czvf ../$@ $*
+
+FOR_SUBS    = git -C dot-cs211 submodule foreach
+STASH_CMD   = git stash push --quiet --all --message='building $@'
+UNSTASH_CMD = git stash pop --quiet
+STS         = something-to-stash
+FIND_CMD    = find $@
+SED_SEARCH  = s@ @\\&@g; s@$(DIST_DIR)/(.*)
+FIND_DEPS   = { $(FIND_CMD) | sed -E '$(SED_SEARCH)@$@: \1@' && \
+                $(FIND_CMD) | sed -E '$(SED_SEARCH)@\1:@'; }
+
+$(DIST_DIR)/%: | $(DEP_DIR) $(DIST_DIR)
+	$(RM) -R $@
+	$(FOR_SUBS) touch $(STS) && touch $*/$(STS)
+	$(FOR_SUBS) $(STASH_CMD) && $(STASH_CMD) $*/'*'
+	rsync -rvL $*/ $@
+	$(FIND_DEPS) > $(DEP_DIR)/$*.d
+	$(UNSTASH_CMD)  && $(FOR_SUBS) $(UNSTASH_CMD)
+	$(RM) $*/$(STS) && $(FOR_SUBS) $(RM) $(STS)
+	touch $@
+
+$(DEP_DIR)/%.d: $(DIST_DIR)/%
+
+-include $(LABS:%=$(DEP_DIR)/%.d)
 
 # Figure out which version of LaTeX to use and save its
 # name in a file:
-build/%.cmd: %.tex Makefile | build
+$(BUILD_DIR)/%.cmd: %.tex Makefile | $(BUILD_DIR)
 	@(                                                 \
 	    if fgrep -q tufte-handout $<;                  \
 	        then LATEX=pdflatex;                       \
@@ -38,12 +76,19 @@ build/%.cmd: %.tex Makefile | build
 	           "$(TEXINPUTS)" "$$LATEX" "$(TEXOPTS)";  \
 	) > $@
 
-build:
+$(BUILD_DIR):
+	mkdir -p $@
+
+$(DIST_DIR):
+	mkdir -p $@
+
+$(DEP_DIR):
 	mkdir -p $@
 
 # Delete all build products:
 clean:
-	$(RM) -R build *.pdf
+	$(RM) *.pdf *.zip *.tgz
+	$(RM) -R $(BUILD_DIR) $(DIST_DIR) $(DEP_DIR)
 
 watch:
 	fswatch $(TEXS) | $(MAKE) watch-stdin
@@ -60,4 +105,7 @@ watch-stdin:
 	  echo "=== Done: $$? ==="; \
 	done
 
-.PHONY: default hard all clean watch watch1 watch-stdin
+.PRECIOUS: $(DIST_DIR)/%
+
+.PHONY: pdf pdfs hard zip tgz
+.PHONY: clean watch watch1 watch-stdin

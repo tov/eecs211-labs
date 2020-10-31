@@ -1,5 +1,25 @@
-dot-cs211
-Publish
+# Vendored but not tracked:
+/dot-cs211
+
+# User-specific CLion (IDEA) settings:
+workspace.xml
+vcs.xml
+.idea/**/tasks.xml
+.idea/**/usage.statistics.xml
+.idea/**/dictionaries
+.idea/**/shelf/
+.idea/**/workspace.xml
+.idea/**/vcs.xml
+
+# Build directories:
+build/
+build.*/
+cmake-build-*/
+
+# Mac OS Finder configuration:
+.DS_Store
+
+# LaTeX stuff
 build/
 dist/
 *.tgz
@@ -9,4 +29,3 @@ dist/
 *.log
 *.out
 *.synctex.gz
-.DS_Store
