@@ -21,7 +21,6 @@ cmake-build-*/
 
 # LaTeX stuff
 build/
-dist/
 *.tgz
 *.zip
 *.pdf

@@ -7,7 +7,7 @@ STYS      = 211base.sty 211lang.sty 211common.sty 211lab.sty
 
 TEX_DIR   = latex
 BUILD_DIR = build
-DIST_DIR  = dist
+DIST_DIR  = $(BUILD_DIR)/dist
 DEP_DIR   = $(BUILD_DIR)/depend
 
 TEXINPUTS = .:./$(TEX_DIR):
@@ -97,18 +97,17 @@ $(BUILD_DIR)/%.cmd: %.tex Makefile | $(BUILD_DIR)
 	) > $@
 
 $(BUILD_DIR):
-	mkdir -p $@
+	@mkdir -p $@
 
 $(DIST_DIR):
-	mkdir -p $@
+	@mkdir -p $@
 
 $(DEP_DIR):
-	mkdir -p $@
+	@mkdir -p $@
 
 # Delete all build products:
 clean:
-	$(RM) *.pdf *.zip *.tgz
-	$(RM) -R $(BUILD_DIR) $(DIST_DIR) $(DEP_DIR)
+	$(RM) -R $(BUILD_DIR) *.pdf *.zip *.tgz
 
 watch:
 	fswatch $(TEXS) | $(MAKE) watch-stdin
