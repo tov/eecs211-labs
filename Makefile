@@ -49,11 +49,17 @@ thisclean: $(DEFAULT).clean
 $(BUILD_DIR)/%.pdf: $(BUILD_DIR)/%.cmd $(STY_DEPS)
 	sh $<
 
-%.zip: $(DIST_DIR)/%
-	cd $(DIST_DIR) && zip -r ../$@ $*
+%.zip: $(DIST_DIR)/%.zip
+	ln -f $< $@
 
-%.tgz: $(DIST_DIR)/%
-	cd $(DIST_DIR) && tar -czvf ../$@ $*
+%.tgz: $(DIST_DIR)/%.tgz
+	ln -f $< $@
+
+$(DIST_DIR)/%.zip: $(DIST_DIR)/%
+	cd $(DIST_DIR) && zip -r $(@F) $*
+
+$(DIST_DIR)/%.tgz: $(DIST_DIR)/%
+	cd $(DIST_DIR) && tar -czvf $(@F) $*
 
 QUIET_GIT  ?= --quiet
 FOR_SUBS    = git -C dot-cs211 submodule $(QUIET_GIT) foreach
