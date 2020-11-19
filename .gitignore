@@ -1,3 +1,14 @@
+# Build directories:
+build/
+build.*/
+build-*/
+cmake-build-*/
+
+# Build products
+*.tgz
+*.zip
+*.pdf
+
 # Vendored but not tracked:
 /dot-cs211
 
@@ -11,21 +22,5 @@ vcs.xml
 .idea/**/workspace.xml
 .idea/**/vcs.xml
 
-# Build directories:
-build/
-build.*/
-build-*/
-cmake-build-*/
-
 # Mac OS Finder configuration:
 .DS_Store
-
-# LaTeX stuff
-build/
-*.tgz
-*.zip
-*.pdf
-*.aux
-*.log
-*.out
-*.synctex.gz
