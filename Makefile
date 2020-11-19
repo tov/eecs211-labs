@@ -49,16 +49,16 @@ thisclean: $(DEFAULT).clean
 $(BUILD_DIR)/%.pdf: $(BUILD_DIR)/%.cmd $(STY_DEPS)
 	sh $<
 
-%.zip: $(DIST_DIR)/%.zip
+%.zip: $(DIST_DIR)/%.zip.dist
 	ln -f $< $@
 
-%.tgz: $(DIST_DIR)/%.tgz
+%.tgz: $(DIST_DIR)/%.tgz.dist
 	ln -f $< $@
 
-$(DIST_DIR)/%.zip: $(DIST_DIR)/%
+$(DIST_DIR)/%.zip.dist: $(DIST_DIR)/%
 	cd $(DIST_DIR) && zip -r $(@F) $*
 
-$(DIST_DIR)/%.tgz: $(DIST_DIR)/%
+$(DIST_DIR)/%.tgz.dist: $(DIST_DIR)/%
 	cd $(DIST_DIR) && tar -czvf $(@F) $*
 
 QUIET_GIT  ?= --quiet
