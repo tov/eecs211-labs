@@ -3,7 +3,7 @@
 % Be sure to check and update this:
 \def\PuTTYurl{https://the.earth.li/~sgtatham/putty/latest/w64/putty-64bit-0.74-installer.msi}
 \def\GlobalProtectUrl{https://kb.northwestern.edu/page.php?id=94726}
-\def\PuTTYhelpUrl{https://superuser.com/questions/1159811/openssh-proxycommand-equivalent-in-putty}
+\def\PuTTYhelpUrl{https://nu-cs211.github.io/cs211-files/putty_setup_guide.pdf}
 \def\setupScriptUrl{https://bit.ly/3nBxDH3}
 \def\setupScriptLink{\href{\setupScriptUrl}{\setupScriptUrl}}
 
@@ -87,6 +87,14 @@ be different for Windows and Mac/Linux, but for the rest it should not
 matter which OS you are on, since you'll be using the remote Unix
 machine.
 
+You will need your netid and EECS password to log into the computers. If you do
+not remember it, you can create a new password at
+\href{https://selfserv.eecs.northwestern.edu/temp_password/}{https://selfserv.eecs.northwestern.edu/temp_password/}.
+You will need to use your netid (lowercase) and Northwestern password to log
+into that website. The link will only work once, so pick a memorable password.
+If you need to reset your password again, you'll have to contact EECS IT:
+help@eecs.northwestern.edu
+
 \subsection{Windows}
 
 Download the \href{\PuTTYurl}{SSH client PuTTY}%
@@ -107,8 +115,8 @@ you trust the host. Press yes. From here, login as your EECS username
 your NetID password). You should now be logged into one of the
 Northwestern EECS boxes!
 
-Note that you can configure PuTTY so that you don't have to do all of
-this every time.
+Note that you can and should configure PuTTY so that you don't have to do all
+of this every time by saving a session.
 
 If you would like to try to configure PuTTY to proxy so that
 you don’t have to use the VPN, try \href{\PuTTYhelpUrl}{these
@@ -285,7 +293,7 @@ have these files, it will first back them up and tell you the names of
 the backup files. Here is the command to run:
 
 \begin{CmdLine*}
-  \C \plaintilde jesse/setup211\\
+  \C \plaintilde cs211/setup211\\
 \end{CmdLine*}
 
 \marginnote[-\baselineskip]{Remember not to type the
