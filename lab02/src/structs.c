@@ -13,13 +13,6 @@ struct apple
 
 
 /*
- * Function declarations
- */
-
-int sum_numbers(int);
-
-
-/*
  * Function definitions
  */
 
@@ -29,10 +22,7 @@ int main(void)
 
     printf("My %s apple is the color %s and weighs %g lbs.\n",
            delicious.variety, delicious.color, delicious.weight);
+
+    return 0;
 }
 
-int sum_numbers(int num)
-{
-    // TODO: FIX ME
-    return -1;
-}

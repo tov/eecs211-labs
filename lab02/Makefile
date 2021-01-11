@@ -10,16 +10,19 @@ CFLAGS      = -g -O1 -std=c11 -pedantic @.Wflags $(SANFLAGS)
 # Flags for linking the final program:
 LDFLAGS     = $(SANFLAGS)
 
-all: lab
+all: sum structs
 
-lab: src/lab.o
+sum: src/sum.o
+	$(CC) -o $@ $^ $(CFLAGS) $(LDFLAGS)
+
+structs: src/structs.o
 	$(CC) -o $@ $^ $(CFLAGS) $(LDFLAGS)
 
 %.o: %.c
 	$(CC) -c -o $@ $< $(CPPFLAGS) $(CFLAGS)
 
 clean:
-	rm -f lab src/*.o
+	rm -f sum structs src/*.o
 
 # Targets that are not actually files we can build:
 .PHONY: all clean

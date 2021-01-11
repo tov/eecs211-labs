@@ -13,9 +13,9 @@ C code.
 
 \section{Getting Started}
 
-Let's get started by logging into a remote Northwestern workstation. We
-did this last week, but if you need help remembering the steps, they are
-included below.\marginnote{The list of remote Northwestern workstations
+Let's get started by logging into a remote Northwestern workstation.
+If you need help remember the steps, review Lab 1.
+\marginnote{The list of remote Northwestern workstations
 can be found here: \LabHostnamesLink}
 
 \section{Enabling the CS 211 build environment}
@@ -64,10 +64,10 @@ You should now have a directory called
 
 \section{Writing the code}
 Navigate into to your \filename{\ThisLabBase} directory using
-\progname{cd}, and open up \filename{src/lab.c} in Emacs using
+\progname{cd}, and open up \filename{src/sum.c} in Emacs using
 
 \begin{CmdLine*}
-  \C emacs src/lab.c\\
+  \C emacs src/sum.c\\
 \end{CmdLine*}
 
 \noindent
@@ -80,7 +80,7 @@ First, find the function called
 \functionref{sum\_numbers}{}.\marginnote{Notice that
 \functionref{sum\_numbers}{} is going to return an {\codestyleKeyword
 int}.} We are going to use this function to sum up all of the numbers
-from 1 to \varname{num}.  If you remember from class, we have a few ways
+from 1 up to and including \varname{num}.  If you remember from class, we have a few ways
 of iterating through numbers, most notably ^for^ and ^while^.  We will
 be using both, but first we will be using ^while^.
 
@@ -110,7 +110,7 @@ exit}. If you remember from last week, we used the \filename{make}
 command in order to turn our C file into machine code. Run:
 
 \begin{CmdLine*}
-  \C make lab\\
+  \C make sum\\
 \end{CmdLine*}
 \marginnote{Remember, make works as follows: \cmdline{make [target]}. Target is the name of the executable file that will be built by the make command.}
 
@@ -119,12 +119,13 @@ If everything works, if we list our files, we should now see a file
 called \filename{lab}. To run it, the command is:
 
 \begin{CmdLine*}
-  \C ./lab\\
+  \C ./sum\\
 \end{CmdLine*}
 
 \noindent
-See if your value looks right!  If it doesn't, don't worry, Rome wasn't
-built in a day.  Try and try and see what went wrong.\marginnote{Error
+See if your value looks right!
+If it doesn't, don't worry. These labs are designed so you can practice.
+Investigate and try to see what went wrong.\marginnote{Error
 messages may look scary, but in reality, they're there to help you!  Not
 intimidate you!}  Play around with the value of \varname{num} and see
 how it affects the result.
@@ -153,7 +154,7 @@ Once you are done, make and run your file.  See if everything looks the same!  I
 
 
 Structs are an important tool in C for grouping data together.  In your
-\filename{lab.c} you will notice that we created an ^apple^ structure
+\filename{structs.c} you will notice that we created an ^apple^ structure
 for you.\marginnote{How 'bout 'dem apples?}  This is so that we can
 organize attributes of ^struct apple^s together in a convenient way.  If
 you look inside our ^apple^ struct, we decided that we will want to know
@@ -162,7 +163,7 @@ the weight, the variety, and the color of our apples.  In our
 Now, create your own type of apple (you'll need to define it as a type
 ^struct apple^), and give it those three attributes.  Add in a print
 statement (we gave you an example one) to print out your new ^struct
-apple^.  Make and run your \progname{lab} program!  Hopefully everything
+apple^.  Make and run your \progname{structs} program!  Hopefully everything
 works as expected!  If not, don't fret or get upset, go back and make
 changes!
 
@@ -179,7 +180,7 @@ then create a print statement to print out information about your
 animal.  These print statements are getting annoying; we'll tackle that
 soon.
 
-Make and run \progname{lab}, and see if your new animal shows up the way that
+Make and run \progname{structs}, and see if your new animal shows up the way that
 you intended.  Hopefully everything works!  If not, as usual, go back
 and try and find what went wrong and update your code.
 
@@ -212,13 +213,13 @@ and replace your print statement with a call to
 \functionref{print\_animal}{}.\marginnote{Remember to pass your animal
 instance to the function.}
 
-Make and run \progname{lab}, and see if everything still works!
+Make and run \progname{structs}, and see if everything still works!
 
 \subsection{Control statements}
 
 Now that we have gotten the hang of structs and functions, let's
 practice our control statements.  Go back to our
-\functionref{print\_animal}{} function.  Remember from HW1 and class that
+\functionref{print\_animal}{} function.  Remember from class that
 ^if^ statements have the following basic syntax:
 
 \begin{Code}
@@ -237,6 +238,6 @@ Using an ^if^--^else^ statement, check your animals age and add to your
 old!'' if the animal is at least 10 and print out ``This animal is not
 that old'' if the animal is younger than 10.
 
-Build and run \progname{lab}, and see if this feature is working.
+Build and run \progname{structs}, and see if this feature is working.
 
 \end{document}
