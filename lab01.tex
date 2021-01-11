@@ -1,10 +1,10 @@
 \documentclass{tufte-handout}
 
 % Be sure to check and update this:
-\def\PuTTYurl{https://the.earth.li/~sgtatham/putty/0.74/w32/putty-0.74-installer.msi}
+\def\PuTTYurl{https://the.earth.li/~sgtatham/putty/latest/w64/putty-64bit-0.74-installer.msi}
 \def\GlobalProtectUrl{https://kb.northwestern.edu/page.php?id=94726}
 \def\PuTTYhelpUrl{https://superuser.com/questions/1159811/openssh-proxycommand-equivalent-in-putty}
-\def\setupScriptUrl{https://bit.ly/2RXwrkb}
+\def\setupScriptUrl{https://bit.ly/3nBxDH3}
 \def\setupScriptLink{\href{\setupScriptUrl}{\setupScriptUrl}}
 
 \usepackage{211lab}
@@ -59,7 +59,7 @@ essentially two alternatives:
     To setup the NU VPN, follow \href{\GlobalProtectUrl}{these
     instructions}.
 
-  \item Configure SSH to ``proxy jump'' through a different host than
+  \item Configure SSH to use a ``proxy'' through a different host than
     the one we ultimately want. SSH can do this automatically for you if
     you set it up just right, but it’s a bit harder than using the VPN.
     Instructions for setting up a proxy appear in the per-system
@@ -110,7 +110,7 @@ Northwestern EECS boxes!
 Note that you can configure PuTTY so that you don't have to do all of
 this every time.
 
-If you would like to try to configure PuTTY to proxy jump so that
+If you would like to try to configure PuTTY to proxy so that
 you don’t have to use the VPN, try \href{\PuTTYhelpUrl}{these
 instructions}.
 
@@ -140,7 +140,7 @@ connecting.  Type ``yes'' as prompted and press Enter. Now type in your
 EECS account password (not necessarily your NetID password), press
 Enter again, and you should be logged in remotely!
 
-You can configure ^ssh^ to proxy jump automatically, and to use a
+You can configure ^ssh^ to proxy automatically, and to use a
 \href{https://en.wikipedia.org/wiki/Key_authentication}{cryptographic
 key for authentication} so that you don’t have to type your password. If
 you want to try this, run the following command in your terminal and
@@ -473,7 +473,7 @@ if you want any more challenges!
 \item[PuTTY MSI installer]
 \url{\PuTTYurl}
 
-\item[PuTTY ``proxy jump'' instructions]
+\item[PuTTY ``proxy'' instructions]
 \url{\PuTTYhelpUrl}
 
 \item[Nice Emacs guide]
