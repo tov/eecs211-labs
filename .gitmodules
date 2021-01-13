@@ -1,3 +1,4 @@
 [submodule "latex"]
 	path = latex
 	url = https://github.com/nu-cs211/latex.git
+	update = rebase
