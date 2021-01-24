@@ -1,7 +1,6 @@
 -Wall
 -Wfatal-errors
 
--Wno-unknown-warning-option
 -Wno-unused-function
 
 -Wcast-align=strict

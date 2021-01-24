@@ -3,14 +3,18 @@
 
 -Wno-unused-function
 
+-Wcast-align=strict
 -Wcast-qual
 -Wdangling-else
 -Wnull-dereference
+-Wold-style-declaration
 -Wold-style-definition
 -Wshadow
 -Wtype-limits
 -Wwrite-strings
 
+-Werror=bool-compare
+-Werror=bool-operation
 -Werror=int-to-pointer-cast
 -Werror=pointer-to-int-cast
 -Werror=return-type
