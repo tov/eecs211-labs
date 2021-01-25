@@ -10,44 +10,23 @@ CFLAGS     += -g -O1 -std=c11 -pedantic @.Wflags $(SANFLAGS)
 # Flags for linking the final program:
 LDFLAGS    += -l211 $(SANFLAGS)
 
-TESTS       = test_cons test_heap_string test_string_fun
-EXES        = asan_example $(TESTS)
+all: infinite broken
 
-all: $(EXES)
-
-test: $(TESTS)
-	for program in $^; do \
-	  echo "*** Running $$program: ***"; \
-	  ./$$program; \
-	  echo; \
-	done
-
-asan_example: src/asan_example.o
+infinite: src/infinite.o src/lab4_funs.o
 	$(CC) -o $@ $^ $(CFLAGS) $(LDFLAGS)
 
-test_cons: test/test_cons.o src/cons.o
-	$(CC) -o $@ $^ $(CFLAGS) $(LDFLAGS)
-
-test_string_fun: test/test_string_fun.o src/string_fun.o \
-                 src/heap_string.o src/ptr_string.o
-	$(CC) -o $@ $^ $(CFLAGS) $(LDFLAGS)
-
-test_heap_string: test/test_heap_string.o src/heap_string.o src/ptr_string.o
+broken: src/broken.o src/lab4_funs.o
 	$(CC) -o $@ $^ $(CFLAGS) $(LDFLAGS)
 
 %.o: %.c
 	$(CC) -c -o $@ $< $(CPPFLAGS) $(CFLAGS)
 
 # Dependencies:
-src/heap_string.o: src/ptr_string.h src/heap_string.h
-src/ptr_string.o: src/ptr_string.h
-src/string_fun.o: src/ptr_string.h src/heap_string.h src/string_fun.h
-test/test_cons.o: src/cons.h
-test/test_heap_string.o: src/ptr_string.h src/heap_string.h
-test/test_string_fun.o: src/ptr_string.h src/heap_string.h src/string_fun.h
+# (All three object files depend on the header.)
+src/infinite.o src/broken.o src/lab4_funs.o: src/lab4_funs.h
 
 clean:
-	$(RM) $(EXES) */*.o
+	$(RM) infinite broken */*.o
 
 # Targets that are not actually files we can build:
-.PHONY: all test clean
+.PHONY: all clean

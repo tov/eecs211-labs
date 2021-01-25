@@ -1,29 +1,32 @@
-\documentclass[11pt]{article}
+%\documentclass[11pt]{article}
+\documentclass{tufte-handout}
 
-\usepackage{microtype}
-\usepackage{mathspec}
-\usepackage{fullpage}
-\usepackage[dvipsnames]{xcolor}
-\usepackage{titlesec}
-\usepackage{multicol}
-\usepackage{parskip}
-\usepackage{211base}
+%\usepackage{microtype}
+%\usepackage{mathspec}
+%\usepackage{fullpage}
+%\usepackage[dvipsnames]{xcolor}
+%\usepackage{titlesec}
+%\usepackage{multicol}
+%\usepackage{parskip}
+%\usepackage{211base}
+\usepackage{211lab}
 
 \LabInfo{4}{Debugging}
 
-\setallmainfonts{Charter}
-\setallsansfonts{Latin Modern Sans}
-\setallmonofonts[Scale=MatchLowercase]{Menlo}
+%\setallmainfonts{Charter}
+%\setallsansfonts{Latin Modern Sans}
+%\setallmonofonts[Scale=MatchLowercase]{Menlo}
 
-\newcommand\keyterm[1]{\textcolor[HTML]{006600}{\emph{#1}}}
+%\newcommand\keyterm[1]{\textcolor[HTML]{006600}{\emph{#1}}}
 
 \newcommand\dbc[2]{{%
   \sffamily\upshape\mdseries
-  \textbf{\textcolor{Abbreviation} {#1}}%
+  \textbf{{#1}}%
   #2}}
-\newcommand\abw[1]{$\langle\mathit{#1}\rangle$}
 
-\newcommand\keycombo[1]{{\sffamily\upshape\bfseries#1}}
+%\newcommand\abw[1]{$\langle\mathit{#1}\rangle$}
+%
+%\newcommand\keycombo[1]{{\sffamily\upshape\bfseries#1}}
 
 \newenvironment{commands}
 {\bgroup
@@ -32,80 +35,108 @@
   \begin{description}}
   {\end{description}\egroup}
 
-\titleformat{\section}
-  {\normalfont\sffamily\LARGE\mdseries}
-  {\thesection}{0.6em}{}
-\titleformat{\subsection}
-  {\normalfont\sffamily\large\mdseries}
-  {\thesubsection}{0.8em}{}
+%\titleformat{\section}
+%  {\normalfont\sffamily\LARGE\mdseries}
+%  {\thesection}{0.6em}{}
+%\titleformat{\subsection}
+%  {\normalfont\sffamily\large\mdseries}
+%  {\thesubsection}{0.8em}{}
+%
+%\pagestyle{empty}
+%\definecolor{Abbreviation}{HTML}{000000}
+%
+%\setlength{\columnsep}{1cm}
+%\raggedright
 
-\pagestyle{empty}
-\definecolor{Abbreviation}{HTML}{000000}
+\begin{document}
 
-\setlength{\columnsep}{1cm}
-\raggedright
+%\begin{center}
+%  \sffamily
+%  \COURSENO\ – \TERM\par
+%  \Huge
+%  Debugging
+%  \Large
+%  with GDB \& Emacs
+%\end{center}
 
-\begin{document}%
+\maketitle
 
-\begin{center}
-  \sffamily
-  \COURSENO\ – \TERM\par
-  \Huge
-  Debugging
-  \Large
-  with GDB \& Emacs
-\end{center}
+Today we are going to practice debugging using \progname{emacs} and
+\progname{GDB}.
 
-\begin{multicols}{2}
+\progname{GDB} is a debugger lets you see inside your program while it runs. You can step
+through it line by line, or you can choose a particular place to stop—a
+\textbf{breakpoint}—and then have it continue at full speed until it reaches
+the point where you’ve asked it to pause. You can print out the values of
+objects, modify their values, and even call functions.
 
-GDB is a debugger lets you see inside your program while it runs. You
-  can step through it line by line, or you can choose a particular place
-  to stop—a \keyterm{breakpoint}—and then have it continue at full speed
-  until it reaches the point where you’ve asked it to pause. You can
-  print out the values of objects, modify their values, and even call
-  functions.
 
-  A few things before we get started:
+\section{Getting Started}
 
-  % \begin{itemize}
+The starter code is available at \filename{\ThisLabTgz}, so you can
+extract it into your current working directory with the command
 
-      1) We’ve improved our Emacs configuration since most of you
-      installed it during Lab 1, so you should re-run the installer now:
+\begin{CmdLine*}
+  \C tar -xkvf \ThisLabTgz\\
+\end{CmdLine*}
 
-      \verb!  % setup211!
+\noindent Your current working directory should now contain a
+subdirectory called \filename{\ThisLabBase}.
 
-      2) You’ll need some code to debug. You might try your current
-      homework or previous one, or there’s some code from class
-      involving strings and linked lists, prepared for this lab, that
-      you can extract from \textsf{\ThisLabTgz} (using \verb!tar -xkvf!
-      like usual).
 
-      3) To use the debugger, you need to compile your C code with the
-      \verb!-g! flag. The \verb!Makefile!s we supply you with comes
-      with that enabled already, so you should be all set. But if you
-      run \verb!cc! by hand, don't forget to tell it \verb!-g!.
+\subsection{Revised Setup}
 
-      4) GDB can be run directly from the shell, but if you run it
-      in Emacs then Emacs will help you out by showing you the
-      debugger’s position in your code. You \emph{definitely} want that,
-      because the way GDB shows context on its own
-      is not very friendly. But to use GDB from Emacs, you’ll need to
-      learn a bit more Emacs. In particular, you need to understand
-      windows and buffers, and you need to be able to issue Emacs
-      “\textsf{M-x}” commands.
+We've also improved several things about the 211 environment setup
+to solve a couple of common student mistakes and ensure it doesn't
+mess with future classes you take. You should re-run the installer now:
 
-  % \end{itemize}
+\begin{CmdLine*}
+  \C ~cs211/setup211\\
+\end{CmdLine*}
 
-\section*{Emacs Keys \& Commands}
+After you have done so, log out and back in.
 
-\subsection*{Windows \& Buffers}
+Now, whenever you log in, instead of running \progname{fish}, you
+will run a new command \progname{211}, which will set up the environment
+and execute \progname{fish} in a single step:
+
+\begin{CmdLine*}
+  \C 211\\
+\end{CmdLine*}
+
+We'll remind you each time you log in with a message that says: ``Run ‘211’ for
+the CS 211 development environment''.
+
+
+\subsection{Guide to Emacs and GDB}
+
+For this lab, we will provide you with some code that needs to be debugged.
+Afterwards, hopefully you see some value in using \progname{GDB} on your own
+code when you are having problems.
+
+To use the debugger, you need to compile your C code with the \varname{-g}
+flag. The \filename{Makefile}s we supply you with in each lab and homework
+comes with that enabled already, so you should be all set. But if you run
+\progname{cc} by hand, or use a future project with a different build system,
+don't forget to pass it the \varname{-g} flag.
+
+\progname{GDB} can be run directly from the shell, but if you run it in Emacs then Emacs
+will help you out by showing you the debugger’s position in your code. You
+\emph{definitely} want that, because the way \progname{GDB} shows context on its own is
+not very friendly. But to use \progname{GDB} from Emacs, you’ll need to learn a bit more
+Emacs. In particular, you need to understand windows and buffers, and you need
+to be able to issue Emacs “\keycombo{M-x}” commands.
+
+\section{Emacs Keys \& Commands}
+
+\subsection{Windows \& Buffers}
 
 Emacs lets you edit more than one file at a time, and that can include
   files that are open but aren’t currently displayed. Each thing you’re
-  working on (usually a file, but possibly a compiler run or GDB
-  session), whether visible or not, is kept in a \keyterm{buffer}. The
+  working on (usually a file, but possibly a compiler run or \progname{GDB}
+  session), whether visible or not, is kept in a \textbf{buffer}. The
   rectangles in the terminal that some buffers are displayed in are called
-  \keyterm{windows}. You can open and close windows, switch between them,
+  \textbf{windows}. You can open and close windows, switch between them,
   and switch which buffer is displayed in each window.
 
 \begin{commands}
@@ -118,9 +149,9 @@ Emacs lets you edit more than one file at a time, and that can include
 \item[C-x C-f] Find a file to open in this window.
 \end{commands}
 
-\subsection*{Running Things}
+\subsection{Running Things}
 
-\textsf{M-x} introduces commands that are whole words (or Emacs Lisp
+\keycombo{M-x} introduces commands that are whole words (or Emacs Lisp
   function names) rather than just keystrokes. So when you press it, a
   command line (called the ``minibuffer'') will open at the bottom of
   Emacs for you to type the rest of the command (and press Enter).
@@ -129,32 +160,32 @@ Emacs lets you edit more than one file at a time, and that can include
   keyboard likely doesn’t have? You can configure your terminal to send
   a key you do have as \textsf{Meta}—usually you’d map \textsf{Alt} on
   Windows or \textsf{Option} on Mac. But if you haven’t set that up, you
-  can always type an \textsf{M-}$k$ combination by typing
+  can always type an \keycombo{M-k} combination by typing
   \textsf{Escape} followed by the particular $k$.
 
-  So to type \textsf{M-x}, you can press \textsf{Escape} followed by
+  So to type \keycombo{M-x}, you can press \textsf{Escape} followed by
   \textsf{x}, regardless of your particular hardware or configuration.
-  \textsf{Option-x} or \textsf{Alt-x} can be made to work and might
+  \keycombo{Option-x} or \keycombo{Alt-x} can be made to work and might
   already.
 
 \begin{commands}
 
 \item[M-x compile] Run the compiler. (Emacs will ask what command to
-    run. If you’re currently editing a file in \verb!src/! or
-    \verb!test/! then Make won’t find the Makefile in there; change the
-    compilation command to \verb!cd .. && make -k! to \verb!cd! up a
-    level before running Make.)
+  run. If you’re currently editing a file in \filename{src/} or
+    \filename{test/} then \progname{make} won’t find the \filename{Makefile} in there; change the
+    compilation command to \cmdline{cd .. \&\& make -k} to \progname{cd} up a
+    level before running \progname{make}.)
 
 \item[M-x recompile] Run the compiler again with the same command.
 
 \item[M-x shell] Open a shell in a buffer.
 
-\item[M-x gdb] Start GDB. (The default command that Emacs suggests is
+\item[M-x gdb] Start \progname{GDB}. (The default command that Emacs suggests is
   good.)
 
 \end{commands}
 
-\subsection*{Getting Unstuck}
+\subsection{Getting Unstuck}
 
 At some point, you may find yourself stuck in the minibuffer with Emacs
 complaining about every keystroke. To get out, use:
@@ -163,7 +194,7 @@ complaining about every keystroke. To get out, use:
 \item[C-g] Quit the current operation.
 \end{commands}
 
-\subsection*{Help}
+\subsection{Help}
 
 \begin{commands}
 \item[C-h a] Search for commands \emph{\underline  apropos to} a word.
@@ -174,7 +205,7 @@ complaining about every keystroke. To get out, use:
 \item[C-h ?] Get help on help.
 \end{commands}
 
-\section*{GDB Commands}
+\section{GDB Commands}
 
 \begin{description}
 
@@ -186,30 +217,33 @@ complaining about every keystroke. To get out, use:
 
 \end{description}
 
-\subsection*{Finding \& Loading}
+\subsection{Finding \& Loading}
 
 \begin{description}
-  \item[\dbc{file}{} \abw{FILE}] Tells GDB where to load your program
+  \item[\dbc{file}{} \metavar{FILE}] Tells GDB where to load your program
     from. This is relative to GDB’s working directory, so
     something like \verb!../count!.
 
   \item[\dbc{pwd}{}] Prints GDB’s working directory.
 
-  \item[\dbc{cd}{} \abw{DIR}] Changes GDB’s working directory.
+  \item[\dbc{cd}{} \metavar{DIR}] Changes GDB’s working directory.
 \end{description}
 
-\subsection*{Starting \& Stopping}
+\subsection{Starting \& Stopping}
 \begin{description}
 
-  \item[\dbc{b}{reak} \abw{point}] Sets a breakpoint at a function, a
-    line number, or \abw{file}:\abw{line}).
+  \item[\dbc{b}{reak} \metavar{point}] Sets a breakpoint at a function, a
+    line number, or \metavar{file}:\metavar{line}).
 
-  \item[\dbc{clear}{} \abw{point}] Deletes any breakpoints at
-    \abw{point}; omit \abw{point} to clear a breakpoint on the current
+  \item[\dbc{clear}{} \metavar{point}] Deletes any breakpoints at
+    \metavar{point}; omit \metavar{point} to clear a breakpoint on the current
     line.
 
-  \item[\dbc{r}{un} \abw{args}\ldots] Runs your program from the start;
-    optionally passes \abw{args} as command-line arguments.
+  \item[\dbc{r}{un} \metavar{args}\ldots] Runs your program from the start;
+    optionally passes \metavar{args} as command-line arguments.
+
+  \item[\keycombo{C-c C-c}] Pauses the running program. Code will stop on
+    whatever line was executing when the key combination was pressed.
 
   \item[\dbc{n}{ext}] Executes until the next line of your program, not
     looking inside function calls.
@@ -225,19 +259,127 @@ complaining about every keystroke. To get out, use:
 
 \end{description}
 
-\subsection*{Peeking \& Poking}
+\subsection{Peeking \& Poking}
 \begin{description}
 
-  \item[\dbc{p}{rint} \abw{EXPR}] Prints the value of a variable in your
+  \item[\dbc{p}{rint} \metavar{EXPR}] Prints the value of a variable in your
     program (in scope at the execution point), or the value of a larger
     expression in the context of your program. (Can even call
     functions!)
 
-  \item[\dbc{set}{ variable} \abw{VARNAME} = \abw{EXPR}] Modifies the
+  \item[\dbc{set}{ variable} \metavar{VARNAME} = \metavar{EXPR}] Modifies the
     value of a variable in your program.
 
 \end{description}
 
-\end{multicols}
+\vfill\eject
+\section{Debugging some code}
+
+First, enter the \filename{lab04/} directory and run \progname{make}.
+
+\subsection{Fixing an infinite loop}
+
+The executable \progname{infinite} is created from \filename{src/infinite.c}
+Try compiling the code and running it first. As you may have guessed, it runs
+forever.
+%
+\marginnote{Remember that you can use the command \keycombo{C-c} in the shell to
+terminate a running program.}
+%
+This isn't what it's supposed to do, however. It has a bug. Let's use GDB to
+figure out where the unintentionally-infinite loop is.
+
+\begin{enumerate}
+  \item Open \progname{emacs} without specifying any filename.
+
+  \item Start a \progname{GDB} session with \keycombo{M-x gdb}. Then hit
+    $\mathit{Enter}$ to execute the command and open a multi-window layout. The
+    top-left window is where you type commands. The top-right window displays
+    local variables when code is paused. The middle-left window displays the code
+    currently open.
+
+  \item In the top-left window, type \keycombo{pwd} to see what directory
+    \progname{GDB} is running in.
+
+  \item In the top-left window, type \keycombo{file infinite} to start
+    debugging the \progname{infinite} executable. Note that you have to specify
+    the relative path to the executable you want to debug, so if \keycombo{pwd}
+    didn't show \progname{GDB} running in \filename{lab04/} you will have to
+    type the path to \progname{infinite} instead.
+
+  \item In the top-left window, type \keycombo{run} to start running the code.
+    Just like when you run it outside of \progname{GDB} this code will run
+    forever without printing anything.
+
+  \item Press the key combination \keycombo{C-c C-c} to pause the running code.
+    The middle-left window will now display what line of code was running when
+    execution was paused.
+
+  \item In the top-left window,
+    %
+    \marginnote{You can hit $\mathit{Enter}$ in \progname{GDB} to run the
+    previous command again. This is really useful when calling \keycombo{step}
+    multiple times in a row!}
+    %
+    type \keycombo{step} to move through code line-by-line. As you do, you will
+    see the current line changing in the middle-left window and the local
+    variables and their values changing in the top-right window.
+
+  \item You can also use the \keycombo{print} command to display the value of
+    variables. For example, you can type \keycombo{print s} to display the
+    input argument to the function.
+
+  \item Step through the code for a while, watching the local variable values,
+    and see if you can figure out why this code runs infinitely.
+
+  \item To close the \progname{GDB} session, you can type \keycombo{quit} in
+    the top-left window and then press \keycombo{C-x C-c} to exit
+    \progname{emacs}.
+
+\end{enumerate}
+
+
+%1. this code runs forever. Let's figure out where the unintentionally-infinite loop is
+% - run code through GDB
+% - break
+% - determine what function you are in
+%
+%2. now figure out what the error is
+% - print variables
+% - step through code printing variables
+
+
+\subsection{Understanding nonfunctional code}
+
+Broken code doesn't always infinite loop. Sometimes it completes quickly, but
+doesn't provide a correct result. Let's use \progname{GDB} to take a look at a
+second program, \progname{broken}, that runs but doesn't work properly.
+
+First, try running \progname{broken} in the shell and take a look at the code
+for it in \filename{src/broken.c}. It currently prints out the wrong summation
+for the array. It does finish running though, so this time we'll have to debug
+it using \textit{breakpoints}.
+
+\begin{enumerate}
+  \item The first few steps are the same as last time: open \progname{emacs},
+    start a \progname{GDB} session, and use the \keycombo{file} command to
+    specify which executable you are debugging (this time it should be
+    \progname{broken}).
+
+  \item In the top-left window, type \keycombo{break sum_array}. This will create
+    a breakpoint at the start of that function, any time it is called.
+
+  \item In the top-left window, type \keycombo{run} to start running the code.
+    This time, execution will pause automatically once the breakpoint is reached.
+
+  \item Like last time, use \keycombo{step} and the local variable values in the
+    top-right window to determine what is going wrong and fix it.
+
+
+\end{enumerate}
+
+
+%1. this code returns immediately, but doesn't actually do what it claims to. We could stare at it a long time and try to figure out why, or we could use GDB to inspect it while it is running
+
 
 \end{document}

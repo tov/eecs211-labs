@@ -1,6 +1,4 @@
 *.o
 *.dSYM
-asan_example
-test_cons
-test_heap_string
-test_string_fun
+broken
+infinite
