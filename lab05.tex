@@ -15,24 +15,38 @@ the two circles overlap, one changes color. As you will see, however, it
 comes with a bug.
 
 Before you can get started, you’ll need to install a C++ and GE211
-development environment. This means you’ll be setting up\marginpar{The
-C++ setup instructions are \href{\CxxSetupUrl}{here}.} a C++ compiler,
-the CLion IDE, and the SDL2 graphics libraries. Read on\ldots.
+development environment. This means you’ll be setting up
+%\marginpar{The C++ setup instructions are \href{\CxxSetupUrl}{here}.}
+a C++ compiler,
+the CLion IDE, and the SDL2 graphics libraries.
 
 \CxxPrelims*
 
 \section{The game}
 
+\subsection{Stating a program}
+
+To select your build target, use the dropdown menu in the top right of the
+CLion IDE. You should select ``circle_game''. To compile and run code, click
+the green ``play'' button in the right of toolbar. After compiling, the game
+window should automatically pop up.
+
 \subsection{Broken control}
 
 Currently, there is an bug in this code. Run the program by clicking the
 green “play” button in the toolbar. Then try to control the circle with
-your left and right arrow keys, and the small circle should likely move
-in the opposite direction of what you intend. A bug!. Locate the code
-for this---hint: look in the ^src/model.cxx^---and fix it.
+your left and right arrow keys, and the big circle should likely move
+in the opposite direction of what you intend. A bug!.
 
-There are test cases for checking the model's movement, so when you are
-done try running your code against the tests.
+Open the project viewer by clicking ``Project'' on the right side of the CLion
+IDE and locate the code for this---hint: look in the ^src/model.cxx^---and fix
+it. Run the code again to verify your fix.
+
+There are also test cases for checking the model's movement, so when you are
+done try running your code against the tests. To build the tests, choose
+``model_test'' from the dropdown menu and again click the green ``play''
+button. This time a window won't pop up, but rather the test results will
+appear at the bottom of the CLion IDE.
 
 \subsection{Up and down}
 
@@ -41,10 +55,14 @@ moves horizontally right now. There are two \emph{member functions} for
 moving the large circle up and down,
 ^Model::move_^\-^large_^\-^circle_^\-^up()^ and
 ^Model::move_^\-^large_^\-^circle_^\-^down()^, declared as part of the
-^Model^ struct in ^src/model.hxx^. Write their definitions in
-^src/model.cxx^, following the pattern of the similar member functions.
+^Model^ struct in \filename{src/model.hxx}. Write their definitions in
+\filename{src/model.cxx}, following the pattern of the similar member functions.
 Then connect them to the keyboard by modifying the ^Game::on_key(Key)^
-member function in \filename{ui.cpp} to handle additional keys.
+member function in \filename{ui.cxx} to handle additional keys.
+
+Be sure to run the ``circle_game'' code after you modify it and make sure
+that it works. You might get the directions wrong on the up and down keys
+the first time you try!
 
 \subsection{Click, not hover}
 
@@ -52,23 +70,30 @@ Currently, the position of the smaller circle tracks the position of the
 mouse. However, what if we want the game to only update the position of
 smaller circle when we click? To detect mouse clicks, you will have to
 override the
-\href{https://bit.ly/39jNovM}
+\href{https://tov.github.io/ge211/classge211_1_1_abstract__game.html#ae010e7d2f2f51229f45eb2046e1a5bde}
 {^Abstract_game::on_mouse_down(Mouse_button, Position)^}
 function in the ^Game^ struct.
 \marginpar{The function signature
 is a link to the function’s documentation.}
 
+You'll need to modify the code in \filename{ui.cxx} and \filename{ui.hxx} to
+remove the ^on_mouse_move()^ function and instead override ^on_mouse_down^ with
+the proper arguments. After you do, run the game again and verify successful
+behavior.
+
 \subsection{Testing}
 
 The current tests include a few examples that should pass
-for your code. Add two new test cases for the new functions you added to
-the model, and verify that they do what you expect.
+for your code. Fill in the two tests for moving the large circle up and down
+to verify it works as expected.
 
-There is a test case that checks that ^Model::is_touching()^ will
-sometimes return ^true^ to indicate that the circles are touching.
-Fill in the final test for checking when the circles aren't touching.
+There is a test case that checks that ^Model::overlapped()^ will return ^true^
+when the two circles are touching. Fill in the final test for checking when the
+circles aren't touching.
 
 \section{Other things to try}
+
+Documentation for the \href{https://tov.github.io/ge211/classge211_1_1_abstract__game.html}{Abstract Game Class}.
 
 \begin{itemize}
 
