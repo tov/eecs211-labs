@@ -19,10 +19,8 @@ public:
     void draw(ge211::Sprite_set&) const;
     
     // Creates the bubble objects for the current word. Takes the
-    // window dimensions within which to position the bubbles, and
-    // a random number generator for randomizing their positions.
-    void load_word(ge211::Dimensions window_dims,
-                   ge211::Random& rng);
+    // window dimensions within which to position the bubbles.
+    void load_word(ge211::geometry::Dims<int> window_dims);
 
 private:
 
@@ -36,17 +34,17 @@ private:
         /// Constructor
         ///
 
-        Bubble_(ge211::Text_sprite&, ge211::Position);
+        Bubble_(ge211::Text_sprite&, ge211::geometry::Posn<int>);
 
         ///
         /// Member functions
         ///
 
         // The top-left position for drawing the bubble.
-        ge211::Position bubble_position() const;
+        ge211::geometry::Posn<int> bubble_position() const;
         
         // The top-left position for drawing the letter.
-        ge211::Position letter_position() const;
+        ge211::geometry::Posn<int> letter_position() const;
 
         ///
         /// Member variables
@@ -56,7 +54,7 @@ private:
         ge211::Text_sprite& letter_sprite;
 
         // The center position of the bubble.
-        ge211::Position     center;
+        ge211::geometry::Posn<int>     center;
     };
 
     // The bubbles.

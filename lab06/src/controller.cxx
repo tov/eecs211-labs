@@ -83,6 +83,5 @@ void Controller::draw(ge211::Sprite_set& sprites)
 
 void Controller::load_word_()
 {
-    view_.load_word(get_window().get_dimensions(),
-                    get_random());
+    view_.load_word(get_window().get_dimensions());
 }
