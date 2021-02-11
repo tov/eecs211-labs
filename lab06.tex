@@ -92,10 +92,9 @@ request. Here's one way you can do it:
   \item Add a public member function to the \verb^Model^ class whose
     purpose is to shuffle the \verb^dictionary_^ vector. For a source of
     randomness, this function should take a reference to a
-    \href{https://tov.github.io/ge211/classge211_1_1_random.html}
-    {\texttt{ge211::Random}}. If \verb^rng^ is a \verb^ge211::Random&^
-    then you can generate a random integer between \verb^a^ and \verb^b^
-    (inclusive) with the call \verb^rng.between(a, b)^.
+    \href{https://tov.github.io/ge211/classge211_1_1_random__source.html}
+    {\texttt{ge211::Random_Source}}. It must be initialized with the range
+    it expects, and can generate a random integer with the \verb^next()^ method.
 
   \item Add a call to your shuffling function to the body of the
     \texttt{Controller::\-Controller(std::string const\&)} constructor.
