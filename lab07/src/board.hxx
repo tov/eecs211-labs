@@ -14,9 +14,9 @@ public:
     /// MEMBER TYPES
     ///
 
-    using Rectangle    = ge211::Rectangle;
-    using Position     = Rectangle::Position;
-    using Dimensions   = Rectangle::Dimensions;
+    using Rectangle    = ge211::Rect<int>;
+    using Position     = ge211::Posn<int>;
+    using Dimensions   = ge211::Dims<int>;
     using Coordinate   = Rectangle::Coordinate;
     using Position_set = std::unordered_set<Position>;
 

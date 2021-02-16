@@ -27,7 +27,7 @@ protected:
 
     void on_frame(double) override;
 
-    void on_mouse_up(ge211::Mouse_button, ge211::Position) override;
+    void on_mouse_up(ge211::Mouse_button, ge211::Posn<int>) override;
 
     void on_start() override;
 

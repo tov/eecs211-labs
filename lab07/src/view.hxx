@@ -12,13 +12,13 @@ public:
     ///
     /// Public member functions
     ///
-    View(const Model& model, ge211::Dimensions window_dimensions);
+    View(const Model& model, ge211::Dims<int> window_dimensions);
 
     void draw(ge211::Sprite_set&, Board::Position selected) const;
 
-    Model::Position screen_to_board(ge211::Position) const;
+    Model::Position screen_to_board(ge211::Posn<int>) const;
 
-    ge211::Position board_to_screen(Model::Position) const;
+    ge211::Posn<int> board_to_screen(Model::Position) const;
 
 private:
     ///

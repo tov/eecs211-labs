@@ -31,7 +31,7 @@ void Controller::draw(ge211::Sprite_set& sprites)
     view_.draw(sprites, selection_);
 }
 
-void Controller::on_mouse_up(ge211::Mouse_button, ge211::Position board_pos)
+void Controller::on_mouse_up(ge211::Mouse_button, ge211::Posn<int> board_pos)
 {
     if (animating_) return;
 
@@ -58,7 +58,6 @@ void Controller::on_mouse_up(ge211::Mouse_button, ge211::Position board_pos)
 
 void Controller::on_start()
 {
-    model_.set_random(get_random());
     start_animating_();
 }
 

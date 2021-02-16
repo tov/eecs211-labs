@@ -20,8 +20,7 @@ public:
     Tile();
 
     void restore(int number_of_groups,
-                 const Action_list&,
-                 ge211::Random&);
+                 const Action_list&);
 
     bool is_full() const
     { return status_ == Status::full; }

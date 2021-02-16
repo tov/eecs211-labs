@@ -31,12 +31,6 @@ void Model::swap_tiles(Position p1, Position p2)
     }
 }
 
-
-void Model::set_random(ge211::Random& rnd)
-{
-    random_ = &rnd;
-}
-
 ///
 /// Private member functions
 ///
@@ -86,9 +80,9 @@ bool Model::falling_step_()
 
         Position top{col, 0};
 
-        if (board_[top].is_empty() && random_) {
+        if (board_[top].is_empty()) {
             changed = true;
-            board_[top].restore(number_of_groups_, actions_, *random_);
+            board_[top].restore(number_of_groups_, actions_);
         }
     }
 

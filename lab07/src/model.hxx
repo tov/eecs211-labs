@@ -37,9 +37,6 @@ public:
     // Lets the controller tell the model about a user action.
     void swap_tiles(Position, Position);
 
-    // Lets the controller give the model access to randomness.
-    void set_random(ge211::Random&);
-
 private:
     bool contagion_step_();
 
@@ -54,10 +51,8 @@ private:
     Position_set gather_group_(Position);
 
     Board                board_;
-    int                  number_of_groups_;
-    int                  min_group_size_;
+    std::size_t          number_of_groups_;
+    std::size_t          min_group_size_;
     Tile::Action_list    actions_;
     std::queue<Position> condemned_;
-
-    ge211::Random* random_ = nullptr;
 };

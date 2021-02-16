@@ -8,15 +8,15 @@ Tile::Tile()
 
 void Tile::restore(
         int number_of_groups,
-        const Action_list& actions,
-        ge211::Random& random)
+        const Action_list& actions)
 {
     status_ = Tile::Status::full;
-    group_  = random.between(0, number_of_groups - 1);
+    group_ = ge211::Random_source<int>(0, number_of_groups - 1).next();
 
     // 1-in-20 (5%) chance of special type:
-    if (random.between(1, 20) == 1) {
-        auto choice = random.between<std::size_t>(1, actions.size() - 1);
+    if (ge211::Random_source<int>(1,20).next() == 1) {
+        auto choice = ge211::Random_source<size_t>(1, actions.size() - 1)
+                .next();
         action_ = actions[choice];
     } else {
         action_ = actions[0];

@@ -12,7 +12,7 @@ static ge211::Color from_hue(double hue)
     return ge211::Color::from_hsva(hue, 1, 1, 1);
 }
 
-View::View(const Model& model, ge211::Dimensions window)
+View::View(const Model& model, ge211::Dims<int> window)
         : model_(model),
           geometry_(model.board().dimensions(), window),
           sans_("sans.ttf", 2 * geometry_.grid_size),
@@ -49,7 +49,7 @@ void View::draw(ge211::Sprite_set& sprites, Board::Position selection) const
     for (Board::Coordinate col = 0; col < ldims.width; ++col) {
         for (Board::Coordinate row = 0; row < ldims.height; ++row) {
             Board::Position lpos{col, row};
-            ge211::Position ppos = board_to_screen(lpos);
+            ge211::Posn<int> ppos = board_to_screen(lpos);
             const Tile& tile = board[lpos];
 
             if (lpos == selection) {
