@@ -6,10 +6,8 @@ double const min_asteroid_mass     = 0.1;
 ///
 /// Constructors
 ///
-Model::Model( ge211::Dimensions screen_dimensions, 
-                       ge211::Random& random)
+Model::Model( ge211::Dims<int> screen_dimensions)
         : screen_dimensions_(screen_dimensions)
-        , random_(random)
         , space_ship_(screen_dimensions_.into<double>())
 {
     space_objects_.emplace_back(&space_ship_);
@@ -25,14 +23,13 @@ Model::Model( ge211::Dimensions screen_dimensions,
 
 void Model::new_asteroid_(double mass, Space_object::Position pos)
 {
-    if (pos.x==-1)
-    {
-        pos.x = random_.between(0,screen_dimensions_.width);
-        pos.y = random_.between(0,screen_dimensions_.height);
+    if (pos.x==-1) {
+        pos.x = ge211::Random_source<int>(0, screen_dimensions_.width).next();
+        pos.x = ge211::Random_source<int>(0, screen_dimensions_.height).next();
     }
-    int xs = random_.between(-5,5);
-    int ys = random_.between(-5,5);
-    double as = random_.between(10,100);
+    int xs = ge211::Random_source<int>(-5,5).next();
+    int ys = ge211::Random_source<int>(-5,5).next();
+    double as = ge211::Random_source<int>(10,100).next();
     space_objects_.push_back(
             std::make_unique<Asteroid>(
                     mass,
@@ -50,8 +47,8 @@ void Model::update ( double ft )
         so->integrate(ft);
     }
 
-    for (int i = 0; i < space_objects_.size(); i++) {
-        for (int j = i + 1; j < space_objects_.size(); j++) {
+    for (std::size_t i = 0; i < space_objects_.size(); i++) {
+        for (std::size_t j = i + 1; j < space_objects_.size(); j++) {
             Space_object* so1 = space_objects_[i].get();
             Space_object* so2 = space_objects_[j].get();
 

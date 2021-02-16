@@ -16,8 +16,8 @@ class Space_object
 public:
     static bool check_collision(Space_object* so1, Space_object* so2);
 
-    using Dimensions = ge211::Basic_dimensions<double>;
-    using Position = ge211::Basic_position<double>;
+    using Dimensions = ge211::Dims<double>;
+    using Position = ge211::Posn<double>;
     using Angle = double; // in ° counterclockwise from N
 
     enum class Material
@@ -64,8 +64,8 @@ private:
 class Inertial_space_object : public Space_object
 {
 public:
-    using Velocity = ge211::Basic_dimensions<double>;
-    using Acceleration = ge211::Basic_dimensions<double>;
+    using Velocity = ge211::Dims<double>;
+    using Acceleration = ge211::Dims<double>;
     using Angular_velocity = double;
 
     Inertial_space_object(Material,

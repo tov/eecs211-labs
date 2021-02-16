@@ -60,8 +60,8 @@ Control &Space_ship::control()
 
 Inertial_space_object::Inertial_space_object( Material material, Position position, Velocity velocity, Angular_velocity angular_velocity)
     : Space_object(material, position)
-    , ddeg_(angular_velocity)
     ,dv_(velocity)
+    ,ddeg_(angular_velocity)
 {
 }
 

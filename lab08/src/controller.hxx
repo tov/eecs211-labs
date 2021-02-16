@@ -18,9 +18,9 @@ public:
     /// Constructors
     ///
     // For passing in small word lists by hand.
-    Controller ( ge211::Dimensions board_dimensions);
+    Controller ( ge211::Dims<int> board_dimensions);
 
-    ge211::Dimensions initial_window_dimensions() const override;
+    ge211::Dims<int> initial_window_dimensions() const override;
 
     ///
     /// Member functions
@@ -38,7 +38,8 @@ public:
 
     // Called by ge211 when the user press the mouse. We forward the mouse_up
     // to the model.
-    void on_mouse_up(ge211::Mouse_button button, ge211::Position position) override;
+    void on_mouse_up(ge211::Mouse_button button, ge211::Posn<int> position)
+    override;
 
 private:
 
@@ -47,5 +48,5 @@ private:
     ///
     Model model_;
     View view_;
-    ge211::Dimensions screen_dimensions_;
+    ge211::Dims<int> screen_dimensions_;
 };

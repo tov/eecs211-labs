@@ -23,8 +23,7 @@ public:
     /// Constructors
     ///
     // Uses the dimensions of the board
-    Model ( ge211::Dimensions screen_dimensions,
-                ge211::Random&  random );
+    Model ( ge211::Dims<int> screen_dimensions);
 
     ///
     /// Public member functions
@@ -49,9 +48,8 @@ private:
     /// Private member variables
     ///
     std::vector<std::unique_ptr<Space_object>> space_objects_;
-    ge211::Dimensions screen_dimensions_;
+    ge211::Dims<int> screen_dimensions_;
     int asteroid_max_mass_;
-    ge211::Random&  random_;
     Space_ship space_ship_;
     Control control_;
 };

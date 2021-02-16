@@ -7,10 +7,10 @@
 /// Constructors
 ///
 
-Controller::Controller(ge211::Dimensions screen_dimensions)
-        : screen_dimensions_(screen_dimensions)
-        , model_(screen_dimensions, get_random())
+Controller::Controller(ge211::Dims<int> screen_dimensions)
+        : model_(screen_dimensions)
         , view_(model_)
+        , screen_dimensions_(screen_dimensions)
 { 
 }
 
@@ -18,7 +18,7 @@ Controller::Controller(ge211::Dimensions screen_dimensions)
 /// Public member functions
 ///
 
-ge211::Dimensions Controller::initial_window_dimensions() const
+ge211::Dims<int> Controller::initial_window_dimensions() const
 {
     return screen_dimensions_;
 }
@@ -58,7 +58,8 @@ void Controller::draw(ge211::Sprite_set& sprites)
 }
 
 
-void Controller::on_mouse_up(ge211::Mouse_button button, ge211::Position position)
+void Controller::on_mouse_up(ge211::Mouse_button button, ge211::Posn<int>
+        position)
 {
 }
 

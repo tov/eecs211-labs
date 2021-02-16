@@ -21,7 +21,7 @@ void View::draw(ge211::Sprite_set& sprites) const
     {
         if (!so->is_space_junk())
         {
-            ge211::Position pos{0,0};
+            ge211::Posn<int> pos{0,0};
             pos.x=(int)so->position().x;
             pos.y=(int)so->position().y;
             ge211::Transform rotation = ge211::Transform::rotation(so->heading());
