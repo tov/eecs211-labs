@@ -70,5 +70,9 @@ private:
     ge211::Circle_sprite yellow_bubble_{bubble_radius, ge211::Color::medium_yellow()};
     ge211::Circle_sprite green_bubble_{bubble_radius, ge211::Color::medium_green()};
     ge211::Circle_sprite red_bubble_{bubble_radius, ge211::Color::medium_red()};
+
+    // Random sources
+    ge211::Random_source<int> random_x_coor_;
+    ge211::Random_source<int> random_y_coor_;
 };
 

@@ -10,10 +10,16 @@
 Model::Model(Dimensions board_dimensions,
              int number_of_groups,
              int min_group_size)
-        : board_(board_dimensions),
-          number_of_groups_(number_of_groups),
-          min_group_size_(min_group_size)
-{ }
+        : board_(board_dimensions)
+        , number_of_groups_(number_of_groups)
+        , min_group_size_(min_group_size)
+        , random_group_(ge211::unbounded)
+        , random_action_(ge211::unbounded)
+        , random_action_probability_(0.05) // 1-in-20(5%) chance of special type
+{
+    // use .stub_with(...) here on random sources if you want non-random
+    // results while developing
+}
 
 ///
 /// Public member functions
@@ -82,7 +88,8 @@ bool Model::falling_step_()
 
         if (board_[top].is_empty()) {
             changed = true;
-            board_[top].restore(number_of_groups_, actions_);
+            board_[top].restore(number_of_groups_, actions_, random_group_,
+                                random_action_, random_action_probability_);
         }
     }
 

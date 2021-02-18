@@ -7,7 +7,12 @@
 
 View::View(Model const& model)
         : model_(model)
+        , random_x_coor_(ge211::unbounded)
+        , random_y_coor_(ge211::unbounded)
 {
+    // use .stub_with(...) here on random sources if you want non-random
+    // results while developing
+
     for (char letter = 'a'; letter <= 'z'; ++letter)
         letter_sprites_.emplace_back(std::string(1, letter), sans_);
 }
@@ -44,10 +49,10 @@ void View::load_word(ge211::geometry::Dims<int> window_dims)
     int x = 0;
     int max_pos = window_dims.width - word_width;
     if (max_pos > 0) {
-        x = ge211::Random_source<int>(0, window_dims.width - word_width).next();
+        x = random_x_coor_.next_between(0, window_dims.width - word_width);
     }
 
-    int y = ge211::Random_source<int> (0, window_dims.height - bubble_radius * 2).next();
+    int y = random_y_coor_.next_between(0, window_dims.height - bubble_radius * 2);
     ge211::geometry::Posn<int> position{x, y};
 
     bubbles_.clear();

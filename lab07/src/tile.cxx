@@ -1,22 +1,23 @@
 #include "tile.hxx"
 
 Tile::Tile()
-        : status_(Tile::Status::empty),
-          group_(0),
-          action_(nullptr)
+        : status_(Tile::Status::empty)
+        , group_(0)
+        , action_(nullptr)
 { }
 
 void Tile::restore(
         int number_of_groups,
-        const Action_list& actions)
+        const Action_list& actions,
+        ge211::Random_source<int>& random_group,
+        ge211::Random_source<int>& random_action,
+        ge211::Random_source<bool>& random_action_probability)
 {
     status_ = Tile::Status::full;
-    group_ = ge211::Random_source<int>(0, number_of_groups - 1).next();
+    group_ = random_group.next_between(0, number_of_groups - 1);
 
-    // 1-in-20 (5%) chance of special type:
-    if (ge211::Random_source<int>(1,20).next() == 1) {
-        auto choice = ge211::Random_source<size_t>(1, actions.size() - 1)
-                .next();
+    if (random_action_probability.next()) {
+        auto choice = random_action.next_between(1, actions.size() - 1);
         action_ = actions[choice];
     } else {
         action_ = actions[0];

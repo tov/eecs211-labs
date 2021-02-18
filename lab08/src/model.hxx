@@ -52,4 +52,10 @@ private:
     int asteroid_max_mass_;
     Space_ship space_ship_;
     Control control_;
+
+    // Random sources
+    ge211::Random_source<int> random_x_coor_;
+    ge211::Random_source<int> random_y_coor_;
+    ge211::Random_source<int> random_velocity_;
+    ge211::Random_source<int> random_angular_velocity_;
 };

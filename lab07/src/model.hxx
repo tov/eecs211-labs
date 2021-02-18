@@ -55,4 +55,9 @@ private:
     std::size_t          min_group_size_;
     Tile::Action_list    actions_;
     std::queue<Position> condemned_;
+
+    // Random sources
+    ge211::Random_source<int> random_group_;
+    ge211::Random_source<int> random_action_;
+    ge211::Random_source<bool> random_action_probability_;
 };

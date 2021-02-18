@@ -9,7 +9,14 @@ double const min_asteroid_mass     = 0.1;
 Model::Model( ge211::Dims<int> screen_dimensions)
         : screen_dimensions_(screen_dimensions)
         , space_ship_(screen_dimensions_.into<double>())
+        , random_x_coor_(0, screen_dimensions_.width)
+        , random_y_coor_(0, screen_dimensions_.height)
+        , random_velocity_(-5, 5)
+        , random_angular_velocity_(10, 100)
 {
+    // use .stub_with(...) here on random sources if you want non-random
+    // results while developing
+
     space_objects_.emplace_back(&space_ship_);
     for (int i=0;i<10;i++)
     {
@@ -24,12 +31,12 @@ Model::Model( ge211::Dims<int> screen_dimensions)
 void Model::new_asteroid_(double mass, Space_object::Position pos)
 {
     if (pos.x==-1) {
-        pos.x = ge211::Random_source<int>(0, screen_dimensions_.width).next();
-        pos.x = ge211::Random_source<int>(0, screen_dimensions_.height).next();
+        pos.x = random_x_coor_.next();
+        pos.y = random_y_coor_.next();
     }
-    int xs = ge211::Random_source<int>(-5,5).next();
-    int ys = ge211::Random_source<int>(-5,5).next();
-    double as = ge211::Random_source<int>(10,100).next();
+    int xs = random_velocity_.next();
+    int ys = random_velocity_.next();
+    double as = random_angular_velocity_.next();
     space_objects_.push_back(
             std::make_unique<Asteroid>(
                     mass,
