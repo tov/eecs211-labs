@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.3)
-project(lab07 CXX)
+project(Bejeweled CXX)
 include(.cs211/cmake/CMakeLists.txt)
 
 # Builds program `bejeweled` from the six listed source files:

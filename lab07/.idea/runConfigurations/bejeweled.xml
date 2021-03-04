@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="bejeweled" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="lab07" TARGET_NAME="bejeweled" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="lab07" RUN_TARGET_NAME="bejeweled">
+  <configuration default="false" name="bejeweled" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Bejeweled" TARGET_NAME="bejeweled" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Bejeweled" RUN_TARGET_NAME="bejeweled">
     <method v="2">
       <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
     </method>
