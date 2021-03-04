@@ -12,9 +12,17 @@ public:
     ///
     /// Public member functions
     ///
-    View(const Model& model, ge211::Dims<int> window_dimensions);
+    View(const Model& model,
+         ge211::Mixer& mixer,
+         ge211::Dims<int> window_dims);
 
     void draw(ge211::Sprite_set&, Board::Position selected) const;
+
+    /// Plays success.ogg if given true, invalid.ogg otherwise.
+    void play_effect(bool success) const;
+
+    /// Keeps the music going.
+    void resume_music_if_ended() const;
 
     Model::Position screen_to_board(ge211::Posn<int>) const;
 
@@ -55,9 +63,16 @@ private:
     // The view can look at the model but doesn't change it.
     const Model& model_;
 
+    // For visuals:
     Geometry                geometry_;
     ge211::Font             sans_;
     ge211::Rectangle_sprite selection_sprite_;
     Tile_table              tile_sprites_;
     Type_table              type_sprites_;
+
+    // For audio:
+    ge211::Mixer&           mixer_;
+    ge211::Music_track      bg_music_;
+    ge211::Sound_effect     success_sound_;
+    ge211::Sound_effect     invalid_sound_;
 };

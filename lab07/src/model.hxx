@@ -35,7 +35,8 @@ public:
     bool step();
 
     // Lets the controller tell the model about a user action.
-    void swap_tiles(Position, Position);
+    // The model returns whether the action was successful.
+    bool swap_tiles(Position, Position);
 
 private:
     bool contagion_step_();

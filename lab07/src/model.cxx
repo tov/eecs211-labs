@@ -30,11 +30,14 @@ bool Model::step()
     return contagion_step_() || falling_step_() || scavenge_step_();
 }
 
-void Model::swap_tiles(Position p1, Position p2)
+bool Model::swap_tiles(Position p1, Position p2)
 {
     if (board_.adjacent_positions(p1, p2)) {
         std::swap(board_[p1], board_[p2]);
+        return true;
     }
+
+    return false;
 }
 
 ///

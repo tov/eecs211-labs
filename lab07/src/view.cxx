@@ -1,7 +1,11 @@
 #include "view.hxx"
 #include <iostream>
 
+// Color to indicate when a jewel is selected.
 static ge211::Color const selection_color{180, 200, 190, 255};
+
+// File in Resources/ to read background music from.
+static std::string const music_filename{"bg_music.ogg"};
 
 ///
 /// Constructor
@@ -12,11 +16,15 @@ static ge211::Color from_hue(double hue)
     return ge211::Color::from_hsva(hue, 1, 1, 1);
 }
 
-View::View(const Model& model, ge211::Dims<int> window)
+View::View(
+        const Model& model,
+        ge211::Mixer& mixer,
+        ge211::Dims<int> window)
         : model_(model),
           geometry_(model.board().dimensions(), window),
           sans_("sans.ttf", 2 * geometry_.grid_size),
-          selection_sprite_(geometry_.grid_dims(), selection_color)
+          selection_sprite_(geometry_.grid_dims(), selection_color),
+          mixer_(mixer)
 {
     const int    groups = model_.number_of_groups();
     const double step   = 360.0 / groups;
@@ -34,6 +42,26 @@ View::View(const Model& model, ge211::Dims<int> window)
 
         ge211::Text_sprite::Builder builder{sans_};
         type_sprites_.emplace(type, (builder << type).build());
+    }
+
+
+    if (mixer_.is_enabled()) {
+        try {
+            // To enable background music, put a file named bg_music.ogg
+            // in the Resources/ directory.
+            if (bg_music_.try_load(music_filename, mixer_)) {
+                mixer_.play_music(bg_music_);
+            }
+        } catch (ge211::Environment_error const& exn) {
+            ge211::internal::logging::warn(exn.what())
+                    << "To enable background music, put a file named"
+                       "\n    "
+                    << music_filename
+                    << " in the Resources/ directory.";
+        }
+
+        success_sound_.try_load("success.ogg", mixer_);
+        invalid_sound_.try_load("invalid.ogg", mixer_);
     }
 }
 
@@ -78,6 +106,24 @@ Model::Position View::screen_to_board(Model::Position pos) const
 Model::Position View::board_to_screen(Model::Position pos) const
 {
     return geometry_.board_to_screen(pos);
+}
+
+void
+View::play_effect(bool success) const
+{
+    if (success) {
+        mixer_.try_play_effect(success_sound_);
+    } else {
+        mixer_.try_play_effect(invalid_sound_);
+    }
+}
+
+void
+View::resume_music_if_ended() const
+{
+    if (mixer_.get_music_state() == ge211::Mixer::State::paused) {
+        mixer_.resume_music();
+    }
 }
 
 View::Geometry::Geometry(View::Geometry::Dimensions ldims,

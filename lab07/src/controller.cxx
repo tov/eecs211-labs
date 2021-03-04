@@ -8,7 +8,9 @@ static const double steps_per_second = 30.0;
 
 Controller::Controller(Model& model)
         : model_(model),
-          view_(model_, ge211::Abstract_game::default_window_dimensions)
+          view_(model_,
+                mixer(),
+                ge211::Abstract_game::default_window_dimensions)
 { }
 
 
@@ -24,6 +26,8 @@ void Controller::on_frame(double dt)
             break;
         }
     }
+
+    view_.resume_music_if_ended();
 }
 
 void Controller::draw(ge211::Sprite_set& sprites)
@@ -52,7 +56,9 @@ void Controller::on_mouse_up(ge211::Mouse_button, ge211::Posn<int> screen_pos)
 
     if (board[selected].is_empty()) return;
 
-    model_.swap_tiles(clicked, selected);
+    bool success = model_.swap_tiles(clicked, selected);
+    view_.play_effect(success);
+
     start_animating_();
 }
 
