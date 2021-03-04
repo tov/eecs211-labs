@@ -31,13 +31,13 @@ void Controller::draw(ge211::Sprite_set& sprites)
     view_.draw(sprites, selection_);
 }
 
-void Controller::on_mouse_up(ge211::Mouse_button, ge211::Posn<int> board_pos)
+void Controller::on_mouse_up(ge211::Mouse_button, ge211::Posn<int> screen_pos)
 {
     if (animating_) return;
 
     const auto& board = model_.board();
 
-    auto clicked  = view_.screen_to_board(board_pos);
+    auto clicked  = view_.screen_to_board(screen_pos);
     auto selected = selection_;
 
     selection_ = {-1, -1};
