@@ -5,7 +5,9 @@
 \def\GlobalProtectUrl{https://kb.northwestern.edu/page.php?id=94726}
 \def\PuTTYhelpUrl{https://nu-cs211.github.io/cs211-files/putty_setup_guide.pdf}
 \def\setupScriptUrl{https://bit.ly/3nBxDH3}
-\def\setupScriptLink{\href{\setupScriptUrl}{\setupScriptUrl}}
+\def\setupScriptLink{\url{\setupScriptUrl}}
+\def\helpEmail{help@eecs.northwestern.edu}
+\def\getHelp{\href{mailto:\helpEmail}{\textsf{\helpEmail}}}
 
 \usepackage{211lab}
 
@@ -45,29 +47,32 @@ Before you can do that, though, we have to get you logged in.
 \section{Getting around the firewall}
 
 The workstations we want to connect to are not directly accessible from
-off-campus, so we will need to do a little work to reach them. There are
-essentially two alternatives:
+off-campus, so in that case you will need to do a little extra work to
+reach them. There are essentially two alternatives:
 
 \begin{itemize}
 
-  \item Use Northwestern’s virtual private network (VPN). When you
-    enable this, all your network traffic goes through an encrypted
-    tunnel to Northwestern’s campus, which means you are effectively
-    there. This solution is easy, but it can slow down your network, so
-    you’ll want to turn it off when you aren’t using it.
+  \item Configure SSH to use a ``proxy'' through a different host than
+    the one we ultimately want to reach. SSH can do this automatically
+    for you if you set it up just right, but it’s a bit harder than
+    the other option. It's also probably preferable, for privacy and
+    performance reasons.
+
+    Instructions for setting up a proxy appear in the per-system
+    sections below.
+
+  \item Use Northwestern’s virtual private network (VPN), Global
+    Protect. When you enable this, all your network traffic goes through
+    an encrypted tunnel to Northwestern’s campus, which means you are
+    effectively there. This solution is easy, but it can slow down your
+    network, so you’ll want to turn it off when you aren’t using it.
 
     To setup the NU VPN, follow \href{\GlobalProtectUrl}{these
     instructions}.
 
-  \item Configure SSH to use a ``proxy'' through a different host than
-    the one we ultimately want. SSH can do this automatically for you if
-    you set it up just right, but it’s a bit harder than using the VPN.
-    Instructions for setting up a proxy appear in the per-system
-    sections below.
-
 \end{itemize}
 
-\section{Logging in}
+\section{Shell access}
 
 For the majority of you who are unfamiliar with the Unix shell, it
 probably seems like a scary foreign concept reserved for computer
@@ -87,21 +92,39 @@ be different for Windows and Mac/Linux, but for the rest it should not
 matter which OS you are on, since you'll be using the remote Unix
 machine.
 
-You will need your netid and EECS password to log into the computers. If you do
-not remember it, you can create a new password at
-\href{https://selfserv.eecs.northwestern.edu/temp_password/}{https://selfserv.eecs.northwestern.edu/temp_password/}.
-You will need to use your netid (lowercase) and Northwestern password to log
-into that website. The link will only work once, so pick a memorable password.
-If you need to reset your password again, you'll have to contact EECS IT:
-help@eecs.northwestern.edu
+You will need your NetID and EECS password to log into the computers. If
+you do not remember it, you can create a new password at
+\url{https://selfserv.eecs.northwestern.edu/temp_password/}
+You will need to use your NetID (in lowercase) and Northwestern password
+to login to that website. The link will only work once, so pick a
+memorable password. If you need to reset your password again, you'll
+have to contact EECS IT: \getHelp
 
-\subsection{Windows}
+\section{Shell access on Windows}
+
+\subsection{Shell access setup (once)}
 
 Download the \href{\PuTTYurl}{SSH client PuTTY}%
 \marginnote{\url{\PuTTYurl}}; we recommend the
 MSI installer, since it’s usually easier.
-The link on the right will take you
-directly to the Windows installer.
+
+If you’re off-campus, you need to set up one of these two options
+for getting past the firewall:
+
+\begin{description}
+  \item[Setup for proxy.]
+    If you'd like to try to configure PuTTY to proxy so that you don’t have
+    to use NU’s VPN, try \href{\PuTTYhelpUrl}{these instructions}.
+
+  \item[Setup for VPN.]
+    If you want to use the VPN and haven't set it up already, follow \href{\GlobalProtectUrl}{these instructions}.
+\end{description}
+
+\subsection{Logging in (every time)}
+
+If you’re off-campus and haven’t done the proxy setup (above) then
+you’ll need to be running Global Protect (NU’s VPN) to log in.
+
 After you install PuTTY, open it up. You'll need to enter a hostname to
 login to. The link on the right will take you to a list of student lab
 hostnames\marginnote{You can find a list here: \LabHostnamesLink}
@@ -118,16 +141,71 @@ Northwestern EECS boxes!
 Note that you can and should configure PuTTY so that you don't have to do all
 of this every time by saving a session.
 
-If you would like to try to configure PuTTY to proxy so that
-you don’t have to use the VPN, try \href{\PuTTYhelpUrl}{these
-instructions}.
+\section{Shell access on Mac/Linux}
 
-\subsection{Mac/Linux}
+\subsection{Shell access setup (once)}
 
-For those of you on Mac or Linux, everything you need is already
-installed. Open up your terminal\marginnote{Mac users: search
-for ``terminal'' in Spotlight} and at the prompt
-type a single command of the form
+For those of you on Mac or Linux, you have a terminal and SSH client
+installed already. Open up your terminal\marginnote{Mac users: search
+for ``terminal'' in Spotlight} to get a shell prompt.
+
+If you’re off-campus, you need to set up one of these two options for
+getting past the firewall:
+
+\begin{description}
+
+  \item[Setup for proxy.]
+You can configure ^ssh^ to proxy automatically, and to use a
+\href{https://en.wikipedia.org/wiki/Key_authentication}{cryptographic
+key for authentication} so that you don’t have to type your password. If
+you want to try this, run the following command in your terminal and
+follow the instructions:
+
+\marginnote{Notes: 1) Run this command \emph{locally} in the terminal on your own
+computer, not while logged into a remote workstation. 2) Type or paste
+that command \emph{exactly} as written.
+3) If you’d like to see the script, run just
+the \progname{curl} command that’s inside the parentheses (not including
+the parentheses), or click the link.}
+\begin{CmdLine*}
+  \C bash -c "\$(curl -fsLS \setupScriptLink)"\\
+\end{CmdLine*}
+
+\item[Setup for VPN.]
+    If you want to use the VPN and haven't set it up already, follow \href{\GlobalProtectUrl}{these instructions}.
+
+  \end{description}
+
+\subsection{Logging in (every time)}
+
+\begin{description}
+  \item[Using our proxy.]
+
+    In a terminal, run this command at the prompt:
+
+\begin{CmdLine*}
+  \C ssh \metavar{eecs-host} \\
+\end{CmdLine*}
+\marginnote[-\baselineskip]{Don't type the \prompt. That stands for your
+shell prompt.}
+
+\noindent where is replaced by one of the EECS hostnames from the list
+of student lab hostnames%
+\marginnote{You can find a list here: \LabHostnamesLink}
+(such as \hostname{freeze} or \hostname{joker}).
+
+For example, your instructor might run
+\cmdline{ssh freeze} or \cmdline{ssh joker}.
+
+The first time you connect to a given host, you should get a message
+saying that the authenticity of the host can't be established, and you
+will be asked if you want to continue connecting.  Type ``yes'' as
+prompted and press Enter.
+
+\item[Using the VPN.]
+
+First make sure the VPN is running and connected. Then in a terminal,
+run this command at the prompt:
 
 \begin{CmdLine*}
   \C ssh \metavar{eecs-id}@\metavar{eecs-host}.eecs.northwestern.edu\\
@@ -139,31 +217,20 @@ shell prompt.}
 and \metavar{eecs-host} is replaced by one of the EECS hostnames from the list
 of student lab hostnames%
 \marginnote{You can find a list here: \LabHostnamesLink}
-(such as \hostname{alfred.eecs.northwestern.edu} or
-\hostname{robin.eecs.northwestern.edu}).
+(such as \hostname{alfred} or \hostname{robin}).
 
-You should get a message saying that the authenticity of the host
-can't be established, and you should be asked if you want to continue
-connecting.  Type ``yes'' as prompted and press Enter. Now type in your
-EECS account password (not necessarily your NetID password), press
-Enter again, and you should be logged in remotely!
+For example, your instructor might run
+\cmdline{ssh jesse@alfred.\-eecs.\-northwestern.\-edu} or
+\cmdline{ssh jesse@robin.\-eecs.\-northwestern.\-edu}.
 
-You can configure ^ssh^ to proxy automatically, and to use a
-\href{https://en.wikipedia.org/wiki/Key_authentication}{cryptographic
-key for authentication} so that you don’t have to type your password. If
-you want to try this, run the following command in your terminal and
-follow the instructions:
+The first time you connect to a given host, you should get a message
+saying that the authenticity of the host can't be established, and you
+will be asked if you want to continue connecting.  Type ``yes'' as
+prompted and press Enter. Now type in your EECS account password (not
+necessarily your NetID password), press Enter again, and you should be
+logged in remotely!
 
-\begin{CmdLine*}
-  \C bash -c "\$(curl -fsLS \setupScriptLink)"\\
-\end{CmdLine*}
-\marginnote[-\baselineskip]{If you’d like to see the script, run just
-  the \progname{curl} command that’s inside the parentheses (not including
-the parentheses), or click the link.}
-
-Notes: 1) Run this \emph{locally} on your own computer, not while logged
-into a remote workstation. 2) Type or paste that command \emph{exactly}
-as written.
+\end{description}
 
 \section{Basic shell navigation}
 
@@ -229,8 +296,7 @@ of Vim or Emacs, feel free to use whichever you already have
 experience with instead of Emacs. However, for the purpose of this
 class, we will be teaching using Emacs. Emacs can also seem scary at
 first, but after you learn a few simple commands, it will quickly
-start making sense. } editor. (On Mac/Linux, you will probably want to
-use \cmdline{emacs} to avoid starting the X Window System..) Pass in
+start making sense. } editor. Pass in
 a file that you want to edit (even if it hasn't been created yet), and
 you can start editing that file! For example type \cmdline{emacs
 my\_code.c} and you can start editing a file called
@@ -303,14 +369,15 @@ the backup files. Here is the command to run:
 restarts. You can log out and back in, or run the command \cmdline{exec
 tcsh} to reload \progname{tcsh}.
 
-Once you’ve done so, you should be able to start \progname{fish}:
+Once you’ve done so, you should be able to start the CS 211 programming
+ environment and \progname{fish}:
 
 \begin{CmdLine*}
-  \C fish \\
+  \C 211 \\
 \end{CmdLine*}
 
 You only need to do the above setup once, but you’ll
-want to run \progname{fish} each time you log in.
+want to run the \progname{211} command each time you log in.
 
 
 \section{Getting the files}
