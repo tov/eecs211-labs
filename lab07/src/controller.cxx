@@ -10,7 +10,7 @@ Controller::Controller(Model& model)
         : model_(model),
           view_(model_,
                 mixer(),
-                ge211::Abstract_game::default_window_dimensions)
+                default_window_dimensions)
 { }
 
 
@@ -37,7 +37,9 @@ void Controller::draw(ge211::Sprite_set& sprites)
 
 void Controller::on_mouse_up(ge211::Mouse_button, ge211::Posn<int> screen_pos)
 {
-    if (animating_) return;
+    if (animating_) {
+        return;
+    }
 
     const auto& board = model_.board();
 
@@ -46,15 +48,18 @@ void Controller::on_mouse_up(ge211::Mouse_button, ge211::Posn<int> screen_pos)
 
     selection_ = {-1, -1};
 
-    if (!board.contains(clicked)) return;
-    if (board[clicked].is_empty()) return;
+    if (!board.contains(clicked) || board[clicked].is_empty()) {
+        return;
+    }
 
     if (!board.contains(selected)) {
         selection_ = clicked;
         return;
     }
 
-    if (board[selected].is_empty()) return;
+    if (board[selected].is_empty()) {
+        return;
+    }
 
     bool success = model_.swap_tiles(clicked, selected);
     view_.play_effect(success);

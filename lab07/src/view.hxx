@@ -33,6 +33,9 @@ private:
     /// Private helper functions
     ///
 
+    // Loads the audio clips if possible. (Only called from the constructor.)
+    void load_audio_();
+
     // Computes and stores sizing and spaces.
     struct Geometry
     {

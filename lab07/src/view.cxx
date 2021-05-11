@@ -4,8 +4,10 @@
 // Color to indicate when a jewel is selected.
 static ge211::Color const selection_color{180, 200, 190, 255};
 
-// File in Resources/ to read background music from.
-static std::string const music_filename{"bg_music.ogg"};
+// File in Resources/ to read background music from. (Might not exist.)
+static std::string const bg_music_filename{"bg_music.ogg"};
+static std::string const success_effect_filename{"success.ogg"};
+static std::string const invalid_effect_filename{"invalid.ogg"};
 
 ///
 /// Constructor
@@ -46,22 +48,7 @@ View::View(
 
 
     if (mixer_.is_enabled()) {
-        try {
-            // To enable background music, put a file named bg_music.ogg
-            // in the Resources/ directory.
-            if (bg_music_.try_load(music_filename, mixer_)) {
-                mixer_.play_music(bg_music_);
-            }
-        } catch (ge211::Environment_error const& exn) {
-            ge211::internal::logging::warn(exn.what())
-                    << "To enable background music, put a file named"
-                       "\n    "
-                    << music_filename
-                    << " in the Resources/ directory.";
-        }
-
-        success_sound_.try_load("success.ogg", mixer_);
-        invalid_sound_.try_load("invalid.ogg", mixer_);
+        load_audio_();
     }
 }
 
@@ -84,7 +71,9 @@ void View::draw(ge211::Sprite_set& sprites, Board::Position selection) const
                 sprites.add_sprite(selection_sprite_, ppos, 0);
             }
 
-            if (tile.is_empty()) continue;
+            if (tile.is_empty()) {
+                continue;
+            }
 
             sprites.add_sprite(tile_sprites_.at(tile.group()), ppos, 1);
 
@@ -160,3 +149,20 @@ View::Geometry::Dimensions View::Geometry::grid_dims() const
     return {grid_size, grid_size};
 }
 
+void View::load_audio_()
+{
+    success_sound_.try_load(success_effect_filename, mixer_);
+    invalid_sound_.try_load(invalid_effect_filename, mixer_);
+
+    try {
+        // To enable background music, put a file named bg_music.ogg
+        // in the Resources/ directory.
+        if (bg_music_.try_load(bg_music_filename, mixer_)) {
+            mixer_.play_music(bg_music_);
+        }
+    } catch (ge211::Environment_error const& exn) {
+        ge211::internal::logging::warn(exn.what())
+                << "To enable background music, put a file named\n"
+                << bg_music_filename << " in the Resources/ directory.";
+    }
+}
