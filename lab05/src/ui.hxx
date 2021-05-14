@@ -41,7 +41,7 @@ struct Game
     // Sprites - prepared images for drawing on the screen.
     ge211::Circle_sprite
             large_sprite_touch,     // the large circle when touching
-            large_sprite_normal,    // the large circle when apart
-            small_sprite;           // the small circle
+    large_sprite_normal,    // the large circle when apart
+    small_sprite;           // the small circle
 };
 

@@ -47,10 +47,10 @@ private:
     ///
 
     Model& model_;
-    View            view_;
-    Board::Position selection_{-1, -1};
+    View view_;
+    Board::Position selection_ {-1, -1};
 
-    bool          animating_       = true;
-    ge211::Timer  animation_time_;
+    bool animating_ = true;
+    ge211::Timer animation_time_;
     unsigned long animation_steps_ = 0;
 };

@@ -12,9 +12,10 @@ public:
     ///
     /// Public member functions
     ///
-    View(const Model& model,
-         ge211::Mixer& mixer,
-         ge211::Dims<int> window_dims);
+    View(
+            const Model& model,
+            ge211::Mixer& mixer,
+            ge211::Dims<int> window_dims);
 
     void draw(ge211::Sprite_set&, Board::Position selected) const;
 
@@ -39,8 +40,8 @@ private:
     // Computes and stores sizing and spaces.
     struct Geometry
     {
-        using Position    = Model::Position;
-        using Dimensions  = Model::Dimensions;
+        using Position = Model::Position;
+        using Dimensions = Model::Dimensions;
 
         Geometry(Dimensions logical, Dimensions physical);
 
@@ -52,7 +53,7 @@ private:
 
         Dimensions grid_dims() const;
 
-        int        grid_size;
+        int grid_size;
         Dimensions board;  // logical
         Dimensions margin; // physical
     };
@@ -67,15 +68,15 @@ private:
     const Model& model_;
 
     // For visuals:
-    Geometry                geometry_;
-    ge211::Font             sans_;
+    Geometry geometry_;
+    ge211::Font sans_;
     ge211::Rectangle_sprite selection_sprite_;
-    Tile_table              tile_sprites_;
-    Type_table              type_sprites_;
+    Tile_table tile_sprites_;
+    Type_table type_sprites_;
 
     // For audio:
-    ge211::Mixer&           mixer_;
-    ge211::Music_track      bg_music_;
-    ge211::Sound_effect     success_sound_;
-    ge211::Sound_effect     invalid_sound_;
+    ge211::Mixer& mixer_;
+    ge211::Music_track bg_music_;
+    ge211::Sound_effect success_sound_;
+    ge211::Sound_effect invalid_sound_;
 };

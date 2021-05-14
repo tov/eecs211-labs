@@ -20,7 +20,7 @@
 //     };
 //
 
-ge211::Dims<int> const scene_dims{1024, 768};
+ge211::Dims<int> const scene_dims {1024, 768};
 
 struct Model
 {
@@ -64,10 +64,10 @@ struct Model
     /////
 
     // The center of the large circle. Starts in the center of the window.
-    ge211::Posn<int> large_center{scene_dims.width / 2, scene_dims.height / 2};
+    ge211::Posn<int> large_center {scene_dims.width / 2, scene_dims.height / 2};
 
     // The center of the small circle. Starts in the upper-left of the window.
-    ge211::Posn<int> small_center{0, 0};
+    ge211::Posn<int> small_center {0, 0};
 
     // The radius of the large circle.
     const int large_radius = 250;

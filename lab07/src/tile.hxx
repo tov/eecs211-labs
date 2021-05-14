@@ -15,15 +15,17 @@ class Tile
 
 public:
     class Action;
-    using Action_list = std::vector<const Action*>;
+
+    using Action_list = std::vector<const Action *>;
 
     Tile();
 
-    void restore(int number_of_groups,
-                 const Action_list&,
-                 ge211::Random_source<int>& random_group,
-                 ge211::Random_source<int>& random_action,
-                 ge211::Random_source<bool>& random_action_probability);
+    void restore(
+            int number_of_groups,
+            const Action_list&,
+            ge211::Random_source<int>& random_group,
+            ge211::Random_source<int>& random_action,
+            ge211::Random_source<bool>& random_action_probability);
 
     bool is_full() const
     { return status_ == Status::full; }
@@ -50,14 +52,14 @@ public:
 
 private:
     Status status_;
-    int    group_;
-    const Action* action_;
+    int group_;
+    const Action *action_;
 };
 
 class Tile::Action
 {
 public:
-    using Position     = Board::Position;
+    using Position = Board::Position;
     using Position_set = Board::Position_set;
 
     // Let `Tile` call the protected `apply()` function.

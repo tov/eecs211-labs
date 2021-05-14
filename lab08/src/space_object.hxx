@@ -14,7 +14,7 @@ struct Control
 class Space_object
 {
 public:
-    static bool check_collision(Space_object* so1, Space_object* so2);
+    static bool check_collision(Space_object *so1, Space_object *so2);
 
     using Dimensions = ge211::Dims<double>;
     using Position = ge211::Posn<double>;
@@ -44,7 +44,7 @@ public:
     virtual void integrate(double dt) = 0;
 
     // Object just dies by default; override to survive, delegate to die.
-    virtual void collide(Space_object const* other)
+    virtual void collide(Space_object const *other)
     {
         space_junk_ = true;
     }
@@ -68,10 +68,11 @@ public:
     using Acceleration = ge211::Dims<double>;
     using Angular_velocity = double;
 
-    Inertial_space_object(Material,
-                          Position,
-                          Velocity = {0.0, 0.0},
-                          Angular_velocity = 0.0);
+    Inertial_space_object(
+            Material,
+            Position,
+            Velocity = {0.0, 0.0},
+            Angular_velocity = 0.0);
 
     void integrate(double dt) override;
 
@@ -86,7 +87,7 @@ protected:
 
 
 private:
-    Acceleration dv_{0.0, 0.0};
+    Acceleration dv_ {0.0, 0.0};
     Angular_velocity ddeg_ = 0;
 };
 
@@ -96,9 +97,9 @@ class Space_ship : public Inertial_space_object
 public:
     explicit Space_ship(Dimensions screen_dimensions)
             : Inertial_space_object(Space_object::Material::metal,
-                                    { screen_dimensions.width / 2,
-                                      screen_dimensions.height / 2 })
-            , screen_dimensions_(screen_dimensions)
+                                    {screen_dimensions.width / 2,
+                                     screen_dimensions.height / 2}),
+              screen_dimensions_(screen_dimensions)
     { }
 
     // Facing direction, may not match velocity
@@ -108,20 +109,25 @@ public:
 
     double size() override;
 
-    void collide(Space_object const* other) override;
+    void collide(Space_object const *other) override;
 
 private:
     double const heading_change = 180;
     double const velocity_change = 100;
-    Control control_{false, false, false};
+    Control control_ {false, false, false};
     Dimensions screen_dimensions_;
 };
 
 class Asteroid : public Inertial_space_object
 {
 public:
-    Asteroid(double mass, Position position, Dimensions speed, double as, Position top_left_margin,
-             Position bottom_right_margin);
+    Asteroid(
+            double mass,
+            Position position,
+            Dimensions speed,
+            double as,
+            Position top_left_margin,
+            Position bottom_right_margin);
 
     void integrate(double dt) override;
 
@@ -129,7 +135,7 @@ public:
 
     double size() override;
 
-    void collide(Space_object const* other) override;
+    void collide(Space_object const *other) override;
 
 private:
     double mass_;
@@ -149,7 +155,7 @@ public:
 
     double size() override;
 
-    void collide(Space_object const* other) override;
+    void collide(Space_object const *other) override;
 
 private:
     Dimensions screen_dimensions_;

@@ -3,9 +3,10 @@
 #include <iostream>
 #include <stdexcept>
 
-ge211::Dims<int> screen_dimensions{1024,768};
+ge211::Dims<int> screen_dimensions {1024, 768};
 
-int main()
+int
+main()
 {
     try {
         Controller(screen_dimensions).run();

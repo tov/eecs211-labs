@@ -10,14 +10,15 @@
 class Model
 {
 public:
-    using Coordinate     = Board::Coordinate;
-    using Dimensions     = Board::Dimensions;
-    using Position       = Board::Position;
-    using Position_set   = Board::Position_set;
+    using Coordinate = Board::Coordinate;
+    using Dimensions = Board::Dimensions;
+    using Position = Board::Position;
+    using Position_set = Board::Position_set;
 
-    Model(Dimensions board_dimensions,
-          int number_of_groups,
-          int min_group_size = 3);
+    Model(
+            Dimensions board_dimensions,
+            int number_of_groups,
+            int min_group_size = 3);
 
     Model& add_action(const Tile::Action&);
 
@@ -51,10 +52,10 @@ private:
 
     Position_set gather_group_(Position);
 
-    Board                board_;
-    std::size_t          number_of_groups_;
-    std::size_t          min_group_size_;
-    Tile::Action_list    actions_;
+    Board board_;
+    std::size_t number_of_groups_;
+    std::size_t min_group_size_;
+    Tile::Action_list actions_;
     std::queue<Position> condemned_;
 
     // Random sources

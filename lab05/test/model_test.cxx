@@ -46,7 +46,7 @@ TEST_CASE("move large circle down")
 TEST_CASE("move small circle to")
 {
     Model model;
-    Posn<int> pos{120, 150};
+    Posn<int> pos {120, 150};
     model.move_small_circle_to(pos);
     CHECK(model.small_center == pos);
 }

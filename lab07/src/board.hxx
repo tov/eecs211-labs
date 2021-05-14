@@ -14,10 +14,10 @@ public:
     /// MEMBER TYPES
     ///
 
-    using Rectangle    = ge211::Rect<int>;
-    using Position     = ge211::Posn<int>;
-    using Dimensions   = ge211::Dims<int>;
-    using Coordinate   = Rectangle::Coordinate;
+    using Rectangle = ge211::Rect<int>;
+    using Position = ge211::Posn<int>;
+    using Dimensions = ge211::Dims<int>;
+    using Coordinate = Rectangle::Coordinate;
     using Position_set = std::unordered_set<Position>;
 
     ///
@@ -52,7 +52,7 @@ private:
 
     std::size_t compute_index_(Position) const;
 
-    Dimensions        dimensions_;
+    Dimensions dimensions_;
     std::vector<Tile> tiles_;
 };
 

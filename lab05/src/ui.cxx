@@ -1,14 +1,14 @@
 #include "ui.hxx"
 
 static const ge211::Color small_color = ge211::Color::medium_yellow();
-static const ge211::Color large_normal_color{0, 100, 0};
-static const ge211::Color large_collide_color{200, 0, 0, 150};
+static const ge211::Color large_normal_color {0, 100, 0};
+static const ge211::Color large_collide_color {200, 0, 0, 150};
 
 // Here we initialize each circle sprite with a radius and a color.
 Game::Game()
-        : large_sprite_touch{model.large_radius, large_collide_color},
-          large_sprite_normal{model.large_radius, large_normal_color},
-          small_sprite{model.small_radius, small_color}
+        : large_sprite_touch {model.large_radius, large_collide_color},
+          large_sprite_normal {model.large_radius, large_normal_color},
+          small_sprite {model.small_radius, small_color}
 { }
 
 ge211::Dims<int>

@@ -18,7 +18,7 @@ public:
     /// Constructors
     ///
     // For passing in small word lists by hand.
-    Controller ( ge211::Dims<int> board_dimensions);
+    Controller(ge211::Dims<int> board_dimensions);
 
     ge211::Dims<int> initial_window_dimensions() const override;
 

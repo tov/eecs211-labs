@@ -1,12 +1,13 @@
 #include "tile.hxx"
 
 Tile::Tile()
-        : status_(Tile::Status::empty)
-        , group_(0)
-        , action_(nullptr)
+        : status_(Tile::Status::empty),
+          group_(0),
+          action_(nullptr)
 { }
 
-void Tile::restore(
+void
+Tile::restore(
         int number_of_groups,
         const Action_list& actions,
         ge211::Random_source<int>& random_group,
@@ -46,13 +47,16 @@ Tile::action_symbol() const
     }
 }
 
-void Tile::condemn()
+void
+Tile::condemn()
 {
-    if (is_full())
+    if (is_full()) {
         status_ = Status::condemned;
+    }
 }
 
-void Tile::remove()
+void
+Tile::remove()
 {
     status_ = Status::empty;
 }

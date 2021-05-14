@@ -2,18 +2,19 @@
 #include <iostream>
 
 // Color to indicate when a jewel is selected.
-static ge211::Color const selection_color{180, 200, 190, 255};
+static ge211::Color const selection_color {180, 200, 190, 255};
 
 // File in Resources/ to read background music from. (Might not exist.)
-static std::string const bg_music_filename{"bg_music.ogg"};
-static std::string const success_effect_filename{"success.ogg"};
-static std::string const invalid_effect_filename{"invalid.ogg"};
+static std::string const bg_music_filename {"bg_music.ogg"};
+static std::string const success_effect_filename {"success.ogg"};
+static std::string const invalid_effect_filename {"invalid.ogg"};
 
 ///
 /// Constructor
 ///
 
-static ge211::Color from_hue(double hue)
+static ge211::Color
+from_hue(double hue)
 {
     return ge211::Color::from_hsva(hue, 1, 1, 1);
 }
@@ -28,8 +29,8 @@ View::View(
           selection_sprite_(geometry_.grid_dims(), selection_color),
           mixer_(mixer)
 {
-    const int    groups = model_.number_of_groups();
-    const double step   = 360.0 / groups;
+    const int groups = model_.number_of_groups();
+    const double step = 360.0 / groups;
 
     double hue = 0;
 
@@ -40,9 +41,9 @@ View::View(
 
     for (auto action : model_.actions()) {
         const std::string& type = action->symbol();
-        if (type.empty()) continue;
+        if (type.empty()) { continue; }
 
-        ge211::Text_sprite::Builder builder{sans_};
+        ge211::Text_sprite::Builder builder {sans_};
         type_sprites_.emplace(type, (builder << type).build());
     }
 
@@ -56,14 +57,15 @@ View::View(
 /// Member functions
 ///
 
-void View::draw(ge211::Sprite_set& sprites, Board::Position selection) const
+void
+View::draw(ge211::Sprite_set& sprites, Board::Position selection) const
 {
     const Board& board = model_.board();
     auto ldims = board.dimensions();
 
     for (Board::Coordinate col = 0; col < ldims.width; ++col) {
         for (Board::Coordinate row = 0; row < ldims.height; ++row) {
-            Board::Position lpos{col, row};
+            Board::Position lpos {col, row};
             ge211::Posn<int> ppos = board_to_screen(lpos);
             const Tile& tile = board[lpos];
 
@@ -87,12 +89,14 @@ void View::draw(ge211::Sprite_set& sprites, Board::Position selection) const
     }
 }
 
-Model::Position View::screen_to_board(Model::Position pos) const
+Model::Position
+View::screen_to_board(Model::Position pos) const
 {
     return geometry_.screen_to_board(pos);
 }
 
-Model::Position View::board_to_screen(Model::Position pos) const
+Model::Position
+View::board_to_screen(Model::Position pos) const
 {
     return geometry_.board_to_screen(pos);
 }
@@ -115,14 +119,15 @@ View::resume_music_if_ended() const
     }
 }
 
-View::Geometry::Geometry(View::Geometry::Dimensions ldims,
-                         View::Geometry::Dimensions pdims)
+View::Geometry::Geometry(
+        View::Geometry::Dimensions ldims,
+        View::Geometry::Dimensions pdims)
 {
     int hfit = pdims.width / (ldims.width + 1);
     int vfit = pdims.height / (ldims.height + 1);
 
     grid_size = std::min(hfit, vfit);
-    margin    = (pdims - grid_size * ldims) / 2;
+    margin = (pdims - grid_size * ldims) / 2;
 }
 
 View::Geometry::Position
@@ -139,17 +144,20 @@ View::Geometry::board_to_screen(Position pos) const
     return o + (pos - o) * grid_size + margin;
 }
 
-int View::Geometry::tile_radius() const
+int
+View::Geometry::tile_radius() const
 {
     return grid_size / 2;
 }
 
-View::Geometry::Dimensions View::Geometry::grid_dims() const
+View::Geometry::Dimensions
+View::Geometry::grid_dims() const
 {
     return {grid_size, grid_size};
 }
 
-void View::load_audio_()
+void
+View::load_audio_()
 {
     success_sound_.try_load(success_effect_filename, mixer_);
     invalid_sound_.try_load(invalid_effect_filename, mixer_);

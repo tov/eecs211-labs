@@ -23,19 +23,19 @@ public:
     /// Constructors
     ///
     // Uses the dimensions of the board
-    Model ( ge211::Dims<int> screen_dimensions);
+    Model(ge211::Dims<int> screen_dimensions);
 
     ///
     /// Public member functions
     ///
-    std::vector<std::unique_ptr<Space_object>> &space_objects();
-    void update ( double ft );
-    void control_space_ship ( Control control );
-    void fire_torpedo ();
-    Control &control();
-    void turn_right ( bool state );
-    void turn_left ( bool state );
-    void thrust ( bool state );
+    std::vector<std::unique_ptr<Space_object>>& space_objects();
+    void update(double ft);
+    void control_space_ship(Control control);
+    void fire_torpedo();
+    Control& control();
+    void turn_right(bool state);
+    void turn_left(bool state);
+    void thrust(bool state);
 
 private:
 
