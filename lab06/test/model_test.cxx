@@ -3,19 +3,22 @@
 
 TEST_CASE("current_word")
 {
-    Model model{"word1", "word2"};
+    Model model{"word1", "word2"}
+    (std::initializer_list<std::string>(), 2);
     CHECK( model.current_word() == "word1" );
 }
 
 TEST_CASE("lowercase")
 {
-    Model model{"WoRd"};
+    Model model{"WoRd"}
+    (std::initializer_list<std::string>(), 2);
     CHECK( model.current_word() == "word" );
 }
 
 TEST_CASE("hit_key")
 {
-    Model model{"hi", "no"};
+    Model model{"hi", "no"}
+    (std::initializer_list<std::string>(), 2);
     CHECK( model.current_word() == "hi" );
     model.hit_key('h');
     model.hit_key('i');
@@ -24,7 +27,8 @@ TEST_CASE("hit_key")
 
 TEST_CASE("game_is_finished")
 {
-    Model model{"hi", "no"};
+    Model model{"hi", "no"}
+    (std::initializer_list<std::string>(), 2);
     model.hit_key('h');
     model.hit_key('i');
     model.hit_key('n');
@@ -36,7 +40,8 @@ TEST_CASE("typing_progress")
 {
     using O = Model::Letter_outcome;
 
-    Model model{"hello", "bye"};
+    Model model{"hello", "bye"}
+    (std::initializer_list<std::string>(), 2);
 
     auto actual = [&]{ return model.typing_progress(); };
     auto expected = actual();

@@ -3,14 +3,17 @@
 #include <iostream>
 #include <stdexcept>
 
-int main()
+int
+main()
 {
-////    You can also provide an explicit list of words:
-//    Controller{"explicit", "word", "list"}.run();
+    ////    You can also provide an explicit list of words:
+    //    Controller{"explicit", "word", "list"}.run();
 
     try {
-        Controller("../Resources/dictionary.dat").run();
-    } catch (std::runtime_error const& e) {
+        Controller("dictionary.dat").run();
+    }
+
+    catch (std::runtime_error const& e) {
         std::cerr << e.what() << "\n";
         return 1;
     }

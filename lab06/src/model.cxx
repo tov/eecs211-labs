@@ -4,22 +4,29 @@
 #include <cctype>
 
 ///
-/// Constants
+/// Helper functions
 ///
 
-double const Model::letter_delay = 2;
+// Lowercases a string in-place.
+static void
+makelower(std::string& s)
+{
+    for (char& c : s) {
+        c = (char) std::tolower((unsigned char) c);
+    }
+}
 
 
 ///
 /// Constructors
 ///
 
-// Lowercases a string in-place.
-static void makelower(std::string&);
-
-Model::Model(std::vector<std::string> const& words)
-        : seconds_remaining_(letter_delay)
-        , dictionary_(words)
+Model::Model(
+        const std::vector<std::string>& words,
+        double letter_delay)
+        : letter_delay_(letter_delay),
+          seconds_remaining_(letter_delay_),
+          dictionary_(words)
 {
     for (auto& word : dictionary_) {
         makelower(word);
@@ -28,8 +35,10 @@ Model::Model(std::vector<std::string> const& words)
     load_next_word_();
 }
 
-Model::Model(std::initializer_list<std::string> words)
-        : Model(std::vector<std::string>(words))
+Model::Model(
+        std::initializer_list<std::string> words,
+        double letter_delay)
+        : Model(std::vector<std::string>(words), 2)
 { }
 
 
@@ -37,7 +46,8 @@ Model::Model(std::initializer_list<std::string> words)
 /// Public member functions
 ///
 
-std::string const& Model::current_word() const
+std::string const&
+Model::current_word() const
 {
     return current_word_;
 }
@@ -49,12 +59,19 @@ Model::typing_progress() const
 }
 
 double
+Model::letter_delay() const
+{
+    return letter_delay_;
+}
+
+double
 Model::seconds_remaining() const
 {
     return seconds_remaining_;
 }
 
-bool Model::game_is_finished() const
+bool
+Model::game_is_finished() const
 {
     return current_word_.empty();
 }
@@ -63,6 +80,7 @@ void
 Model::hit_key(char letter)
 {
     size_t i = typing_progress_.size();
+
     if (i < current_word_.size()) {
         record_progress_(std::tolower(letter) == current_word_[i]
                          ? Letter_outcome::correct
@@ -74,6 +92,7 @@ bool
 Model::on_frame(double dt)
 {
     seconds_remaining_ -= dt;
+
     if (seconds_remaining_ < 0) {
         return record_progress_(Letter_outcome::missed);
     } else {
@@ -93,6 +112,7 @@ Model::dictionary() const
     return dictionary_;
 }
 
+
 ///
 /// Private member functions
 ///
@@ -100,10 +120,10 @@ Model::dictionary() const
 bool
 Model::record_progress_(Letter_outcome outcome)
 {
-    seconds_remaining_ = letter_delay;
+    seconds_remaining_ = letter_delay_;
     typing_progress_.push_back(outcome);
 
-    if (! word_is_finished_()) {
+    if (!word_is_finished_()) {
         return false;
     }
 
@@ -119,28 +139,19 @@ Model::record_progress_(Letter_outcome outcome)
     return true;
 }
 
-void Model::load_next_word_()
+void
+Model::load_next_word_()
 {
     typing_progress_.clear();
     current_word_.clear();
 
-    while (next_word_index_ < dictionary_.size() && current_word_.empty())
+    while (next_word_index_ < dictionary_.size() && current_word_.empty()) {
         current_word_ = dictionary_[next_word_index_++];
+    }
 }
 
-bool Model::word_is_finished_() const
+bool
+Model::word_is_finished_() const
 {
     return typing_progress_.size() == current_word_.size();
-}
-
-///
-/// HELPER
-///
-
-static void
-makelower(std::string& s)
-{
-    for (char& c : s) {
-        c = (char) std::tolower((unsigned char) c);
-    }
 }

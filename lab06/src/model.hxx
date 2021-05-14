@@ -12,20 +12,14 @@
 class Model
 {
 public:
-    ///
-    /// Constants
-    ///
-
-    // Seconds between letters.
-    static double const letter_delay;
-
 
     ///
     /// Associated types
     ///
 
     // What happened with a particular letter?
-    enum class Letter_outcome {
+    enum class Letter_outcome
+    {
         correct,
         incorrect,
         missed,
@@ -38,12 +32,18 @@ public:
     ///
     /// Constructors
     ///
-    
+
     // Uses the given vector of words as the source of words.
-    explicit Model(const std::vector<std::string>& words);
+    // Allows specifyng the time between letters, which defaults to 2 seconds.
+    explicit Model(
+            const std::vector<std::string>& words,
+            double letter_delay = 2);
 
     // Uses the given literal word list as the source of words.
-    explicit Model(std::initializer_list<std::string> words);
+    // Allows specifyng the time between letters, which defaults to 2 seconds.
+    explicit Model(
+            std::initializer_list<std::string> words,
+            double letter_delay = 2);
 
 
     ///
@@ -56,6 +56,9 @@ public:
     // Returns the state of all letters already processed in order,
     // where true means hit and false means miss.
     Progress_vector const& typing_progress() const;
+
+    // The amount of time to type each letter.
+    double letter_delay() const;
 
     // The amount of time left to type the current letter.
     double seconds_remaining() const;
@@ -97,6 +100,9 @@ private:
     /// Private member variables
     ///
 
+    // Seconds between letters.
+    double letter_delay_;
+
     // Seconds remaining for this letter.
     double seconds_remaining_;
 
@@ -116,4 +122,3 @@ private:
     // The score.
     unsigned score_ = 0;
 };
-
