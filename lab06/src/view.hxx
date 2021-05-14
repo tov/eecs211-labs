@@ -2,77 +2,118 @@
 
 #include "model.hxx"
 
-static int const font_size = 30;
-static int const bubble_radius = 30;
-static int const bubble_offset = 70;
-
 // Controls how the game is shown to the user:
 class View
 {
 public:
+    // Type for window dimensions.
+    using Dims = ge211::Dims<int>;
+
     // Constructs a view with reference to a model, which it doesn't
     // modify but need const& access to find out what letters to render.
-    explicit View(Model const&);
+    // Optionally, you can specify the dimensions of the window.
+    explicit View(Model const& model,
+                  Dims window_dims = {800, 600});
 
-    // Renders the bubbles with the letters of the current word
-    // on the screen.
-    void draw(ge211::Sprite_set&) const;
-    
-    // Creates the bubble objects for the current word. Takes the
-    // window dimensions within which to position the bubbles.
-    void load_word(ge211::geometry::Dims<int> window_dims);
+    // Renders the state of the game (bubbles, score, timer) to the screen.
+    void draw(ge211::Sprite_set&);
+
+    // Creates the bubble objects for the current word.
+    void load_word();
+
+    // Returns the window dimensions.
+    Dims window_dimensions() const;
 
 private:
+    // Type for positions.
+    using Posn = ge211::Posn<int>;
+
+    // A private helper type for keeping track of bubbles.
+    // (Defined below.)
+    struct Bubble_;
+
+    ///
+    /// PRIVATE HELPER FUNCTIONS
+    ///
+
+    void
+    add_bubble_(ge211::Sprite_set&, Bubble_ const&);
+
+    void
+    add_score_(ge211::Sprite_set&);
+
+    void
+    add_timer_bar_(ge211::Sprite_set&);
+
+    ge211::Sprite const&
+    bubble_sprite_for_(size_t index) const;
+
+    ge211::Sprite const&
+    bubble_sprite_for_(Model::Letter_outcome) const;
+
+    ///
+    /// PRIVATE MEMBER VARIABLES
+    ///
 
     // The view can look at the model but doesn't change it.
     Model const& model_;
 
-    // A private helper type.
-    struct Bubble_
-    {
-        ///
-        /// Constructor
-        ///
-
-        Bubble_(ge211::Text_sprite&, ge211::geometry::Posn<int>);
-
-        ///
-        /// Member functions
-        ///
-
-        // The top-left position for drawing the bubble.
-        ge211::geometry::Posn<int> bubble_position() const;
-        
-        // The top-left position for drawing the letter.
-        ge211::geometry::Posn<int> letter_position() const;
-
-        ///
-        /// Member variables
-        ///
-
-        /// Text sprite containing the letter to display.
-        ge211::Text_sprite& letter_sprite;
-
-        // The center position of the bubble.
-        ge211::geometry::Posn<int>     center;
-    };
+    // The dimensions of the window to open.
+    Dims window_dims_;
 
     // The bubbles.
     std::vector<Bubble_> bubbles_;
 
-    // The font for the letters.
-    ge211::Font sans_{"sans.ttf", font_size};
+    // Sprites for bubbles:
+    ge211::Circle_sprite const future_bubble_;
+    ge211::Circle_sprite const correct_bubble_;
+    ge211::Circle_sprite const incorrect_bubble_;
+    ge211::Circle_sprite const missed_bubble_;
 
-    // The whole alphabet, a-z, in `Text_sprite`s.
+    // To display the time remaining.
+    ge211::Rectangle_sprite const timer_bar_;
+
+    // The fonts for the letters and the score.
+    ge211::Font bubble_font_;
+    ge211::Font score_font_;
+
+    // The whole alphabet, A-Z, in `Text_sprite`s.
     std::vector<ge211::Text_sprite> letter_sprites_;
 
-    // Sprites for bubbles:
-    ge211::Circle_sprite yellow_bubble_{bubble_radius, ge211::Color::medium_yellow()};
-    ge211::Circle_sprite green_bubble_{bubble_radius, ge211::Color::medium_green()};
-    ge211::Circle_sprite red_bubble_{bubble_radius, ge211::Color::medium_red()};
+    // For displaying the score.
+    ge211::Text_sprite score_sprite_;
 
-    // Random sources
-    ge211::Random_source<int> random_x_coor_;
-    ge211::Random_source<int> random_y_coor_;
+    // Random sources -- these are used to position the words proportional
+    // the the available space in the window.
+    ge211::Random_source<float> random_x_source_{0.0, 1.0};
+    ge211::Random_source<float> random_y_source_{0.0, 1.0};
 };
 
+struct View::Bubble_
+{
+    ///
+    /// Constructor
+    ///
+
+    Bubble_(ge211::Text_sprite&, Posn);
+
+    ///
+    /// Member functions
+    ///
+
+    // The top-left position for drawing the bubble.
+    Posn bubble_position() const;
+
+    // The top-left position for drawing the letter.
+    Posn letter_position() const;
+
+    ///
+    /// Member variables
+    ///
+
+    /// Text sprite containing the letter to display.
+    ge211::Text_sprite& letter_sprite;
+
+    // The center position of the bubble.
+    Posn center;
+};

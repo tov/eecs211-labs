@@ -34,8 +34,8 @@ static std::vector<std::string> load_dictionary(std::string const& filename)
 ///
 
 Controller::Controller(std::vector<std::string> const& words)
-        : model_(words)
-        , view_(model_)
+        : model_(words),
+          view_(model_, {800, 600})
 { }
 
 Controller::Controller(std::string const& filename)
@@ -57,8 +57,9 @@ void Controller::on_start()
 
 void Controller::on_frame(double dt)
 {
-    if (model_.update())
+    if (model_.on_frame(dt)) {
         load_word_();
+    }
 }
 
 void Controller::on_key(ge211::Key key)
@@ -77,11 +78,16 @@ void Controller::draw(ge211::Sprite_set& sprites)
     view_.draw(sprites);
 }
 
+ge211::Dims<int> Controller::initial_window_dimensions() const
+{
+    return view_.window_dimensions();
+}
+
 ///
 /// Private member functions
 ///
 
 void Controller::load_word_()
 {
-    view_.load_word(get_window().get_dimensions());
+    view_.load_word();
 }

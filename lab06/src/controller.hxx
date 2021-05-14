@@ -32,6 +32,7 @@ public:
     /// Member functions
     ///
 
+protected:
     // Called by ge211 when it needs to redraw the screen. Delegates to
     // the view.
     void draw(ge211::Sprite_set& sprites) override;
@@ -47,6 +48,9 @@ public:
     // Called by ge211 when the user press a key. We forward the keypress
     // to the model.
     void on_key(ge211::Key key) override;
+
+    // Called by ge211 to find out how big to make the window.
+    ge211::Dims<int> initial_window_dimensions() const override;
 
 private:
 
