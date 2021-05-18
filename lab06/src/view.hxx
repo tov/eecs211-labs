@@ -16,7 +16,7 @@ public:
             Model const& model,
             Dims window_dims = {800, 600});
 
-    // Renders the state of the game (bubbles, score, timer) to the screen.
+    // Renders the state of the game (bubbles, timer) to the screen.
     void draw(ge211::Sprite_set& sprites);
 
     // Creates the bubble objects for the current word.
@@ -37,9 +37,6 @@ private:
     ///
     /// PRIVATE HELPER FUNCTIONS
     ///
-
-    void
-    draw_score_(ge211::Sprite_set& sprites);
 
     void
     draw_timer_(ge211::Sprite_set& sprites);
@@ -76,15 +73,11 @@ private:
     // To display the time remaining.
     ge211::Rectangle_sprite const timer_bar_;
 
-    // The fonts for the letters and the score.
+    // The fonts for the letters.
     ge211::Font bubble_font_;
-    ge211::Font score_font_;
 
     // The whole alphabet, A-Z, in `Text_sprite`s.
     std::vector<ge211::Text_sprite> letter_sprites_;
-
-    // For displaying the score.
-    ge211::Text_sprite score_sprite_;
 
     // Random sources -- these are used to position the words proportional
     // the the available space in the window.

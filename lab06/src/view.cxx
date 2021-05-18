@@ -24,17 +24,13 @@ int const bubble_offset = 2 * bubble_radius + bubble_padding;
 // Effective space taken up by a bubble, including padding around it:
 Dims const bubble_box {bubble_offset, bubble_offset};
 
-// How far to place the score from the bottom-right of the window:
-Dims const score_margin {30, 0};
-
 // Thickness of "cursor" ring around current bubble:
 int const cursor_thickness = 4;
 // Thickness of timer bar at bottom of window:
 int const timer_thickness = 4;
 
-// Sizes of fonts:
+// Size of font:
 int const letter_font_size = bubble_radius;
-int const score_font_size = 3 * bubble_radius;
 
 // Bubble colors;
 Color const
@@ -47,7 +43,6 @@ Color const
 // Other colors;
 Color const
         cursor_color {0xFF, 0xFF, 0xFF},
-        score_color {0x99, 0xCC, 0xFF, 0x99},
         timer_color {0xFF, 0xFF, 0xFF};
 
 }  // end anonymous namespace
@@ -67,8 +62,7 @@ View::View(Model const& model, Dims window_dims)
           missed_bubble_(bubble_radius, missed_bubble_color),
           cursor_disc_(bubble_radius + cursor_thickness, cursor_color),
           timer_bar_({1, timer_thickness}, timer_color),
-          bubble_font_("sans.ttf", letter_font_size),
-          score_font_("sans.ttf", score_font_size)
+          bubble_font_("sans.ttf", letter_font_size)
 {
     // use .stub_with(...) here on random sources if you want non-random
     // results while developing
@@ -91,21 +85,7 @@ View::draw(Sprite_set& sprites)
         bubble.draw(sprites, *this);
     }
 
-    draw_score_(sprites);
     draw_timer_(sprites);
-}
-
-void
-View::draw_score_(Sprite_set& sprites)
-{
-    ge211::Text_sprite::Builder builder(score_font_);
-    builder.color(score_color);
-    builder << model_.score();
-    score_sprite_ = builder.build();
-
-    Posn posn(window_dims_);
-    posn -= score_margin + score_sprite_.dimensions();
-    sprites.add_sprite(score_sprite_, posn, -1);
 }
 
 void

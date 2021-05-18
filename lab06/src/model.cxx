@@ -100,12 +100,6 @@ Model::on_frame(double dt)
     }
 }
 
-unsigned
-Model::score() const
-{
-    return score_;
-}
-
 std::vector<std::string> const&
 Model::dictionary() const
 {
@@ -125,13 +119,6 @@ Model::record_progress_(Letter_outcome outcome)
 
     if (!word_is_finished_()) {
         return false;
-    }
-
-    if (std::all_of(typing_progress_.begin(), typing_progress_.end(),
-                    [](auto o) {
-                        return o == Letter_outcome::correct;
-                    })) {
-        score_ += typing_progress_.size();
     }
 
     load_next_word_();

@@ -73,9 +73,6 @@ public:
     // the current word changed.
     bool on_frame(double dt);
 
-    // Returns the current score.
-    unsigned score() const;
-
     // Lets us see the word list. (For testing.)
     std::vector<std::string> const& dictionary() const;
 
@@ -118,7 +115,4 @@ private:
 
     // The index of the next work for after the current word finishes.
     size_t next_word_index_ = 0;
-
-    // The score.
-    unsigned score_ = 0;
 };
