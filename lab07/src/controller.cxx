@@ -64,9 +64,8 @@ Controller::on_mouse_up(ge211::Mouse_button, ge211::Posn<int> screen_pos)
         return;
     }
 
-    bool success = model_.swap_tiles(clicked, selected);
-    view_.play_effect(success);
-
+    Model::Event event = model_.swap_tiles(clicked, selected);
+    play_sound_for_event_(event);
     start_animating_();
 }
 
@@ -74,6 +73,23 @@ void
 Controller::on_start()
 {
     start_animating_();
+}
+
+void
+Controller::play_sound_for_event_(Model::Event ev)
+{
+    typedef Model::Event E;
+
+    switch (ev) {
+    case E::valid_swap:
+        view_.play_success_effect();
+        return;
+    case E::invalid_swap:
+        view_.play_invalid_effect();
+        return;
+    case E::none:
+        return;
+    }
 }
 
 void

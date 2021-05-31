@@ -19,8 +19,11 @@ public:
 
     void draw(ge211::Sprite_set&, Board::Position selected) const;
 
-    /// Plays success.ogg if given true, invalid.ogg otherwise.
-    void play_effect(bool success) const;
+    /// Plays success.ogg.
+    void play_success_effect() const;
+
+    /// Plays invalid.ogg.
+    void play_invalid_effect() const;
 
     /// Keeps the music going.
     void resume_music_if_ended() const;

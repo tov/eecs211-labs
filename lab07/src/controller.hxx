@@ -38,6 +38,8 @@ private:
     /// Helper functions
     ///
 
+    void play_sound_for_event_(Model::Event);
+
     void start_animating_();
 
     bool can_animate_();

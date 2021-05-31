@@ -15,6 +15,15 @@ public:
     using Position = Board::Position;
     using Position_set = Board::Position_set;
 
+    /// Enumeration of events that the model might want to inform the
+    /// controller about.
+    enum class Event
+    {
+        valid_swap,
+        invalid_swap,
+        none,
+    };
+
     Model(
             Dimensions board_dimensions,
             int number_of_groups,
@@ -37,7 +46,7 @@ public:
 
     // Lets the controller tell the model about a user action.
     // The model returns whether the action was successful.
-    bool swap_tiles(Position, Position);
+    Event swap_tiles(Position, Position);
 
 private:
     bool contagion_step_();

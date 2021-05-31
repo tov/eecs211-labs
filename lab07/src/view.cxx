@@ -102,13 +102,15 @@ View::board_to_screen(Model::Position pos) const
 }
 
 void
-View::play_effect(bool success) const
+View::play_success_effect() const
 {
-    if (success) {
-        mixer_.try_play_effect(success_sound_);
-    } else {
-        mixer_.try_play_effect(invalid_sound_);
-    }
+    mixer_.try_play_effect(success_sound_);
+}
+
+void
+View::play_invalid_effect() const
+{
+    mixer_.try_play_effect(invalid_sound_);
 }
 
 void
