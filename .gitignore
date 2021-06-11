@@ -3,6 +3,7 @@ build/
 build.*/
 build-*/
 cmake-build-*/
+.cache/
 
 # Build products
 *.tgz
